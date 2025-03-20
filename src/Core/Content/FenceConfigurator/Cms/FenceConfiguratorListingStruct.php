@@ -7,10 +7,7 @@ use Shopware\Core\Framework\Struct\Struct;
 
 class FenceConfiguratorListingStruct extends Struct
 {
-    /**
-     * @var EntitySearchResult|null
-     */
-    protected $listing;
+    protected ?EntitySearchResult $listing;
 
     public function getListing(): ?EntitySearchResult
     {
@@ -24,6 +21,6 @@ class FenceConfiguratorListingStruct extends Struct
 
     public function getApiAlias(): string
     {
-        return 'cms_look_listing';
+        return 'cms_fence_configurator_listing';
     }
 }

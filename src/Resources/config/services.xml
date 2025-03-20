@@ -55,5 +55,33 @@
 
             <tag name="kernel.event_subscriber"/>
         </service>
+
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorDetailRoute" public="true">
+            <argument type="service" id="moorl_fc.repository"/>
+            <argument type="service" id="Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoader"/>
+            <argument type="service" id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition"/>
+        </service>
+
+        <service id="Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator\FenceConfiguratorPageLoader">
+            <argument type="service" id="Shopware\Storefront\Page\GenericPageLoader"/>
+            <argument type="service" id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorDetailRoute"/>
+        </service>
+
+        <service id="Moorl\FenceConfigurator\Storefront\Controller\FenceConfiguratorController" public="true">
+            <argument type="service" id="Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator\FenceConfiguratorPageLoader"/>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
+        </service>
+
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\Listing\FenceConfiguratorListingFeaturesSubscriber">
+            <argument type="service" id="MoorlFoundation\Core\Service\SortingService"/>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
 </container>

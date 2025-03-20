@@ -5,6 +5,7 @@ namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingBaseTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingMetaTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingPageTrait;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingTrait;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
@@ -25,6 +26,17 @@ class FenceConfiguratorEntity extends Entity
     protected string $fenceStreamId;
     protected string $fencePostStreamId;
     protected string $fenceOtherStreamId;
+    protected bool $active = false;
+
+    public function getActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
+    }
 
     public function getLogicalOptions(): ?PropertyGroupOptionCollection
     {

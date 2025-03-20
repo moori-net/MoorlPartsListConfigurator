@@ -25,20 +25,20 @@ class FenceConfiguratorListing extends EntityListingExtension implements EntityL
 
     public function getTitle(): string
     {
-        return 'look-listing';
+        return 'fence-configurator-listing';
     }
 
     public function getSnippet(): ?string
     {
-        return 'moorl-get-the-look.looks';
+        return 'moorl-fence-configurator.fenceConfigurators';
     }
 
     public function getElementConfig(): array
     {
-        if ($this->isSearch() && $this->systemConfigService->get('Moorl\FenceConfigurator.config.searchConfigActive')) {
-            return $this->systemConfigService->get('Moorl\FenceConfigurator.config.searchConfig') ?: parent::getElementConfig();
-        } elseif ($this->isSuggest() && $this->systemConfigService->get('Moorl\FenceConfigurator.config.suggestConfigActive')) {
-            return $this->systemConfigService->get('Moorl\FenceConfigurator.config.suggestConfig') ?: parent::getElementConfig();
+        if ($this->isSearch() && $this->systemConfigService->get('MoorlFenceConfigurator.config.searchConfigActive')) {
+            return $this->systemConfigService->get('MoorlFenceConfigurator.config.searchConfig') ?: parent::getElementConfig();
+        } elseif ($this->isSuggest() && $this->systemConfigService->get('MoorlFenceConfigurator.config.suggestConfigActive')) {
+            return $this->systemConfigService->get('MoorlFenceConfigurator.config.suggestConfig') ?: parent::getElementConfig();
         }
 
         return parent::getElementConfig();
@@ -47,9 +47,9 @@ class FenceConfiguratorListing extends EntityListingExtension implements EntityL
     public function isActive(): bool
     {
         if ($this->isSearch()) {
-            return $this->systemConfigService->get('Moorl\FenceConfigurator.config.searchActive') ? true : false;
+            return $this->systemConfigService->get('MoorlFenceConfigurator.config.searchActive') ? true : false;
         } elseif ($this->isSuggest()) {
-            return $this->systemConfigService->get('Moorl\FenceConfigurator.config.suggestActive') ? true : false;
+            return $this->systemConfigService->get('MoorlFenceConfigurator.config.suggestActive') ? true : false;
         }
 
         return true;
@@ -58,9 +58,9 @@ class FenceConfiguratorListing extends EntityListingExtension implements EntityL
     public function getLimit(): int
     {
         if ($this->isSearch()) {
-            return $this->systemConfigService->get('Moorl\FenceConfigurator.config.searchLimit') ?: 12;
+            return $this->systemConfigService->get('MoorlFenceConfigurator.config.searchLimit') ?: 12;
         } elseif ($this->isSuggest()) {
-            return $this->systemConfigService->get('Moorl\FenceConfigurator.config.suggestLimit') ?: 6;
+            return $this->systemConfigService->get('MoorlFenceConfigurator.config.suggestLimit') ?: 6;
         }
 
         return 1;

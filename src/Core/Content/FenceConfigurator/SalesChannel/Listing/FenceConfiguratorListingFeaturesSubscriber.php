@@ -2,7 +2,6 @@
 
 namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\Listing;
 
-use Doctrine\DBAL\Connection;
 use MoorlCreator\Core\Content\Creator\CreatorDefinition;
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition;
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\Events\FenceConfiguratorListingCriteriaEvent;
@@ -254,21 +253,7 @@ class FenceConfiguratorListingFeaturesSubscriber implements EventSubscriberInter
     private function getFilters(Request $request, SalesChannelContext $context): FilterCollection
     {
         $filters = new FilterCollection();
-        $filters->add($this->getCreatorFilter($request));
 
         return $filters;
-    }
-
-    private function getCreatorFilter(Request $request): Filter
-    {
-        $ids = array_filter(explode('|', $request->query->get('creator', '')));
-
-        return new Filter(
-            'creator',
-            !empty($ids),
-            [new EntityAggregation('creator', 'creator.id', CreatorDefinition::ENTITY_NAME)],
-            new EqualsAnyFilter('moorl_fc.creator.id', $ids),
-            $ids
-        );
     }
 }

@@ -10,10 +10,10 @@ class FenceConfiguratorDetailRouteResponse extends StoreApiResponse
 {
     protected $object;
 
-    public function __construct(FenceConfiguratorEntity $look)
+    public function __construct(FenceConfiguratorEntity $fenceConfigurator)
     {
         parent::__construct(new ArrayStruct([
-            'moorl_fc' => $look,
+            'moorl_fc' => $fenceConfigurator,
         ], 'moorl_fc_detail'));
     }
 
