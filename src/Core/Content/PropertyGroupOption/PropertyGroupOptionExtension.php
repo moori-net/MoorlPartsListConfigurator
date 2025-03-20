@@ -3,6 +3,7 @@
 namespace Moorl\FenceConfigurator\Core\Content\PropertyGroupOption;
 
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition;
+use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorLogicalOptionDefinition;
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorOptionDefinition;
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorPostOptionDefinition;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
@@ -34,6 +35,16 @@ class PropertyGroupOptionExtension extends EntityExtension
                 'fenceConfiguratorPosts',
                 FenceConfiguratorDefinition::class,
                 FenceConfiguratorPostOptionDefinition::class,
+                'property_group_option_id',
+                'moorl_fc_id'
+            ))->addFlags()
+        );
+
+        $collection->add(
+            (new ManyToManyAssociationField(
+                'fenceConfiguratorLogicals',
+                FenceConfiguratorDefinition::class,
+                FenceConfiguratorLogicalOptionDefinition::class,
                 'property_group_option_id',
                 'moorl_fc_id'
             ))->addFlags()

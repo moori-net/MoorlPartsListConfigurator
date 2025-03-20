@@ -20,7 +20,51 @@ class FenceConfiguratorEntity extends Entity
 
     protected ?PropertyGroupOptionCollection $options = null;
     protected ?PropertyGroupOptionCollection $postOptions = null;
+    protected ?PropertyGroupOptionCollection $logicalOptions = null;
     protected string $productLinePropertyId;
+    protected string $fenceStreamId;
+    protected string $fencePostStreamId;
+    protected string $fenceOtherStreamId;
+
+    public function getLogicalOptions(): ?PropertyGroupOptionCollection
+    {
+        return $this->logicalOptions;
+    }
+
+    public function setLogicalOptions(?PropertyGroupOptionCollection $logicalOptions): void
+    {
+        $this->logicalOptions = $logicalOptions;
+    }
+
+    public function getFenceStreamId(): string
+    {
+        return $this->fenceStreamId;
+    }
+
+    public function setFenceStreamId(string $fenceStreamId): void
+    {
+        $this->fenceStreamId = $fenceStreamId;
+    }
+
+    public function getFencePostStreamId(): string
+    {
+        return $this->fencePostStreamId;
+    }
+
+    public function setFencePostStreamId(string $fencePostStreamId): void
+    {
+        $this->fencePostStreamId = $fencePostStreamId;
+    }
+
+    public function getFenceOtherStreamId(): string
+    {
+        return $this->fenceOtherStreamId;
+    }
+
+    public function setFenceOtherStreamId(string $fenceOtherStreamId): void
+    {
+        $this->fenceOtherStreamId = $fenceOtherStreamId;
+    }
 
     public function getProductLinePropertyId(): string
     {

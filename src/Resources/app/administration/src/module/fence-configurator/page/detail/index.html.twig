@@ -26,24 +26,34 @@
             <sw-tabs default-item="general">
                 <template #default="{ active }">
                     {% block moorl_fc_detail_tabs %}
-                        <sw-tabs-item name="general"
-                                      :activeTab="active">
+                        <sw-tabs-item
+                                name="general"
+                                :activeTab="active"
+                        >
                             {{ $tc('moorl-fence-configurator.cards.general') }}
                         </sw-tabs-item>
 
-                        <sw-tabs-item name="layout"
-                                      :activeTab="active"
-                                      :disabled="item && item.isNew()">
+                        <sw-tabs-item
+                                name="layout"
+                                :activeTab="active"
+                                :disabled="item && item.isNew()"
+                        >
                             {{ $tc('moorl-fence-configurator.cards.layout') }}
                         </sw-tabs-item>
 
-                        <sw-tabs-item name="seo" :activeTab="active" :disabled="item && item.isNew()">
+                        <sw-tabs-item
+                                name="seo"
+                                :activeTab="active"
+                                :disabled="item && item.isNew()"
+                        >
                             {{ $tc('moorl-fence-configurator.cards.seo') }}
                         </sw-tabs-item>
 
-                        <sw-tabs-item name="assignment"
-                                      :activeTab="active"
-                                      :disabled="item && item.isNew()">
+                        <sw-tabs-item
+                                name="assignment"
+                                :activeTab="active"
+                                :disabled="item && item.isNew()"
+                        >
                             {{ $tc('moorl-fence-configurator.cards.assignment') }}
                         </sw-tabs-item>
                     {% endblock %}
@@ -63,13 +73,33 @@
 
                         <moorl-thing-seo-card v-if="active === 'seo'" v-model:item="item" :hidden="['keywords', 'seoUrl']"/>
 
-                        <sw-card v-if="active === 'general'"
-                                 :isLoading="isLoading"
-                                 :title="$tc('moorl-fence-configurator.cards.general')">
+                        <sw-card
+                                v-if="active === 'general'"
+                                :isLoading="isLoading"
+                                :title="$tc('moorl-fence-configurator.cards.general')"
+                        >
                             <sw-entity-single-select
                                     :label="$tc('moorl-fence-configurator.properties.productLineProperty')"
                                     v-model:value="item.productLinePropertyId"
                                     entity="property_group_option"
+                            />
+
+                            <sw-entity-single-select
+                                    :label="$tc('moorl-fence-configurator.properties.fenceStream')"
+                                    v-model:value="item.fenceStreamId"
+                                    entity="product_stream"
+                            />
+
+                            <sw-entity-single-select
+                                    :label="$tc('moorl-fence-configurator.properties.fencePostStream')"
+                                    v-model:value="item.fencePostStreamId"
+                                    entity="product_stream"
+                            />
+
+                            <sw-entity-single-select
+                                    :label="$tc('moorl-fence-configurator.properties.fenceOtherStream')"
+                                    v-model:value="item.fenceOtherStreamId"
+                                    entity="product_stream"
                             />
 
                             <sw-switch-field
@@ -111,6 +141,13 @@
                                 :isLoading="isLoading"
                                 :title="$tc('moorl-fence-configurator.cards.postProperties')"
                                 v-model:entityCollection="item.postOptions"
+                        />
+
+                        <moorl-properties
+                                v-if="active === 'general'"
+                                :isLoading="isLoading"
+                                :title="$tc('moorl-fence-configurator.cards.logicalProperties')"
+                                v-model:entityCollection="item.logicalOptions"
                         />
 
                         <sw-card

@@ -1,12 +1,12 @@
 {
     "sw-seo-url-template-card": {
         "routeNames": {
-            "frontend-moorl-creator-detail": "Public profiles"
+            "frontend-moorl-fence-configurator-detail": "Fence configurator"
         }
     },
     "global": {
         "entities": {
-            "moorl_cfc": "Fence configurator"
+            "moorl_fc": "Fence configurator"
         }
     },
     "moorl-fence-configurator": {

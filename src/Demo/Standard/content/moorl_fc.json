@@ -1,0 +1,38 @@
+[
+  {
+    "id": "{ID:FC01}",
+    "productLinePropertyId": "{MD5:LINE_656}",
+    "fenceStreamId": "{ID:STREAM_CATEGORY_FENCE}",
+    "fencePostStreamId": "{ID:STREAM_CATEGORY_FENCE_POST}",
+    "fenceOtherStreamId": "{ID:STREAM_CATEGORY_FENCE_OTHER}",
+    "active": true,
+    "name": "Demo Zaunkonfigurator 6/5/6",
+    "options": [
+      {"id": "{MD5:COLOR_RAL_6005}"},
+      {"id": "{MD5:COLOR_RAL_7016}"},
+      {"id": "{MD5:COLOR_NONE}"},
+      {"id": "{MD5:HEIGHT_600}"},
+      {"id": "{MD5:HEIGHT_800}"},
+      {"id": "{MD5:HEIGHT_1000}"},
+      {"id": "{MD5:HEIGHT_1200}"}
+    ],
+    "postOptions": [
+      {"id": "{MD5:FENCE_POST_MOUNTING_COVER}"},
+      {"id": "{MD5:FENCE_POST_MOUNTING_CLAMPS}"},
+      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE}"},
+      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
+      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL}"},
+      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL_L}"},
+      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_SPIKE}"}
+    ],
+    "logicalOptions": [
+      {"id": "{MD5:FENCE_POST_TYPE_SIDE}"},
+      {"id": "{MD5:FENCE_POST_TYPE_CORNER}"},
+      {"id": "{MD5:FENCE_LAYOUT_1}"},
+      {"id": "{MD5:FENCE_LAYOUT_2}"},
+      {"id": "{MD5:FENCE_LAYOUT_3}"},
+      {"id": "{MD5:FENCE_LAYOUT_4}"},
+      {"id": "{MD5:FENCE_LAYOUT_5}"}
+    ]
+  }
+]

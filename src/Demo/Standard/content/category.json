@@ -4,5 +4,17 @@
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
         "name": "Zäune"
+    },
+    {
+        "id": "{ID:CATEGORY_FENCE_POST}",
+        "parentId": "{NAVIGATION_CATEGORY_ID}",
+        "active": true,
+        "name": "Pfosten"
+    },
+    {
+        "id": "{ID:CATEGORY_FENCE_DOOR}",
+        "parentId": "{NAVIGATION_CATEGORY_ID}",
+        "active": true,
+        "name": "Tore"
     }
 ]

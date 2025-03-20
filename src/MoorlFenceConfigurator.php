@@ -10,6 +10,7 @@ use Shopware\Core\Framework\Plugin\Context\UpdateContext;
 
 class MoorlFenceConfigurator extends Plugin
 {
+    final public const CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID = 'e48001efe482dda2a0970ff518315ec7';
     final public const NAME = 'MoorlFenceConfigurator';
     final public const DATA_CREATED_AT = '2025-01-03 00:00:00.000';
     final public const PLUGIN_TABLES = [
@@ -17,6 +18,7 @@ class MoorlFenceConfigurator extends Plugin
         'moorl_fc_translation',
         'moorl_fc_option',
         'moorl_fc_post_option',
+        'moorl_fc_logical_option',
         'moorl_fc_product',
         'moorl_fc_media',
     ];
@@ -24,6 +26,7 @@ class MoorlFenceConfigurator extends Plugin
         'category',
         'category_translation',
         'property_group',
+        'product_stream', /* Insert before products because indexing */
         'product',
         'product_translation',
         'product_category',

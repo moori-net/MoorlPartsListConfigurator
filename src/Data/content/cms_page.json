@@ -1,0 +1,8 @@
+[
+    {
+        "name": "Default fence configurator",
+        "type": "fence_configurator_detail",
+        "id": "{CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID}",
+        "sections": []
+    }
+]

@@ -52,6 +52,7 @@ Component.register('moorl-fence-configurator-detail', {
             const criteria = new Criteria();
             criteria.getAssociation('options')
             criteria.getAssociation('postOptions')
+            criteria.getAssociation('logicalOptions')
             criteria.getAssociation('seoUrls')
                 .addFilter(Criteria.equals('isCanonical', true));
             return criteria;

@@ -23,6 +23,9 @@ CREATE TABLE IF NOT EXISTS `moorl_fc` (
     `media_id` BINARY(16),
     `cms_page_id` BINARY(16),
     `product_line_property_id` BINARY(16) NOT NULL,
+    `fence_stream_id` BINARY(16) NOT NULL,
+    `fence_post_stream_id` BINARY(16) NOT NULL,
+    `fence_other_stream_id` BINARY(16) NOT NULL,
     `active` TINYINT,
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3),
@@ -91,6 +94,25 @@ CREATE TABLE IF NOT EXISTS `moorl_fc_post_option` (
         REFERENCES `property_group_option` (`id`)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk.moorl_fc_post_option.moorl_fc_id`
+        FOREIGN KEY (`moorl_fc_id`)
+        REFERENCES `moorl_fc` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+SQL;
+        $connection->executeStatement($sql);
+
+        $sql = <<<SQL
+CREATE TABLE IF NOT EXISTS `moorl_fc_logical_option` (
+    `moorl_fc_id` BINARY(16) NOT NULL,
+    `property_group_option_id` BINARY(16) NOT NULL,
+    
+    PRIMARY KEY (`moorl_fc_id`, `property_group_option_id`),
+    
+    CONSTRAINT `fk.moorl_fc_logical_option.property_group_option_id`
+        FOREIGN KEY (`property_group_option_id`)
+        REFERENCES `property_group_option` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk.moorl_fc_logical_option.moorl_fc_id`
         FOREIGN KEY (`moorl_fc_id`)
         REFERENCES `moorl_fc` (`id`)
         ON DELETE CASCADE ON UPDATE CASCADE

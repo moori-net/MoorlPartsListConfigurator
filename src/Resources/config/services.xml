@@ -8,6 +8,7 @@
     </imports>
 
     <services>
+        <!-- Entities -->
         <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition">
             <tag name="shopware.entity.definition" entity="moorl_fc"/>
         </service>
@@ -24,8 +25,35 @@
             <tag name="shopware.entity.definition" entity="moorl_fc_post_option"/>
         </service>
 
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorLogicalOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_fc_logical_option"/>
+        </service>
+
         <service id="Moorl\FenceConfigurator\Core\Content\PropertyGroupOption\PropertyGroupOptionExtension">
             <tag name="shopware.entity.extension"/>
+        </service>
+
+        <!-- SEO -->
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\DataAbstractionLayer\FenceConfiguratorIndexer">
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+            <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory"/>
+            <argument type="service" id="moorl_fc.repository"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="MoorlFoundation\Core\Framework\DataAbstractionLayer\Indexing\HtmlContentUpdater"/>
+
+            <tag name="shopware.entity_indexer"/>
+        </service>
+
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\Seo\FenceConfiguratorSeoUrlRoute">
+            <argument type="service" id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition"/>
+
+            <tag name="shopware.seo_url.route"/>
+        </service>
+
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\Seo\SeoUrlUpdateListener">
+            <argument type="service" id="Shopware\Core\Content\Seo\SeoUrlUpdater"/>
+
+            <tag name="kernel.event_subscriber"/>
         </service>
     </services>
 </container>

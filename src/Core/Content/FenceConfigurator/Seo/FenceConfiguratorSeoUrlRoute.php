@@ -13,8 +13,8 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 
 class FenceConfiguratorSeoUrlRoute implements SeoUrlRouteInterface
 {
-    final public const ROUTE_NAME = 'frontend.moorl.gtl.look.detail';
-    final public const DEFAULT_TEMPLATE = 'about/{{ look.translated.name }}';
+    final public const ROUTE_NAME = 'frontend.moorl.fence.configurator.detail';
+    final public const DEFAULT_TEMPLATE = 'configurator/{{ fenceConfigurator.translated.name }}';
 
     public function __construct(private readonly FenceConfiguratorDefinition $entityDefinition)
     {
@@ -39,7 +39,7 @@ class FenceConfiguratorSeoUrlRoute implements SeoUrlRouteInterface
         return new SeoUrlMapping(
             $entity,
             ['fenceConfiguratorId' => $entity->getId()],
-            ['look' => $entity->jsonSerialize()]
+            ['fenceConfigurator' => $entity->jsonSerialize()]
         );
     }
 

@@ -4,6 +4,7 @@ namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator;
 
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEntityCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldThingCollection;
+use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
@@ -47,9 +48,13 @@ class FenceConfiguratorDefinition extends EntityDefinition
         $collection = [
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
             (new FkField('product_line_property_id', 'productLinePropertyId', PropertyGroupOptionDefinition::class))->addFlags(new Required()),
+            (new FkField('fence_stream_id', 'fenceStreamId', ProductStreamDefinition::class))->addFlags(new Required()),
+            (new FkField('fence_post_stream_id', 'fencePostStreamId', ProductStreamDefinition::class))->addFlags(new Required()),
+            (new FkField('fence_other_stream_id', 'fenceOtherStreamId', ProductStreamDefinition::class))->addFlags(new Required()),
             (new TranslationsAssociationField(FenceConfiguratorTranslationDefinition::class, 'moorl_fc_id'))->addFlags(new Required()),
             (new ManyToManyAssociationField('options', PropertyGroupOptionDefinition::class, FenceConfiguratorOptionDefinition::class, 'moorl_fc_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
             (new ManyToManyAssociationField('postOptions', PropertyGroupOptionDefinition::class, FenceConfiguratorPostOptionDefinition::class, 'moorl_fc_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
+            (new ManyToManyAssociationField('logicalOptions', PropertyGroupOptionDefinition::class, FenceConfiguratorLogicalOptionDefinition::class, 'moorl_fc_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
         ];
 
         $fieldCollection = new FieldCollection(array_merge(

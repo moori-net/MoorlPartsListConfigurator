@@ -38,7 +38,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_FENCE}"
+                "id": "{ID:CATEGORY_FENCE_POST}"
             }
         ],
         "cover": {
@@ -61,7 +61,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_FENCE}"
+                "id": "{ID:CATEGORY_FENCE_DOOR}"
             }
         ],
         "cover": {

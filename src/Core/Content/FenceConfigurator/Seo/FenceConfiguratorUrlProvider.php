@@ -4,8 +4,6 @@ namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator\Seo;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\FetchMode;
-use Doctrine\DBAL\ParameterType;
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorCollection;
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition;
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorEntity;
@@ -48,9 +46,6 @@ class FenceConfiguratorUrlProvider extends AbstractUrlProvider
         return 'moorl_fc_page';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUrls(SalesChannelContext $salesChannelContext, int $limit, ?int $offset = null): UrlResult
     {
         $collection = $this->getCollection($salesChannelContext, $limit, $offset);
@@ -58,7 +53,7 @@ class FenceConfiguratorUrlProvider extends AbstractUrlProvider
             return new UrlResult([], null);
         }
 
-        $seoUrls = $this->getSeoUrls($collection->getIds(), 'frontend.moorl.gtl.look.detail', $salesChannelContext, $this->connection);
+        $seoUrls = $this->getSeoUrls($collection->getIds(), 'frontend.moorl.fence.configurator.detail', $salesChannelContext, $this->connection);
         $seoUrls = FetchModeHelper::groupUnique($seoUrls);
 
         $urls = [];

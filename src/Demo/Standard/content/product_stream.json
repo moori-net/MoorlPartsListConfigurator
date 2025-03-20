@@ -1,0 +1,71 @@
+[
+  {
+    "id": "{ID:STREAM_CATEGORY_FENCE}",
+    "name": "Zaunmatten",
+    "filters": [
+      {
+        "type": "multi",
+        "queries": [
+          {
+            "type": "multi",
+            "queries": [
+              {
+                "type": "equals",
+                "field": "product.categoriesRo.id",
+                "value": "{ID:CATEGORY_FENCE}"
+              }
+            ],
+            "operator": "AND"
+          }
+        ],
+        "operator": "OR"
+      }
+    ]
+  },
+  {
+    "id": "{ID:STREAM_CATEGORY_FENCE_POST}",
+    "name": "Pfosten",
+    "filters": [
+      {
+        "type": "multi",
+        "queries": [
+          {
+            "type": "multi",
+            "queries": [
+              {
+                "type": "equals",
+                "field": "product.categoriesRo.id",
+                "value": "{ID:CATEGORY_FENCE_POST}"
+              }
+            ],
+            "operator": "AND"
+          }
+        ],
+        "operator": "OR"
+      }
+    ]
+  },
+  {
+    "id": "{ID:STREAM_CATEGORY_FENCE_OTHER}",
+    "name": "Tore",
+    "filters": [
+      {
+        "type": "multi",
+        "queries": [
+          {
+            "type": "multi",
+            "queries": [
+              {
+                "type": "equals",
+                "field": "product.categoriesRo.id",
+                "value": "{ID:CATEGORY_FENCE_DOOR}"
+              }
+            ],
+            "operator": "AND"
+          }
+        ],
+        "operator": "OR"
+      }
+    ]
+  }
+]

@@ -9,8 +9,8 @@
       "technicalName": "LINE"
     },
     "options": [
-      {"id": "{MD5:LINE_BASIC}", "name": "Basic"},
-      {"id": "{MD5:LINE_PREMIUM}", "name": "Premium"}
+      {"id": "{MD5:LINE_656}", "name": "6/5/6"},
+      {"id": "{MD5:LINE_868}", "name": "8/6/8"}
     ]
   },
   {
@@ -26,6 +26,22 @@
       {"id": "{MD5:COLOR_RAL_6005}", "position": 1, "name": "RAL 6005, Grün"},
       {"id": "{MD5:COLOR_RAL_7016}", "position": 2, "name": "RAL 7016, Anthrazit"},
       {"id": "{MD5:COLOR_NONE}", "position": 0, "name": "Feuerverzinkt"}
+    ]
+  },
+  {
+    "id": "{ID:FENCE_LAYOUT}",
+    "position": 4,
+    "name": "Layout",
+    "sortingType": "position",
+    "customFields": {
+      "technicalName": "FENCE_LAYOUT"
+    },
+    "options": [
+      {"id": "{MD5:FENCE_LAYOUT_1}", "position": 0, "name": "1 Seite, 0 Ecken", "customFields": {"technicalName": "1;0"}},
+      {"id": "{MD5:FENCE_LAYOUT_2}", "position": 1, "name": "2 Seiten, 1 Ecke", "customFields": {"technicalName": "2;1"}},
+      {"id": "{MD5:FENCE_LAYOUT_3}", "position": 2, "name": "3 Seiten, 2 Ecken", "customFields": {"technicalName": "3;2"}},
+      {"id": "{MD5:FENCE_LAYOUT_4}", "position": 3, "name": "4 Seiten, 3 Ecken", "customFields": {"technicalName": "4;3"}},
+      {"id": "{MD5:FENCE_LAYOUT_5}", "position": 4, "name": "4 Seiten, 4 Ecken", "customFields": {"technicalName": "4;4"}}
     ]
   },
   {
