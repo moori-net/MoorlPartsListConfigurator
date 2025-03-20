@@ -1,0 +1,31 @@
+{% sw_extends '@Storefront/storefront/layout/meta.html.twig' %}
+
+{% block layout_head_meta_tags_opengraph %}
+    <meta property="og:type"
+          content="article"/>
+    <meta property="og:site_name"
+          content="{{ config('core.basicInformation.shopName') }}"/>
+    <meta property="og:url"
+          content="{{ seoUrl('frontend.moorl.creator.detail', { creatorId: creator.id }) }}"/>
+    <meta property="og:title"
+          content="{{ creator.translated.metaTitle ? creator.translated.metaTitle : metaTitle }}"/>
+    <meta property="og:description"
+          content="{{ creator.translated.metaDescription ?: creator.translated.teaser }}"/>
+    <meta property="og:image"
+          content="{{ creator.avatar.url }}"/>
+
+    <meta name="twitter:card"
+          content="article"/>
+    <meta name="twitter:site"
+          content="{{ config('core.basicInformation.shopName') }}"/>
+    <meta name="twitter:title"
+          content="{{ creator.translated.metaTitle ? creator.translated.metaTitle : metaTitle }}"/>
+    <meta name="twitter:description"
+          content="{{ creator.translated.metaDescription ?: creator.translated.teaser }}"/>
+    <meta name="twitter:image"
+          content="{{ creator.avatar.url }}"/>
+{% endblock %}
+
+{% block layout_head_canonical %}
+    <link rel="canonical" href="{{ seoUrl('frontend.moorl.creator.detail', { creatorId: creator.id }) }}"/>
+{% endblock %}

@@ -1,0 +1,350 @@
+import template from './index.html.twig';
+
+const {Component, Mixin} = Shopware;
+const {Criteria, ChangesetGenerator} = Shopware.Data;
+const utils = Shopware.Utils;
+const {mapPropertyErrors} = Shopware.Component.getComponentHelper();
+const type = Shopware.Utils.types;
+const {cloneDeep, merge} = Shopware.Utils.object;
+
+Component.register('moorl-fence-configurator-detail', {
+    template,
+
+    inject: [
+        'repositoryFactory',
+        'cmsService',
+        'seoUrlService',
+        'customFieldDataProviderService',
+    ],
+
+    mixins: [
+        Mixin.getByName('notification'),
+        Mixin.getByName('placeholder')
+    ],
+
+    metaInfo() {
+        return {
+            title: this.$createTitle(this.identifier)
+        };
+    },
+
+    data() {
+        return {
+            item: null,
+            isLoading: false,
+            pageTypes: ['fence_configurator_detail'],
+            processSuccess: false,
+            mediaModalIsOpen: false,
+            uploadTagAvatar: utils.createId(),
+            uploadTagBanner: utils.createId(),
+            customFieldSets: null
+        };
+    },
+
+    computed: {
+        ...mapPropertyErrors('item', ['name']),
+
+        repository() {
+            return this.repositoryFactory.create('moorl_fc');
+        },
+
+        defaultCriteria() {
+            const criteria = new Criteria();
+            criteria.getAssociation('options')
+            criteria.getAssociation('postOptions')
+            criteria.getAssociation('seoUrls')
+                .addFilter(Criteria.equals('isCanonical', true));
+            return criteria;
+        },
+
+        pageTypeCriteria() {
+            const criteria = new Criteria(1, 25);
+
+            criteria.addFilter(
+                Criteria.equals('type', 'fence_configurator_detail'),
+            );
+
+            return criteria;
+        },
+
+        searchCriteria() {
+            const criteria = new Criteria(1, 30);
+            criteria.addAssociation('options.group');
+            return criteria;
+        },
+
+        searchContext() {
+            return {
+                ...Shopware.Context.api,
+                inheritance: true
+            };
+        },
+
+        mediaRepository() {
+            return this.repositoryFactory.create('media');
+        },
+
+        cmsPageRepository() {
+            return this.repositoryFactory.create('cms_page');
+        },
+
+        cmsPageId() {
+            return this.item ? this.item.cmsPageId : null;
+        },
+
+        cmsPage() {
+            return Shopware.State.get('cmsPageState').currentPage;
+        },
+
+        identifier() {
+            return this.placeholder(this.item, 'name');
+        }
+    },
+
+    watch: {
+        cmsPageId() {
+            Shopware.State.dispatch('cmsPageState/resetCmsPageState');
+            this.getAssignedCmsPage();
+        }
+    },
+
+    created() {
+        Shopware.State.dispatch('cmsPageState/resetCmsPageState');
+
+        this.loadCustomFieldSets();
+        this.getItem();
+    },
+
+    methods: {
+        getItem() {
+            this.repository
+                .get(this.$route.params.id, Shopware.Context.api, this.defaultCriteria)
+                .then((entity) => {
+                    this.item = entity;
+                    this.getAssignedCmsPage();
+                });
+        },
+
+        loadCustomFieldSets() {
+            this.customFieldDataProviderService.getCustomFieldSets('moorl_fc').then((sets) => {
+                this.customFieldSets = sets;
+            });
+        },
+
+        onChangeLanguage() {
+            this.getItem();
+        },
+
+        async onClickSave() {
+            this.isLoading = true;
+
+            await this.updateSeoUrls();
+
+            const pageOverrides = this.getCmsPageOverrides();
+
+            if (type.isPlainObject(pageOverrides)) {
+                this.item.slotConfig = cloneDeep(pageOverrides);
+            }
+
+            this.repository
+                .save(this.item, Shopware.Context.api)
+                .then(() => {
+                    this.getItem();
+                    this.isLoading = false;
+                    this.processSuccess = true;
+                })
+                .catch((exception) => {
+                    this.isLoading = false;
+                    if (exception.response.data && exception.response.data.errors) {
+                        exception.response.data.errors.forEach((error) => {
+                            this.createNotificationWarning({
+                                title: this.$tc('moorl-foundation.notification.errorTitle'),
+                                message: error.detail
+                            });
+                        });
+                    }
+                });
+        },
+
+        updateSeoUrls() {
+            if (!Shopware.State.list().includes('swSeoUrl')) {
+                return Promise.resolve();
+            }
+
+            const seoUrls = Shopware.State.getters['swSeoUrl/getNewOrModifiedUrls']();
+
+            return Promise.all(seoUrls.map((seoUrl) => {
+                if (seoUrl.seoPathInfo) {
+                    seoUrl.isModified = true;
+                    return this.seoUrlService.updateCanonicalUrl(seoUrl, seoUrl.languageId);
+                }
+
+                return Promise.resolve();
+            }));
+        },
+
+        saveFinish() {
+            this.processSuccess = false;
+        },
+
+        setMediaAvatar({targetId}) {
+            this.mediaRepository.get(targetId, Shopware.Context.api).then((updatedMedia) => {
+                this.item.avatarId = targetId;
+                this.item.avatar = updatedMedia;
+            });
+        },
+        onDropMediaAvatar(dragData) {
+            this.setMediaAvatar({targetId: dragData.id});
+        },
+        onUnlinkMediaAvatar() {
+            this.item.avatarId = null;
+        },
+
+        setMediaBanner({targetId}) {
+            this.mediaRepository.get(targetId, Shopware.Context.api).then((updatedMedia) => {
+                this.item.bannerId = targetId;
+                this.item.banner = updatedMedia;
+            });
+        },
+        onDropMediaBanner(dragData) {
+            this.setMediaBanner({targetId: dragData.id});
+        },
+        onUnlinkMediaBanner() {
+            this.item.bannerId = null;
+        },
+
+        onCloseModal() {
+            this.mediaModalIsOpen = false;
+        },
+        onSelectionChanges(mediaEntity) {
+            this.item.avatarId = mediaEntity[0].id;
+            this.item.avatar = mediaEntity[0];
+        },
+        onOpenMediaModal() {
+            this.mediaModalIsOpen = true;
+        },
+
+        getAssignedCmsPage() {
+            if (this.cmsPageId === null) {
+                return Promise.resolve(null);
+            }
+
+            const cmsPageId = this.cmsPageId;
+            const criteria = new Criteria(1, 1);
+            criteria.setIds([cmsPageId]);
+            criteria.addAssociation('previewMedia');
+            criteria.addAssociation('sections');
+            criteria.getAssociation('sections').addSorting(Criteria.sort('position'));
+
+            criteria.addAssociation('sections.blocks');
+            criteria.getAssociation('sections.blocks')
+                .addSorting(Criteria.sort('position', 'ASC'))
+                .addAssociation('slots');
+
+            return this.cmsPageRepository.search(criteria).then((response) => {
+                const cmsPage = response.get(cmsPageId);
+
+                if (cmsPageId !== this.cmsPageId) {
+                    return null;
+                }
+
+                if (this.item.slotConfig !== null) {
+                    cmsPage.sections.forEach((section) => {
+                        section.blocks.forEach((block) => {
+                            block.slots.forEach((slot) => {
+                                if (this.item.slotConfig[slot.id]) {
+                                    if (slot.config === null) {
+                                        slot.config = {};
+                                    }
+                                    merge(slot.config, cloneDeep(this.item.slotConfig[slot.id]));
+                                }
+                            });
+                        });
+                    });
+                }
+
+                this.updateCmsPageDataMapping();
+                Shopware.State.commit('cmsPageState/setCurrentPage', cmsPage);
+
+                return this.cmsPage;
+            });
+        },
+
+        updateCmsPageDataMapping() {
+            Shopware.State.commit('cmsPageState/setCurrentMappingEntity', 'moorl_fc');
+            Shopware.State.commit(
+                'cmsPageState/setCurrentMappingTypes',
+                this.cmsService.getEntityMappingTypes('moorl_fc'),
+            );
+            Shopware.State.commit('cmsPageState/setCurrentDemoEntity', this.item);
+        },
+
+        getCmsPageOverrides() {
+            if (this.cmsPage === null) {
+                return null;
+            }
+
+            this.deleteSpecifcKeys(this.cmsPage.sections);
+
+            const changesetGenerator = new ChangesetGenerator();
+            const {changes} = changesetGenerator.generate(this.cmsPage);
+
+            const slotOverrides = {};
+            if (changes === null) {
+                return slotOverrides;
+            }
+
+            if (type.isArray(changes.sections)) {
+                changes.sections.forEach((section) => {
+                    if (type.isArray(section.blocks)) {
+                        section.blocks.forEach((block) => {
+                            if (type.isArray(block.slots)) {
+                                block.slots.forEach((slot) => {
+                                    slotOverrides[slot.id] = slot.config;
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+
+            return slotOverrides;
+        },
+
+        deleteSpecifcKeys(sections) {
+            if (!sections) {
+                return;
+            }
+
+            sections.forEach((section) => {
+                if (!section.blocks) {
+                    return;
+                }
+
+                section.blocks.forEach((block) => {
+                    if (!block.slots) {
+                        return;
+                    }
+
+                    block.slots.forEach((slot) => {
+                        if (!slot.config) {
+                            return;
+                        }
+
+                        Object.values(slot.config).forEach((configField) => {
+                            if (configField.entity) {
+                                delete configField.entity;
+                            }
+                            if (configField.hasOwnProperty('required')) {
+                                delete configField.required;
+                            }
+                            if (configField.type) {
+                                delete configField.type;
+                            }
+                        });
+                    });
+                });
+            });
+        },
+    }
+});

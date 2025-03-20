@@ -1,0 +1,8 @@
+[
+    {
+        "id": "{ID:CATEGORY_FENCE}",
+        "parentId": "{NAVIGATION_CATEGORY_ID}",
+        "active": true,
+        "name": "Zäune"
+    }
+]

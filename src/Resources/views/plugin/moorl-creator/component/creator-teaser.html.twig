@@ -1,0 +1,17 @@
+{% set creators = page.product.extensions.creators %}
+
+{% if creators.count() %}
+    {% block creator_teaser_title %}
+        <div class="h3 product-detail-description-title">
+            {% if creators.count() == 1 %}
+                {{ "moorl-creator.aboutTheCreator"|trans|sw_sanitize }}
+            {% else %}
+                {{ "moorl-creator.aboutTheCreators"|trans|sw_sanitize }}
+            {% endif %}
+        </div>
+    {% endblock %}
+
+    {% for creator in creators %}
+        {% sw_include '@Storefront/plugin/moorl-creator/component/creator-card.html.twig' %}
+    {% endfor %}
+{% endif %}

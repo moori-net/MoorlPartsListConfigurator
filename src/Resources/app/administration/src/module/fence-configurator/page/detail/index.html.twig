@@ -1,0 +1,174 @@
+<sw-page class="moorl-fence-configurator-detail">
+    <template #smart-bar-actions>
+        <sw-button :routerLink="{ name: 'moorl.creator.list' }">
+            {{ $tc('global.default.cancel') }}
+        </sw-button>
+
+        <sw-button-process
+                :isLoading="isLoading"
+                :processSuccess="processSuccess"
+                variant="primary"
+                @update:process-success="saveFinish"
+                @click="onClickSave">
+            {{ $tc('global.default.save') }}
+        </sw-button-process>
+    </template>
+
+    <template #language-switch>
+        <sw-language-switch
+                :disabled="item && item.isNew()"
+                @on-change="onChangeLanguage"
+        />
+    </template>
+
+    <template #content>
+        <sw-card-view v-if="item">
+            <sw-tabs default-item="general">
+                <template #default="{ active }">
+                    {% block moorl_fc_detail_tabs %}
+                        <sw-tabs-item name="general"
+                                      :activeTab="active">
+                            {{ $tc('moorl-fence-configurator.cards.general') }}
+                        </sw-tabs-item>
+
+                        <sw-tabs-item name="layout"
+                                      :activeTab="active"
+                                      :disabled="item && item.isNew()">
+                            {{ $tc('moorl-fence-configurator.cards.layout') }}
+                        </sw-tabs-item>
+
+                        <sw-tabs-item name="seo" :activeTab="active" :disabled="item && item.isNew()">
+                            {{ $tc('moorl-fence-configurator.cards.seo') }}
+                        </sw-tabs-item>
+
+                        <sw-tabs-item name="assignment"
+                                      :activeTab="active"
+                                      :disabled="item && item.isNew()">
+                            {{ $tc('moorl-fence-configurator.cards.assignment') }}
+                        </sw-tabs-item>
+                    {% endblock %}
+                </template>
+
+                <template #content="{ active }">
+                    {% block moorl_fc_detail_content %}
+                        <moorl-layout-card
+                                v-bind="{ item, cmsPage, isLoading, pageTypes }"
+                                v-if="active === 'layout'"
+                        />
+
+                        <sw-cms-page-form
+                                v-if="active === 'layout' && cmsPage"
+                                :page="cmsPage"
+                        />
+
+                        <moorl-thing-seo-card v-if="active === 'seo'" v-model:item="item" :hidden="['keywords', 'seoUrl']"/>
+
+                        <sw-card v-if="active === 'general'"
+                                 :isLoading="isLoading"
+                                 :title="$tc('moorl-fence-configurator.cards.general')">
+                            <sw-entity-single-select
+                                    :label="$tc('moorl-fence-configurator.properties.productLineProperty')"
+                                    v-model:value="item.productLinePropertyId"
+                                    entity="property_group_option"
+                            />
+
+                            <sw-switch-field
+                                    bordered
+                                    :label="$tc('moorl-fence-configurator.properties.active')"
+                                    v-model:value="item.active"
+                            />
+
+                            <sw-text-field
+                                    :label="$tc('moorl-fence-configurator.properties.name')"
+                                    v-model:value="item.name"
+                                    required
+                                    validation="required"
+                                    :error="itemNameError"
+                            />
+
+                            <sw-language-info :entityDescription="item.name"/>
+
+                            <sw-textarea-field
+                                    :label="$tc('moorl-fence-configurator.properties.teaser')"
+                                    v-model:value="item.teaser"
+                            />
+
+                            <sw-text-editor
+                                    :label="$tc('moorl-fence-configurator.properties.description')"
+                                    v-model:value="item.description"
+                            />
+                        </sw-card>
+
+                        <moorl-properties
+                                v-if="active === 'general'"
+                                :isLoading="isLoading"
+                                :title="$tc('moorl-fence-configurator.cards.mainProperties')"
+                                v-model:entityCollection="item.options"
+                        />
+
+                        <moorl-properties
+                                v-if="active === 'general'"
+                                :isLoading="isLoading"
+                                :title="$tc('moorl-fence-configurator.cards.postProperties')"
+                                v-model:entityCollection="item.postOptions"
+                        />
+
+                        <sw-card
+                                v-if="active === 'general' && !!customFieldSets && customFieldSets.length > 0"
+                                position-identifier="sw-customer-detail-base-custom-field-sets"
+                                :title="$tc('sw-settings-custom-field.general.mainMenuItemGeneral')"
+                        >
+                            <sw-custom-field-set-renderer
+                                    :entity="item"
+                                    :sets="customFieldSets"
+                            />
+                        </sw-card>
+
+                        <sw-card v-if="active === 'assignment'"
+                                 :title="$tc('moorl-fence-configurator.cards.assignment')"
+                                 :isLoading="isLoading">
+                            <sw-entity-many-to-many-select
+                                    :localMode="true"
+                                    :label="$tc('moorl-fence-configurator.properties.customer')"
+                                    v-model:entityCollection="item.customers"
+                                    labelProperty="email"
+                            />
+
+                            <sw-entity-many-to-many-select
+                                    :label="$tc('moorl-fence-configurator.properties.salesChannels')"
+                                    :localMode="true"
+                                    labelProperty="name"
+                                    v-model:entityCollection="item.salesChannels"
+                            />
+
+                            <sw-entity-multi-select
+                                    :label="$tc('moorl-fence-configurator.properties.products')"
+                                    labelProperty="productNumber"
+                                    v-model:entityCollection="item.products"
+                                    :context="searchContext"
+                                    :criteria="searchCriteria">
+                                <template #result-item="{ item, index }">
+                                    <slot name="result-item" v-bind="{ item, index }">
+                                        <li is="sw-select-result" v-bind="{ item, index }">
+                                            <span class="sw-select-result__result-item-text">
+                                                <sw-product-variant-info :variations="item.variation">
+                                                    {{ item.productNumber }} - {{ item.translated.name || item.name }}
+                                                </sw-product-variant-info>
+                                            </span>
+                                        </li>
+                                    </slot>
+                                </template>
+                            </sw-entity-multi-select>
+                        </sw-card>
+                    {% endblock %}
+                </template>
+            </sw-tabs>
+        </sw-card-view>
+    </template>
+
+    <template #sidebar>
+        <sw-sidebar :propagateWidth="true">
+            <sw-sidebar-media-item ref="mediaSidebarItem"/>
+        </sw-sidebar>
+    </template>
+</sw-page>

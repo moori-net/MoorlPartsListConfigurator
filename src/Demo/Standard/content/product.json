@@ -1,0 +1,71 @@
+[
+    {
+        "id": "{ID:PRODUCT_FENCE}",
+        "active": true,
+        "name": "Zaun",
+        "productNumber": "FENCE",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:50|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_FENCE}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/fence.jpg}"
+        }
+    },
+    {
+        "id": "{ID:PRODUCT_FENCE_POST}",
+        "active": true,
+        "name": "Pfosten",
+        "productNumber": "FENCE_POST",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:20|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_FENCE}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/fence-post.jpg}"
+        }
+    },
+    {
+        "id": "{ID:PRODUCT_FENCE_DOOR}",
+        "active": true,
+        "name": "Tor",
+        "productNumber": "FENCE_DOOR",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:100|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_FENCE}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/fence-door.jpg}"
+        }
+    }
+]

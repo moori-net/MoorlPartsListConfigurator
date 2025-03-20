@@ -1,0 +1,33 @@
+{
+    "sw-seo-url-template-card": {
+        "routeNames": {
+            "frontend-moorl-creator-detail": "Public profiles"
+        }
+    },
+    "global": {
+        "entities": {
+            "moorl_cfc": "Fence configurator"
+        }
+    },
+    "moorl-fence-configurator": {
+        "general": {
+            "fenceConfigurator": "Fence configurator"
+        },
+        "notification": {
+            "deleteCreatorTypeError": "This type cannot be removed because there are active assignments or the type is a default value."
+        },
+        "properties": {
+            "salesChannels": "Sales Channels"
+        },
+        "label": {
+            "generalCard": "General"
+        },
+        "cards": {
+            "seo": "SEO",
+            "general": "General",
+            "assignment": "Assignments",
+            "layout": "Layout",
+            "meta": "Meta"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-moorl-foundation-listing.html.twig' %}
+
+{# Just define item layouts here #}
+{# Case 1: From widget or search page #}
+{# Case 2: From CMS (auto) #}
+{# Case 3: From CMS (others) #}
+{% block moorl_foundation_listing_item %}
+    {% sw_include '@MoorlFoundation/plugin/moorl-foundation/listing-item.html.twig' with {
+        url: seoUrl('frontend.moorl.creator.detail', {creatorId: item.id}),
+        media: item.avatar,
+        title: item.translated.name,
+        meta: itemMeta,
+        description: item.translated.teaser,
+        schemaOrgType: 'Person'
+    } %}
+{% endblock %}
+
+{% block moorl_foundation_listing_slider_thumbnails_item %}
+    {% sw_thumbnails 'moorl-listing-slider-thumbnail' with {
+        media: item.avatar,
+        attributes: {alt: item.translated.name,title: ''}
+    } %}
+{% endblock %}

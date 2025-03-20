@@ -1,0 +1,46 @@
+{% if creator %}
+    <div class="moorl-creator-card"
+         itemscope
+         itemprop="author"
+         itemtype="https://schema.org/Person">
+        {% if creator.avatar %}
+            <div class="moorl-creator-card-avatar">
+                {% sw_thumbnails 'creator-avatar' with {
+                    media: creator.avatar,
+                    attributes: {
+                        'itemprop': 'image',
+                        'class': '',
+                        'alt': creator.translated.name,
+                        'title': creator.translated.name
+                    }
+                } %}
+            </div>
+        {% else %}
+            <div></div>
+        {% endif %}
+
+        <div class="moorl-creator-card-content">
+            <p class="h4 moorl-creator-card-teaser">
+                <span itemprop="name">
+                    {{ creator.translated.name }}
+                </span>
+                {% if creator.translated.role %}
+                    <small itemprop="jobTitle" class="text-muted">
+                        {{ creator.translated.role }}
+                    </small>
+                {% endif %}
+            </p>
+
+            <p itemprop="description" class="moorl-creator-card-teaser">
+                {{ creator.translated.teaser }}
+            </p>
+
+            {% if creator.active %}
+                <a itemprop="mainEntityOfPage" href="{{ seoUrl('frontend.moorl.creator.detail', {creatorId: creator.id}) }}"
+                   title="{{ "moorl-creator.readMore"|trans|sw_sanitize }}">
+                    {{ "moorl-creator.readMore"|trans|sw_sanitize }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

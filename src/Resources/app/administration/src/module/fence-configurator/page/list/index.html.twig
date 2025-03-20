@@ -1,0 +1,36 @@
+<sw-page class="moorl-fence-configurator-list">
+    <template #smart-bar-header>
+        <h2>
+            {{ $tc('moorl-fence-configurator.general.fenceConfigurator') }}
+        </h2>
+    </template>
+
+    <template #smart-bar-actions>
+        <sw-button variant="primary" :routerLink="{ name: 'moorl.fence.configurator.create' }">
+            {{ $tc('global.default.add') }}
+        </sw-button>
+    </template>
+
+    <template #language-switch>
+        <sw-language-switch @on-change="changeLanguage"/>
+    </template>
+
+    <template #content>
+        <sw-entity-listing
+                v-if="entitySearchable"
+                detailRoute="moorl.fence.configurator.detail"
+                :items="items"
+                :repository="repository"
+                :showSelection="true"
+                :columns="columns"
+                :is-loading="isLoading"
+                :criteria-limit="limit"
+                :sort-by="currentSortBy"
+                :sort-direction="sortDirection"
+                :disable-data-fetching="true"
+                @page-change="onPageChange"
+                @column-sort="onSortColumn"
+        >
+        </sw-entity-listing>
+    </template>
+</sw-page>

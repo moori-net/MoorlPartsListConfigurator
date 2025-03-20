@@ -1,0 +1,11 @@
+{% sw_extends '@Storefront/storefront/component/product/card/badges.html.twig' %}
+
+{% block component_product_badges_discount %}
+    {{ parent() }}
+
+    {% if config('MoorlCreator.config.enableProductBadge') and product.extensions.creators.first() %}
+        <div class="badge badge-success badge-creator">
+            <span>{{ product.extensions.creators.first().translated.name }}</span>
+        </div>
+    {% endif %}
+{% endblock %}
