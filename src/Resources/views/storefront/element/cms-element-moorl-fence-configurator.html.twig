@@ -1,17 +1,22 @@
 {% set fenceConfigurator = page.fenceConfigurator %}
 
 <div class="cms-element-moorl-fence-configurator">
-    {{ dump(fenceConfigurator.options.groupByPropertyGroups) }}
+    {{ dump(page) }}
 
-    {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
-        configuratorSettings: fenceConfigurator.options.groupByPropertyGroups
-    } %}
+    <form data-moorl-fence-configurator="true" data-moorl-fence-configurator-options="{{ config|json_encode }}">
+        {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
+            configuratorSettings: fenceConfigurator.options.groupByPropertyGroups,
+            initiator: 'options'
+        } %}
 
-    {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
-        configuratorSettings: fenceConfigurator.logicalOptions.groupByPropertyGroups
-    } %}
+        {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
+            configuratorSettings: fenceConfigurator.logicalOptions.groupByPropertyGroups,
+            initiator: 'logicalOptions'
+        } %}
 
-    {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
-        configuratorSettings: fenceConfigurator.postOptions.groupByPropertyGroups
-    } %}
+        {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
+            configuratorSettings: fenceConfigurator.postOptions.groupByPropertyGroups,
+            initiator: 'postOptions'
+        } %}
+    </form>
 </div>

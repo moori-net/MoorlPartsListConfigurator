@@ -80,6 +80,7 @@
         <service id="Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator\FenceConfiguratorPageLoader">
             <argument type="service" id="Shopware\Storefront\Page\GenericPageLoader"/>
             <argument type="service" id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorDetailRoute"/>
+            <argument type="service" id="Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingRoute"/>
         </service>
 
         <service id="Moorl\FenceConfigurator\Storefront\Controller\FenceConfiguratorController" public="true">

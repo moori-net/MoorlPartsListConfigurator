@@ -4,7 +4,12 @@ namespace Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator;
 
 use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorDetailRoute;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
+use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\AndFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Page\GenericPageLoaderInterface;
@@ -14,7 +19,8 @@ class FenceConfiguratorPageLoader
 {
     public function __construct(
         private readonly GenericPageLoaderInterface $genericLoader,
-        private readonly FenceConfiguratorDetailRoute $fenceConfiguratorDetailRoute
+        private readonly FenceConfiguratorDetailRoute $fenceConfiguratorDetailRoute,
+        private readonly AbstractProductListingRoute $productListingRoute
     )
     {
     }
@@ -34,12 +40,33 @@ class FenceConfiguratorPageLoader
             throw new PageNotFoundException($fenceConfigurator->getId());
         }
 
+        $criteria = new Criteria();
+        $criteria->addFilter(new AndFilter([
+            new OrFilter([
+                new AndFilter([
+                    new ContainsFilter('optionIds', $fenceConfigurator->getProductLinePropertyId()),
+                    new ContainsFilter('streamIds', $fenceConfigurator->getFenceStreamId())
+                ]),
+                new ContainsFilter('streamIds', $fenceConfigurator->getFencePostStreamId()),
+                new ContainsFilter('streamIds', $fenceConfigurator->getFenceOtherStreamId())
+            ])
+        ]));
+        $result = $this->productListingRoute->load(
+            $context->getSalesChannel()->getNavigationCategoryId(),
+            $request,
+            $context,
+            $criteria
+        );
+        $products = $result->getResult();
+
         $page = $this->genericLoader->load($request, $context);
 
         /** @var FenceConfiguratorPage $page */
         $page = FenceConfiguratorPage::createFrom($page);
         $page->setFenceConfigurator($fenceConfigurator);
         $page->setCmsPage($fenceConfigurator->getCmsPage());
+
+        $page->setProducts($products);
 
         $this->loadMetaData($page);
 
