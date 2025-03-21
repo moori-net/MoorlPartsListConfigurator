@@ -3,16 +3,15 @@
 <div class="cms-element-moorl-fence-configurator">
     {{ dump(fenceConfigurator.options.groupByPropertyGroups) }}
 
-
     {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
         configuratorSettings: fenceConfigurator.options.groupByPropertyGroups
     } %}
 
     {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
-        configuratorSettings: fenceConfigurator.postOptions.groupByPropertyGroups
+        configuratorSettings: fenceConfigurator.logicalOptions.groupByPropertyGroups
     } %}
 
     {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
-        configuratorSettings: fenceConfigurator.logicalOptions.groupByPropertyGroups
+        configuratorSettings: fenceConfigurator.postOptions.groupByPropertyGroups
     } %}
 </div>

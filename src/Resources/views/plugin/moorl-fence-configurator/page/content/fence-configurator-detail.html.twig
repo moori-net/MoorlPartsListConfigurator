@@ -8,8 +8,6 @@
 
 {% block base_main_inner %}
     <div class="container-main">
-        {{ dump(page) }}
-
         {% block page_content %}
             {% block cms_content %}
                 {% set cmsPageClasses = ('cms-page ' ~ page.cmsPage.cssClass|striptags)|trim %}

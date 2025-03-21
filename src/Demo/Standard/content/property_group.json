@@ -85,7 +85,7 @@
         "id": "{MD5:FENCE_LAYOUT_5}",
         "position": 4,
         "name": "4 Seiten, 4 Ecken",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.jpg}",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}",
         "customFields": {"technicalName": "4;4"}
       }
     ]
@@ -137,6 +137,7 @@
   {
     "id": "{ID:FENCE_POST_MOUNTING}",
     "position": 2,
+    "displayType": "media",
     "name": "Zaunbefestigung",
     "sortingType": "position",
     "customFields": {
@@ -183,19 +184,19 @@
         "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL}",
         "position": 2,
         "name": "Zum Aufdübeln",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL.svg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL.jpg}"
       },
       {
         "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL_L}",
         "position": 3,
         "name": "Zum Aufdübeln (L-Winkelform)",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL_L.svg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL_L.jpg}"
       },
       {
         "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_SPIKE}",
         "position": 4,
         "name": "Erdspieß",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_SPIKE.svg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_SPIKE.jpg}"
       }
     ]
   }
