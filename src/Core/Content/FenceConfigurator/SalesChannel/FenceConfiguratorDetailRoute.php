@@ -34,6 +34,13 @@ class FenceConfiguratorDetailRoute
     {
         $criteria->setIds([$fenceConfiguratorId]);
 
+        $criteria->addAssociation('options.media');
+        $criteria->addAssociation('options.group');
+        $criteria->addAssociation('postOptions.media');
+        $criteria->addAssociation('postOptions.group');
+        $criteria->addAssociation('logicalOptions.media');
+        $criteria->addAssociation('logicalOptions.group');
+
         /** @var SalesChannelFenceConfiguratorEntity $fenceConfigurator */
         $fenceConfigurator = $this->fenceConfiguratorRepository
             ->search($criteria, $context)

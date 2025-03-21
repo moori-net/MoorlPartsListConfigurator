@@ -17,31 +17,77 @@
     "id": "{ID:COLOR}",
     "position": 1,
     "name": "Farbe",
-    "displayType": "text",
+    "displayType": "media",
     "sortingType": "position",
     "customFields": {
       "technicalName": "COLOR"
     },
     "options": [
-      {"id": "{MD5:COLOR_RAL_6005}", "position": 1, "name": "RAL 6005, Grün"},
-      {"id": "{MD5:COLOR_RAL_7016}", "position": 2, "name": "RAL 7016, Anthrazit"},
-      {"id": "{MD5:COLOR_NONE}", "position": 0, "name": "Feuerverzinkt"}
+      {
+        "id": "{MD5:COLOR_RAL_6005}",
+        "position": 1,
+        "name": "RAL 6005, Grün",
+        "mediaId": "{MEDIA_FILE:property_group_option/COLOR_RAL_6005.jpg}"
+      },
+      {
+        "id": "{MD5:COLOR_RAL_7016}",
+        "position": 2,
+        "name": "RAL 7016, Anthrazit",
+        "mediaId": "{MEDIA_FILE:property_group_option/COLOR_RAL_7016.jpg}"
+      },
+      {
+        "id": "{MD5:COLOR_NONE}",
+        "position": 0,
+        "name": "Feuerverzinkt",
+        "mediaId": "{MEDIA_FILE:property_group_option/COLOR_NONE.jpg}"
+      }
     ]
   },
   {
     "id": "{ID:FENCE_LAYOUT}",
     "position": 4,
+    "displayType": "media",
     "name": "Layout",
     "sortingType": "position",
     "customFields": {
       "technicalName": "FENCE_LAYOUT"
     },
     "options": [
-      {"id": "{MD5:FENCE_LAYOUT_1}", "position": 0, "name": "1 Seite, 0 Ecken", "customFields": {"technicalName": "1;0"}},
-      {"id": "{MD5:FENCE_LAYOUT_2}", "position": 1, "name": "2 Seiten, 1 Ecke", "customFields": {"technicalName": "2;1"}},
-      {"id": "{MD5:FENCE_LAYOUT_3}", "position": 2, "name": "3 Seiten, 2 Ecken", "customFields": {"technicalName": "3;2"}},
-      {"id": "{MD5:FENCE_LAYOUT_4}", "position": 3, "name": "4 Seiten, 3 Ecken", "customFields": {"technicalName": "4;3"}},
-      {"id": "{MD5:FENCE_LAYOUT_5}", "position": 4, "name": "4 Seiten, 4 Ecken", "customFields": {"technicalName": "4;4"}}
+      {
+        "id": "{MD5:FENCE_LAYOUT_1}",
+        "position": 0,
+        "name": "1 Seite, 0 Ecken",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_1.svg}",
+        "customFields": {"technicalName": "1;0"}
+      },
+      {
+        "id": "{MD5:FENCE_LAYOUT_2}",
+        "position": 1,
+        "name": "2 Seiten, 1 Ecke",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_2.svg}",
+        "customFields": {"technicalName": "2;1"}
+      },
+      {
+        "id": "{MD5:FENCE_LAYOUT_3}",
+        "position": 2,
+        "name": "3 Seiten, 2 Ecken",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_3.svg}",
+        "customFields": {"technicalName": "3;2"}
+      },
+      {
+        "id": "{MD5:FENCE_LAYOUT_4}",
+        "position": 3,
+        "name": "4 Seiten, 3 Ecken",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}",
+        "customFields": {"technicalName": "4;3"}
+      },
+      {
+        "id": "{MD5:FENCE_LAYOUT_5}",
+        "position": 4,
+        "name": "4 Seiten, 4 Ecken",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.jpg}",
+        "customFields": {"technicalName": "4;4"}
+      }
     ]
   },
   {
@@ -77,6 +123,7 @@
   {
     "id": "{ID:FENCE_POST_TYPE}",
     "position": 4,
+    "displayType": "media",
     "name": "Pfostentyp",
     "sortingType": "position",
     "customFields": {
@@ -96,24 +143,60 @@
       "technicalName": "FENCE_POST_MOUNTING"
     },
     "options": [
-      {"id": "{MD5:FENCE_POST_MOUNTING_COVER}", "position": 0, "name": "Abdeckleiste"},
-      {"id": "{MD5:FENCE_POST_MOUNTING_CLAMPS}", "position": 1, "name": "Klemmen"}
+      {
+        "id": "{MD5:FENCE_POST_MOUNTING_COVER}",
+        "position": 0,
+        "name": "Abdeckleiste",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_MOUNTING_COVER.jpg}"
+      },
+      {
+        "id": "{MD5:FENCE_POST_MOUNTING_CLAMPS}",
+        "position": 1,
+        "name": "Klemmen",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_MOUNTING_CLAMPS.jpg}"
+      }
     ]
   },
   {
     "id": "{ID:FENCE_POST_FLOOR_MOUNTING}",
     "position": 3,
+    "displayType": "media",
     "name": "Bodenbefestigung",
     "sortingType": "position",
     "customFields": {
       "technicalName": "FENCE_POST_FLOOR_MOUNTING"
     },
     "options": [
-      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE}", "position": 0, "name": "Zum Einbetonieren"},
-      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE_PLUS}", "position": 1, "name": "Zum Einbetonieren (inkl. Beton)"},
-      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL}", "position": 2, "name": "Zum Aufdübeln"},
-      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL_L}", "position": 3, "name": "Zum Aufdübeln (L-Winkelform)"},
-      {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_SPIKE}", "position": 4, "name": "Erdspieß"}
+      {
+        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE}",
+        "position": 0,
+        "name": "Zum Einbetonieren",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_CONCRETE.svg}"
+      },
+      {
+        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE_PLUS}",
+        "position": 1,
+        "name": "Zum Einbetonieren (inkl. Beton)",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_CONCRETE_PLUS.svg}"
+      },
+      {
+        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL}",
+        "position": 2,
+        "name": "Zum Aufdübeln",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL.svg}"
+      },
+      {
+        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL_L}",
+        "position": 3,
+        "name": "Zum Aufdübeln (L-Winkelform)",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL_L.svg}"
+      },
+      {
+        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_SPIKE}",
+        "position": 4,
+        "name": "Erdspieß",
+        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_SPIKE.svg}"
+      }
     ]
   }
 ]

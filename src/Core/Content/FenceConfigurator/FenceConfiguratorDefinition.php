@@ -3,10 +3,8 @@
 namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator;
 
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEntityCollection;
-use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldThingCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
 use Shopware\Core\Content\Cms\CmsPageDefinition;
-use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
 use Shopware\Core\Content\Seo\SeoUrl\SeoUrlDefinition;
