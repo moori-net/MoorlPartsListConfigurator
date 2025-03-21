@@ -5,6 +5,7 @@
     "fenceStreamId": "{ID:STREAM_CATEGORY_FENCE}",
     "fencePostStreamId": "{ID:STREAM_CATEGORY_FENCE_POST}",
     "fenceOtherStreamId": "{ID:STREAM_CATEGORY_FENCE_OTHER}",
+    "coverId": "{ID:MEDIA_1}",
     "active": true,
     "name": "Demo Zaunkonfigurator 6/5/6",
     "options": [
