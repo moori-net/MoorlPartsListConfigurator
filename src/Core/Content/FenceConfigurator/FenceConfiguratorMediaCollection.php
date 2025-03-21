@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator\Aggregate\FenceConfiguratorMedia;
+namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator;
 
 use Shopware\Core\Content\Media\MediaCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
@@ -19,7 +19,7 @@ class FenceConfiguratorMediaCollection extends EntityCollection
     public function getMedia(): MediaCollection
     {
         return new MediaCollection(
-            $this->fmap(fn(FenceConfiguratorMediaEntity $lookMedia) => $lookMedia->getMedia())
+            $this->fmap(fn(FenceConfiguratorMediaEntity $fenceConfiguratorMedia) => $fenceConfiguratorMedia->getMedia())
         );
     }
 

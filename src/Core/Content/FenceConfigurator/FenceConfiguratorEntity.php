@@ -6,6 +6,7 @@ use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingBaseTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingMetaTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingPageTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingTrait;
+use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
@@ -22,11 +23,44 @@ class FenceConfiguratorEntity extends Entity
     protected ?PropertyGroupOptionCollection $options = null;
     protected ?PropertyGroupOptionCollection $postOptions = null;
     protected ?PropertyGroupOptionCollection $logicalOptions = null;
+    protected ?FenceConfiguratorMediaCollection $media = null;
+    protected ?FenceConfiguratorMediaEntity $cover = null;
+    protected ?string $coverId = null;
+
+    public function getCover(): ?FenceConfiguratorMediaEntity
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?FenceConfiguratorMediaEntity $cover): void
+    {
+        $this->cover = $cover;
+    }
+
+    public function getCoverId(): ?string
+    {
+        return $this->coverId;
+    }
+
+    public function setCoverId(?string $coverId): void
+    {
+        $this->coverId = $coverId;
+    }
     protected string $productLinePropertyId;
     protected string $fenceStreamId;
     protected string $fencePostStreamId;
     protected string $fenceOtherStreamId;
     protected bool $active = false;
+
+    public function getMedia(): ?FenceConfiguratorMediaCollection
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?FenceConfiguratorMediaCollection $media): void
+    {
+        $this->media = $media;
+    }
 
     public function getActive(): bool
     {

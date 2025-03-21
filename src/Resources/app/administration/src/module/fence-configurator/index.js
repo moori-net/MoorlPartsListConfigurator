@@ -1,6 +1,7 @@
 const {Module} = Shopware;
 
 import './component/properties';
+import './component/media-gallery';
 import './page/list';
 import './page/detail';
 import './page/create';

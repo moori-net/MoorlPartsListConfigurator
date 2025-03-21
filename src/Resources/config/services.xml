@@ -29,6 +29,10 @@
             <tag name="shopware.entity.definition" entity="moorl_fc_logical_option"/>
         </service>
 
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorMediaDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_fc_media"/>
+        </service>
+
         <service id="Moorl\FenceConfigurator\Core\Content\PropertyGroupOption\PropertyGroupOptionExtension">
             <tag name="shopware.entity.extension"/>
         </service>

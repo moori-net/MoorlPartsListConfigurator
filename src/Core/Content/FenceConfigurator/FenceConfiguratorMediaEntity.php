@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator\Aggregate\FenceConfiguratorMedia;
+namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator;
 
-use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorEntity;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
@@ -17,7 +16,7 @@ class FenceConfiguratorMediaEntity extends Entity
     protected string $mediaId;
     protected int $position;
     protected ?MediaEntity $media = null;
-    protected ?FenceConfiguratorEntity $look = null;
+    protected ?FenceConfiguratorEntity $fenceConfigurator = null;
 
     public function getFenceConfiguratorId(): string
     {
@@ -61,11 +60,11 @@ class FenceConfiguratorMediaEntity extends Entity
 
     public function getFenceConfigurator(): ?FenceConfiguratorEntity
     {
-        return $this->look;
+        return $this->fenceConfigurator;
     }
 
-    public function setFenceConfigurator(?FenceConfiguratorEntity $look): void
+    public function setFenceConfigurator(?FenceConfiguratorEntity $fenceConfigurator): void
     {
-        $this->look = $look;
+        $this->fenceConfigurator = $fenceConfigurator;
     }
 }

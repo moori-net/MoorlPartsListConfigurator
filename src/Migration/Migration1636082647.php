@@ -20,7 +20,7 @@ class Migration1636082647 extends MigrationStep
         $sql = <<<SQL
 CREATE TABLE IF NOT EXISTS `moorl_fc` (
     `id` BINARY(16) NOT NULL,
-    `media_id` BINARY(16),
+    `fence_configurator_media_id` BINARY(16),
     `cms_page_id` BINARY(16),
     `product_line_property_id` BINARY(16) NOT NULL,
     `fence_stream_id` BINARY(16) NOT NULL,

@@ -23,6 +23,10 @@ class MoorlFenceConfigurator extends Plugin
         'moorl_fc_media',
     ];
     final public const SHOPWARE_TABLES = [
+        'cms_page',
+        'cms_page_translation',
+        'cms_section',
+        'cms_block',
         'category',
         'category_translation',
         'property_group',

@@ -34,9 +34,6 @@ Component.register('moorl-fence-configurator-detail', {
             isLoading: false,
             pageTypes: ['fence_configurator_detail'],
             processSuccess: false,
-            mediaModalIsOpen: false,
-            uploadTagAvatar: utils.createId(),
-            uploadTagBanner: utils.createId(),
             customFieldSets: null
         };
     },
@@ -53,6 +50,7 @@ Component.register('moorl-fence-configurator-detail', {
             criteria.getAssociation('options')
             criteria.getAssociation('postOptions')
             criteria.getAssociation('logicalOptions')
+            criteria.getAssociation('media')
             criteria.getAssociation('seoUrls')
                 .addFilter(Criteria.equals('isCanonical', true));
             return criteria;
@@ -83,6 +81,10 @@ Component.register('moorl-fence-configurator-detail', {
 
         mediaRepository() {
             return this.repositoryFactory.create('media');
+        },
+
+        itemMediaRepository() {
+            return this.repositoryFactory.create('moorl_fc_media');
         },
 
         cmsPageRepository() {
@@ -186,43 +188,6 @@ Component.register('moorl-fence-configurator-detail', {
 
         saveFinish() {
             this.processSuccess = false;
-        },
-
-        setMediaAvatar({targetId}) {
-            this.mediaRepository.get(targetId, Shopware.Context.api).then((updatedMedia) => {
-                this.item.avatarId = targetId;
-                this.item.avatar = updatedMedia;
-            });
-        },
-        onDropMediaAvatar(dragData) {
-            this.setMediaAvatar({targetId: dragData.id});
-        },
-        onUnlinkMediaAvatar() {
-            this.item.avatarId = null;
-        },
-
-        setMediaBanner({targetId}) {
-            this.mediaRepository.get(targetId, Shopware.Context.api).then((updatedMedia) => {
-                this.item.bannerId = targetId;
-                this.item.banner = updatedMedia;
-            });
-        },
-        onDropMediaBanner(dragData) {
-            this.setMediaBanner({targetId: dragData.id});
-        },
-        onUnlinkMediaBanner() {
-            this.item.bannerId = null;
-        },
-
-        onCloseModal() {
-            this.mediaModalIsOpen = false;
-        },
-        onSelectionChanges(mediaEntity) {
-            this.item.avatarId = mediaEntity[0].id;
-            this.item.avatar = mediaEntity[0];
-        },
-        onOpenMediaModal() {
-            this.mediaModalIsOpen = true;
         },
 
         getAssignedCmsPage() {
