@@ -51,6 +51,13 @@ class FenceConfiguratorPageLoader
                 new ContainsFilter('streamIds', $fenceConfigurator->getFenceOtherStreamId())
             ])
         ]));
+
+        if ($request->attributes->get('options')) {
+            $request->attributes->set('properties', $request->attributes->get('options'));
+        } else {
+            $properties = $fenceConfigurator->getOptions()->groupByPropertyGroups()->first();
+        }
+
         $result = $this->productListingRoute->load(
             $context->getSalesChannel()->getNavigationCategoryId(),
             $request,

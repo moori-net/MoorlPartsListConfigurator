@@ -38,10 +38,6 @@
                                                     {% set isActive = true %}
                                                 {% endif %}
 
-                                                {% if not option.combinable %}
-                                                    {% set isCombinableCls = false %}
-                                                {% endif %}
-
                                                 {% if option.configuratorSetting.media %}
                                                     {% set displayType = 'media' %}
                                                     {% set media = option.configuratorSetting.media %}

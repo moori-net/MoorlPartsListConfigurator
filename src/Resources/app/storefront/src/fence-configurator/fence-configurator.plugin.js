@@ -24,23 +24,45 @@ export default class MoorlFenceConfiguratorPlugin extends Plugin {
     }
 
     _registerEvents() {
-        this.el.querySelectorAll('input[type=radio][data-initiator=options]').forEach((el) => {
-            ['keyup', 'change', 'force'].forEach(evt =>
-                el.addEventListener(evt, () => {
-                    this._loadVariants();
-                }, false)
-            );
+        this.el.querySelectorAll('input[type=radio]').forEach((el) => {
+            ['keyup', 'change', 'force'].forEach(evt => {
+                    el.addEventListener(evt, () => {
+                        this._loadHistory();
+                    }, false);
+
+                    if (el.dataset.initiator === 'options') {
+                        this._loadVariants();
+                    }
+            });
         });
     }
 
     _loadVariants() {
+
+    }
+
+    _loadHistory() {
         const filters = {
-            properties: []
+            options: [],
+            postOptions: [],
+            logicalOptions: [],
         };
 
         this.el.querySelectorAll('input[type=radio][data-initiator=options]').forEach((el) => {
             if (el.checked) {
-                filters.properties.push(el.value);
+                filters.options.push(el.value);
+            }
+        });
+
+        this.el.querySelectorAll('input[type=radio][data-initiator=postOptions]').forEach((el) => {
+            if (el.checked) {
+                filters.postOptions.push(el.value);
+            }
+        });
+
+        this.el.querySelectorAll('input[type=radio][data-initiator=logicalOptions]').forEach((el) => {
+            if (el.checked) {
+                filters.logicalOptions.push(el.value);
             }
         });
 
@@ -52,17 +74,18 @@ export default class MoorlFenceConfiguratorPlugin extends Plugin {
     }
 
     _setValuesFromUrl(params = {}) {
-        const properties = params['properties'];
 
-        const ids = properties ? properties.split('|') : [];
+        for (const [key, value] of Object.entries(params)) {
+            const ids = value ? value.split('|') : [];
 
-        ids.forEach(id => {
-            const checkboxEl = this.el.querySelector('[value="' + id + '"]');
+            ids.forEach(id => {
+                const checkboxEl = this.el.querySelector('[value="' + id + '"]');
 
-            if (checkboxEl) {
-                checkboxEl.checked = true;
-            }
-        });
+                if (checkboxEl) {
+                    checkboxEl.checked = true;
+                }
+            });
+        }
     }
 
     _updateHistory(query) {
