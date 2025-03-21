@@ -6,6 +6,7 @@ use Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator\FenceConfiguratorP
 use MoorlFoundation\Core\Content\ProductBuyListV2Item\ProductBuyListV2ItemCollection;
 use MoorlFoundation\Core\Content\ProductBuyListV2Item\ProductBuyListV2ItemEntity;
 use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
+use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +40,7 @@ class FenceConfiguratorController extends StorefrontController
         /** @var SalesChannelProductEntity $product */
         foreach ($page->getProducts() as $product) {
             $item = new ProductBuyListV2ItemEntity();
-            $item->setId($product->getId());
+            $item->setId(Uuid::randomHex());
             $item->setProductId($product->getId());
             $item->setProduct($product);
             $item->setQuantity(12);

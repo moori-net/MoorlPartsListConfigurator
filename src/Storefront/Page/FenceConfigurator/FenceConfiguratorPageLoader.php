@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FenceConfiguratorPageLoader
 {
+    public const CRITERIA_STATE = 'moorl-fence-configurator-criteria';
+
     public function __construct(
         private readonly GenericPageLoaderInterface $genericLoader,
         private readonly FenceConfiguratorDetailRoute $fenceConfiguratorDetailRoute,
@@ -41,6 +43,7 @@ class FenceConfiguratorPageLoader
         }
 
         $criteria = new Criteria();
+        $criteria->addState(self::CRITERIA_STATE);
         $criteria->addFilter(new AndFilter([
             new OrFilter([
                 new AndFilter([
@@ -52,8 +55,11 @@ class FenceConfiguratorPageLoader
             ])
         ]));
 
-        if ($request->attributes->get('options')) {
-            $request->attributes->set('properties', $request->attributes->get('options'));
+        //dd($request->query->all());
+
+        if ($request->query->get('options')) {
+            $request->query->set('properties', $request->query->get('options'));
+            $request->query->set('no-aggregations', 1);
         }
 
         $result = $this->productListingRoute->load(

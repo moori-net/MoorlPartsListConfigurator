@@ -2,7 +2,8 @@
 
 namespace Moorl\FenceConfigurator\Core\Content\Product\SalesChannel;
 
-use Shopware\Core\Content\Product\Events\ProductListingResolvePreviewEvent;
+use Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator\FenceConfiguratorPageLoader;
+use Shopware\Core\System\SalesChannel\Event\SalesChannelProcessCriteriaEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProductSubscriber implements EventSubscriberInterface
@@ -10,17 +11,17 @@ class ProductSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ProductListingResolvePreviewEvent::class => 'onProductListingResolvePreviewEvent',
+            'sales_channel.product.process.criteria' => 'processCriteria'
         ];
     }
 
-    public function onProductListingResolvePreviewEvent(ProductListingResolvePreviewEvent $event): void
+    public function processCriteria(SalesChannelProcessCriteriaEvent $event): void
     {
-        foreach ($event->getMapping() as $k => $v) {
-            if ($k === $v) {
-                continue;
-            }
-            $event->replace($k, $k);
+        $criteria = $event->getCriteria();
+        if (!$criteria->hasState(FenceConfiguratorPageLoader::CRITERIA_STATE)) {
+            return;
         }
+
+        $criteria->resetGroupFields();
     }
 }
