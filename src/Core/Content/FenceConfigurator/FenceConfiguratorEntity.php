@@ -26,6 +26,17 @@ class FenceConfiguratorEntity extends Entity
     protected ?FenceConfiguratorMediaCollection $media = null;
     protected ?FenceConfiguratorMediaEntity $cover = null;
     protected ?string $coverId = null;
+    protected ?string $teaser = null;
+
+    public function getTeaser(): ?string
+    {
+        return $this->teaser;
+    }
+
+    public function setTeaser(?string $teaser): void
+    {
+        $this->teaser = $teaser;
+    }
 
     public function getCover(): ?FenceConfiguratorMediaEntity
     {

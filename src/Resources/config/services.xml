@@ -37,6 +37,17 @@
             <tag name="shopware.entity.extension"/>
         </service>
 
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\SalesChannelFenceConfiguratorDefinition">
+            <tag name="shopware.sales_channel.entity.definition"/>
+        </service>
+
+        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorListing">
+            <argument type="service" id="sales_channel.moorl_fc.repository"/>
+
+            <tag name="moorl.foundation.entity_suggest" priority="0"/>
+            <tag name="moorl.foundation.entity_search" priority="0"/>
+        </service>
+
         <!-- SEO -->
         <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\DataAbstractionLayer\FenceConfiguratorIndexer">
             <argument type="service" id="Doctrine\DBAL\Connection"/>
@@ -61,7 +72,7 @@
         </service>
 
         <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorDetailRoute" public="true">
-            <argument type="service" id="moorl_fc.repository"/>
+            <argument type="service" id="sales_channel.moorl_fc.repository"/>
             <argument type="service" id="Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoader"/>
             <argument type="service" id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition"/>
         </service>

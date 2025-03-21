@@ -2,8 +2,8 @@
 
 {% block moorl_foundation_listing_item %}
     {% sw_include '@MoorlFoundation/plugin/moorl-foundation/listing-item.html.twig' with {
-        url: seoUrl('frontend.moorl.creator.detail', {creatorId: item.id}),
-        media: item.avatar,
+        url: seoUrl('frontend.moorl.fence.configurator.detail', {fenceConfiguratorId: item.id}),
+        media: item.cover.media,
         title: item.translated.name,
         description: item.translated.teaser
     } %}

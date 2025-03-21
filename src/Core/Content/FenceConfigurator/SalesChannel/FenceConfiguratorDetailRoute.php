@@ -2,6 +2,11 @@
 
 namespace Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel;
 
+use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition;
+use Shopware\Core\Content\Cms\DataResolver\ResolverContext\EntityResolverContext;
+use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
+use Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoaderInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
@@ -13,7 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class FenceConfiguratorDetailRoute
 {
     public function __construct(
-        private readonly SalesChannelRepository $fenceConfiguratorRepository
+        private readonly SalesChannelRepository $fenceConfiguratorRepository,
+        private readonly SalesChannelCmsPageLoaderInterface $cmsPageLoader,
+        private readonly FenceConfiguratorDefinition $fenceConfiguratorDefinition
     )
     {
     }
@@ -27,10 +34,50 @@ class FenceConfiguratorDetailRoute
     {
         $criteria->setIds([$fenceConfiguratorId]);
 
-        $look = $this->fenceConfiguratorRepository
+        /** @var SalesChannelFenceConfiguratorEntity $fenceConfigurator */
+        $fenceConfigurator = $this->fenceConfiguratorRepository
             ->search($criteria, $context)
             ->first();
 
-        return new FenceConfiguratorDetailRouteResponse($look);
+        $pageId = $fenceConfigurator->getCmsPageId();
+
+        $slotConfig = $fenceConfigurator->getTranslation('slotConfig');
+        $resolverContext = new EntityResolverContext($context, $request, $this->fenceConfiguratorDefinition, $fenceConfigurator);
+
+        $pages = $this->cmsPageLoader->load(
+            $request,
+            $this->createCriteria($pageId, $request),
+            $context,
+            $slotConfig,
+            $resolverContext
+        );
+
+        if (!$pages->has($pageId)) {
+            throw new PageNotFoundException($pageId);
+        }
+
+        $fenceConfigurator->setCmsPage($pages->get($pageId));
+
+        return new FenceConfiguratorDetailRouteResponse($fenceConfigurator);
+    }
+
+    private function createCriteria(string $pageId, Request $request): Criteria
+    {
+        $criteria = new Criteria([$pageId]);
+        $criteria->setTitle('fence_configurator_detail::cms-page');
+
+        $slots = $request->get('slots');
+
+        if (\is_string($slots)) {
+            $slots = explode('|', $slots);
+        }
+
+        if (!empty($slots) && \is_array($slots)) {
+            $criteria
+                ->getAssociation('sections.blocks')
+                ->addFilter(new EqualsAnyFilter('slots.id', $slots));
+        }
+
+        return $criteria;
     }
 }
