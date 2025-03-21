@@ -48,6 +48,10 @@
             <tag name="moorl.foundation.entity_search" priority="0"/>
         </service>
 
+        <service id="Moorl\FenceConfigurator\Core\Content\Product\SalesChannel\ProductSubscriber">
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <!-- SEO -->
         <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\DataAbstractionLayer\FenceConfiguratorIndexer">
             <argument type="service" id="Doctrine\DBAL\Connection"/>

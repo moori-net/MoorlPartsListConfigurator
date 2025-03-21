@@ -1,9 +1,15 @@
 {% set fenceConfigurator = page.fenceConfigurator %}
 
 <div class="cms-element-moorl-fence-configurator">
-    {{ dump(page) }}
+    {% set config = {
+        partsListUrl: path('frontend.moorl.fence.configurator.parts.list', {fenceConfiguratorId: fenceConfigurator.id})
+    } %}
 
-    <form data-moorl-fence-configurator="true" data-moorl-fence-configurator-options="{{ config|json_encode }}">
+    <form
+            action="{{ path('frontend.moorl.fence.configurator.parts.list', {fenceConfiguratorId: fenceConfigurator.id}) }}"
+            data-moorl-fence-configurator="true"
+            data-moorl-fence-configurator-options="{{ config|json_encode }}"
+    >
         {% sw_include "@MoorlFenceConfigurator/plugin/moorl-fence-configurator/component/configurator.html.twig" with {
             configuratorSettings: fenceConfigurator.options.groupByPropertyGroups,
             initiator: 'options'
@@ -20,5 +26,7 @@
         } %}
     </form>
 
-    {{ dump(page.products) }}
+    <hr>
+
+    <div id="partsList"></div>
 </div>

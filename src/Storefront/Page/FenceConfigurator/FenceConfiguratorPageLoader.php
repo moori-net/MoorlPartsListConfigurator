@@ -54,8 +54,6 @@ class FenceConfiguratorPageLoader
 
         if ($request->attributes->get('options')) {
             $request->attributes->set('properties', $request->attributes->get('options'));
-        } else {
-            $properties = $fenceConfigurator->getOptions()->groupByPropertyGroups()->first();
         }
 
         $result = $this->productListingRoute->load(

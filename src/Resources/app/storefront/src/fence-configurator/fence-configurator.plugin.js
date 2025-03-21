@@ -6,12 +6,22 @@ import querystring from 'query-string';
 export default class MoorlFenceConfiguratorPlugin extends Plugin {
     static options = {
         fenceConfiguratorId: null,
-        debug: false
+        debug: false,
+        partsListUrl: null
     };
 
     init() {
         this._urlFilterParams = querystring.parse(HistoryUtil.getSearch());
         console.log(this._urlFilterParams);
+
+        this._client = new HttpClient(window.accessKey, window.contextToken);
+        this._filters = {
+            options: [],
+            postOptions: [],
+            logicalOptions: [],
+        };
+
+        this._partsListEl = document.getElementById('partsList');
 
         this._setFilterState();
         this._registerEvents();
@@ -28,21 +38,26 @@ export default class MoorlFenceConfiguratorPlugin extends Plugin {
             ['keyup', 'change', 'force'].forEach(evt => {
                     el.addEventListener(evt, () => {
                         this._loadHistory();
+                        this._loadPartsList();
                     }, false);
-
-                    if (el.dataset.initiator === 'options') {
-                        this._loadVariants();
-                    }
             });
         });
     }
 
-    _loadVariants() {
+    _loadPartsList() {
+        const mapped = this._mapFilters(this._filters);
 
+        let query = querystring.stringify(mapped);
+
+        this._client.get(this.el.action + "?" + query, response => {
+            this._partsListEl.innerHTML = response;
+
+            window.PluginManager.initializePlugins();
+        });
     }
 
     _loadHistory() {
-        const filters = {
+        this._filters = {
             options: [],
             postOptions: [],
             logicalOptions: [],
@@ -50,23 +65,23 @@ export default class MoorlFenceConfiguratorPlugin extends Plugin {
 
         this.el.querySelectorAll('input[type=radio][data-initiator=options]').forEach((el) => {
             if (el.checked) {
-                filters.options.push(el.value);
+                this._filters.options.push(el.value);
             }
         });
 
         this.el.querySelectorAll('input[type=radio][data-initiator=postOptions]').forEach((el) => {
             if (el.checked) {
-                filters.postOptions.push(el.value);
+                this._filters.postOptions.push(el.value);
             }
         });
 
         this.el.querySelectorAll('input[type=radio][data-initiator=logicalOptions]').forEach((el) => {
             if (el.checked) {
-                filters.logicalOptions.push(el.value);
+                this._filters.logicalOptions.push(el.value);
             }
         });
 
-        const mapped = this._mapFilters(filters);
+        const mapped = this._mapFilters(this._filters);
 
         let query = querystring.stringify(mapped);
 
