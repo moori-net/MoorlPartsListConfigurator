@@ -1,0 +1,9 @@
+{
+    "sw-cms": {
+        "elements": {
+            "moorl-fence-configurator": {
+                "name": "Fence configurator"
+            }
+        }
+    }
+}
