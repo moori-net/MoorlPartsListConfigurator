@@ -8,9 +8,10 @@ use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRou
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\AndFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
 use Shopware\Core\Framework\Routing\RoutingException;
+use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Page\GenericPageLoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,25 +43,30 @@ class PartsListConfiguratorPageLoader
             throw new PageNotFoundException($partsListConfigurator->getId());
         }
 
+        $request->query->set('no-aggregations', 1);
+
+        $optionIds = $partsListConfigurator->getFixedOptions()?->getIds() ?: [];
+        $optionIds = array_merge($optionIds, $this->getPropIds($request, 'globalOptions'));
+
         $criteria = new Criteria();
         $criteria->addState(self::CRITERIA_STATE);
         $criteria->addFilter(new AndFilter([
+            new EqualsAnyFilter('options.id', $optionIds),
             new OrFilter([
                 new AndFilter([
-                    new ContainsFilter('optionIds', $partsListConfigurator->getProductLinePropertyId()),
-                    new ContainsFilter('streamIds', $partsListConfigurator->getFenceStreamId())
+                    new EqualsAnyFilter('options.id', $this->getPropIds($request, 'firstOptions')),
+                    new ContainsFilter('streamIds', $partsListConfigurator->getFirstStreamId())
                 ]),
-                new ContainsFilter('streamIds', $partsListConfigurator->getFencePostStreamId()),
-                new ContainsFilter('streamIds', $partsListConfigurator->getFenceOtherStreamId())
+                new AndFilter([
+                    new EqualsAnyFilter('options.id', $this->getPropIds($request, 'secondOptions')),
+                    new ContainsFilter('streamIds', $partsListConfigurator->getSecondStreamId()),
+                ]),
+                new AndFilter([
+                    new EqualsAnyFilter('options.id', $this->getPropIds($request, 'thirdOptions')),
+                    new ContainsFilter('streamIds', $partsListConfigurator->getThirdStreamId())
+                ]),
             ])
         ]));
-
-        //dd($request->query->all());
-
-        if ($request->query->get('globalOptions')) {
-            $request->query->set('properties', $request->query->get('globalOptions'));
-            $request->query->set('no-aggregations', 1);
-        }
 
         $result = $this->productListingRoute->load(
             $context->getSalesChannel()->getNavigationCategoryId(),
@@ -102,5 +108,27 @@ class PartsListConfiguratorPageLoader
 
         $metaTitleParts = [$page->getPartsListConfigurator()->getTranslation('name')];
         $metaInformation->setMetaTitle(implode(' | ', $metaTitleParts));
+    }
+
+    protected function getPropIds(Request $request, string $prop = "tag", ?array $defaultIds = null): array
+    {
+        $ids = $request->query->get($prop);
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $ids = $request->request->get($prop);
+        }
+
+        if (\is_string($ids)) {
+            $ids = explode('|', $ids);
+        }
+
+        if (empty($ids) && !empty($defaultIds)) {
+            $ids = $defaultIds;
+        }
+
+        $ids = array_filter((array) $ids, function ($id) {
+            return Uuid::isValid((string) $id);
+        });
+
+        return $ids;
     }
 }

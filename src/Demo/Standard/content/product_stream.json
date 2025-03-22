@@ -1,6 +1,6 @@
 [
   {
-    "id": "{ID:STREAM_CATEGORY_FENCE}",
+    "id": "{ID:STREAM_CATEGORY_PARTS_LIST}",
     "name": "Zaunmatten",
     "filters": [
       {
@@ -12,7 +12,7 @@
               {
                 "type": "equals",
                 "field": "product.categoriesRo.id",
-                "value": "{ID:CATEGORY_FENCE}"
+                "value": "{ID:CATEGORY_PARTS_LIST}"
               }
             ],
             "operator": "AND"
@@ -23,7 +23,7 @@
     ]
   },
   {
-    "id": "{ID:STREAM_CATEGORY_FENCE_POST}",
+    "id": "{ID:STREAM_CATEGORY_PARTS_LIST_POST}",
     "name": "Pfosten",
     "filters": [
       {
@@ -35,7 +35,7 @@
               {
                 "type": "equals",
                 "field": "product.categoriesRo.id",
-                "value": "{ID:CATEGORY_FENCE_POST}"
+                "value": "{ID:CATEGORY_PARTS_LIST_POST}"
               }
             ],
             "operator": "AND"
@@ -46,7 +46,7 @@
     ]
   },
   {
-    "id": "{ID:STREAM_CATEGORY_FENCE_OTHER}",
+    "id": "{ID:STREAM_CATEGORY_PARTS_LIST_OTHER}",
     "name": "Tore",
     "filters": [
       {
@@ -58,7 +58,7 @@
               {
                 "type": "equals",
                 "field": "product.categoriesRo.id",
-                "value": "{ID:CATEGORY_FENCE_DOOR}"
+                "value": "{ID:CATEGORY_PARTS_LIST_DOOR}"
               }
             ],
             "operator": "AND"

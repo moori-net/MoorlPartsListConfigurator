@@ -1,18 +1,18 @@
 [
     {
-        "id": "{ID:CATEGORY_FENCE}",
+        "id": "{ID:CATEGORY_PARTS_LIST}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
         "name": "Zäune"
     },
     {
-        "id": "{ID:CATEGORY_FENCE_POST}",
+        "id": "{ID:CATEGORY_PARTS_LIST_POST}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
         "name": "Pfosten"
     },
     {
-        "id": "{ID:CATEGORY_FENCE_DOOR}",
+        "id": "{ID:CATEGORY_PARTS_LIST_DOOR}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
         "name": "Tore"

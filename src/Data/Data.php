@@ -56,7 +56,7 @@ class Data extends DataExtension implements DataInterface
     public function getLocalReplacers(): array
     {
         return [
-            '{CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID}' => MoorlPartsListConfigurator::CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID,
+            '{CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID}' => MoorlPartsListConfigurator::CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID,
             '{SEO_ROUTE_NAME}' => PartsListConfiguratorSeoUrlRoute::ROUTE_NAME,
             '{SEO_DEFAULT_TEMPLATE}' => PartsListConfiguratorSeoUrlRoute::DEFAULT_TEMPLATE,
             '{MAIN_ENTITY}' => PartsListConfiguratorDefinition::ENTITY_NAME,
@@ -66,14 +66,14 @@ class Data extends DataExtension implements DataInterface
     public function getPreInstallQueries(): array
     {
         return [
-            "UPDATE `cms_page` SET `locked` = '0' WHERE `id` = UNHEX('{CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID}');"
+            "UPDATE `cms_page` SET `locked` = '0' WHERE `id` = UNHEX('{CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID}');"
         ];
     }
 
     public function getInstallQueries(): array
     {
         return [
-            "UPDATE `cms_page` SET `locked` = '1' WHERE `id` = UNHEX('{CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID}');",
+            "UPDATE `cms_page` SET `locked` = '1' WHERE `id` = UNHEX('{CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID}');",
             "INSERT IGNORE INTO `seo_url_template` (`id`,`is_valid`,`route_name`,`entity_name`,`template`,`created_at`) VALUES (UNHEX('{ID:SEO_URL_1}'),1,'{SEO_ROUTE_NAME}','{MAIN_ENTITY}','{SEO_DEFAULT_TEMPLATE}','{DATA_CREATED_AT}');"
         ];
     }

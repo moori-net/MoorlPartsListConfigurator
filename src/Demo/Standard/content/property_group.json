@@ -44,48 +44,48 @@
     ]
   },
   {
-    "id": "{ID:FENCE_LAYOUT}",
+    "id": "{ID:PARTS_LIST_LAYOUT}",
     "position": 4,
     "displayType": "media",
     "name": "Layout",
     "sortingType": "position",
     "customFields": {
-      "technicalName": "FENCE_LAYOUT"
+      "technicalName": "PARTS_LIST_LAYOUT"
     },
     "options": [
       {
-        "id": "{MD5:FENCE_LAYOUT_1}",
+        "id": "{MD5:PARTS_LIST_LAYOUT_1}",
         "position": 0,
         "name": "1 Seite, 0 Ecken",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_1.svg}",
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_LAYOUT_1.svg}",
         "customFields": {"technicalName": "1;0"}
       },
       {
-        "id": "{MD5:FENCE_LAYOUT_2}",
+        "id": "{MD5:PARTS_LIST_LAYOUT_2}",
         "position": 1,
         "name": "2 Seiten, 1 Ecke",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_2.svg}",
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_LAYOUT_2.svg}",
         "customFields": {"technicalName": "2;1"}
       },
       {
-        "id": "{MD5:FENCE_LAYOUT_3}",
+        "id": "{MD5:PARTS_LIST_LAYOUT_3}",
         "position": 2,
         "name": "3 Seiten, 2 Ecken",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_3.svg}",
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_LAYOUT_3.svg}",
         "customFields": {"technicalName": "3;2"}
       },
       {
-        "id": "{MD5:FENCE_LAYOUT_4}",
+        "id": "{MD5:PARTS_LIST_LAYOUT_4}",
         "position": 3,
         "name": "4 Seiten, 3 Ecken",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}",
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_LAYOUT_4.svg}",
         "customFields": {"technicalName": "4;3"}
       },
       {
-        "id": "{MD5:FENCE_LAYOUT_5}",
+        "id": "{MD5:PARTS_LIST_LAYOUT_5}",
         "position": 4,
         "name": "4 Seiten, 4 Ecken",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}",
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_LAYOUT_4.svg}",
         "customFields": {"technicalName": "4;4"}
       }
     ]
@@ -121,82 +121,82 @@
     ]
   },
   {
-    "id": "{ID:FENCE_POST_TYPE}",
+    "id": "{ID:PARTS_LIST_POST_TYPE}",
     "position": 4,
     "displayType": "text",
     "name": "Pfostentyp",
     "sortingType": "position",
     "customFields": {
-      "technicalName": "FENCE_POST_TYPE"
+      "technicalName": "PARTS_LIST_POST_TYPE"
     },
     "options": [
-      {"id": "{MD5:FENCE_POST_TYPE_SIDE}", "position": 0, "name": "Seite", "customFields": {"technicalName": "FENCE_POST_TYPE_SIDE"}},
-      {"id": "{MD5:FENCE_POST_TYPE_CORNER}", "position": 1, "name": "Ecke", "customFields": {"technicalName": "FENCE_POST_TYPE_CORNER"}}
+      {"id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}", "position": 0, "name": "Seite", "customFields": {"technicalName": "PARTS_LIST_POST_TYPE_SIDE"}},
+      {"id": "{MD5:PARTS_LIST_POST_TYPE_CORNER}", "position": 1, "name": "Ecke", "customFields": {"technicalName": "PARTS_LIST_POST_TYPE_CORNER"}}
     ]
   },
   {
-    "id": "{ID:FENCE_POST_MOUNTING}",
+    "id": "{ID:PARTS_LIST_POST_MOUNTING}",
     "position": 2,
     "displayType": "media",
     "name": "Zaunbefestigung",
     "sortingType": "position",
     "customFields": {
-      "technicalName": "FENCE_POST_MOUNTING"
+      "technicalName": "PARTS_LIST_POST_MOUNTING"
     },
     "options": [
       {
-        "id": "{MD5:FENCE_POST_MOUNTING_COVER}",
+        "id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}",
         "position": 0,
         "name": "Abdeckleiste",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_MOUNTING_COVER.jpg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_POST_MOUNTING_COVER.jpg}"
       },
       {
-        "id": "{MD5:FENCE_POST_MOUNTING_CLAMPS}",
+        "id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}",
         "position": 1,
         "name": "Klemmen",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_MOUNTING_CLAMPS.jpg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_POST_MOUNTING_CLAMPS.jpg}"
       }
     ]
   },
   {
-    "id": "{ID:FENCE_POST_FLOOR_MOUNTING}",
+    "id": "{ID:PARTS_LIST_POST_FLOOR_MOUNTING}",
     "position": 3,
     "displayType": "media",
     "name": "Bodenbefestigung",
     "sortingType": "position",
     "customFields": {
-      "technicalName": "FENCE_POST_FLOOR_MOUNTING"
+      "technicalName": "PARTS_LIST_POST_FLOOR_MOUNTING"
     },
     "options": [
       {
-        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE}",
+        "id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}",
         "position": 0,
         "name": "Zum Einbetonieren",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_CONCRETE.svg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE.svg}"
       },
       {
-        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE_PLUS}",
+        "id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}",
         "position": 1,
         "name": "Zum Einbetonieren (inkl. Beton)",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_CONCRETE_PLUS.svg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS.svg}"
       },
       {
-        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL}",
+        "id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}",
         "position": 2,
         "name": "Zum Aufdübeln",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL.jpg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL.jpg}"
       },
       {
-        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_DOWEL_L}",
+        "id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}",
         "position": 3,
         "name": "Zum Aufdübeln (L-Winkelform)",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL_L.jpg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L.jpg}"
       },
       {
-        "id": "{MD5:FENCE_POST_FLOOR_MOUNTING_SPIKE}",
+        "id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}",
         "position": 4,
         "name": "Erdspieß",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_SPIKE.jpg}"
+        "mediaId": "{MEDIA_FILE:property_group_option/PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE.jpg}"
       }
     ]
   }

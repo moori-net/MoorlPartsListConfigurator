@@ -9,6 +9,6 @@ class SalesChannelPartsListConfiguratorEntity extends PartsListConfiguratorEntit
 {
     public function getCmsPageId(): ?string
     {
-        return $this->cmsPageId ?: MoorlPartsListConfigurator::CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID;
+        return $this->cmsPageId ?: MoorlPartsListConfigurator::CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID;
     }
 }

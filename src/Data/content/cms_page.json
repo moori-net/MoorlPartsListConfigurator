@@ -2,7 +2,7 @@
     {
         "name": "Parts list configurator default",
         "type": "parts_list_configurator_detail",
-        "id": "{CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID}",
+        "id": "{CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID}",
         "sections": [
             {
                 "position": 0,

@@ -5,8 +5,6 @@ namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingBaseTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingMetaTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingPageTrait;
-use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingTrait;
-use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
@@ -20,6 +18,7 @@ class PartsListConfiguratorEntity extends Entity
     use EntityThingPageTrait;
     use EntityThingBaseTrait;
 
+    protected ?PropertyGroupOptionCollection $fixedOptions = null;
     protected ?PropertyGroupOptionCollection $globalOptions = null;
     protected ?PropertyGroupOptionCollection $secondOptions = null;
     protected ?PropertyGroupOptionCollection $logicalOptions = null;
@@ -28,25 +27,59 @@ class PartsListConfiguratorEntity extends Entity
     protected ?string $coverId = null;
     protected ?string $teaser = null;
     protected ?string $calculator = null;
+    protected string $firstStreamId;
+    protected string $secondStreamId;
+    protected string $thirdStreamId;
+    protected bool $active = false;
 
-    public function getCalculator(): ?string
+    public function getFixedOptions(): ?PropertyGroupOptionCollection
     {
-        return $this->calculator;
+        return $this->fixedOptions;
     }
 
-    public function setCalculator(?string $calculator): void
+    public function setFixedOptions(?PropertyGroupOptionCollection $fixedOptions): void
     {
-        $this->calculator = $calculator;
+        $this->fixedOptions = $fixedOptions;
     }
 
-    public function getTeaser(): ?string
+    public function getGlobalOptions(): ?PropertyGroupOptionCollection
     {
-        return $this->teaser;
+        return $this->globalOptions;
     }
 
-    public function setTeaser(?string $teaser): void
+    public function setGlobalOptions(?PropertyGroupOptionCollection $globalOptions): void
     {
-        $this->teaser = $teaser;
+        $this->globalOptions = $globalOptions;
+    }
+
+    public function getSecondOptions(): ?PropertyGroupOptionCollection
+    {
+        return $this->secondOptions;
+    }
+
+    public function setSecondOptions(?PropertyGroupOptionCollection $secondOptions): void
+    {
+        $this->secondOptions = $secondOptions;
+    }
+
+    public function getLogicalOptions(): ?PropertyGroupOptionCollection
+    {
+        return $this->logicalOptions;
+    }
+
+    public function setLogicalOptions(?PropertyGroupOptionCollection $logicalOptions): void
+    {
+        $this->logicalOptions = $logicalOptions;
+    }
+
+    public function getMedia(): ?PartsListConfiguratorMediaCollection
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?PartsListConfiguratorMediaCollection $media): void
+    {
+        $this->media = $media;
     }
 
     public function getCover(): ?PartsListConfiguratorMediaEntity
@@ -68,20 +101,55 @@ class PartsListConfiguratorEntity extends Entity
     {
         $this->coverId = $coverId;
     }
-    protected string $productLinePropertyId;
-    protected string $firstStreamId;
-    protected string $secondStreamId;
-    protected string $thirdStreamId;
-    protected bool $active = false;
 
-    public function getMedia(): ?PartsListConfiguratorMediaCollection
+    public function getTeaser(): ?string
     {
-        return $this->media;
+        return $this->teaser;
     }
 
-    public function setMedia(?PartsListConfiguratorMediaCollection $media): void
+    public function setTeaser(?string $teaser): void
     {
-        $this->media = $media;
+        $this->teaser = $teaser;
+    }
+
+    public function getCalculator(): ?string
+    {
+        return $this->calculator;
+    }
+
+    public function setCalculator(?string $calculator): void
+    {
+        $this->calculator = $calculator;
+    }
+
+    public function getFirstStreamId(): string
+    {
+        return $this->firstStreamId;
+    }
+
+    public function setFirstStreamId(string $firstStreamId): void
+    {
+        $this->firstStreamId = $firstStreamId;
+    }
+
+    public function getSecondStreamId(): string
+    {
+        return $this->secondStreamId;
+    }
+
+    public function setSecondStreamId(string $secondStreamId): void
+    {
+        $this->secondStreamId = $secondStreamId;
+    }
+
+    public function getThirdStreamId(): string
+    {
+        return $this->thirdStreamId;
+    }
+
+    public function setThirdStreamId(string $thirdStreamId): void
+    {
+        $this->thirdStreamId = $thirdStreamId;
     }
 
     public function getActive(): bool
@@ -92,75 +160,5 @@ class PartsListConfiguratorEntity extends Entity
     public function setActive(bool $active): void
     {
         $this->active = $active;
-    }
-
-    public function getLogicalOptions(): ?PropertyGroupOptionCollection
-    {
-        return $this->logicalOptions;
-    }
-
-    public function setLogicalOptions(?PropertyGroupOptionCollection $logicalOptions): void
-    {
-        $this->logicalOptions = $logicalOptions;
-    }
-
-    public function getFenceStreamId(): string
-    {
-        return $this->firstStreamId;
-    }
-
-    public function setFenceStreamId(string $firstStreamId): void
-    {
-        $this->firstStreamId = $firstStreamId;
-    }
-
-    public function getFencePostStreamId(): string
-    {
-        return $this->secondStreamId;
-    }
-
-    public function setFencePostStreamId(string $secondStreamId): void
-    {
-        $this->secondStreamId = $secondStreamId;
-    }
-
-    public function getFenceOtherStreamId(): string
-    {
-        return $this->thirdStreamId;
-    }
-
-    public function setFenceOtherStreamId(string $thirdStreamId): void
-    {
-        $this->thirdStreamId = $thirdStreamId;
-    }
-
-    public function getProductLinePropertyId(): string
-    {
-        return $this->productLinePropertyId;
-    }
-
-    public function setProductLinePropertyId(string $productLinePropertyId): void
-    {
-        $this->productLinePropertyId = $productLinePropertyId;
-    }
-
-    public function getOptions(): ?PropertyGroupOptionCollection
-    {
-        return $this->globalOptions;
-    }
-
-    public function setOptions(?PropertyGroupOptionCollection $globalOptions): void
-    {
-        $this->globalOptions = $globalOptions;
-    }
-
-    public function getSecondOptions(): ?PropertyGroupOptionCollection
-    {
-        return $this->secondOptions;
-    }
-
-    public function setSecondOptions(?PropertyGroupOptionCollection $secondOptions): void
-    {
-        $this->secondOptions = $secondOptions;
     }
 }

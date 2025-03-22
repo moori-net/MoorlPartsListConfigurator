@@ -1,9 +1,9 @@
 [
     {
-        "id": "{ID:PRODUCT_FENCE}",
+        "id": "{ID:PRODUCT_PARTS_LIST}",
         "active": true,
         "name": "Zaun",
-        "productNumber": "FENCE",
+        "productNumber": "PARTS_LIST",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:50|S}",
@@ -15,7 +15,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_FENCE}"
+                "id": "{ID:CATEGORY_PARTS_LIST}"
             }
         ],
         "cover": {
@@ -23,10 +23,10 @@
         }
     },
     {
-        "id": "{ID:PRODUCT_FENCE_POST}",
+        "id": "{ID:PRODUCT_PARTS_LIST_POST}",
         "active": true,
         "name": "Pfosten",
-        "productNumber": "FENCE_POST",
+        "productNumber": "PARTS_LIST_POST",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:20|S}",
@@ -38,7 +38,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_FENCE_POST}"
+                "id": "{ID:CATEGORY_PARTS_LIST_POST}"
             }
         ],
         "cover": {
@@ -46,10 +46,10 @@
         }
     },
     {
-        "id": "{ID:PRODUCT_FENCE_DOOR}",
+        "id": "{ID:PRODUCT_PARTS_LIST_DOOR}",
         "active": true,
         "name": "Tor",
-        "productNumber": "FENCE_DOOR",
+        "productNumber": "PARTS_LIST_DOOR",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:100|S}",
@@ -61,7 +61,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_FENCE_DOOR}"
+                "id": "{ID:CATEGORY_PARTS_LIST_DOOR}"
             }
         ],
         "cover": {

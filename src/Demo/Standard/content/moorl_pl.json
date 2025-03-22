@@ -1,0 +1,41 @@
+[
+  {
+    "id": "{ID:FC01}",
+    "firstStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST}",
+    "secondStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_POST}",
+    "thirdStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_OTHER}",
+    "coverId": "{ID:MEDIA_1}",
+    "active": true,
+    "name": "Demo Zaunkonfigurator 6/5/6",
+    "fixedOptions": [
+      {"id": "{MD5:LINE_656}"}
+    ],
+    "globalOptions": [
+      {"id": "{MD5:COLOR_RAL_6005}"},
+      {"id": "{MD5:COLOR_RAL_7016}"},
+      {"id": "{MD5:COLOR_NONE}"},
+      {"id": "{MD5:HEIGHT_600}"},
+      {"id": "{MD5:HEIGHT_800}"},
+      {"id": "{MD5:HEIGHT_1000}"},
+      {"id": "{MD5:HEIGHT_1200}"}
+    ],
+    "secondOptions": [
+      {"id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
+      {"id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"},
+      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}"},
+      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
+      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}"},
+      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}"},
+      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}"}
+    ],
+    "logicalOptions": [
+      {"id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}"},
+      {"id": "{MD5:PARTS_LIST_POST_TYPE_CORNER}"},
+      {"id": "{MD5:PARTS_LIST_LAYOUT_1}"},
+      {"id": "{MD5:PARTS_LIST_LAYOUT_2}"},
+      {"id": "{MD5:PARTS_LIST_LAYOUT_3}"},
+      {"id": "{MD5:PARTS_LIST_LAYOUT_4}"},
+      {"id": "{MD5:PARTS_LIST_LAYOUT_5}"}
+    ]
+  }
+]

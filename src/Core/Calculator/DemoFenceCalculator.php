@@ -18,20 +18,20 @@ class DemoFenceCalculator implements CalculatorInterface
     {
         return [
             'COLOR',
-            'FENCE_LAYOUT',
+            'PARTS_LIST_LAYOUT',
             'HEIGHT',
             'LENGTH',
-            'FENCE_POST_TYPE',
-            'FENCE_POST_MOUNTING',
-            'FENCE_POST_FLOOR_MOUNTING',
+            'PARTS_LIST_POST_TYPE',
+            'PARTS_LIST_POST_MOUNTING',
+            'PARTS_LIST_POST_FLOOR_MOUNTING',
         ];
     }
 
     public function getExpectedPropertyGroupOptions(): array
     {
         return [
-            'FENCE_POST_TYPE_SIDE',
-            'FENCE_POST_TYPE_CORNER',
+            'PARTS_LIST_POST_TYPE_SIDE',
+            'PARTS_LIST_POST_TYPE_CORNER',
         ];
     }
 
