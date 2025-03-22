@@ -25,12 +25,20 @@
             <tag name="shopware.entity.definition" entity="moorl_pl_global_option"/>
         </service>
 
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorLogicalOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_logical_option"/>
+        </service>
+
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFirstOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_first_option"/>
+        </service>
+
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorSecondOptionDefinition">
             <tag name="shopware.entity.definition" entity="moorl_pl_second_option"/>
         </service>
 
-        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorLogicalOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_pl_logical_option"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorThirdOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_third_option"/>
         </service>
 
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorMediaDefinition">

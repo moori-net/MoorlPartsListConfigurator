@@ -80,8 +80,10 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             (new ManyToOneAssociationField('cmsPage', 'cms_page_id', CmsPageDefinition::class))->addFlags(),
             (new ManyToManyAssociationField('fixedOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorFixedOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
             (new ManyToManyAssociationField('globalOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorGlobalOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new ManyToManyAssociationField('secondOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorSecondOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
             (new ManyToManyAssociationField('logicalOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorLogicalOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
+            (new ManyToManyAssociationField('firstOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorFirstOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
+            (new ManyToManyAssociationField('secondOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorSecondOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
+            (new ManyToManyAssociationField('thirdOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorThirdOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
             (new ManyToOneAssociationField('cover', 'parts_list_configurator_media_id', PartsListConfiguratorMediaDefinition::class, 'id'))->addFlags(new ApiAware()),
             (new OneToManyAssociationField('media', PartsListConfiguratorMediaDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
         ];

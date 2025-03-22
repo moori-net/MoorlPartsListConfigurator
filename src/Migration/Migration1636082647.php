@@ -102,6 +102,25 @@ SQL;
         $connection->executeStatement($sql);
 
         $sql = <<<SQL
+CREATE TABLE IF NOT EXISTS `moorl_pl_first_option` (
+    `moorl_pl_id` BINARY(16) NOT NULL,
+    `property_group_option_id` BINARY(16) NOT NULL,
+    
+    PRIMARY KEY (`moorl_pl_id`, `property_group_option_id`),
+    
+    CONSTRAINT `fk.moorl_pl_first_option.property_group_option_id`
+        FOREIGN KEY (`property_group_option_id`)
+        REFERENCES `property_group_option` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk.moorl_pl_first_option.moorl_pl_id`
+        FOREIGN KEY (`moorl_pl_id`)
+        REFERENCES `moorl_pl` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+SQL;
+        $connection->executeStatement($sql);
+
+        $sql = <<<SQL
 CREATE TABLE IF NOT EXISTS `moorl_pl_second_option` (
     `moorl_pl_id` BINARY(16) NOT NULL,
     `property_group_option_id` BINARY(16) NOT NULL,
@@ -113,6 +132,25 @@ CREATE TABLE IF NOT EXISTS `moorl_pl_second_option` (
         REFERENCES `property_group_option` (`id`)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk.moorl_pl_second_option.moorl_pl_id`
+        FOREIGN KEY (`moorl_pl_id`)
+        REFERENCES `moorl_pl` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+SQL;
+        $connection->executeStatement($sql);
+
+        $sql = <<<SQL
+CREATE TABLE IF NOT EXISTS `moorl_pl_third_option` (
+    `moorl_pl_id` BINARY(16) NOT NULL,
+    `property_group_option_id` BINARY(16) NOT NULL,
+    
+    PRIMARY KEY (`moorl_pl_id`, `property_group_option_id`),
+    
+    CONSTRAINT `fk.moorl_pl_third_option.property_group_option_id`
+        FOREIGN KEY (`property_group_option_id`)
+        REFERENCES `property_group_option` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk.moorl_pl_third_option.moorl_pl_id`
         FOREIGN KEY (`moorl_pl_id`)
         REFERENCES `moorl_pl` (`id`)
         ON DELETE CASCADE ON UPDATE CASCADE

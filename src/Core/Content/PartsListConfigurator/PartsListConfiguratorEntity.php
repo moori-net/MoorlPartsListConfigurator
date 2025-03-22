@@ -20,7 +20,9 @@ class PartsListConfiguratorEntity extends Entity
 
     protected ?PropertyGroupOptionCollection $fixedOptions = null;
     protected ?PropertyGroupOptionCollection $globalOptions = null;
+    protected ?PropertyGroupOptionCollection $firstOptions = null;
     protected ?PropertyGroupOptionCollection $secondOptions = null;
+    protected ?PropertyGroupOptionCollection $thirdOptions = null;
     protected ?PropertyGroupOptionCollection $logicalOptions = null;
     protected ?PartsListConfiguratorMediaCollection $media = null;
     protected ?PartsListConfiguratorMediaEntity $cover = null;
@@ -31,6 +33,26 @@ class PartsListConfiguratorEntity extends Entity
     protected string $secondStreamId;
     protected string $thirdStreamId;
     protected bool $active = false;
+
+    public function getFirstOptions(): ?PropertyGroupOptionCollection
+    {
+        return $this->firstOptions;
+    }
+
+    public function setFirstOptions(?PropertyGroupOptionCollection $firstOptions): void
+    {
+        $this->firstOptions = $firstOptions;
+    }
+
+    public function getThirdOptions(): ?PropertyGroupOptionCollection
+    {
+        return $this->thirdOptions;
+    }
+
+    public function setThirdOptions(?PropertyGroupOptionCollection $thirdOptions): void
+    {
+        $this->thirdOptions = $thirdOptions;
+    }
 
     public function getFixedOptions(): ?PropertyGroupOptionCollection
     {
