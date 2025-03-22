@@ -37,10 +37,34 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this.el.querySelectorAll('input[type=radio]').forEach((el) => {
             ['keyup', 'change', 'force'].forEach(evt => {
                     el.addEventListener(evt, () => {
+                        this._refreshForm();
                         this._loadHistory();
                         this._loadPartsList();
                     }, false);
             });
+        });
+    }
+
+    _refreshForm() {
+        this.options.propertyGroupConfig.forEach((group) => {
+            const groupEl = this.el.querySelector('[data-technical-name="' + group.technicalName + '"]');
+
+            if (group.hidden) {
+                groupEl.style.display = 'none';
+                return;
+            }
+
+            if (group.options) {
+                const moreEl = groupEl.querySelector('.product-detail-configurator-more');
+
+                group.options.forEach((option) => {
+                    const optionEl = this.el.querySelector('[data-technical-name="' + option.technicalName + '"]');
+
+                    if (optionEl.checked) {
+                        moreEl.innerHTML = '<hr>';
+                    }
+                });
+            }
         });
     }
 
