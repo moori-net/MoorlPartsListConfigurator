@@ -6,7 +6,7 @@ import querystring from 'query-string';
 export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     static options = {
         partsListConfiguratorId: null,
-        debug: false,
+        propertyGroupConfig: [],
         partsListUrl: null
     };
 
