@@ -27,7 +27,7 @@ class DemoFenceCalculator implements CalculatorInterface
         ];
     }
 
-    public function getOptionConfig(): array
+    public function getPropertyGroupConfig(): array
     {
         return [
             [

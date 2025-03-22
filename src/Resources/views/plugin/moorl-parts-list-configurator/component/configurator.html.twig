@@ -5,7 +5,10 @@
                 {% block buy_widget_configurator_groups %}
                     {% for group in configuratorSettings %}
                         {% block buy_widget_configurator_group %}
-                            <div class="product-detail-configurator-group">
+                            <div
+                                    class="product-detail-configurator-group"
+                                    data-technical-name="{{ group.translated.customFields.technicalName }}"
+                            >
                                 {% block buy_widget_configurator_group_title %}
                                     <div class="product-detail-configurator-group-title">
                                         {% block buy_widget_configurator_group_title_text %}
@@ -45,14 +48,17 @@
                                                 {% block buy_widget_configurator_option %}
                                                     <div class="product-detail-configurator-option">
                                                         {% block buy_widget_configurator_option_radio %}
-                                                            <input type="radio"
-                                                                   name="{{ group.id }}"
-                                                                   value="{{ option.id }}"
-                                                                   class="product-detail-configurator-option-input{% if isCombinableCls %} {{ isCombinableCls }}{% endif %}"
-                                                                   title="{{ optionIdentifier }}"
-                                                                   id="{{ optionIdentifier }}"
-                                                                   data-initiator="{{ initiator }}"
-                                                                   {% if isActive %}checked="checked"{% endif %}>
+                                                            <input
+                                                                    type="radio"
+                                                                    name="{{ group.id }}"
+                                                                    value="{{ option.id }}"
+                                                                    class="product-detail-configurator-option-input{% if isCombinableCls %} {{ isCombinableCls }}{% endif %}"
+                                                                    title="{{ optionIdentifier }}"
+                                                                    id="{{ optionIdentifier }}"
+                                                                    data-initiator="{{ initiator }}"
+                                                                    data-technical-name="{{ option.translated.customFields.technicalName }}"
+                                                                    {% if isActive %}checked="checked"{% endif %}
+                                                            >
 
                                                             {% block buy_widget_configurator_option_radio_label %}
                                                                 <label class="product-detail-configurator-option-label{% if isCombinableCls %} {{ isCombinableCls }}{% endif %} is-display-{{ displayType }}"

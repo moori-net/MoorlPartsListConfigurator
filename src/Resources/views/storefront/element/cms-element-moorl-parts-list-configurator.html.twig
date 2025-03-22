@@ -1,8 +1,11 @@
 {% set partsListConfigurator = page.partsListConfigurator %}
 
 <div class="cms-element-moorl-parts-list-configurator">
+    {{ dump(page.calculator.getPropertyGroupConfig) }}
+
     {% set config = {
-        partsListUrl: path('frontend.moorl.parts.list.configurator.parts.list', {partsListConfiguratorId: partsListConfigurator.id})
+        partsListUrl: path('frontend.moorl.parts.list.configurator.parts.list', {partsListConfiguratorId: partsListConfigurator.id}),
+        propertyGroupConfig: page.calculator.getPropertyGroupConfig
     } %}
 
     <form

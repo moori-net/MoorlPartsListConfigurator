@@ -11,7 +11,7 @@ interface CalculatorInterface
 {
     public function getName(): string;
     public function getExpectedPropertyGroups(): array;
-    public function getOptionConfig(): array;
+    public function getPropertyGroupConfig(): array;
     public function getExpectedPropertyGroupOptions(): array;
     public function calculate(
         Request $request,
