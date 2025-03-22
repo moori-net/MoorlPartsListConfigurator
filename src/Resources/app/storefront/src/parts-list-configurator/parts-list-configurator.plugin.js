@@ -45,6 +45,17 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         });
     }
 
+    _registerInputEvents() {
+        this.el.querySelectorAll('input[type=number]').forEach((el) => {
+            ['keyup', 'change', 'force'].forEach(evt => {
+                el.addEventListener(evt, () => {
+                    this._loadHistory();
+                    this._loadPartsList();
+                }, false);
+            });
+        });
+    }
+
     _refreshForm() {
         this.options.propertyGroupConfig.forEach((group) => {
             const groupEl = this.el.querySelector('[data-technical-name="' + group.technicalName + '"]');
@@ -61,11 +72,52 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                     const optionEl = this.el.querySelector('[data-technical-name="' + option.technicalName + '"]');
 
                     if (optionEl.checked) {
-                        moreEl.innerHTML = '<hr>';
+                        while(moreEl.firstChild) {
+                            moreEl.removeChild(moreEl.firstChild);
+                        }
+                        moreEl.appendChild(this._buildInputElements(option));
                     }
                 });
+
+                this._registerInputEvents();
             }
         });
+    }
+
+    _buildInputElements(option) {
+        const newEl = document.createElement("div");
+        const labelEl = document.createElement("label");
+
+        labelEl.innerText = option.name;
+
+        newEl.appendChild(labelEl);
+
+        option.elements.forEach((element) => {
+            const inputGroupEl = document.createElement("div");
+            const labelEl = document.createElement("span");
+            const inputEl = document.createElement("input");
+            const appendEl = document.createElement("span");
+
+            inputGroupEl.classList.add('input-group','mb-2');
+            labelEl.innerText = element.name;
+            labelEl.classList.add('input-group-text');
+            inputEl.type = element.type;
+            inputEl.name = element.name;
+            inputEl.value = this._filters[element.name] ?? '3000';
+            inputEl.min = element.min ?? '1000';
+            inputEl.step = element.step ?? '500';
+            inputEl.classList.add('form-control');
+            appendEl.innerText = element.unit ?? 'mm';
+            appendEl.classList.add('input-group-text');
+
+            inputGroupEl.appendChild(labelEl);
+            inputGroupEl.appendChild(inputEl);
+            inputGroupEl.appendChild(appendEl);
+
+            newEl.appendChild(inputGroupEl);
+        });
+
+        return newEl;
     }
 
     _loadPartsList() {
@@ -87,22 +139,16 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             logicalOptions: [],
         };
 
-        this.el.querySelectorAll('input[type=radio][data-initiator=globalOptions]').forEach((el) => {
+        this.el.querySelectorAll('input[type=radio]').forEach((el) => {
             if (el.checked) {
-                this._filters.globalOptions.push(el.value);
+                let initiator = el.dataset.initiator;
+
+                this._filters[initiator].push(el.value);
             }
         });
 
-        this.el.querySelectorAll('input[type=radio][data-initiator=secondOptions]').forEach((el) => {
-            if (el.checked) {
-                this._filters.secondOptions.push(el.value);
-            }
-        });
-
-        this.el.querySelectorAll('input[type=radio][data-initiator=logicalOptions]').forEach((el) => {
-            if (el.checked) {
-                this._filters.logicalOptions.push(el.value);
-            }
+        this.el.querySelectorAll('input[type=number]').forEach((el) => {
+            this._filters[el.name] = el.value;
         });
 
         const mapped = this._mapFilters(this._filters);
@@ -113,7 +159,6 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _setValuesFromUrl(params = {}) {
-
         for (const [key, value] of Object.entries(params)) {
             const ids = value ? value.split('|') : [];
 
