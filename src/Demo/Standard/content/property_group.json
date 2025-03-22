@@ -58,35 +58,28 @@
         "position": 0,
         "name": "1 Seite, 0 Ecken",
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_1.svg}",
-        "customFields": {"technicalName": "1;0"}
+        "customFields": {"technicalName": "PARTS_LIST_LAYOUT_1"}
       },
       {
         "id": "{MD5:PARTS_LIST_LAYOUT_2}",
         "position": 1,
         "name": "2 Seiten, 1 Ecke",
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_2.svg}",
-        "customFields": {"technicalName": "2;1"}
+        "customFields": {"technicalName": "PARTS_LIST_LAYOUT_2"}
       },
       {
         "id": "{MD5:PARTS_LIST_LAYOUT_3}",
         "position": 2,
         "name": "3 Seiten, 2 Ecken",
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_3.svg}",
-        "customFields": {"technicalName": "3;2"}
+        "customFields": {"technicalName": "PARTS_LIST_LAYOUT_3"}
       },
       {
         "id": "{MD5:PARTS_LIST_LAYOUT_4}",
         "position": 3,
         "name": "4 Seiten, 3 Ecken",
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}",
-        "customFields": {"technicalName": "4;3"}
-      },
-      {
-        "id": "{MD5:PARTS_LIST_LAYOUT_5}",
-        "position": 4,
-        "name": "4 Seiten, 4 Ecken",
-        "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}",
-        "customFields": {"technicalName": "4;4"}
+        "customFields": {"technicalName": "PARTS_LIST_LAYOUT_4"}
       }
     ]
   },

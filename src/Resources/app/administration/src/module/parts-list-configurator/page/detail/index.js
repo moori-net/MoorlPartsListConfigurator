@@ -39,7 +39,7 @@ Component.register('moorl-parts-list-configurator-detail', {
     },
 
     computed: {
-        ...mapPropertyErrors('item', ['name']),
+        ...mapPropertyErrors('item', ['name', 'calculator']),
 
         repository() {
             return this.repositoryFactory.create('moorl_pl');

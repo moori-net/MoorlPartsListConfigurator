@@ -48,7 +48,8 @@ class PartsListConfiguratorDefinition extends EntityDefinition
     public function getDefaults(): array
     {
         return [
-            'active' => false
+            'active' => false,
+            'calculator' => 'demo-fence',
         ];
     }
 

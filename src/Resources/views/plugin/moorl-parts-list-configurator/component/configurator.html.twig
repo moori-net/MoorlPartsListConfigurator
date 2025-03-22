@@ -6,23 +6,15 @@
                     {% for group in configuratorSettings %}
                         {% block buy_widget_configurator_group %}
                             <div class="product-detail-configurator-group">
-                                {% if group.displayType == 'select' %}
-                                    {# @deprecated tag:v6.7.0 - Template `select.html.twig` is deprecated. Use `storefront/component/buy-widget/configurator/select.html.twig` instead. #}
-                                    {% if feature('v6.7.0.0') %}
-                                        {% sw_include '@Storefront/storefront/component/buy-widget/configurator/select.html.twig' %}
-                                    {% else %}
-                                        {% sw_include '@Storefront/storefront/page/product-detail/configurator/select.html.twig' %}
-                                    {% endif %}
-                                {% else %}
-                                    {% block buy_widget_configurator_group_title %}
-                                        <div class="product-detail-configurator-group-title">
-                                            {% block buy_widget_configurator_group_title_text %}
-                                                {{ group.translated.name }}
-                                            {% endblock %}
-                                        </div>
-                                    {% endblock %}
+                                {% block buy_widget_configurator_group_title %}
+                                    <div class="product-detail-configurator-group-title">
+                                        {% block buy_widget_configurator_group_title_text %}
+                                            {{ group.translated.name }}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
 
-                                    {% block buy_widget_configurator_options %}
+                                {% block buy_widget_configurator_options %}
                                         <div class="product-detail-configurator-options">
                                             {% for option in group.options %}
                                                 {% if elementId is defined and elementId is not null %}
@@ -99,7 +91,6 @@
                                             {% endfor %}
                                         </div>
                                     {% endblock %}
-                                {% endif %}
                             </div>
                         {% endblock %}
                     {% endfor %}

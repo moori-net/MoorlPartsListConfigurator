@@ -78,6 +78,14 @@
                                 :isLoading="isLoading"
                                 :title="$tc('moorl-parts-list-configurator.cards.general')"
                         >
+                            <sw-text-field
+                                    :label="$tc('moorl-parts-list-configurator.properties.calculator')"
+                                    v-model:value="item.calculator"
+                                    required
+                                    validation="required"
+                                    :error="itemCalculatorError"
+                            />
+
                             <sw-entity-single-select
                                     :label="$tc('moorl-parts-list-configurator.properties.firstStream')"
                                     v-model:value="item.firstStreamId"

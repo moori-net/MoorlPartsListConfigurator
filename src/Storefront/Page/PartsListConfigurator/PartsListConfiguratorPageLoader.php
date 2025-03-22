@@ -4,6 +4,7 @@ namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
+use Moorl\PartsListConfigurator\Core\Calculator\CalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
@@ -23,11 +24,15 @@ class PartsListConfiguratorPageLoader
 {
     public const CRITERIA_STATE = 'moorl-parts-list-configurator-criteria';
 
+    /**
+     * @param CalculatorInterface[] $calulators
+     */
     public function __construct(
         private readonly GenericPageLoaderInterface $genericLoader,
         private readonly PartsListConfiguratorDetailRoute $partsListConfiguratorDetailRoute,
         private readonly AbstractProductListingRoute $productListingRoute,
-        private readonly Connection $connection
+        private readonly Connection $connection,
+        private readonly iterable $calulators
     )
     {
     }
@@ -87,6 +92,7 @@ class PartsListConfiguratorPageLoader
         $page->setPartsListConfigurator($partsListConfigurator);
         $page->setCmsPage($partsListConfigurator->getCmsPage());
         $page->setProducts($products);
+        $page->setCalculator($this->getCalculatorByName($partsListConfigurator->getCalculator()));
 
         $this->loadMetaData($page);
 
@@ -137,6 +143,15 @@ class PartsListConfiguratorPageLoader
         }
 
         return new AndFilter($filters);
+    }
+
+    private function getCalculatorByName(string $name): CalculatorInterface
+    {
+        foreach ($this->calulators as $calculator) {
+            if ($calculator->getName() === $name) {
+                return $calculator;
+            }
+        }
     }
 
     protected function getPropIds(Request $request, string $prop = "tag", ?array $defaultIds = null): array

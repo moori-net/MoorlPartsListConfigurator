@@ -29,7 +29,7 @@ class PartsListConfiguratorEntity extends Entity
     protected ?PartsListConfiguratorMediaEntity $cover = null;
     protected ?string $coverId = null;
     protected ?string $teaser = null;
-    protected ?string $calculator = null;
+    protected string $calculator;
     protected string $firstStreamId;
     protected string $secondStreamId;
     protected string $thirdStreamId;
@@ -140,12 +140,12 @@ class PartsListConfiguratorEntity extends Entity
         $this->teaser = $teaser;
     }
 
-    public function getCalculator(): ?string
+    public function getCalculator(): string
     {
         return $this->calculator;
     }
 
-    public function setCalculator(?string $calculator): void
+    public function setCalculator(string $calculator): void
     {
         $this->calculator = $calculator;
     }
