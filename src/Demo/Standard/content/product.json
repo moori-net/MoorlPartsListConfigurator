@@ -1,9 +1,9 @@
 [
     {
-        "id": "{ID:PRODUCT_PARTS_LIST}",
+        "id": "{ID:PRODUCT_FENCE_656}",
         "active": true,
-        "name": "Zaun",
-        "productNumber": "PARTS_LIST",
+        "name": "Zaun (6/5/6)",
+        "productNumber": "FENCE_656",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:50|S}",
@@ -20,13 +20,64 @@
         ],
         "cover": {
             "mediaId": "{MEDIA_FILE:product/fence.jpg}"
-        }
+        },
+        "properties": [
+            {"id": "{MD5:LINE_656}"}
+        ],
+        "configuratorSettings": [
+            {"id": "{ID:PRODUCT_FENCE_656.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}"},
+            {"id": "{ID:PRODUCT_FENCE_656.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}"},
+            {"id": "{ID:PRODUCT_FENCE_656.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_FENCE_656.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_FENCE_656.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}"},
+            {"id": "{ID:PRODUCT_FENCE_656.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}"},
+            {"id": "{ID:PRODUCT_FENCE_656.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}"},
+            {"id": "{ID:PRODUCT_FENCE_656.LENGTH_1000}", "optionId": "{MD5:LENGTH_1000}"},
+            {"id": "{ID:PRODUCT_FENCE_656.LENGTH_2500}", "optionId": "{MD5:LENGTH_2500}"}
+        ]
     },
     {
-        "id": "{ID:PRODUCT_PARTS_LIST_POST}",
+        "id": "{ID:PRODUCT_FENCE_868}",
         "active": true,
-        "name": "Pfosten",
-        "productNumber": "PARTS_LIST_POST",
+        "name": "Zaun (8/6/8)",
+        "productNumber": "FENCE_868",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:70|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_PARTS_LIST}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/fence.jpg}"
+        },
+        "properties": [
+            {"id": "{MD5:LINE_868}"}
+        ],
+        "configuratorSettings": [
+            {"id": "{ID:PRODUCT_FENCE_868.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}"},
+            {"id": "{ID:PRODUCT_FENCE_868.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}"},
+            {"id": "{ID:PRODUCT_FENCE_868.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_FENCE_868.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_FENCE_868.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}"},
+            {"id": "{ID:PRODUCT_FENCE_868.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}"},
+            {"id": "{ID:PRODUCT_FENCE_868.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}"},
+            {"id": "{ID:PRODUCT_FENCE_868.LENGTH_1000}", "optionId": "{MD5:LENGTH_1000}"},
+            {"id": "{ID:PRODUCT_FENCE_868.LENGTH_2500}", "optionId": "{MD5:LENGTH_2500}"}
+        ]
+    },
+    {
+        "id": "{ID:PRODUCT_POST_SMALL}",
+        "active": true,
+        "name": "Pfosten (Klein)",
+        "productNumber": "POST_SMALL",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:20|S}",
@@ -43,13 +94,76 @@
         ],
         "cover": {
             "mediaId": "{MEDIA_FILE:product/fence-post.jpg}"
-        }
+        },
+        "properties": [
+            {"id": "{MD5:LINE_656}"},
+            {"id": "{MD5:LINE_868}"}
+        ],
+        "configuratorSettings": [
+            {"id": "{ID:PRODUCT_POST_SMALL.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_MOUNTING_COVER}", "optionId": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_MOUNTING_CLAMPS}", "optionId": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_TYPE_SIDE}", "optionId": "{MD5:PARTS_LIST_POST_TYPE_SIDE}"},
+            {"id": "{ID:PRODUCT_POST_SMALL.PARTS_LIST_POST_TYPE_CORNER}", "optionId": "{MD5:PARTS_LIST_POST_TYPE_CORNER}"}
+        ]
     },
     {
-        "id": "{ID:PRODUCT_PARTS_LIST_DOOR}",
+        "id": "{ID:PRODUCT_POST_LARGE}",
         "active": true,
-        "name": "Tor",
-        "productNumber": "PARTS_LIST_DOOR",
+        "name": "Pfosten (Groß)",
+        "productNumber": "POST_LARGE",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:30|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_PARTS_LIST_POST}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/fence-post.jpg}"
+        },
+        "properties": [
+            {"id": "{MD5:LINE_656}"},
+            {"id": "{MD5:LINE_868}"}
+        ],
+        "configuratorSettings": [
+            {"id": "{ID:PRODUCT_POST_LARGE.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_MOUNTING_COVER}", "optionId": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_MOUNTING_CLAMPS}", "optionId": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}", "optionId": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_TYPE_SIDE}", "optionId": "{MD5:PARTS_LIST_POST_TYPE_SIDE}"},
+            {"id": "{ID:PRODUCT_POST_LARGE.PARTS_LIST_POST_TYPE_CORNER}", "optionId": "{MD5:PARTS_LIST_POST_TYPE_CORNER}"}
+        ]
+    },
+    {
+        "id": "{ID:PRODUCT_DOOR_SMALL}",
+        "active": true,
+        "name": "Tor (Klein)",
+        "productNumber": "DOOR_SMALL",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:100|S}",
@@ -66,6 +180,57 @@
         ],
         "cover": {
             "mediaId": "{MEDIA_FILE:product/fence-door.jpg}"
-        }
+        },
+        "properties": [
+            {"id": "{MD5:LINE_656}"},
+            {"id": "{MD5:LINE_868}"},
+            {"id": "{MD5:LENGTH_1000}"}
+        ],
+        "configuratorSettings": [
+            {"id": "{ID:PRODUCT_DOOR_SMALL.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}"},
+            {"id": "{ID:PRODUCT_DOOR_SMALL.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}"},
+            {"id": "{ID:PRODUCT_DOOR_SMALL.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_DOOR_SMALL.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_DOOR_SMALL.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}"},
+            {"id": "{ID:PRODUCT_DOOR_SMALL.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}"},
+            {"id": "{ID:PRODUCT_DOOR_SMALL.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}"}
+        ]
+    },
+    {
+        "id": "{ID:PRODUCT_DOOR_LARGE}",
+        "active": true,
+        "name": "Tor (Groß)",
+        "productNumber": "DOOR_LARGE",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:300|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_PARTS_LIST_DOOR}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/fence-door.jpg}"
+        },
+        "properties": [
+            {"id": "{MD5:LINE_656}"},
+            {"id": "{MD5:LINE_868}"},
+            {"id": "{MD5:LENGTH_2500}"}
+        ],
+        "configuratorSettings": [
+            {"id": "{ID:PRODUCT_DOOR_LARGE.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}"},
+            {"id": "{ID:PRODUCT_DOOR_LARGE.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}"},
+            {"id": "{ID:PRODUCT_DOOR_LARGE.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_DOOR_LARGE.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_DOOR_LARGE.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}"},
+            {"id": "{ID:PRODUCT_DOOR_LARGE.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}"},
+            {"id": "{ID:PRODUCT_DOOR_LARGE.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}"}
+        ]
     }
 ]

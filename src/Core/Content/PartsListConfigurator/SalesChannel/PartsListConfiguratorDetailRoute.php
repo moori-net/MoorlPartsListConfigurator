@@ -34,6 +34,7 @@ class PartsListConfiguratorDetailRoute
     {
         $criteria->setIds([$partsListConfiguratorId]);
 
+        $criteria->addAssociation('fixedOptions.group');
         $criteria->addAssociation('globalOptions.media');
         $criteria->addAssociation('globalOptions.group');
         $criteria->addAssociation('secondOptions.media');

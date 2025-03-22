@@ -48,7 +48,7 @@ class PartsListConfiguratorPageLoader
         }
 
         $optionIds = $partsListConfigurator->getFixedOptions()?->getIds() ?: [];
-        $optionIds = array_merge($optionIds, $this->getPropIds($request, 'globalOptions'));
+        $optionIds = array_merge(array_values($optionIds), $this->getPropIds($request, 'globalOptions'));
 
         $request->query->set('no-aggregations', 1);
         $request->query->set('properties', implode("|", $optionIds));
