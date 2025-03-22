@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use Moorl\PartsListConfigurator\MoorlPartsListConfigurator;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingBaseTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingMetaTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingPageTrait;
@@ -33,6 +34,11 @@ class PartsListConfiguratorEntity extends Entity
     protected string $secondStreamId;
     protected string $thirdStreamId;
     protected bool $active = false;
+
+    public function getCmsPageId(): ?string
+    {
+        return $this->cmsPageId ?: MoorlPartsListConfigurator::CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID;
+    }
 
     public function getFirstOptions(): ?PropertyGroupOptionCollection
     {

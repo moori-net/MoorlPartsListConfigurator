@@ -153,15 +153,15 @@
                         <moorl-properties
                                 v-if="active === 'general'"
                                 :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.secondOptions')"
-                                v-model:entityCollection="item.secondOptions"
+                                :title="$tc('moorl-parts-list-configurator.cards.logicalOptions')"
+                                v-model:entityCollection="item.logicalOptions"
                         />
 
                         <moorl-properties
                                 v-if="active === 'general'"
                                 :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.logicalOptions')"
-                                v-model:entityCollection="item.logicalOptions"
+                                :title="$tc('moorl-parts-list-configurator.cards.secondOptions')"
+                                v-model:entityCollection="item.secondOptions"
                         />
 
                         <sw-card
