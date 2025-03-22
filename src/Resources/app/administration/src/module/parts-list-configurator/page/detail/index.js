@@ -47,6 +47,7 @@ Component.register('moorl-parts-list-configurator-detail', {
 
         defaultCriteria() {
             const criteria = new Criteria();
+            criteria.getAssociation('fixedOptions')
             criteria.getAssociation('globalOptions')
             criteria.getAssociation('secondOptions')
             criteria.getAssociation('logicalOptions')

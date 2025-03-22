@@ -89,6 +89,7 @@
             <argument type="service" id="Shopware\Storefront\Page\GenericPageLoader"/>
             <argument type="service" id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute"/>
             <argument type="service" id="Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingRoute"/>
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
         </service>
 
         <service id="Moorl\PartsListConfigurator\Storefront\Controller\PartsListConfiguratorController" public="true">

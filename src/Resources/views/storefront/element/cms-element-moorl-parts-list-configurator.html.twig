@@ -11,7 +11,7 @@
             data-moorl-parts-list-configurator-options="{{ config|json_encode }}"
     >
         {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
-            configuratorSettings: partsListConfigurator.options.groupByPropertyGroups,
+            configuratorSettings: partsListConfigurator.globalOptions.groupByPropertyGroups,
             initiator: 'globalOptions'
         } %}
 

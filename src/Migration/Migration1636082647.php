@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS `moorl_pl` (
     `id` BINARY(16) NOT NULL,
     `parts_list_configurator_media_id` BINARY(16),
     `cms_page_id` BINARY(16),
-    `product_line_property_id` BINARY(16) NOT NULL,
     `first_stream_id` BINARY(16) NOT NULL,
     `second_stream_id` BINARY(16) NOT NULL,
     `third_stream_id` BINARY(16) NOT NULL,

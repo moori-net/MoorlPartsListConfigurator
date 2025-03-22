@@ -2,9 +2,12 @@
 
 namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 
+use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\Connection;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
+use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\AndFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
@@ -23,7 +26,8 @@ class PartsListConfiguratorPageLoader
     public function __construct(
         private readonly GenericPageLoaderInterface $genericLoader,
         private readonly PartsListConfiguratorDetailRoute $partsListConfiguratorDetailRoute,
-        private readonly AbstractProductListingRoute $productListingRoute
+        private readonly AbstractProductListingRoute $productListingRoute,
+        private readonly Connection $connection
     )
     {
     }
@@ -43,26 +47,26 @@ class PartsListConfiguratorPageLoader
             throw new PageNotFoundException($partsListConfigurator->getId());
         }
 
-        $request->query->set('no-aggregations', 1);
-
         $optionIds = $partsListConfigurator->getFixedOptions()?->getIds() ?: [];
         $optionIds = array_merge($optionIds, $this->getPropIds($request, 'globalOptions'));
+
+        $request->query->set('no-aggregations', 1);
+        $request->query->set('properties', implode("|", $optionIds));
 
         $criteria = new Criteria();
         $criteria->addState(self::CRITERIA_STATE);
         $criteria->addFilter(new AndFilter([
-            new EqualsAnyFilter('options.id', $optionIds),
             new OrFilter([
                 new AndFilter([
-                    new EqualsAnyFilter('options.id', $this->getPropIds($request, 'firstOptions')),
+                    $this->getPropertyFilter($request, 'firstOptions'),
                     new ContainsFilter('streamIds', $partsListConfigurator->getFirstStreamId())
                 ]),
                 new AndFilter([
-                    new EqualsAnyFilter('options.id', $this->getPropIds($request, 'secondOptions')),
+                    $this->getPropertyFilter($request, 'secondOptions'),
                     new ContainsFilter('streamIds', $partsListConfigurator->getSecondStreamId()),
                 ]),
                 new AndFilter([
-                    new EqualsAnyFilter('options.id', $this->getPropIds($request, 'thirdOptions')),
+                    $this->getPropertyFilter($request, 'thirdOptions'),
                     new ContainsFilter('streamIds', $partsListConfigurator->getThirdStreamId())
                 ]),
             ])
@@ -82,7 +86,6 @@ class PartsListConfiguratorPageLoader
         $page = PartsListConfiguratorPage::createFrom($page);
         $page->setPartsListConfigurator($partsListConfigurator);
         $page->setCmsPage($partsListConfigurator->getCmsPage());
-
         $page->setProducts($products);
 
         $this->loadMetaData($page);
@@ -108,6 +111,32 @@ class PartsListConfiguratorPageLoader
 
         $metaTitleParts = [$page->getPartsListConfigurator()->getTranslation('name')];
         $metaInformation->setMetaTitle(implode(' | ', $metaTitleParts));
+    }
+
+    private function getPropertyFilter(Request $request, string $prop = "tag"): AndFilter
+    {
+        $ids = $this->getPropIds($request, $prop);
+        if (empty($ids)) {
+            return new AndFilter([]);
+        }
+
+        $grouped = $this->connection->fetchAllAssociative(
+            'SELECT LOWER(HEX(property_group_id)) as property_group_id, LOWER(HEX(id)) as id FROM property_group_option WHERE id IN (:ids)',
+            ['ids' => Uuid::fromHexToBytesList($ids)],
+            ['ids' => ArrayParameterType::BINARY]
+        );
+
+        $grouped = FetchModeHelper::group($grouped, static fn ($row): string => (string) $row['id']);
+
+        $filters = [];
+        foreach ($grouped as $options) {
+            $filters[] = new OrFilter([
+                new EqualsAnyFilter('product.optionIds', $options),
+                new EqualsAnyFilter('product.propertyIds', $options),
+            ]);
+        }
+
+        return new AndFilter($filters);
     }
 
     protected function getPropIds(Request $request, string $prop = "tag", ?array $defaultIds = null): array

@@ -79,12 +79,6 @@
                                 :title="$tc('moorl-parts-list-configurator.cards.general')"
                         >
                             <sw-entity-single-select
-                                    :label="$tc('moorl-parts-list-configurator.properties.productLineProperty')"
-                                    v-model:value="item.productLinePropertyId"
-                                    entity="property_group_option"
-                            />
-
-                            <sw-entity-single-select
                                     :label="$tc('moorl-parts-list-configurator.properties.firstStream')"
                                     v-model:value="item.firstStreamId"
                                     entity="product_stream"
@@ -145,21 +139,28 @@
                         <moorl-properties
                                 v-if="active === 'general'"
                                 :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.mainProperties')"
+                                :title="$tc('moorl-parts-list-configurator.cards.fixedOptions')"
+                                v-model:entityCollection="item.fixedOptions"
+                        />
+
+                        <moorl-properties
+                                v-if="active === 'general'"
+                                :isLoading="isLoading"
+                                :title="$tc('moorl-parts-list-configurator.cards.globalOptions')"
                                 v-model:entityCollection="item.globalOptions"
                         />
 
                         <moorl-properties
                                 v-if="active === 'general'"
                                 :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.postProperties')"
+                                :title="$tc('moorl-parts-list-configurator.cards.secondOptions')"
                                 v-model:entityCollection="item.secondOptions"
                         />
 
                         <moorl-properties
                                 v-if="active === 'general'"
                                 :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.logicalProperties')"
+                                :title="$tc('moorl-parts-list-configurator.cards.logicalOptions')"
                                 v-model:entityCollection="item.logicalOptions"
                         />
 
