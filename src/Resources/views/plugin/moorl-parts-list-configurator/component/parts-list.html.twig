@@ -1,0 +1,14 @@
+<div class="parts-list">
+    {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig' with {
+        items: items,
+        options: {
+            enablePrices: true,
+            enableAddToCartAll: true,
+            enableAddToCartSingle: false,
+            enableSelection: false,
+            currencyIso: context.currency.isoCode,
+            discountValue: 10,
+            enableVariantSwitch: false
+        }
+    } %}
+</div>

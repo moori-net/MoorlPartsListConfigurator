@@ -1,7 +1,7 @@
 [
     {
-        "name": "Fence configurator default",
-        "type": "fence_configurator_detail",
+        "name": "Parts list configurator default",
+        "type": "parts_list_configurator_detail",
         "id": "{CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID}",
         "sections": [
             {
@@ -44,7 +44,7 @@
                                 "config": {
                                     "content": {
                                         "source": "mapped",
-                                        "value": "moorl_fc.name"
+                                        "value": "moorl_pl.name"
                                     },
                                     "verticalAlign": {
                                         "source": "static",
@@ -185,12 +185,12 @@
                         "id": "{ID:CMS_PAGE_FCD_BLOCK_2}",
                         "slots": [
                             {
-                                "type": "moorl-fence-configurator",
+                                "type": "moorl-parts-list-configurator",
                                 "slot": "slot-a",
                                 "config": {
-                                    "fenceConfigurator": {
+                                    "partsListConfigurator": {
                                         "source": "mapped",
-                                        "value": "moorl_fc.id"
+                                        "value": "moorl_pl.id"
                                     }
                                 },
                                 "id": "{ID:CMS_PAGE_FCD_SLOT_2}"
@@ -221,7 +221,7 @@
                                 "config": {
                                     "sliderItems": {
                                         "source": "mapped",
-                                        "value": "moorl_fc.media"
+                                        "value": "moorl_pl.media"
                                     },
                                     "navigationArrows": {
                                         "source": "static",

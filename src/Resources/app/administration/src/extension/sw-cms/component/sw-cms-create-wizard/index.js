@@ -4,7 +4,7 @@ Shopware.Component.override('sw-cms-create-wizard', {
     template,
 
     created() {
-        this.pageTypeNames['fence_configurator_detail'] = this.$tc('moorl-fence-configurator.general.fenceConfigurator');
-        this.pageTypeIcons['fence_configurator_detail'] = 'regular-3d';
+        this.pageTypeNames['parts_list_configurator_detail'] = this.$tc('moorl-parts-list-configurator.general.partsListConfigurator');
+        this.pageTypeIcons['parts_list_configurator_detail'] = 'regular-3d';
     },
 });

@@ -1,6 +1,6 @@
 {
-    "name": "moorl/fence-configurator",
-    "description": "Fence Configurator",
+    "name": "moorl/parts-list-configurator",
+    "description": "Parts list configurator",
     "version": "0.0.1",
     "license": "proprietary",
     "authors": [
@@ -14,19 +14,19 @@
     "type": "shopware-platform-plugin",
     "autoload": {
         "psr-4": {
-            "Moorl\\FenceConfigurator\\": "src/"
+            "Moorl\\PartsListConfigurator\\": "src/"
         }
     },
     "extra": {
-        "shopware-plugin-class": "Moorl\\FenceConfigurator\\MoorlFenceConfigurator",
+        "shopware-plugin-class": "Moorl\\PartsListConfigurator\\MoorlPartsListConfigurator",
         "copyright": "(c) by moori",
         "label": {
-            "de-DE": "Fence Configurator",
-            "en-GB": "Fence Configurator"
+            "de-DE": "Parts list configurator",
+            "en-GB": "Parts list configurator"
         },
         "description": {
-            "de-DE": "Fence Configurator",
-            "en-GB": "Fence Configurator"
+            "de-DE": "Parts list configurator",
+            "en-GB": "Parts list configurator"
         },
         "manufacturerLink": {
             "de-DE": "https://docs.moori.net/",

@@ -1,7 +1,7 @@
-import MoorlFenceConfiguratorPlugin from './fence-configurator/fence-configurator.plugin';
+import MoorlPartsListConfiguratorPlugin from './parts-list-configurator/parts-list-configurator.plugin';
 
 const PluginManager = window.PluginManager;
-PluginManager.register('MoorlFenceConfigurator', MoorlFenceConfiguratorPlugin, '[data-moorl-fence-configurator]');
+PluginManager.register('MoorlPartsListConfigurator', MoorlPartsListConfiguratorPlugin, '[data-moorl-parts-list-configurator]');
 
 if (module.hot) {
     module.hot.accept();

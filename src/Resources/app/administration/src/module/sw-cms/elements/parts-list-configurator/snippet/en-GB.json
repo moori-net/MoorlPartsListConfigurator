@@ -1,0 +1,9 @@
+{
+    "sw-cms": {
+        "elements": {
+            "moorl-parts-list-configurator": {
+                "name": "Parts list configurator"
+            }
+        }
+    }
+}

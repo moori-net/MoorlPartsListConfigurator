@@ -1,3 +1,3 @@
 import './extension';
-import './module/fence-configurator';
+import './module/parts-list-configurator';
 import './module/sw-cms';

@@ -1,0 +1,9 @@
+<?php declare(strict_types=1);
+
+namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Events;
+
+use Shopware\Core\Content\Product\Events\ProductListingResultEvent;
+
+class PartsListConfiguratorSuggestResultEvent extends ProductListingResultEvent
+{
+}

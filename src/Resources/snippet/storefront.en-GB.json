@@ -1,5 +1,5 @@
 {
-    "moorl-fence-configurator": {
-        "fenceConfigurators": "Fence configurators"
+    "moorl-parts-list-configurator": {
+        "partsListConfigurators": "Parts list configurators"
     }
 }

@@ -5,7 +5,7 @@ Shopware.Component.override('sw-cms-detail', {
         cmsPageTypes() {
             const cmsPageTypes = this.$super('cmsPageTypes');
 
-            cmsPageTypes['fence_configurator_detail'] = this.$tc('moorl-fence-configurator.general.fenceConfigurator');
+            cmsPageTypes['parts_list_configurator_detail'] = this.$tc('moorl-parts-list-configurator.general.partsListConfigurator');
 
             return cmsPageTypes;
         },
@@ -13,8 +13,8 @@ Shopware.Component.override('sw-cms-detail', {
         cmsTypeMappingEntities() {
             const cmsTypeMappingEntities = this.$super('cmsTypeMappingEntities');
 
-            cmsTypeMappingEntities['fence_configurator_detail'] = {
-                entity: 'moorl_fc',
+            cmsTypeMappingEntities['parts_list_configurator_detail'] = {
+                entity: 'moorl_pl',
                 mode: 'single',
             };
 
@@ -22,9 +22,9 @@ Shopware.Component.override('sw-cms-detail', {
         },
 
         cmsPageTypeSettings() {
-            if (this.page.type === 'fence_configurator_detail') {
+            if (this.page.type === 'parts_list_configurator_detail') {
                 return {
-                    entity: 'moorl_fc',
+                    entity: 'moorl_pl',
                     mode: 'single',
                 };
             }
@@ -37,7 +37,7 @@ Shopware.Component.override('sw-cms-detail', {
         onDemoEntityChange(demoEntityId) {
             const demoMappingType = this.cmsPageTypeSettings?.entity;
 
-            if (demoMappingType === 'moorl_fc') {
+            if (demoMappingType === 'moorl_pl') {
                 this.loadDemoCreator(demoEntityId);
                 return;
             }
@@ -52,7 +52,7 @@ Shopware.Component.override('sw-cms-detail', {
                 criteria.setIds([entityId]);
             }
 
-            const response = await this.repositoryFactory.create('moorl_fc').search(criteria);
+            const response = await this.repositoryFactory.create('moorl_pl').search(criteria);
             const demoEntity = response[0];
 
             this.demoEntityId = demoEntity.id;
@@ -63,7 +63,7 @@ Shopware.Component.override('sw-cms-detail', {
             console.log('onPageTypeChange');
             console.log(this.page.type);
 
-            if (this.page.type === 'fence_configurator_detail') {
+            if (this.page.type === 'parts_list_configurator_detail') {
                 this.processCreatorDetailType();
             }
 

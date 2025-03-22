@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Moorl\FenceConfigurator\Demo\Standard;
+namespace Moorl\PartsListConfigurator\Demo\Standard;
 
-use Moorl\FenceConfigurator\MoorlFenceConfigurator;
+use Moorl\PartsListConfigurator\MoorlPartsListConfigurator;
 use MoorlFoundation\Core\System\DataExtension;
 use MoorlFoundation\Core\System\DataInterface;
 
@@ -28,12 +28,12 @@ class DemoStandard extends DataExtension implements DataInterface
 
     public function getShopwareTables(): ?array
     {
-        return MoorlFenceConfigurator::SHOPWARE_TABLES;
+        return MoorlPartsListConfigurator::SHOPWARE_TABLES;
     }
 
     public function getPluginTables(): ?array
     {
-        return MoorlFenceConfigurator::PLUGIN_TABLES;
+        return MoorlPartsListConfigurator::PLUGIN_TABLES;
     }
 
     public function getPath(): string
@@ -43,11 +43,11 @@ class DemoStandard extends DataExtension implements DataInterface
 
     public function getPluginName(): string
     {
-        return MoorlFenceConfigurator::NAME;
+        return MoorlPartsListConfigurator::NAME;
     }
 
     public function getCreatedAt(): string
     {
-        return MoorlFenceConfigurator::DATA_CREATED_AT;
+        return MoorlPartsListConfigurator::DATA_CREATED_AT;
     }
 }

@@ -1,0 +1,31 @@
+<div class="sw-cms-el-moorl-default">
+    <div>
+        {{ $tc('sw-cms.elements.moorl-parts-list-configurator.name') }}
+    </div>
+
+    <template v-if="partsListConfigurator">
+        <div class="small">
+            {{ partsListConfigurator.translated.name }}
+        </div>
+
+        <router-link
+                class="sw-button"
+                target="_blank"
+                rel="noopener"
+                :to="{ name: 'moorl.parts.list.configurator.detail', params: { id: partsListConfigurator.id } }"
+        >
+            {{ $tc('global.default.edit') }}
+        </router-link>
+    </template>
+
+    <template v-else>
+        <router-link
+                class="sw-button"
+                target="_blank"
+                rel="noopener"
+                :to="{ name: 'moorl.parts.list.configurator.list' }"
+        >
+            {{ $tc('global.default.add') }}
+        </router-link>
+    </template>
+</div>

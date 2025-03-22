@@ -130,8 +130,8 @@
       "technicalName": "FENCE_POST_TYPE"
     },
     "options": [
-      {"id": "{MD5:FENCE_POST_TYPE_SIDE}", "position": 0, "name": "Seite", "customFields": {"technicalName": "SIDE"}},
-      {"id": "{MD5:FENCE_POST_TYPE_CORNER}", "position": 1, "name": "Ecke", "customFields": {"technicalName": "CORNER"}}
+      {"id": "{MD5:FENCE_POST_TYPE_SIDE}", "position": 0, "name": "Seite", "customFields": {"technicalName": "FENCE_POST_TYPE_SIDE"}},
+      {"id": "{MD5:FENCE_POST_TYPE_CORNER}", "position": 1, "name": "Ecke", "customFields": {"technicalName": "FENCE_POST_TYPE_CORNER"}}
     ]
   },
   {

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Moorl\FenceConfigurator\Core\Content\Product\SalesChannel;
+namespace Moorl\PartsListConfigurator\Core\Content\Product\SalesChannel;
 
-use Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator\FenceConfiguratorPageLoader;
+use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
 use Shopware\Core\System\SalesChannel\Event\SalesChannelProcessCriteriaEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -18,7 +18,7 @@ class ProductSubscriber implements EventSubscriberInterface
     public function processCriteria(SalesChannelProcessCriteriaEvent $event): void
     {
         $criteria = $event->getCriteria();
-        if (!$criteria->hasState(FenceConfiguratorPageLoader::CRITERIA_STATE)) {
+        if (!$criteria->hasState(PartsListConfiguratorPageLoader::CRITERIA_STATE)) {
             return;
         }
 

@@ -1,17 +1,17 @@
 {
     "sw-seo-url-template-card": {
         "routeNames": {
-            "frontend-moorl-fence-configurator-detail": "Fence configurator"
+            "frontend-moorl-parts-list-configurator-detail": "Parts list configurator"
         }
     },
     "global": {
         "entities": {
-            "moorl_fc": "Fence configurator"
+            "moorl_pl": "Parts list configurator"
         }
     },
-    "moorl-fence-configurator": {
+    "moorl-parts-list-configurator": {
         "general": {
-            "fenceConfigurator": "Fence configurator"
+            "partsListConfigurator": "Parts list configurator"
         },
         "notification": {
             "deleteCreatorTypeError": "This type cannot be removed because there are active assignments or the type is a default value."

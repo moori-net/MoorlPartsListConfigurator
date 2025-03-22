@@ -1,0 +1,32 @@
+{% set partsListConfigurator = page.partsListConfigurator %}
+
+<div class="cms-element-moorl-parts-list-configurator">
+    {% set config = {
+        partsListUrl: path('frontend.moorl.parts.list.configurator.parts.list', {partsListConfiguratorId: partsListConfigurator.id})
+    } %}
+
+    <form
+            action="{{ path('frontend.moorl.parts.list.configurator.parts.list', {partsListConfiguratorId: partsListConfigurator.id}) }}"
+            data-moorl-parts-list-configurator="true"
+            data-moorl-parts-list-configurator-options="{{ config|json_encode }}"
+    >
+        {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
+            configuratorSettings: partsListConfigurator.options.groupByPropertyGroups,
+            initiator: 'globalOptions'
+        } %}
+
+        {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
+            configuratorSettings: partsListConfigurator.secondOptions.groupByPropertyGroups,
+            initiator: 'secondOptions'
+        } %}
+
+        {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
+            configuratorSettings: partsListConfigurator.logicalOptions.groupByPropertyGroups,
+            initiator: 'logicalOptions'
+        } %}
+    </form>
+
+    <hr>
+
+    <div id="partsList"></div>
+</div>

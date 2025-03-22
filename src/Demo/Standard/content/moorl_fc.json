@@ -2,13 +2,13 @@
   {
     "id": "{ID:FC01}",
     "productLinePropertyId": "{MD5:LINE_656}",
-    "fenceStreamId": "{ID:STREAM_CATEGORY_FENCE}",
-    "fencePostStreamId": "{ID:STREAM_CATEGORY_FENCE_POST}",
-    "fenceOtherStreamId": "{ID:STREAM_CATEGORY_FENCE_OTHER}",
+    "firstStreamId": "{ID:STREAM_CATEGORY_FENCE}",
+    "secondStreamId": "{ID:STREAM_CATEGORY_FENCE_POST}",
+    "thirdStreamId": "{ID:STREAM_CATEGORY_FENCE_OTHER}",
     "coverId": "{ID:MEDIA_1}",
     "active": true,
     "name": "Demo Zaunkonfigurator 6/5/6",
-    "options": [
+    "globalOptions": [
       {"id": "{MD5:COLOR_RAL_6005}"},
       {"id": "{MD5:COLOR_RAL_7016}"},
       {"id": "{MD5:COLOR_NONE}"},
@@ -17,7 +17,7 @@
       {"id": "{MD5:HEIGHT_1000}"},
       {"id": "{MD5:HEIGHT_1200}"}
     ],
-    "postOptions": [
+    "secondOptions": [
       {"id": "{MD5:FENCE_POST_MOUNTING_COVER}"},
       {"id": "{MD5:FENCE_POST_MOUNTING_CLAMPS}"},
       {"id": "{MD5:FENCE_POST_FLOOR_MOUNTING_CONCRETE}"},

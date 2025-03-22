@@ -11,17 +11,17 @@
       }
     },
     "key": "standard",
-    "entity": "moorl_fc",
+    "entity": "moorl_pl",
     "active": true,
     "fields": [
       {
-        "field": "moorl_fc.id",
+        "field": "moorl_pl.id",
         "order": "asc",
         "priority": 0,
         "naturalSorting": 0
       },
       {
-        "field": "moorl_fc.name",
+        "field": "moorl_pl.name",
         "order": "asc",
         "priority": 1,
         "naturalSorting": 0

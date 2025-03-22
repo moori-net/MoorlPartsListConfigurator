@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Moorl\FenceConfigurator\Data;
+namespace Moorl\PartsListConfigurator\Data;
 
-use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition;
-use Moorl\FenceConfigurator\Core\Content\FenceConfigurator\Seo\FenceConfiguratorSeoUrlRoute;
-use Moorl\FenceConfigurator\MoorlFenceConfigurator;
+use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition;
+use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\Seo\PartsListConfiguratorSeoUrlRoute;
+use Moorl\PartsListConfigurator\MoorlPartsListConfigurator;
 use MoorlFoundation\Core\System\DataExtension;
 use MoorlFoundation\Core\System\DataInterface;
 
@@ -20,22 +20,22 @@ class Data extends DataExtension implements DataInterface
 
     public function getShopwareTables(): ?array
     {
-        return MoorlFenceConfigurator::SHOPWARE_TABLES;
+        return MoorlPartsListConfigurator::SHOPWARE_TABLES;
     }
 
     public function getPluginTables(): ?array
     {
-        return MoorlFenceConfigurator::PLUGIN_TABLES;
+        return MoorlPartsListConfigurator::PLUGIN_TABLES;
     }
 
     public function getPluginName(): string
     {
-        return MoorlFenceConfigurator::NAME;
+        return MoorlPartsListConfigurator::NAME;
     }
 
     public function getCreatedAt(): string
     {
-        return MoorlFenceConfigurator::DATA_CREATED_AT;
+        return MoorlPartsListConfigurator::DATA_CREATED_AT;
     }
 
     public function getName(): string
@@ -56,10 +56,10 @@ class Data extends DataExtension implements DataInterface
     public function getLocalReplacers(): array
     {
         return [
-            '{CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID}' => MoorlFenceConfigurator::CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID,
-            '{SEO_ROUTE_NAME}' => FenceConfiguratorSeoUrlRoute::ROUTE_NAME,
-            '{SEO_DEFAULT_TEMPLATE}' => FenceConfiguratorSeoUrlRoute::DEFAULT_TEMPLATE,
-            '{MAIN_ENTITY}' => FenceConfiguratorDefinition::ENTITY_NAME,
+            '{CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID}' => MoorlPartsListConfigurator::CMS_PAGE_FENCE_CONFIGURATOR_DEFAULT_ID,
+            '{SEO_ROUTE_NAME}' => PartsListConfiguratorSeoUrlRoute::ROUTE_NAME,
+            '{SEO_DEFAULT_TEMPLATE}' => PartsListConfiguratorSeoUrlRoute::DEFAULT_TEMPLATE,
+            '{MAIN_ENTITY}' => PartsListConfiguratorDefinition::ENTITY_NAME,
         ];
     }
 

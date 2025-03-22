@@ -9,86 +9,90 @@
 
     <services>
         <!-- Entities -->
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_fc"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorTranslationDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_fc_translation"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_translation"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_fc_option"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFixedOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_fixed_option"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorPostOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_fc_post_option"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorGlobalOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_global_option"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorLogicalOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_fc_logical_option"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorSecondOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_second_option"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorMediaDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_fc_media"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorLogicalOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_logical_option"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\PropertyGroupOption\PropertyGroupOptionExtension">
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorMediaDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_media"/>
+        </service>
+
+        <service id="Moorl\PartsListConfigurator\Core\Content\PropertyGroupOption\PropertyGroupOptionExtension">
             <tag name="shopware.entity.extension"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\SalesChannelFenceConfiguratorDefinition">
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorDefinition">
             <tag name="shopware.sales_channel.entity.definition"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorListing">
-            <argument type="service" id="sales_channel.moorl_fc.repository"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorListing">
+            <argument type="service" id="sales_channel.moorl_pl.repository"/>
 
             <tag name="moorl.foundation.entity_suggest" priority="0"/>
             <tag name="moorl.foundation.entity_search" priority="0"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\Product\SalesChannel\ProductSubscriber">
+        <service id="Moorl\PartsListConfigurator\Core\Content\Product\SalesChannel\ProductSubscriber">
             <tag name="kernel.event_subscriber"/>
         </service>
 
         <!-- SEO -->
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\DataAbstractionLayer\FenceConfiguratorIndexer">
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\DataAbstractionLayer\PartsListConfiguratorIndexer">
             <argument type="service" id="Doctrine\DBAL\Connection"/>
             <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory"/>
-            <argument type="service" id="moorl_fc.repository"/>
+            <argument type="service" id="moorl_pl.repository"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="MoorlFoundation\Core\Framework\DataAbstractionLayer\Indexing\HtmlContentUpdater"/>
 
             <tag name="shopware.entity_indexer"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\Seo\FenceConfiguratorSeoUrlRoute">
-            <argument type="service" id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\Seo\PartsListConfiguratorSeoUrlRoute">
+            <argument type="service" id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition"/>
 
             <tag name="shopware.seo_url.route"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\Seo\SeoUrlUpdateListener">
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\Seo\SeoUrlUpdateListener">
             <argument type="service" id="Shopware\Core\Content\Seo\SeoUrlUpdater"/>
 
             <tag name="kernel.event_subscriber"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorDetailRoute" public="true">
-            <argument type="service" id="sales_channel.moorl_fc.repository"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute" public="true">
+            <argument type="service" id="sales_channel.moorl_pl.repository"/>
             <argument type="service" id="Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoader"/>
-            <argument type="service" id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\FenceConfiguratorDefinition"/>
+            <argument type="service" id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator\FenceConfiguratorPageLoader">
+        <service id="Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader">
             <argument type="service" id="Shopware\Storefront\Page\GenericPageLoader"/>
-            <argument type="service" id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\FenceConfiguratorDetailRoute"/>
+            <argument type="service" id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute"/>
             <argument type="service" id="Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingRoute"/>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Storefront\Controller\FenceConfiguratorController" public="true">
-            <argument type="service" id="Moorl\FenceConfigurator\Storefront\Page\FenceConfigurator\FenceConfiguratorPageLoader"/>
+        <service id="Moorl\PartsListConfigurator\Storefront\Controller\PartsListConfiguratorController" public="true">
+            <argument type="service" id="Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader"/>
 
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
@@ -98,7 +102,7 @@
             </call>
         </service>
 
-        <service id="Moorl\FenceConfigurator\Core\Content\FenceConfigurator\SalesChannel\Listing\FenceConfiguratorListingFeaturesSubscriber">
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Listing\PartsListConfiguratorListingFeaturesSubscriber">
             <argument type="service" id="MoorlFoundation\Core\Service\SortingService"/>
 
             <tag name="kernel.event_subscriber"/>

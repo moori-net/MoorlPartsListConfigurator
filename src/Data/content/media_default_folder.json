@@ -1,11 +1,11 @@
 [
   {
     "id": "{ID:MAIN_ENTITY_CFG}",
-    "entity": "moorl_fc",
+    "entity": "moorl_pl",
     "associationFields": [],
     "folder": {
       "id":  "{ID:MAIN_ENTITY_FOLDER}",
-      "name": "moorl_fc",
+      "name": "moorl_pl",
       "configuration": {
         "id": "{ID:MAIN_ENTITY_FOLDER_CONFIG}"
       },

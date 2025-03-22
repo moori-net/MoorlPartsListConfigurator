@@ -1,1 +1,1 @@
-import './fence-configurator';
+import './parts-list-configurator';

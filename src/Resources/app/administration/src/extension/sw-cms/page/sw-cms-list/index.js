@@ -4,8 +4,8 @@ Shopware.Component.override('sw-cms-list', {
             const sortPageTypes = this.$super('sortPageTypes');
 
             sortPageTypes.push({
-                value: 'fence_configurator_detail',
-                name: this.$tc('moorl-fence-configurator.general.fenceConfigurator')
+                value: 'parts_list_configurator_detail',
+                name: this.$tc('moorl-parts-list-configurator.general.partsListConfigurator')
             });
 
             return sortPageTypes;
@@ -14,7 +14,7 @@ Shopware.Component.override('sw-cms-list', {
         pageTypes() {
             const pageTypes = this.$super('pageTypes');
 
-            pageTypes['fence_configurator_detail'] = this.$tc('moorl-fence-configurator.general.fenceConfigurator');
+            pageTypes['parts_list_configurator_detail'] = this.$tc('moorl-parts-list-configurator.general.partsListConfigurator');
 
             return pageTypes;
         },
