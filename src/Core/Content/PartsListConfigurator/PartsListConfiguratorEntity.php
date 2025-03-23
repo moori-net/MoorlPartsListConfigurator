@@ -28,11 +28,6 @@ class PartsListConfiguratorEntity extends Entity
     protected ?PartsListConfiguratorMediaCollection $media = null;
     protected ?PartsListConfiguratorMediaEntity $cover = null;
 
-    public function getCmsPageId(): ?string
-    {
-        return $this->cmsPageId ?: MoorlPartsListConfigurator::CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID;
-    }
-
     public function getActive(): bool
     {
         return $this->active;

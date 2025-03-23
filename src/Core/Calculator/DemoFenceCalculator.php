@@ -14,6 +14,36 @@ class DemoFenceCalculator implements CalculatorInterface
         return 'demo-fence';
     }
 
+    public function getLogicalConfigurator(
+        Request $request,
+        SalesChannelContext $salesChannelContext,
+        PartsListConfiguratorEntity $partsListConfigurator
+    )
+    {
+        $groupTechnicalName = $request->query->get('group');
+        if (!$groupTechnicalName) {
+            return null;
+        }
+
+        $group = current(array_filter(
+            $this->getPropertyGroupConfig(),
+            fn($item) => $item['technicalName'] === $groupTechnicalName
+        ));
+        if (!$group) {
+            return null;
+        }
+
+        $optionTechnicalName = $partsListConfigurator->findOptionTechnicalName($request->query->get('group'));
+        if (!$optionTechnicalName) {
+            return null;
+        }
+
+        return current(array_filter(
+            $group['options'],
+            fn($item) => $item['technicalName'] === $optionTechnicalName
+        ));
+    }
+
     public function getExpectedPropertyGroups(): array
     {
         return [

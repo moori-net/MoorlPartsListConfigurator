@@ -5,8 +5,8 @@ namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Moorl\PartsListConfigurator\Core\Calculator\CalculatorInterface;
-use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterDefinition;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
+use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
@@ -47,6 +47,7 @@ class PartsListConfiguratorPageLoader
         
         $criteria = new Criteria();
         $result = $this->partsListConfiguratorDetailRoute->load($partsListConfiguratorId, $request, $context, $criteria);
+        /** @var SalesChannelPartsListConfiguratorEntity $partsListConfigurator */
         $partsListConfigurator = $result->getPartsListConfigurator();
 
         if (!$partsListConfigurator->getActive()) {
@@ -71,13 +72,7 @@ class PartsListConfiguratorPageLoader
                 if ($filter->getLogical()) {
                     continue;
                 }
-
                 $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
-
-                if ($filter->getFixed() && $partsListConfigurator->getPartsListConfiguratorProductStreams()->count() === count($filter->getPartsListConfiguratorProductStreamIds())) {
-                    $request->query->set('properties', implode('|', $optionIds));
-                    continue;
-                }
 
                 if (in_array($partsListConfiguratorProductStream->getId(), $filter->getPartsListConfiguratorProductStreamIds())) {
                     $subFilters[] = $this->getPropertyFilter($request, $optionIds, 'options', $filter->getFixed());
@@ -89,7 +84,7 @@ class PartsListConfiguratorPageLoader
 
         $criteria = new Criteria();
         $criteria->addState(self::CRITERIA_STATE);
-        $criteria->addFilter(new AndFilter([
+        $criteria->addPostFilter(new AndFilter([
             new OrFilter($mainFilters)
         ]));
 
@@ -111,6 +106,8 @@ class PartsListConfiguratorPageLoader
         $page->setCalculator($this->getCalculatorByName($partsListConfigurator->getCalculator()));
 
         $this->loadMetaData($page);
+
+        $partsListConfigurator->mergeCurrentOptionIds($this->getPropIds($request, 'options'));
 
         return $page;
     }

@@ -5,8 +5,10 @@
                 {% for group in configuratorSettings %}
                     {% block buy_widget_configurator_group %}
                         <div
-                                class="product-detail-configurator-group"
+                                class="js-group product-detail-configurator-group"
+                                data-identifier="{{ identifier }}"
                                 data-technical-name="{{ group.translated.customFields.technicalName }}"
+                                data-logical="{{ logical }}"
                         >
                             {% block buy_widget_configurator_group_title %}
                                 <div class="product-detail-configurator-group-title">
@@ -54,7 +56,7 @@
                                                             class="product-detail-configurator-option-input{% if isCombinableCls %} {{ isCombinableCls }}{% endif %}"
                                                             title="{{ optionIdentifier }}"
                                                             id="{{ optionIdentifier }}"
-                                                            data-initiator="{{ initiator }}"
+                                                            data-logical="{{ logical }}"
                                                             data-technical-name="{{ option.translated.customFields.technicalName }}"
                                                             {% if isActive %}checked="checked"{% endif %}
                                                     >
@@ -97,7 +99,9 @@
                                 </div>
                             {% endblock %}
 
-                            <div class="product-detail-configurator-more"></div>
+                            {% if logical %}
+                                <div class="js-logical-configurator">Loading...</div>
+                            {% endif %}
                         </div>
                     {% endblock %}
                 {% endfor %}

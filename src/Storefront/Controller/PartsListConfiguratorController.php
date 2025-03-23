@@ -20,9 +20,9 @@ class PartsListConfiguratorController extends StorefrontController
     }
 
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}', name: 'frontend.moorl.parts.list.configurator.detail', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
-    public function detail(SalesChannelContext $context, Request $request): Response
+    public function detail(SalesChannelContext $salesChannelContext, Request $request): Response
     {
-        $page = $this->partsListConfiguratorPageLoader->load($request, $context);
+        $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/page/content/parts-list-configurator-detail.html.twig', [
             'page' => $page
@@ -30,9 +30,9 @@ class PartsListConfiguratorController extends StorefrontController
     }
 
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/parts-list', name: 'frontend.moorl.parts.list.configurator.parts.list', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
-    public function partsList(SalesChannelContext $context, Request $request): Response
+    public function partsList(SalesChannelContext $salesChannelContext, Request $request): Response
     {
-        $page = $this->partsListConfiguratorPageLoader->load($request, $context);
+        $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
         $items = new ProductBuyListItemCollection();
 
@@ -49,6 +49,17 @@ class PartsListConfiguratorController extends StorefrontController
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/parts-list.html.twig', [
             'items' => $items
+        ]);
+    }
+
+    #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/logical-configurator', name: 'frontend.moorl.parts.list.configurator.logical.configurator', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
+    public function logicalConfigurator(SalesChannelContext $salesChannelContext, Request $request): Response
+    {
+        $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
+
+        return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator.html.twig', [
+            'page' => $page,
+            'logicalConfigurator' => $page->getCalculator()->getLogicalConfigurator($request, $salesChannelContext, $page->getPartsListConfigurator()),
         ]);
     }
 }

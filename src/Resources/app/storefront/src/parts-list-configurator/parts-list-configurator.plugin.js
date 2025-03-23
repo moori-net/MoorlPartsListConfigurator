@@ -7,19 +7,19 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     static options = {
         partsListConfiguratorId: null,
         propertyGroupConfig: [],
-        partsListUrl: null
+        partsListUrl: null,
+        logicalConfiguratorUrl: null,
     };
 
     init() {
         this._urlFilterParams = querystring.parse(HistoryUtil.getSearch());
-        console.log(this._urlFilterParams);
-
         this._client = new HttpClient(window.accessKey, window.contextToken);
         this._filters = {
             options: []
         };
 
         this._partsListEl = document.getElementById('partsList');
+        this._formEl = this.el.querySelector('form');
 
         this._setFilterState();
         this._registerEvents();
@@ -32,19 +32,22 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _registerEvents() {
-        this.el.querySelectorAll('input[type=radio]').forEach((el) => {
-            ['keyup', 'change', 'force'].forEach(evt => {
+        this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
+            groupEl.querySelectorAll('input[type=radio]').forEach((el) => {
+                ['keyup', 'change', 'force'].forEach(evt => {
                     el.addEventListener(evt, () => {
-                        this._refreshForm();
+                        this._loadLogicalConfigurator(groupEl);
+
                         this._loadHistory();
                         this._loadPartsList();
                     }, false);
+                });
             });
         });
     }
 
     _registerInputEvents() {
-        this.el.querySelectorAll('input[type=number]').forEach((el) => {
+        this._formEl.querySelectorAll('input[type=number]').forEach((el) => {
             ['keyup', 'change', 'force'].forEach(evt => {
                 el.addEventListener(evt, () => {
                     this._loadHistory();
@@ -54,33 +57,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         });
     }
 
-    _refreshForm() {
-        this.options.propertyGroupConfig.forEach((group) => {
-            const groupEl = this.el.querySelector('[data-technical-name="' + group.technicalName + '"]');
-
-            if (group.hidden) {
-                groupEl.style.display = 'none';
-                return;
-            }
-
-            if (group.options) {
-                const moreEl = groupEl.querySelector('.product-detail-configurator-more');
-
-                group.options.forEach((option) => {
-                    const optionEl = this.el.querySelector('[data-technical-name="' + option.technicalName + '"]');
-
-                    if (optionEl.checked) {
-                        while(moreEl.firstChild) {
-                            moreEl.removeChild(moreEl.firstChild);
-                        }
-                        moreEl.appendChild(this._buildInputElements(option));
-                    }
-                });
-
-                this._registerInputEvents();
-            }
-        });
-    }
+    _refreshForm(el) {}
 
     _buildInputElements(option) {
         const newEl = document.createElement("div");
@@ -123,9 +100,26 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         let query = querystring.stringify(mapped);
 
-        this._client.get(this.el.action + "?" + query, response => {
+        this._client.get(this.options.partsListUrl + "?" + query, response => {
             this._partsListEl.innerHTML = response;
+            window.PluginManager.initializePlugins();
+        });
+    }
 
+    _loadLogicalConfigurator(groupEl) {
+        if (!groupEl.dataset.logical) {
+            return;
+        }
+
+        this._filters.group = groupEl.dataset.technicalName;
+
+        const mapped = this._mapFilters(this._filters);
+        const logicalConfiguratorEl = groupEl.querySelector('.js-logical-configurator');
+
+        let query = querystring.stringify(mapped);
+
+        this._client.get(this.options.logicalConfiguratorUrl + "?" + query, response => {
+            logicalConfiguratorEl.innerHTML = response;
             window.PluginManager.initializePlugins();
         });
     }
@@ -135,7 +129,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             options: [],
         };
 
-        this.el.querySelectorAll('input[type=radio]').forEach((el) => {
+        this._formEl.querySelectorAll('input[type=radio]').forEach((el) => {
             if (el.checked) {
                 let initiator = el.dataset.initiator;
 
@@ -143,7 +137,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             }
         });
 
-        this.el.querySelectorAll('input[type=number]').forEach((el) => {
+        this._formEl.querySelectorAll('input[type=number]').forEach((el) => {
             this._filters[el.name] = el.value;
         });
 

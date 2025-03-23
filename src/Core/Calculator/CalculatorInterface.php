@@ -13,6 +13,11 @@ interface CalculatorInterface
     public function getExpectedPropertyGroups(): array;
     public function getPropertyGroupConfig(): array;
     public function getExpectedPropertyGroupOptions(): array;
+    public function getLogicalConfigurator(
+        Request $request,
+        SalesChannelContext $salesChannelContext,
+        PartsListConfiguratorEntity $partsListConfigurator
+    );
     public function calculate(
         Request $request,
         SalesChannelContext $salesChannelContext,
