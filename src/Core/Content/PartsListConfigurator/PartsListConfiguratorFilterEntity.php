@@ -11,11 +11,33 @@ class PartsListConfiguratorFilterEntity extends Entity
     use EntityIdTrait;
 
     protected string $partsListConfiguratorId;
+    protected bool $logical = false;
+    protected bool $fixed = false;
     protected array $partsListConfiguratorProductStreamIds;
     protected int $position;
     protected ?string $technicalName = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
     protected ?PropertyGroupOptionCollection $options = null;
+
+    public function getLogical(): bool
+    {
+        return $this->logical;
+    }
+
+    public function setLogical(bool $logical): void
+    {
+        $this->logical = $logical;
+    }
+
+    public function getFixed(): bool
+    {
+        return $this->fixed;
+    }
+
+    public function setFixed(bool $fixed): void
+    {
+        $this->fixed = $fixed;
+    }
 
     public function getPartsListConfiguratorId(): string
     {

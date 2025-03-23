@@ -16,9 +16,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         this._client = new HttpClient(window.accessKey, window.contextToken);
         this._filters = {
-            globalOptions: [],
-            secondOptions: [],
-            logicalOptions: [],
+            options: []
         };
 
         this._partsListEl = document.getElementById('partsList');
@@ -134,16 +132,14 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
     _loadHistory() {
         this._filters = {
-            globalOptions: [],
-            secondOptions: [],
-            logicalOptions: [],
+            options: [],
         };
 
         this.el.querySelectorAll('input[type=radio]').forEach((el) => {
             if (el.checked) {
                 let initiator = el.dataset.initiator;
 
-                this._filters[initiator].push(el.value);
+                this._filters.options.push(el.value);
             }
         });
 

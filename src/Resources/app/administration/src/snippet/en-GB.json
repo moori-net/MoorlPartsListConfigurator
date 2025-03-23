@@ -17,6 +17,8 @@
             "deleteCreatorTypeError": "This type cannot be removed because there are active assignments or the type is a default value."
         },
         "properties": {
+            "fixed": "Fixed",
+            "logical": "Logical",
             "calculator": "Calculator (technical name)",
             "active": "Active",
             "name": "Name",

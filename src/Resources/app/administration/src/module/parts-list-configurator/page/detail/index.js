@@ -88,6 +88,8 @@ Component.register('moorl-parts-list-configurator-detail', {
 
         partsListFilterFilterColumns() {
             return [
+                'fixed',
+                'logical',
                 'position',
                 'technicalName',
             ];

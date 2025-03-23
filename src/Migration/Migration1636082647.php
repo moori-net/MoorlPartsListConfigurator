@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS `moorl_pl` (
     `id` BINARY(16) NOT NULL,
     `parts_list_configurator_media_id` BINARY(16),
     `cms_page_id` BINARY(16),
-    `active` TINYINT,
-    `calculator` varchar(255) NULL,
+    `active` TINYINT NOT NULL,
+    `calculator` varchar(255),
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3),
     
@@ -92,6 +92,8 @@ CREATE TABLE IF NOT EXISTS `moorl_pl_filter` (
     `moorl_pl_product_stream_ids` json NULL,
     `position` INT(11) NOT NULL,
     `technical_name` varchar(255) NOT NULL,
+    `fixed` TINYINT NOT NULL,
+    `logical` TINYINT NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3),
     

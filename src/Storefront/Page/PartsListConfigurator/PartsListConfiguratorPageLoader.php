@@ -57,29 +57,40 @@ class PartsListConfiguratorPageLoader
             throw new PageNotFoundException($partsListConfigurator->getId());
         }
 
-        $filters = [];
-        foreach ($partsListConfigurator->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
-            $filters[] = new AndFilter([
-                $this->getPropertyFilter($request, 'firstOptions'),
-                new ContainsFilter('streamIds', $partsListConfiguratorProductStream->getProductStreamId())
-            ]);
+        if ($partsListConfigurator->getFilters()->count() === 0) {
+            throw new PageNotFoundException($partsListConfigurator->getId());
         }
 
-        if ($partsListConfigurator->getFilters()->count() > 0) {
-            foreach ($partsListConfigurator->getFilters() as $filter) {
-                if ($filter->getTechnicalName() === PartsListConfiguratorFilterDefinition::FIXED) {
-                    $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
+        $mainFilters = [];
+        foreach ($partsListConfigurator->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
+            $subFilters = [
+                new ContainsFilter('streamIds', $partsListConfiguratorProductStream->getProductStreamId())
+            ];
 
-                    $request->query->set('no-aggregations', 1);
-                    $request->query->set('properties', implode("|", $optionIds));
+            foreach ($partsListConfigurator->getFilters() as $filter) {
+                if ($filter->getLogical()) {
+                    continue;
+                }
+
+                $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
+
+                if ($filter->getFixed() && $partsListConfigurator->getPartsListConfiguratorProductStreams()->count() === count($filter->getPartsListConfiguratorProductStreamIds())) {
+                    $request->query->set('properties', implode('|', $optionIds));
+                    continue;
+                }
+
+                if (in_array($partsListConfiguratorProductStream->getId(), $filter->getPartsListConfiguratorProductStreamIds())) {
+                    $subFilters[] = $this->getPropertyFilter($request, $optionIds, 'options', $filter->getFixed());
                 }
             }
+
+            $mainFilters[] = new AndFilter($subFilters);
         }
 
         $criteria = new Criteria();
         $criteria->addState(self::CRITERIA_STATE);
         $criteria->addFilter(new AndFilter([
-            new OrFilter($filters)
+            new OrFilter($mainFilters)
         ]));
 
         $result = $this->productListingRoute->load(
@@ -124,11 +135,22 @@ class PartsListConfiguratorPageLoader
         $metaInformation->setMetaTitle(implode(' | ', $metaTitleParts));
     }
 
-    private function getPropertyFilter(Request $request, string $prop = "tag"): AndFilter
+    private function getPropertyFilter(
+        Request $request,
+        array $whitelistIds = [],
+        string $prop = "tag",
+        bool $fixed = false,
+    ): AndFilter
     {
-        $ids = $this->getPropIds($request, $prop);
-        if (empty($ids)) {
-            return new AndFilter([]);
+        if ($fixed) {
+            $ids = $whitelistIds;
+        } else {
+            $ids = $this->getPropIds($request, $prop);
+            if (empty($ids)) {
+                return new AndFilter([]);
+            }
+
+            $ids = array_intersect($ids, $whitelistIds);
         }
 
         $grouped = $this->connection->fetchAllAssociative(

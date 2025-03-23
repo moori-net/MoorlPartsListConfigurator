@@ -7,6 +7,7 @@ use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\LabelPropert
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\VueComponent;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\CascadeDelete;
@@ -59,6 +60,10 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
         return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
             (new FkField('moorl_pl_id', 'partsListConfiguratorId', PartsListConfiguratorDefinition::class))->addFlags(new ApiAware(), new Required()),
+
+            (new BoolField('fixed', 'fixed'))->addFlags(new EditField('switch')),
+            (new BoolField('logical', 'logical'))->addFlags(new EditField('switch')),
+
             (new ListField('moorl_pl_product_stream_ids', 'partsListConfiguratorProductStreamIds', StringField::class))
                 ->addFlags(new ApiAware(), new Required(), new EditField(EditField::MULTI_ID, ['entity' => 'moorl_pl_product_stream']), new LabelProperty('technicalName')),
             (new IntField('position', 'position'))->addFlags(new ApiAware(), new EditField('number')),

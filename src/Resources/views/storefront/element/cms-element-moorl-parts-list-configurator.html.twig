@@ -6,8 +6,6 @@
         propertyGroupConfig: page.calculator.getPropertyGroupConfig
     } %}
 
-    {{ dump(partsListConfigurator.getFilters) }}
-
     <form
             action="{{ path('frontend.moorl.parts.list.configurator.parts.list', {partsListConfiguratorId: partsListConfigurator.id}) }}"
             data-moorl-parts-list-configurator="true"

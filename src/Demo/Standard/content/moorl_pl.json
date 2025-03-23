@@ -28,7 +28,7 @@
       {
         "id": "{ID:FC01_FILTER_LOGICAL}",
         "position": 0,
-        "technicalName": "_logical",
+        "logical": true,
         "partsListConfiguratorProductStreamIds": [],
         "options": [
           {"id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}"},
@@ -42,7 +42,7 @@
       {
         "id": "{ID:FC01_FILTER_FIXED}",
         "position": 0,
-        "technicalName": "_fixed",
+        "fixed": true,
         "partsListConfiguratorProductStreamIds": [
           "{ID:FC01_STREAM_FENCES}",
           "{ID:FC01_STREAM_POSTS}",
