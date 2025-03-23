@@ -17,28 +17,16 @@
             <tag name="shopware.entity.definition" entity="moorl_pl_translation"/>
         </service>
 
-        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFixedOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_pl_fixed_option"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorProductStreamDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_product_stream"/>
         </service>
 
-        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorGlobalOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_pl_global_option"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_filter"/>
         </service>
 
-        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorLogicalOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_pl_logical_option"/>
-        </service>
-
-        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFirstOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_pl_first_option"/>
-        </service>
-
-        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorSecondOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_pl_second_option"/>
-        </service>
-
-        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorThirdOptionDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_pl_third_option"/>
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_filter_option"/>
         </service>
 
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorMediaDefinition">

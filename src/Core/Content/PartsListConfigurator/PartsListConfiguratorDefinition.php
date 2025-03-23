@@ -5,8 +5,6 @@ namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEntityCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
 use Shopware\Core\Content\Cms\CmsPageDefinition;
-use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
-use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
 use Shopware\Core\Content\Seo\SeoUrl\SeoUrlDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
@@ -18,7 +16,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SearchRanking;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToManyAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
@@ -58,11 +55,7 @@ class PartsListConfiguratorDefinition extends EntityDefinition
         $collection = [
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
             (new FkField('parts_list_configurator_media_id', 'coverId', PartsListConfiguratorMediaDefinition::class))->addFlags(new ApiAware(), new NoConstraint()),
-            (new FkField('first_stream_id', 'firstStreamId', ProductStreamDefinition::class))->addFlags(new Required()),
-            (new FkField('second_stream_id', 'secondStreamId', ProductStreamDefinition::class))->addFlags(new Required()),
-            (new FkField('third_stream_id', 'thirdStreamId', ProductStreamDefinition::class))->addFlags(new Required()),
             new FkField('cms_page_id', 'cmsPageId', CmsPageDefinition::class),
-
             (new BoolField('active', 'active'))->addFlags(new EditField('switch')),
 
             new StringField('calculator', 'calculator'),
@@ -79,14 +72,10 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             (new TranslationsAssociationField(PartsListConfiguratorTranslationDefinition::class, 'moorl_pl_id'))->addFlags(new Required()),
 
             (new ManyToOneAssociationField('cmsPage', 'cms_page_id', CmsPageDefinition::class))->addFlags(),
-            (new ManyToManyAssociationField('fixedOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorFixedOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new ManyToManyAssociationField('globalOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorGlobalOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new ManyToManyAssociationField('logicalOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorLogicalOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new ManyToManyAssociationField('firstOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorFirstOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new ManyToManyAssociationField('secondOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorSecondOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new ManyToManyAssociationField('thirdOptions', PropertyGroupOptionDefinition::class, PartsListConfiguratorThirdOptionDefinition::class, 'moorl_pl_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
             (new ManyToOneAssociationField('cover', 'parts_list_configurator_media_id', PartsListConfiguratorMediaDefinition::class, 'id'))->addFlags(new ApiAware()),
             (new OneToManyAssociationField('media', PartsListConfiguratorMediaDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
+            (new OneToManyAssociationField('productStreams', PartsListConfiguratorProductStreamDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
+            (new OneToManyAssociationField('filters', PartsListConfiguratorFilterDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
         ];
 
         $fieldCollection = new FieldCollection(array_merge(

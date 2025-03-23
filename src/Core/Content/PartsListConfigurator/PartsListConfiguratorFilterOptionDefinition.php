@@ -10,9 +10,9 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\MappingEntityDefinition;
 
-class PartsListConfiguratorSecondOptionDefinition extends MappingEntityDefinition
+class PartsListConfiguratorFilterOptionDefinition extends MappingEntityDefinition
 {
-    final public const ENTITY_NAME = 'moorl_pl_second_option';
+    final public const ENTITY_NAME = 'moorl_pl_filter_option';
 
     public function getEntityName(): string
     {
@@ -22,9 +22,9 @@ class PartsListConfiguratorSecondOptionDefinition extends MappingEntityDefinitio
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
-            (new FkField('moorl_pl_id', 'partsListConfiguratorId', PartsListConfiguratorDefinition::class))->addFlags(new PrimaryKey(), new Required()),
+            (new FkField('moorl_pl_filter_id', 'partsListConfiguratorFilterId', PartsListConfiguratorFilterDefinition::class))->addFlags(new PrimaryKey(), new Required()),
             (new FkField('property_group_option_id', 'optionId', PropertyGroupOptionDefinition::class))->addFlags(new PrimaryKey(), new Required()),
-            new ManyToOneAssociationField('partsListConfigurator', 'moorl_pl_id', PartsListConfiguratorDefinition::class, 'id'),
+            new ManyToOneAssociationField('partsListConfiguratorFilter', 'moorl_pl_filter_id', PartsListConfiguratorFilterDefinition::class, 'id'),
             new ManyToOneAssociationField('option', 'property_group_option_id', PropertyGroupOptionDefinition::class, 'id'),
         ]);
     }
