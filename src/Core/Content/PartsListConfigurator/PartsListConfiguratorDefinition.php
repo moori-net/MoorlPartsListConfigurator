@@ -74,7 +74,7 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             (new ManyToOneAssociationField('cmsPage', 'cms_page_id', CmsPageDefinition::class))->addFlags(),
             (new ManyToOneAssociationField('cover', 'parts_list_configurator_media_id', PartsListConfiguratorMediaDefinition::class, 'id'))->addFlags(new ApiAware()),
             (new OneToManyAssociationField('media', PartsListConfiguratorMediaDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new OneToManyAssociationField('productStreams', PartsListConfiguratorProductStreamDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
+            (new OneToManyAssociationField('partsListConfiguratorProductStreams', PartsListConfiguratorProductStreamDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
             (new OneToManyAssociationField('filters', PartsListConfiguratorFilterDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
         ];
 

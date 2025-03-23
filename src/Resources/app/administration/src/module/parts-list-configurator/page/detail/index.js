@@ -47,13 +47,8 @@ Component.register('moorl-parts-list-configurator-detail', {
 
         defaultCriteria() {
             const criteria = new Criteria();
-            criteria.getAssociation('fixedOptions')
-            criteria.getAssociation('globalOptions')
-            criteria.getAssociation('secondOptions')
-            criteria.getAssociation('logicalOptions')
-            criteria.getAssociation('media')
-            criteria.getAssociation('seoUrls')
-                .addFilter(Criteria.equals('isCanonical', true));
+            criteria.addAssociation('media')
+            criteria.getAssociation('seoUrls').addFilter(Criteria.equals('isCanonical', true));
             return criteria;
         },
 
@@ -65,19 +60,6 @@ Component.register('moorl-parts-list-configurator-detail', {
             );
 
             return criteria;
-        },
-
-        searchCriteria() {
-            const criteria = new Criteria(1, 30);
-            criteria.addAssociation('options.group');
-            return criteria;
-        },
-
-        searchContext() {
-            return {
-                ...Shopware.Context.api,
-                inheritance: true
-            };
         },
 
         mediaRepository() {
@@ -102,6 +84,33 @@ Component.register('moorl-parts-list-configurator-detail', {
 
         identifier() {
             return this.placeholder(this.item, 'name');
+        },
+
+        partsListFilterFilterColumns() {
+            return [
+                'position',
+                'technicalName',
+            ];
+        },
+
+        partsListFilterCriteria() {
+            const criteria = new Criteria();
+            criteria.addAssociation('options');
+            return criteria;
+        },
+
+        partsListProductStreamFilterColumns() {
+            return [
+                'position',
+                'technicalName',
+                'productStream.name',
+            ];
+        },
+
+        partsListProductStreamCriteria() {
+            const criteria = new Criteria();
+            criteria.addAssociation('productStream');
+            return criteria;
         }
     },
 

@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
 use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
@@ -17,6 +18,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 class PartsListConfiguratorProductStreamDefinition extends EntityDefinition
 {
     final public const ENTITY_NAME = 'moorl_pl_product_stream';
+    final public const FIXED = '_fixed';
+    final public const LOGICAL = '_logical';
 
     public function getEntityName(): string
     {
@@ -42,7 +45,7 @@ class PartsListConfiguratorProductStreamDefinition extends EntityDefinition
     {
         return [
             'position' => 0,
-            'technicalName' => '_fixed',
+            'technicalName' => self::FIXED,
         ];
     }
 
@@ -52,10 +55,10 @@ class PartsListConfiguratorProductStreamDefinition extends EntityDefinition
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
             (new FkField('moorl_pl_id', 'partsListConfiguratorId', PartsListConfiguratorDefinition::class))->addFlags(new ApiAware(), new Required()),
             (new FkField('product_stream_id', 'productStreamId', ProductStreamDefinition::class))->addFlags(new ApiAware(), new Required()),
-            (new IntField('position', 'position'))->addFlags(new ApiAware()),
-            (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new Required()),
+            (new IntField('position', 'position'))->addFlags(new ApiAware(), new EditField('number')),
+            (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new Required(), new EditField('text')),
             (new ManyToOneAssociationField('partsListConfigurator', 'moorl_pl_id', PartsListConfiguratorDefinition::class, 'id', false))->addFlags(),
-            (new ManyToOneAssociationField('productStream', 'product_stream_id', ProductStreamDefinition::class, 'id', true))->addFlags(new ApiAware())
+            (new ManyToOneAssociationField('productStream', 'product_stream_id', ProductStreamDefinition::class, 'id', true))->addFlags(new ApiAware(), new EditField())
         ]);
     }
 }

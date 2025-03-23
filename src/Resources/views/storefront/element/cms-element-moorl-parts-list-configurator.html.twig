@@ -6,25 +6,19 @@
         propertyGroupConfig: page.calculator.getPropertyGroupConfig
     } %}
 
+    {{ dump(partsListConfigurator.getFilters) }}
+
     <form
             action="{{ path('frontend.moorl.parts.list.configurator.parts.list', {partsListConfiguratorId: partsListConfigurator.id}) }}"
             data-moorl-parts-list-configurator="true"
             data-moorl-parts-list-configurator-options="{{ config|json_encode }}"
     >
-        {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
-            configuratorSettings: partsListConfigurator.globalOptions.groupByPropertyGroups,
-            initiator: 'globalOptions'
-        } %}
-
-        {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
-            configuratorSettings: partsListConfigurator.secondOptions.groupByPropertyGroups,
-            initiator: 'secondOptions'
-        } %}
-
-        {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
-            configuratorSettings: partsListConfigurator.logicalOptions.groupByPropertyGroups,
-            initiator: 'logicalOptions'
-        } %}
+        {% for filter in partsListConfigurator.getFilters %}
+            {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
+                configuratorSettings: filter.options.groupByPropertyGroups,
+                initiator: filter.technicalName
+            } %}
+        {% endfor %}
     </form>
 
     <hr>

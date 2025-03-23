@@ -61,6 +61,40 @@
 
                 <template #content="{ active }">
                     {% block moorl_pl_detail_content %}
+                        <sw-card
+                                v-if="active === 'assignment'"
+                                :isLoading="isLoading"
+                                :title="$tc('moorl-parts-list-configurator.cards.partsListConfiguratorProductStreams')"
+                                class="moorl-entity-grid"
+                        >
+                            <moorl-entity-grid
+                                    key="moorl_pl_product_stream"
+                                    entity="moorl_pl_product_stream"
+                                    snippetSrc="moorl-parts-list-configurator"
+                                    :isLoading="isLoading"
+                                    :filterColumns="partsListProductStreamFilterColumns"
+                                    :criteria="partsListProductStreamCriteria"
+                                    :default-item="{ partsListConfiguratorId: item.id }"
+                            />
+                        </sw-card>
+
+                        <sw-card
+                                v-if="active === 'assignment'"
+                                :isLoading="isLoading"
+                                :title="$tc('moorl-parts-list-configurator.cards.filters')"
+                                class="moorl-entity-grid"
+                        >
+                            <moorl-entity-grid
+                                    key="moorl_pl_filter"
+                                    entity="moorl_pl_filter"
+                                    snippetSrc="moorl-parts-list-configurator"
+                                    :isLoading="isLoading"
+                                    :filterColumns="partsListFilterFilterColumns"
+                                    :criteria="partsListFilterCriteria"
+                                    :default-item="{ partsListConfiguratorId: item.id }"
+                            />
+                        </sw-card>
+
                         <moorl-layout-card
                                 v-bind="{ item, cmsPage, isLoading, pageTypes }"
                                 v-if="active === 'layout'"
@@ -84,24 +118,6 @@
                                     required
                                     validation="required"
                                     :error="itemCalculatorError"
-                            />
-
-                            <sw-entity-single-select
-                                    :label="$tc('moorl-parts-list-configurator.properties.firstStream')"
-                                    v-model:value="item.firstStreamId"
-                                    entity="product_stream"
-                            />
-
-                            <sw-entity-single-select
-                                    :label="$tc('moorl-parts-list-configurator.properties.secondStream')"
-                                    v-model:value="item.secondStreamId"
-                                    entity="product_stream"
-                            />
-
-                            <sw-entity-single-select
-                                    :label="$tc('moorl-parts-list-configurator.properties.thirdStream')"
-                                    v-model:value="item.thirdStreamId"
-                                    entity="product_stream"
                             />
 
                             <sw-switch-field
@@ -144,34 +160,6 @@
                             />
                         </sw-card>
 
-                        <moorl-properties
-                                v-if="active === 'general'"
-                                :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.fixedOptions')"
-                                v-model:entityCollection="item.fixedOptions"
-                        />
-
-                        <moorl-properties
-                                v-if="active === 'general'"
-                                :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.globalOptions')"
-                                v-model:entityCollection="item.globalOptions"
-                        />
-
-                        <moorl-properties
-                                v-if="active === 'general'"
-                                :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.logicalOptions')"
-                                v-model:entityCollection="item.logicalOptions"
-                        />
-
-                        <moorl-properties
-                                v-if="active === 'general'"
-                                :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.secondOptions')"
-                                v-model:entityCollection="item.secondOptions"
-                        />
-
                         <sw-card
                                 v-if="active === 'general' && !!customFieldSets && customFieldSets.length > 0"
                                 position-identifier="sw-customer-detail-base-custom-field-sets"
@@ -181,13 +169,6 @@
                                     :entity="item"
                                     :sets="customFieldSets"
                             />
-                        </sw-card>
-
-                        <sw-card
-                                v-if="active === 'assignment'"
-                                :title="$tc('moorl-parts-list-configurator.cards.assignment')"
-                                :isLoading="isLoading"
-                        >
                         </sw-card>
                     {% endblock %}
                 </template>

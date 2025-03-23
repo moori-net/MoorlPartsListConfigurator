@@ -5,6 +5,7 @@ namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Moorl\PartsListConfigurator\Core\Calculator\CalculatorInterface;
+use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterDefinition;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
@@ -25,14 +26,14 @@ class PartsListConfiguratorPageLoader
     public const CRITERIA_STATE = 'moorl-parts-list-configurator-criteria';
 
     /**
-     * @param CalculatorInterface[] $calulators
+     * @param CalculatorInterface[] $calculators
      */
     public function __construct(
         private readonly GenericPageLoaderInterface $genericLoader,
         private readonly PartsListConfiguratorDetailRoute $partsListConfiguratorDetailRoute,
         private readonly AbstractProductListingRoute $productListingRoute,
         private readonly Connection $connection,
-        private readonly iterable $calulators
+        private readonly iterable $calculators
     )
     {
     }
@@ -52,29 +53,33 @@ class PartsListConfiguratorPageLoader
             throw new PageNotFoundException($partsListConfigurator->getId());
         }
 
-        $optionIds = $partsListConfigurator->getFixedOptions()?->getIds() ?: [];
-        $optionIds = array_merge(array_values($optionIds), $this->getPropIds($request, 'globalOptions'));
+        if ($partsListConfigurator->getPartsListConfiguratorProductStreams()->count() === 0) {
+            throw new PageNotFoundException($partsListConfigurator->getId());
+        }
 
-        $request->query->set('no-aggregations', 1);
-        $request->query->set('properties', implode("|", $optionIds));
+        $filters = [];
+        foreach ($partsListConfigurator->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
+            $filters[] = new AndFilter([
+                $this->getPropertyFilter($request, 'firstOptions'),
+                new ContainsFilter('streamIds', $partsListConfiguratorProductStream->getProductStreamId())
+            ]);
+        }
+
+        if ($partsListConfigurator->getFilters()->count() > 0) {
+            foreach ($partsListConfigurator->getFilters() as $filter) {
+                if ($filter->getTechnicalName() === PartsListConfiguratorFilterDefinition::FIXED) {
+                    $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
+
+                    $request->query->set('no-aggregations', 1);
+                    $request->query->set('properties', implode("|", $optionIds));
+                }
+            }
+        }
 
         $criteria = new Criteria();
         $criteria->addState(self::CRITERIA_STATE);
         $criteria->addFilter(new AndFilter([
-            new OrFilter([
-                new AndFilter([
-                    $this->getPropertyFilter($request, 'firstOptions'),
-                    new ContainsFilter('streamIds', $partsListConfigurator->getFirstStreamId())
-                ]),
-                new AndFilter([
-                    $this->getPropertyFilter($request, 'secondOptions'),
-                    new ContainsFilter('streamIds', $partsListConfigurator->getSecondStreamId()),
-                ]),
-                new AndFilter([
-                    $this->getPropertyFilter($request, 'thirdOptions'),
-                    new ContainsFilter('streamIds', $partsListConfigurator->getThirdStreamId())
-                ]),
-            ])
+            new OrFilter($filters)
         ]));
 
         $result = $this->productListingRoute->load(
@@ -147,7 +152,7 @@ class PartsListConfiguratorPageLoader
 
     private function getCalculatorByName(string $name): CalculatorInterface
     {
-        foreach ($this->calulators as $calculator) {
+        foreach ($this->calculators as $calculator) {
             if ($calculator->getName() === $name) {
                 return $calculator;
             }

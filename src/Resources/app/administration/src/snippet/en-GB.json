@@ -17,17 +17,26 @@
             "deleteCreatorTypeError": "This type cannot be removed because there are active assignments or the type is a default value."
         },
         "properties": {
-            "salesChannels": "Sales Channels"
-        },
-        "label": {
-            "generalCard": "General"
+            "calculator": "Calculator (technical name)",
+            "active": "Active",
+            "name": "Name",
+            "teaser": "Teaser",
+            "description": "Description",
+            "productStream": "Stream",
+            "salesChannels": "Sales Channels",
+            "position": "Position",
+            "technicalName": "Technical name",
+            "partsListConfiguratorProductStreamIds": "Parts list product streams",
+            "options": "Options"
         },
         "cards": {
             "seo": "SEO",
             "general": "General",
             "assignment": "Assignments",
             "layout": "Layout",
-            "meta": "Meta"
+            "filters": "Filter",
+            "media": "Media",
+            "partsListConfiguratorProductStreams": "Parts list product streams"
         }
     }
 }

@@ -1,40 +1,93 @@
 [
   {
     "id": "{ID:FC01}",
-    "firstStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST}",
-    "secondStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_POST}",
-    "thirdStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_OTHER}",
     "coverId": "{ID:MEDIA_1}",
     "active": true,
     "name": "Demo Zaunkonfigurator 6/5/6",
-    "fixedOptions": [
-      {"id": "{MD5:LINE_656}"}
+    "productStreams": [
+      {
+        "id": "{ID:FC01_STREAM_FENCES}",
+        "productStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST}",
+        "position": 1,
+        "technicalName": "fences"
+      },
+      {
+        "id": "{ID:FC01_STREAM_POSTS}",
+        "productStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_POST}",
+        "position": 2,
+        "technicalName": "posts"
+      },
+      {
+        "id": "{ID:FC01_STREAM_OTHER}",
+        "productStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_OTHER}",
+        "position": 3,
+        "technicalName": "other"
+      }
     ],
-    "globalOptions": [
-      {"id": "{MD5:COLOR_RAL_6005}"},
-      {"id": "{MD5:COLOR_RAL_7016}"},
-      {"id": "{MD5:COLOR_NONE}"},
-      {"id": "{MD5:HEIGHT_600}"},
-      {"id": "{MD5:HEIGHT_800}"},
-      {"id": "{MD5:HEIGHT_1000}"},
-      {"id": "{MD5:HEIGHT_1200}"}
-    ],
-    "secondOptions": [
-      {"id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
-      {"id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"},
-      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}"},
-      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
-      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}"},
-      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}"},
-      {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}"}
-    ],
-    "logicalOptions": [
-      {"id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}"},
-      {"id": "{MD5:PARTS_LIST_POST_TYPE_CORNER}"},
-      {"id": "{MD5:PARTS_LIST_LAYOUT_1}"},
-      {"id": "{MD5:PARTS_LIST_LAYOUT_2}"},
-      {"id": "{MD5:PARTS_LIST_LAYOUT_3}"},
-      {"id": "{MD5:PARTS_LIST_LAYOUT_4}"}
+    "filters": [
+      {
+        "id": "{ID:FC01_FILTER_LOGICAL}",
+        "position": 0,
+        "technicalName": "_logical",
+        "partsListConfiguratorProductStreamIds": [],
+        "options": [
+          {"id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}"},
+          {"id": "{MD5:PARTS_LIST_POST_TYPE_CORNER}"},
+          {"id": "{MD5:PARTS_LIST_LAYOUT_1}"},
+          {"id": "{MD5:PARTS_LIST_LAYOUT_2}"},
+          {"id": "{MD5:PARTS_LIST_LAYOUT_3}"},
+          {"id": "{MD5:PARTS_LIST_LAYOUT_4}"}
+        ]
+      },
+      {
+        "id": "{ID:FC01_FILTER_FIXED}",
+        "position": 0,
+        "technicalName": "_fixed",
+        "partsListConfiguratorProductStreamIds": [
+          "{ID:FC01_STREAM_FENCES}",
+          "{ID:FC01_STREAM_POSTS}",
+          "{ID:FC01_STREAM_OTHER}"
+        ],
+        "options": [
+          {"id": "{MD5:LINE_656}"}
+        ]
+      },
+      {
+        "id": "{ID:FC01_FILTER_GLOBAL}",
+        "position": 1,
+        "technicalName": "global",
+        "partsListConfiguratorProductStreamIds": [
+          "{ID:FC01_STREAM_FENCES}",
+          "{ID:FC01_STREAM_POSTS}",
+          "{ID:FC01_STREAM_OTHER}"
+        ],
+        "options": [
+          {"id": "{MD5:COLOR_RAL_6005}"},
+          {"id": "{MD5:COLOR_RAL_7016}"},
+          {"id": "{MD5:COLOR_NONE}"},
+          {"id": "{MD5:HEIGHT_600}"},
+          {"id": "{MD5:HEIGHT_800}"},
+          {"id": "{MD5:HEIGHT_1000}"},
+          {"id": "{MD5:HEIGHT_1200}"}
+        ]
+      },
+      {
+        "id": "{ID:FC01_FILTER_POSTS}",
+        "position": 2,
+        "technicalName": "posts",
+        "partsListConfiguratorProductStreamIds": [
+          "{ID:FC01_STREAM_POSTS}"
+        ],
+        "options": [
+          {"id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
+          {"id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"},
+          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}"},
+          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
+          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}"},
+          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}"},
+          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}"}
+        ]
+      }
     ]
   }
 ]

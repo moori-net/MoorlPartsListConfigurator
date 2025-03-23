@@ -2,8 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
-use MoorlFoundation\Core\Content\ProductBuyList\ProductBuyListItemEntity;
-use Shopware\Core\Content\ProductStream\ProductStreamEntity;
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 
@@ -12,11 +11,11 @@ class PartsListConfiguratorFilterEntity extends Entity
     use EntityIdTrait;
 
     protected string $partsListConfiguratorId;
-    protected string $productStreamId;
+    protected array $partsListConfiguratorProductStreamIds;
     protected int $position;
-    protected ?string $technicalName;
-    protected ?PartsListConfiguratorEntity $partsListConfigurator;
-    protected ?array $productStream;
+    protected ?string $technicalName = null;
+    protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
+    protected ?PropertyGroupOptionCollection $options = null;
 
     public function getPartsListConfiguratorId(): string
     {
@@ -28,14 +27,14 @@ class PartsListConfiguratorFilterEntity extends Entity
         $this->partsListConfiguratorId = $partsListConfiguratorId;
     }
 
-    public function getProductStreamId(): string
+    public function getPartsListConfiguratorProductStreamIds(): array
     {
-        return $this->productStreamId;
+        return $this->partsListConfiguratorProductStreamIds;
     }
 
-    public function setProductStreamId(string $productStreamId): void
+    public function setPartsListConfiguratorProductStreamIds(array $partsListConfiguratorProductStreamIds): void
     {
-        $this->productStreamId = $productStreamId;
+        $this->partsListConfiguratorProductStreamIds = $partsListConfiguratorProductStreamIds;
     }
 
     public function getPosition(): int
@@ -68,13 +67,13 @@ class PartsListConfiguratorFilterEntity extends Entity
         $this->partsListConfigurator = $partsListConfigurator;
     }
 
-    public function getProductStream(): ?ProductStreamEntity
+    public function getOptions(): ?PropertyGroupOptionCollection
     {
-        return $this->productStream;
+        return $this->options;
     }
 
-    public function setProductStream(?ProductStreamEntity $productStream): void
+    public function setOptions(?PropertyGroupOptionCollection $options): void
     {
-        $this->productStream = $productStream;
+        $this->options = $options;
     }
 }

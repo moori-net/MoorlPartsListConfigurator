@@ -23,7 +23,7 @@ class PartsListConfiguratorEntity extends Entity
     protected ?string $coverId = null;
     protected ?string $teaser = null;
     protected string $calculator;
-    protected ?PartsListConfiguratorProductStreamCollection $productStreams = null;
+    protected ?PartsListConfiguratorProductStreamCollection $partsListConfiguratorProductStreams = null;
     protected ?PartsListConfiguratorFilterCollection $filters = null;
     protected ?PartsListConfiguratorMediaCollection $media = null;
     protected ?PartsListConfiguratorMediaEntity $cover = null;
@@ -31,5 +31,85 @@ class PartsListConfiguratorEntity extends Entity
     public function getCmsPageId(): ?string
     {
         return $this->cmsPageId ?: MoorlPartsListConfigurator::CMS_PAGE_PARTS_LIST_CONFIGURATOR_DEFAULT_ID;
+    }
+
+    public function getActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    public function getCoverId(): ?string
+    {
+        return $this->coverId;
+    }
+
+    public function setCoverId(?string $coverId): void
+    {
+        $this->coverId = $coverId;
+    }
+
+    public function getTeaser(): ?string
+    {
+        return $this->teaser;
+    }
+
+    public function setTeaser(?string $teaser): void
+    {
+        $this->teaser = $teaser;
+    }
+
+    public function getCalculator(): string
+    {
+        return $this->calculator;
+    }
+
+    public function setCalculator(string $calculator): void
+    {
+        $this->calculator = $calculator;
+    }
+
+    public function getPartsListConfiguratorProductStreams(): ?PartsListConfiguratorProductStreamCollection
+    {
+        return $this->partsListConfiguratorProductStreams;
+    }
+
+    public function setPartsListConfiguratorProductStreams(?PartsListConfiguratorProductStreamCollection $partsListConfiguratorProductStreams): void
+    {
+        $this->partsListConfiguratorProductStreams = $partsListConfiguratorProductStreams;
+    }
+
+    public function getFilters(): ?PartsListConfiguratorFilterCollection
+    {
+        return $this->filters;
+    }
+
+    public function setFilters(?PartsListConfiguratorFilterCollection $filters): void
+    {
+        $this->filters = $filters;
+    }
+
+    public function getMedia(): ?PartsListConfiguratorMediaCollection
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?PartsListConfiguratorMediaCollection $media): void
+    {
+        $this->media = $media;
+    }
+
+    public function getCover(): ?PartsListConfiguratorMediaEntity
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?PartsListConfiguratorMediaEntity $cover): void
+    {
+        $this->cover = $cover;
     }
 }

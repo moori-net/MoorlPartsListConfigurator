@@ -2,6 +2,9 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\LabelProperty;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\VueComponent;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
@@ -20,6 +23,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 class PartsListConfiguratorFilterDefinition extends EntityDefinition
 {
     final public const ENTITY_NAME = 'moorl_pl_filter';
+    final public const FIXED = '_fixed';
+    final public const LOGICAL = '_logical';
 
     public function getEntityName(): string
     {
@@ -54,11 +59,17 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
         return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
             (new FkField('moorl_pl_id', 'partsListConfiguratorId', PartsListConfiguratorDefinition::class))->addFlags(new ApiAware(), new Required()),
-            (new ListField('moorl_pl_product_stream_ids', 'partsListConfiguratorProductStreamIds', StringField::class))->addFlags(new ApiAware(), new Required()),
-            (new IntField('position', 'position'))->addFlags(new ApiAware()),
-            (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new Required()),
+            (new ListField('moorl_pl_product_stream_ids', 'partsListConfiguratorProductStreamIds', StringField::class))
+                ->addFlags(new ApiAware(), new Required(), new EditField(EditField::MULTI_ID, ['entity' => 'moorl_pl_product_stream']), new LabelProperty('technicalName')),
+            (new IntField('position', 'position'))->addFlags(new ApiAware(), new EditField('number')),
+            (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new Required(), new EditField('text')),
             (new ManyToOneAssociationField('partsListConfigurator', 'moorl_pl_id', PartsListConfiguratorDefinition::class, 'id', false))->addFlags(),
-            (new ManyToManyAssociationField('options', PropertyGroupOptionDefinition::class, PartsListConfiguratorFilterOptionDefinition::class, 'moorl_pl_filter_id', 'property_group_option_id'))->addFlags(new ApiAware(), new CascadeDelete()),
+            (new ManyToManyAssociationField(
+                'options',
+                PropertyGroupOptionDefinition::class,
+                PartsListConfiguratorFilterOptionDefinition::class,
+                'moorl_pl_filter_id', 'property_group_option_id')
+            )->addFlags(new ApiAware(), new CascadeDelete(), new VueComponent('moorl-properties')),
         ]);
     }
 }

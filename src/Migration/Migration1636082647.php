@@ -22,9 +22,6 @@ CREATE TABLE IF NOT EXISTS `moorl_pl` (
     `id` BINARY(16) NOT NULL,
     `parts_list_configurator_media_id` BINARY(16),
     `cms_page_id` BINARY(16),
-    `first_stream_id` BINARY(16) NOT NULL,
-    `second_stream_id` BINARY(16) NOT NULL,
-    `third_stream_id` BINARY(16) NOT NULL,
     `active` TINYINT,
     `calculator` varchar(255) NULL,
     `created_at` DATETIME(3) NOT NULL,
@@ -70,6 +67,8 @@ CREATE TABLE IF NOT EXISTS `moorl_pl_product_stream` (
     `product_stream_id` BINARY(16) NOT NULL,
     `position` INT(11) NOT NULL,
     `technical_name` varchar(255) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updated_at` DATETIME(3),
     
     PRIMARY KEY (`id`),
     UNIQUE KEY `uniq.moorl_pl_product_stream.moorl_pl_id` (`moorl_pl_id`, `technical_name`),
@@ -93,6 +92,8 @@ CREATE TABLE IF NOT EXISTS `moorl_pl_filter` (
     `moorl_pl_product_stream_ids` json NULL,
     `position` INT(11) NOT NULL,
     `technical_name` varchar(255) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updated_at` DATETIME(3),
     
     PRIMARY KEY (`id`),
     UNIQUE KEY `uniq.moorl_pl_filter.moorl_pl_id` (`moorl_pl_id`, `technical_name`),
