@@ -4,13 +4,6 @@ namespace Moorl\PartsListConfigurator\Storefront\Controller;
 
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
 use MoorlFoundation\Core\Content\ProductBuyList\ProductBuyListItemCollection;
-use MoorlFoundation\Core\Content\ProductBuyList\ProductBuyListItemEntity;
-use Shopware\Core\Checkout\Cart\Cart;
-use Shopware\Core\Checkout\Cart\LineItem\LineItem;
-use Shopware\Core\Content\Product\ProductDefinition;
-use Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity;
-use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
-use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Symfony\Component\HttpFoundation\Request;
