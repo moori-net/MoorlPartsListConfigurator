@@ -1,0 +1,10 @@
+{% block sw_property_option_detail_media %}
+    {% parent %}
+
+    <div class="sw-field"></div>
+
+    <sw-custom-field-set-renderer
+            :entity="currentOption"
+            :sets="customFieldSets"
+    />
+{% endblock %}

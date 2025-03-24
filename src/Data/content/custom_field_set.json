@@ -47,6 +47,18 @@
             "de-DE": "Verstecken"
           }
         }
+      },
+      {
+        "name": "moorl_pl_image",
+        "type": "media",
+        "config": {
+          "componentName": "sw-media-field",
+          "customFieldType": "media",
+          "label": {
+            "en-GB": "Alternative image",
+            "de-DE": "Alternatives Bild"
+          }
+        }
       }
     ]
   }
