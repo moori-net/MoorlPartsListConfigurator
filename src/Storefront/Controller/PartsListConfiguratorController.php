@@ -24,9 +24,7 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
-        $items = ProductBuyListItemCollection::createFromProducts(
-            $page->getProducts()->getEntities()
-        );
+        $items = ProductBuyListItemCollection::createFromProducts($page->getProducts()->getEntities());
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/page/content/parts-list-configurator-detail.html.twig', [
             'page' => $page,
