@@ -52,6 +52,8 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
         return [
             'position' => 0,
             'technicalName' => '_fixed',
+            'fixed' => false,
+            'logical' => false,
         ];
     }
 

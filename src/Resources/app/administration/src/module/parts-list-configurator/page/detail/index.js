@@ -103,6 +103,7 @@ Component.register('moorl-parts-list-configurator-detail', {
 
         partsListProductStreamFilterColumns() {
             return [
+                'accessory',
                 'position',
                 'technicalName',
                 'productStream.name',

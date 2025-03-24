@@ -20,9 +20,43 @@
                 } %}
             {% endif %}
         {% endfor %}
+
+        {% if accessoryList.count > 0 %}
+            <div class="product-detail-configurator-group-title">
+                {{ "moorl-parts-list-configurator.accessories"|trans }}
+            </div>
+        {% endif %}
+
+        <div id="accessoryList">
+            {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig' with {
+                items: accessoryList,
+                options: {
+                    enablePrices: true,
+                    enableAddToCartAll: true,
+                    enableAddToCartSingle: false,
+                    enableSelection: false,
+                    currencyIso: context.currency.isoCode,
+                    discountValue: 10,
+                    enableVariantSwitch: false
+                }
+            } %}
+        </div>
     </form>
 
     <hr>
 
-    <div id="partsList"></div>
+    <div id="partsList">
+        {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig' with {
+            items: partsList,
+            options: {
+                enablePrices: true,
+                enableAddToCartAll: true,
+                enableAddToCartSingle: false,
+                enableSelection: false,
+                currencyIso: context.currency.isoCode,
+                discountValue: 10,
+                enableVariantSwitch: false
+            }
+        } %}
+    </div>
 </div>

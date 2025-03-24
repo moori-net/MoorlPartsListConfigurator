@@ -6,8 +6,7 @@
     "displayType": "text",
     "sortingType": "position",
     "customFields": {
-      "moorl_pl_name": "LINE",
-      "technicalName": "LINE"
+      "moorl_pl_name": "LINE"
     },
     "options": [
       {"id": "{MD5:LINE_656}", "name": "6/5/6"},
@@ -21,8 +20,7 @@
     "displayType": "media",
     "sortingType": "position",
     "customFields": {
-      "moorl_pl_name": "LINE",
-      "technicalName": "COLOR"
+      "moorl_pl_name": "COLOR"
     },
     "options": [
       {
@@ -52,8 +50,7 @@
     "name": "Layout",
     "sortingType": "position",
     "customFields": {
-      "moorl_pl_name": "LINE",
-      "technicalName": "PARTS_LIST_LAYOUT"
+      "moorl_pl_name": "PARTS_LIST_LAYOUT"
     },
     "options": [
       {
@@ -61,28 +58,28 @@
         "position": 0,
         "name": "1 Seite, 0 Ecken",
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_1.svg}",
-        "customFields": {"technicalName": "PARTS_LIST_LAYOUT_1"}
+        "customFields": {"moorl_pl_name": "PARTS_LIST_LAYOUT_1"}
       },
       {
         "id": "{MD5:PARTS_LIST_LAYOUT_2}",
         "position": 1,
         "name": "2 Seiten, 1 Ecke",
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_2.svg}",
-        "customFields": {"technicalName": "PARTS_LIST_LAYOUT_2"}
+        "customFields": {"moorl_pl_name": "PARTS_LIST_LAYOUT_2"}
       },
       {
         "id": "{MD5:PARTS_LIST_LAYOUT_3}",
         "position": 2,
         "name": "3 Seiten, 2 Ecken",
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_3.svg}",
-        "customFields": {"technicalName": "PARTS_LIST_LAYOUT_3"}
+        "customFields": {"moorl_pl_name": "PARTS_LIST_LAYOUT_3"}
       },
       {
         "id": "{MD5:PARTS_LIST_LAYOUT_4}",
         "position": 3,
         "name": "4 Seiten, 3 Ecken",
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}",
-        "customFields": {"technicalName": "PARTS_LIST_LAYOUT_4"}
+        "customFields": {"moorl_pl_name": "PARTS_LIST_LAYOUT_4"}
       }
     ]
   },
@@ -92,8 +89,7 @@
     "name": "Höhe",
     "sortingType": "position",
     "customFields": {
-      "moorl_pl_name": "LINE",
-      "technicalName": "HEIGHT"
+      "moorl_pl_name": "HEIGHT"
     },
     "options": [
       {"id": "{MD5:HEIGHT_600}", "position": 0, "name": "600"},
@@ -108,8 +104,7 @@
     "name": "Breite",
     "sortingType": "position",
     "customFields": {
-      "moorl_pl_name": "LINE",
-      "technicalName": "LENGTH"
+      "moorl_pl_name": "LENGTH"
     },
     "options": [
       {"id": "{MD5:LENGTH_1000}", "position": 0, "name": "1000"},
@@ -126,11 +121,25 @@
     "sortingType": "position",
     "customFields": {
       "moorl_pl_name": "PARTS_LIST_POST_TYPE",
-      "technicalName": "PARTS_LIST_POST_TYPE"
+      "moorl_pl_hidden": true
     },
     "options": [
-      {"id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}", "position": 0, "name": "Seite", "customFields": {"technicalName": "PARTS_LIST_POST_TYPE_SIDE"}},
-      {"id": "{MD5:PARTS_LIST_POST_TYPE_CORNER}", "position": 1, "name": "Ecke", "customFields": {"technicalName": "PARTS_LIST_POST_TYPE_CORNER"}}
+      {
+        "id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}",
+        "position": 0,
+        "name": "Seite",
+        "customFields": {
+          "moorl_pl_name": "PARTS_LIST_POST_TYPE_SIDE"
+        }
+      },
+      {
+        "id": "{MD5:PARTS_LIST_POST_TYPE_CORNER}",
+        "position": 1,
+        "name": "Ecke",
+        "customFields": {
+          "moorl_pl_name": "PARTS_LIST_POST_TYPE_CORNER"
+        }
+      }
     ]
   },
   {
@@ -140,8 +149,7 @@
     "name": "Zaunbefestigung",
     "sortingType": "position",
     "customFields": {
-      "moorl_pl_name": "LINE",
-      "technicalName": "PARTS_LIST_POST_MOUNTING"
+      "moorl_pl_name": "PARTS_LIST_POST_MOUNTING"
     },
     "options": [
       {
@@ -165,8 +173,7 @@
     "name": "Bodenbefestigung",
     "sortingType": "position",
     "customFields": {
-      "moorl_pl_name": "LINE",
-      "technicalName": "PARTS_LIST_POST_FLOOR_MOUNTING"
+      "moorl_pl_name": "PARTS_LIST_POST_FLOOR_MOUNTING"
     },
     "options": [
       {

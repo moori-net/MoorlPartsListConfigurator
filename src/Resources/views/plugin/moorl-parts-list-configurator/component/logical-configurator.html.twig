@@ -1,54 +1,31 @@
 {% if logicalConfigurator %}
     {% block parts_list_logical_configurator %}
         {% if logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT' %}
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                {% for element in logicalConfigurator.elements %}
-                    <li class="nav-item" role="presentation">
-                        <button
-                                class="nav-link {% if loop.first %}active{% endif %}"
-                                id="{{ element.name }}-tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#{{ element.name }}"
-                                type="button" role="tab"
-                                aria-controls="home"
-                                aria-selected="true"
-                        >
-                            {{ "moorl-parts-list-configurator.logical-configurator.properties.#{element.name}"|trans }}
-                        </button>
-                    </li>
-                {% endfor %}
-            </ul>
+            {% for element in logicalConfigurator.elements %}
+                <div class="product-detail-configurator-group-title">
+                    {{ "moorl-parts-list-configurator.logical-configurator.properties.#{element.name}"|trans }}
+                </div>
 
-            <div class="tab-content my-3" id="myTabContent">
-                {% for element in logicalConfigurator.elements %}
-                    <div
-                            class="tab-pane fade show {% if loop.first %}active{% endif %}"
-                            id="{{ element.name }}"
-                            role="tabpanel"
-                            aria-labelledby="home-tab"
-                    >
-                        <div class="input-group mb-2">
+                <div class="input-group mb-2">
                             <span class="input-group-text">
                                 {{ "moorl-parts-list-configurator.logical-configurator.properties.totalWidth"|trans }}
                             </span>
-                            <input
-                                    class="form-control"
-                                    type="number"
-                                    name="{{ element.name }}.length"
-                                    min="2500"
-                                    step="500"
-                            />
-                            <span class="input-group-text">mm</span>
-                        </div>
+                    <input
+                            class="form-control"
+                            type="number"
+                            name="{{ element.name }}.length"
+                            min="2500"
+                            step="500"
+                    />
+                    <span class="input-group-text">mm</span>
+                </div>
 
-                        {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator/product-slider.html.twig" with {
-                            configuratorSettings: filter.options.groupByPropertyGroups,
-                            logical: filter.logical,
-                            identifier: filter.id,
-                        } %}
-                    </div>
-                {% endfor %}
-            </div>
+                {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator/product-slider.html.twig" with {
+                    configuratorSettings: filter.options.groupByPropertyGroups,
+                    logical: filter.logical,
+                    identifier: filter.id,
+                } %}
+            {% endfor %}
         {% endif %}
     {% endblock %}
 {% endif %}

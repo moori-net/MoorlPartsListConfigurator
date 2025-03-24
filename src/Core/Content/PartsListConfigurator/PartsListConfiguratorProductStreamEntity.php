@@ -13,10 +13,22 @@ class PartsListConfiguratorProductStreamEntity extends Entity
 
     protected string $partsListConfiguratorId;
     protected string $productStreamId;
+    protected bool $accessory = false;
     protected int $position;
     protected ?string $technicalName;
     protected ?PartsListConfiguratorEntity $partsListConfigurator;
     protected ?ProductStreamEntity $productStream;
+
+    public function getAccessory(): bool
+    {
+        return $this->accessory;
+    }
+
+    public function setAccessory(bool $accessory): PartsListConfiguratorProductStreamEntity
+    {
+        $this->accessory = $accessory;
+        return $this;
+    }
 
     public function getPartsListConfiguratorId(): string
     {

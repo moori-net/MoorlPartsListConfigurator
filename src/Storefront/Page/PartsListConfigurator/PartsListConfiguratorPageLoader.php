@@ -7,6 +7,7 @@ use Doctrine\DBAL\Connection;
 use Moorl\PartsListConfigurator\Core\Calculator\CalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
+use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
@@ -32,10 +33,16 @@ class PartsListConfiguratorPageLoader
         private readonly GenericPageLoaderInterface $genericLoader,
         private readonly PartsListConfiguratorDetailRoute $partsListConfiguratorDetailRoute,
         private readonly AbstractProductListingRoute $productListingRoute,
+        private readonly CartService $cartService,
         private readonly Connection $connection,
         private readonly iterable $calculators
     )
     {
+    }
+
+    public function getCartService(): CartService
+    {
+        return $this->cartService;
     }
 
     public function load(Request $request, SalesChannelContext $context): PartsListConfiguratorPage

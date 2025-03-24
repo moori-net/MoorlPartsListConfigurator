@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `moorl_pl_product_stream` (
     `moorl_pl_id` BINARY(16) NOT NULL,
     `product_stream_id` BINARY(16) NOT NULL,
     `position` INT(11) NOT NULL,
+    `accessory` TINYINT NOT NULL,
     `technical_name` varchar(255) NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3),

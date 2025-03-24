@@ -8,7 +8,7 @@
                             <div
                                     class="js-group product-detail-configurator-group"
                                     data-identifier="{{ identifier }}"
-                                    data-technical-name="{{ group.translated.customFields.technicalName }}"
+                                    data-technical-name="{{ group.translated.customFields.moorl_pl_name }}"
                                     data-logical="{{ logical }}"
                             >
                                 {% block buy_widget_configurator_group_title %}
@@ -58,7 +58,7 @@
                                                                 title="{{ optionIdentifier }}"
                                                                 id="{{ optionIdentifier }}"
                                                                 data-logical="{{ logical }}"
-                                                                data-technical-name="{{ option.translated.customFields.technicalName }}"
+                                                                data-technical-name="{{ option.translated.customFields.moorl_pl_name }}"
                                                                 {% if isActive %}checked="checked"{% endif %}
                                                         >
 

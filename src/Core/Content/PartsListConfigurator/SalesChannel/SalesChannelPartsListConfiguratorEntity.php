@@ -36,12 +36,25 @@ class SalesChannelPartsListConfiguratorEntity extends PartsListConfiguratorEntit
                     continue;
                 }
 
-                if ($option->getGroup()->getTranslation('customFields')['technicalName'] === $groupTechnicalName) {
-                    return $option->getTranslation('customFields')['technicalName'];
+                if ($option->getGroup()->getTranslation('customFields')['moorl_pl_name'] === $groupTechnicalName) {
+                    return $option->getTranslation('customFields')['moorl_pl_name'];
                 }
             }
         }
 
         return null;
+    }
+
+    public function getAccessoryProductStreamIds(): array
+    {
+        $productStreamIds = [];
+
+        foreach ($this->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
+            if ($partsListConfiguratorProductStream->getAccessory()) {
+                $productStreamIds[] = $partsListConfiguratorProductStream->getProductStreamId();
+            }
+        }
+
+        return $productStreamIds;
     }
 }
