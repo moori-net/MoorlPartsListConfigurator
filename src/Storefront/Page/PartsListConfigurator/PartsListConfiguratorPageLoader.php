@@ -79,6 +79,7 @@ class PartsListConfiguratorPageLoader
 
             foreach ($partsListConfigurator->getFilters() as $filter) {
                 if ($filter->getLogical()) {
+                    $filter->addProductStreamId($partsListConfiguratorProductStream->getProductStreamId());
                     continue;
                 }
                 $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
@@ -151,6 +152,17 @@ class PartsListConfiguratorPageLoader
 
         $metaTitleParts = [$page->getPartsListConfigurator()->getTranslation('name')];
         $metaInformation->setMetaTitle(implode(' | ', $metaTitleParts));
+    }
+
+    private function getFilterProductStreamIds(
+        Request $request,
+        string $prop = "tag"
+    ): ?array
+    {
+        $ids = $this->getPropIds($request, $prop);
+        if (empty($ids)) {
+            return new AndFilter([]);
+        }
     }
 
     private function getPropertyFilter(

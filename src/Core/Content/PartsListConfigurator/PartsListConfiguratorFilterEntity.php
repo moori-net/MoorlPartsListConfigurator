@@ -18,6 +18,17 @@ class PartsListConfiguratorFilterEntity extends Entity
     protected ?string $technicalName = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
     protected ?PropertyGroupOptionCollection $options = null;
+    protected array $productStreamIds = [];
+
+    public function getProductStreamIds(): array
+    {
+        return $this->productStreamIds;
+    }
+
+    public function addProductStreamId(string $productStreamId): void
+    {
+        $this->productStreamIds[] = $productStreamId;
+    }
 
     public function getLogical(): bool
     {
