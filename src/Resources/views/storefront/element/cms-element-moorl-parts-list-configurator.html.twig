@@ -31,13 +31,7 @@
             {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig' with {
                 items: accessoryList,
                 options: {
-                    enablePrices: true,
-                    enableAddToCartAll: true,
-                    enableAddToCartSingle: false,
-                    enableSelection: false,
-                    currencyIso: context.currency.isoCode,
-                    discountValue: 10,
-                    enableVariantSwitch: false
+                    variant: 'slider'
                 }
             } %}
         </div>
@@ -49,13 +43,7 @@
         {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig' with {
             items: partsList,
             options: {
-                enablePrices: true,
-                enableAddToCartAll: true,
-                enableAddToCartSingle: false,
-                enableSelection: false,
-                currencyIso: context.currency.isoCode,
-                discountValue: 10,
-                enableVariantSwitch: false
+                variant: 'slider'
             }
         } %}
     </div>

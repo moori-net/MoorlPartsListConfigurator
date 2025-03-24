@@ -15,6 +15,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\AndFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\Framework\Uuid\Uuid;
@@ -73,9 +74,8 @@ class PartsListConfiguratorPageLoader
 
         $mainFilters = [];
         foreach ($partsListConfigurator->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
-            $subFilters = [
-                new ContainsFilter('streamIds', $partsListConfiguratorProductStream->getProductStreamId())
-            ];
+            $streamFilter = new ContainsFilter('streamIds', $partsListConfiguratorProductStream->getProductStreamId());
+            $propertyFilters = [];
 
             foreach ($partsListConfigurator->getFilters() as $filter) {
                 if ($filter->getLogical()) {
@@ -84,11 +84,23 @@ class PartsListConfiguratorPageLoader
                 $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
 
                 if (in_array($partsListConfiguratorProductStream->getId(), $filter->getPartsListConfiguratorProductStreamIds())) {
-                    $subFilters[] = $this->getPropertyFilter($request, $optionIds, 'options', $filter->getFixed());
+                    $propertyFilters[] = $this->getPropertyFilter($request, $optionIds, 'options', $filter->getFixed());
                 }
             }
 
-            $mainFilters[] = new AndFilter($subFilters);
+            if ($partsListConfiguratorProductStream->getAccessory()) {
+                $mainFilters[] = new AndFilter([
+                    $streamFilter,
+                    new OrFilter([
+                        new AndFilter($propertyFilters),
+                        new EqualsFilter('parentId', null)
+                    ])
+                ]);
+            } else {
+                $propertyFilters[] = $streamFilter;
+
+                $mainFilters[] = new AndFilter($propertyFilters);
+            }
         }
 
         $criteria = new Criteria();

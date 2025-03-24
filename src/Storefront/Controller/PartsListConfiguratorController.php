@@ -50,7 +50,7 @@ class PartsListConfiguratorController extends StorefrontController
         $items = ProductBuyListItemCollection::createFromProducts($page->getProducts()->getEntities());
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/parts-list.html.twig', [
-            'partsListProducts' => $items
+            'partsList' => $items
         ]);
     }
 
@@ -59,8 +59,11 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
+        $items = ProductBuyListItemCollection::createFromProducts($page->getProducts()->getEntities());
+
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator.html.twig', [
             'page' => $page,
+            'accessoryList' => $items->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds()),
             'logicalConfigurator' => $page->getCalculator()->getLogicalConfigurator($request, $salesChannelContext, $page->getPartsListConfigurator()),
         ]);
     }
