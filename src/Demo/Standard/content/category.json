@@ -1,6 +1,6 @@
 [
     {
-        "id": "{ID:CATEGORY_PARTS_LIST}",
+        "id": "{ID:CATEGORY_PARTS_LIST_FENCE}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
         "name": "Zäune"
@@ -16,5 +16,11 @@
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
         "name": "Tore"
+    },
+    {
+        "id": "{ID:CATEGORY_PARTS_LIST_ACCESSORY}",
+        "parentId": "{NAVIGATION_CATEGORY_ID}",
+        "active": true,
+        "name": "Zubehör"
     }
 ]

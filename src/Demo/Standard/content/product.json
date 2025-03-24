@@ -15,7 +15,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST}"
+                "id": "{ID:CATEGORY_PARTS_LIST_FENCE}"
             }
         ],
         "cover": {
@@ -52,7 +52,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST}"
+                "id": "{ID:CATEGORY_PARTS_LIST_FENCE}"
             }
         ],
         "cover": {
@@ -231,6 +231,56 @@
             {"id": "{ID:PRODUCT_DOOR_LARGE.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}"},
             {"id": "{ID:PRODUCT_DOOR_LARGE.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}"},
             {"id": "{ID:PRODUCT_DOOR_LARGE.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}"}
+        ]
+    },
+    {
+        "id": "{ID:PRODUCT_BIT}",
+        "active": true,
+        "name": "Akku Bit 5,5mm",
+        "productNumber": "BIT",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:6|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_PARTS_LIST_ACCESSORY}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/bit.jpg}"
+        }
+    },
+    {
+        "id": "{ID:PRODUCT_DOSE}",
+        "active": true,
+        "name": "Sprühdose (400ml)",
+        "productNumber": "DOSE",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:20|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_PARTS_LIST_ACCESSORY}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/spruhdose-400ml.jpg}"
+        },
+        "configuratorSettings": [
+            {"id": "{ID:PRODUCT_DOSE.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}"},
+            {"id": "{ID:PRODUCT_DOSE.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}"}
         ]
     }
 ]

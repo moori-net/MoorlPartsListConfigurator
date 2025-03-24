@@ -12,7 +12,7 @@
               {
                 "type": "equals",
                 "field": "product.categoriesRo.id",
-                "value": "{ID:CATEGORY_PARTS_LIST}"
+                "value": "{ID:CATEGORY_PARTS_LIST_FENCE}"
               }
             ],
             "operator": "AND"
@@ -59,6 +59,29 @@
                 "type": "equals",
                 "field": "product.categoriesRo.id",
                 "value": "{ID:CATEGORY_PARTS_LIST_DOOR}"
+              }
+            ],
+            "operator": "AND"
+          }
+        ],
+        "operator": "OR"
+      }
+    ]
+  },
+  {
+    "id": "{ID:STREAM_CATEGORY_PARTS_LIST_ACCESSORY}",
+    "name": "Zubehör",
+    "filters": [
+      {
+        "type": "multi",
+        "queries": [
+          {
+            "type": "multi",
+            "queries": [
+              {
+                "type": "equals",
+                "field": "product.categoriesRo.id",
+                "value": "{ID:CATEGORY_PARTS_LIST_ACCESSORY}"
               }
             ],
             "operator": "AND"

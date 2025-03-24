@@ -6,6 +6,7 @@
     "displayType": "text",
     "sortingType": "position",
     "customFields": {
+      "moorl_pl_name": "LINE",
       "technicalName": "LINE"
     },
     "options": [
@@ -20,6 +21,7 @@
     "displayType": "media",
     "sortingType": "position",
     "customFields": {
+      "moorl_pl_name": "LINE",
       "technicalName": "COLOR"
     },
     "options": [
@@ -50,6 +52,7 @@
     "name": "Layout",
     "sortingType": "position",
     "customFields": {
+      "moorl_pl_name": "LINE",
       "technicalName": "PARTS_LIST_LAYOUT"
     },
     "options": [
@@ -89,6 +92,7 @@
     "name": "Höhe",
     "sortingType": "position",
     "customFields": {
+      "moorl_pl_name": "LINE",
       "technicalName": "HEIGHT"
     },
     "options": [
@@ -104,6 +108,7 @@
     "name": "Breite",
     "sortingType": "position",
     "customFields": {
+      "moorl_pl_name": "LINE",
       "technicalName": "LENGTH"
     },
     "options": [
@@ -120,6 +125,7 @@
     "name": "Pfostentyp",
     "sortingType": "position",
     "customFields": {
+      "moorl_pl_name": "PARTS_LIST_POST_TYPE",
       "technicalName": "PARTS_LIST_POST_TYPE"
     },
     "options": [
@@ -134,6 +140,7 @@
     "name": "Zaunbefestigung",
     "sortingType": "position",
     "customFields": {
+      "moorl_pl_name": "LINE",
       "technicalName": "PARTS_LIST_POST_MOUNTING"
     },
     "options": [
@@ -158,6 +165,7 @@
     "name": "Bodenbefestigung",
     "sortingType": "position",
     "customFields": {
+      "moorl_pl_name": "LINE",
       "technicalName": "PARTS_LIST_POST_FLOOR_MOUNTING"
     },
     "options": [

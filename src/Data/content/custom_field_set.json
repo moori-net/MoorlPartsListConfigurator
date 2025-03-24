@@ -1,0 +1,53 @@
+[
+  {
+    "id": "{ID:CUSTOM_FIELD}",
+    "name": "moorl_pl",
+    "global": true,
+    "config": {
+      "label": {
+        "en-GB": "Parts list configurator",
+        "de-DE": "Stücklisten Konfigurator"
+      }
+    },
+    "relations": [
+      {
+        "id": "{ID:property_group}",
+        "entityName": "property_group"
+      },
+      {
+        "id": "{ID:product_stream}",
+        "entityName": "product_stream"
+      },
+      {
+        "id": "{ID:property_group_option}",
+        "entityName": "property_group_option"
+      }
+    ],
+    "customFields": [
+      {
+        "name": "moorl_pl_name",
+        "type": "text",
+        "config": {
+          "componentName": "sw-text-field",
+          "customFieldType": "text",
+          "label": {
+            "en-GB": "Technical name",
+            "de-DE": "Technischer Name"
+          }
+        }
+      },
+      {
+        "name": "moorl_pl_hidden",
+        "type": "bool",
+        "config": {
+          "componentName": "sw-switch-field",
+          "customFieldType": "switch",
+          "label": {
+            "en-GB": "Hide",
+            "de-DE": "Verstecken"
+          }
+        }
+      }
+    ]
+  }
+]
