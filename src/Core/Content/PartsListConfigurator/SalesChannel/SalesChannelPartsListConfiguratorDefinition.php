@@ -4,6 +4,7 @@ namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesCh
 
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelDefinitionInterface;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
@@ -21,6 +22,9 @@ class SalesChannelPartsListConfiguratorDefinition extends PartsListConfiguratorD
         $criteria->addAssociation('partsListConfiguratorProductStreams');
         $criteria->addAssociation('filters.options.group');
         $criteria->addAssociation('filters.options.media');
+
+        //$optionsCriteria = $criteria->getAssociation('filters.options');
+        //$optionsCriteria->addSorting(new FieldSorting('position'));
 
         if (!$this->hasAvailableFilter($criteria)) {
             $criteria->addFilter(

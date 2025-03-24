@@ -34,14 +34,6 @@ class PartsListConfiguratorDetailRoute
     {
         $criteria->setIds([$partsListConfiguratorId]);
 
-        $criteria->addAssociation('fixedOptions.group');
-        $criteria->addAssociation('globalOptions.media');
-        $criteria->addAssociation('globalOptions.group');
-        $criteria->addAssociation('secondOptions.media');
-        $criteria->addAssociation('secondOptions.group');
-        $criteria->addAssociation('logicalOptions.media');
-        $criteria->addAssociation('logicalOptions.group');
-
         /** @var SalesChannelPartsListConfiguratorEntity $partsListConfigurator */
         $partsListConfigurator = $this->partsListConfiguratorRepository
             ->search($criteria, $context)

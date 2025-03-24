@@ -2,6 +2,9 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
+use Shopware\Core\Content\Property\PropertyGroupCollection;
+use Shopware\Core\Content\Property\PropertyGroupEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 /**
@@ -29,5 +32,20 @@ class PartsListConfiguratorFilterCollection extends EntityCollection
         return $this->filter(
             fn(PartsListConfiguratorFilterEntity $entity) => $entity->getTechnicalName() === $technicalName
         )->first();
+    }
+
+    public function sortByPosition(): self
+    {
+        foreach ($this->getIterator() as $element) {
+            if ($element->getOptions() === null) {
+                continue;
+            }
+
+            $element->getOptions()->sort(fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => $a->getPosition() > $b->getPosition());
+        }
+
+        $this->sort(fn(PartsListConfiguratorFilterEntity $a, PartsListConfiguratorFilterEntity $b) => $a->getPosition() > $b->getPosition());
+
+        return $this;
     }
 }

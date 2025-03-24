@@ -38,10 +38,15 @@ class DemoFenceCalculator implements CalculatorInterface
             return null;
         }
 
-        return current(array_filter(
+        $option = current(array_filter(
             $group['options'],
             fn($item) => $item['technicalName'] === $optionTechnicalName
         ));
+
+        $option['groupTechnicalName'] = $groupTechnicalName;
+        $option['optionTechnicalName'] = $optionTechnicalName;
+
+        return $option;
     }
 
     public function getExpectedPropertyGroups(): array

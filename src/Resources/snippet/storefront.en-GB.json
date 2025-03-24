@@ -1,5 +1,14 @@
 {
     "moorl-parts-list-configurator": {
-        "partsListConfigurators": "Parts list configurators"
+        "partsListConfigurators": "Parts list configurators",
+        "logical-configurator": {
+            "properties": {
+                "totalWidth": "Total width",
+                "side_a": "Side A",
+                "side_b": "Side B",
+                "side_c": "Side C",
+                "side_d": "Side D"
+            }
+        }
     }
 }

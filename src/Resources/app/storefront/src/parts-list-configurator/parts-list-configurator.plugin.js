@@ -36,9 +36,8 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             groupEl.querySelectorAll('input[type=radio]').forEach((el) => {
                 ['keyup', 'change', 'force'].forEach(evt => {
                     el.addEventListener(evt, () => {
-                        this._loadLogicalConfigurator(groupEl);
-
                         this._loadHistory();
+                        this._loadLogicalConfigurator(groupEl);
                         this._loadPartsList();
                     }, false);
                 });

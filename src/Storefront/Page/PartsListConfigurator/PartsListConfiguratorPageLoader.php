@@ -62,6 +62,8 @@ class PartsListConfiguratorPageLoader
             throw new PageNotFoundException($partsListConfigurator->getId());
         }
 
+        $partsListConfigurator->getFilters()->sortByPosition();
+
         $mainFilters = [];
         foreach ($partsListConfigurator->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
             $subFilters = [
