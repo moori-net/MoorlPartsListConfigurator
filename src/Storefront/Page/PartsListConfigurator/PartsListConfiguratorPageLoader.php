@@ -72,7 +72,7 @@ class PartsListConfiguratorPageLoader
         }
 
         $partsListConfigurator->getFilters()->sortByPosition();
-        $partsListConfigurator->mergeCurrentOptionIds($this->getPropIds($request, 'options'));
+        $partsListConfigurator->setCurrentOptionIds($this->getPropIds($request, 'options'));
 
         $calculator = $this->getCalculatorByName($partsListConfigurator->getCalculator());
 
@@ -89,12 +89,11 @@ class PartsListConfiguratorPageLoader
 
                     $filter->addProductStreamId($partsListConfiguratorProductStream->getProductStreamId());
 
-                    $request->query->set('group', 'PARTS_LIST_LAYOUT');
-
                     $filter->setLogicalConfigurator($calculator->getLogicalConfigurator(
                         $request,
                         $salesChannelContext,
-                        $partsListConfigurator
+                        $partsListConfigurator,
+                        $filter->getOptions()->getGroups()->first()->getTranslation('customFields')['moorl_pl_name']
                     ));
 
                     continue;

@@ -48,6 +48,21 @@
         ]
       },
       {
+        "id": "{ID:FC01_FILTER_LENGTH}",
+        "position": 10,
+        "technicalName": "LENGTH",
+        "logical": true,
+        "partsListConfiguratorProductStreamIds": [
+          "{ID:FC01_STREAM_OTHER}"
+        ],
+        "options": [
+          {"id": "{MD5:PARTS_LIST_LAYOUT_1}"},
+          {"id": "{MD5:PARTS_LIST_LAYOUT_2}"},
+          {"id": "{MD5:PARTS_LIST_LAYOUT_3}"},
+          {"id": "{MD5:PARTS_LIST_LAYOUT_4}"}
+        ]
+      },
+      {
         "id": "{ID:FC01_FILTER_FIXED}",
         "position": 0,
         "technicalName": "fixed",

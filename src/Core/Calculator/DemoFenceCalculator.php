@@ -3,7 +3,7 @@
 namespace Moorl\PartsListConfigurator\Core\Calculator;
 
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
-use MoorlFoundation\Core\Content\PartsList\ProductBuyListItemCollection;
+use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,12 +17,15 @@ class DemoFenceCalculator implements CalculatorInterface
     public function getLogicalConfigurator(
         Request $request,
         SalesChannelContext $salesChannelContext,
-        PartsListConfiguratorEntity $partsListConfigurator
+        PartsListConfiguratorEntity $partsListConfigurator,
+        ?string $groupTechnicalName = null
     ): ?array
     {
-        $groupTechnicalName = $request->query->get('group');
         if (!$groupTechnicalName) {
-            return null;
+            $groupTechnicalName = $request->query->get('group');
+            if (!$groupTechnicalName) {
+                return null;
+            }
         }
 
         $group = current(array_filter(
@@ -33,7 +36,7 @@ class DemoFenceCalculator implements CalculatorInterface
             return null;
         }
 
-        $optionTechnicalName = $partsListConfigurator->findOptionTechnicalName($request->query->get('group'));
+        $optionTechnicalName = $partsListConfigurator->findOptionTechnicalName($groupTechnicalName);
         if (!$optionTechnicalName) {
             return null;
         }
@@ -131,9 +134,9 @@ class DemoFenceCalculator implements CalculatorInterface
         Request $request,
         SalesChannelContext $salesChannelContext,
         PartsListConfiguratorEntity $partsListConfigurator
-    ): ProductBuyListItemCollection
+    ): PartsListCollection
     {
-        $productBuyList = new ProductBuyListItemCollection();
+        $productBuyList = new PartsListCollection();
 
         return $productBuyList;
     }
