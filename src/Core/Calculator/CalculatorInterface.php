@@ -3,7 +3,7 @@
 namespace Moorl\PartsListConfigurator\Core\Calculator;
 
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
-use MoorlFoundation\Core\Content\ProductBuyList\ProductBuyListItemCollection;
+use MoorlFoundation\Core\Content\PartsList\ProductBuyListItemCollection;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 

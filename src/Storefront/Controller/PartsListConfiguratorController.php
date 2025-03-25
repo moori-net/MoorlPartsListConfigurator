@@ -3,7 +3,6 @@
 namespace Moorl\PartsListConfigurator\Storefront\Controller;
 
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
-use MoorlFoundation\Core\Content\ProductBuyList\ProductBuyListItemCollection;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +23,10 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
-        $items = ProductBuyListItemCollection::createFromProducts($page->getProducts()->getEntities());
-
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/page/content/parts-list-configurator-detail.html.twig', [
             'page' => $page,
-            'partsList' => $items,
-            'accessoryList' => $items->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds())
+            'partsList' => $page->getPartsList(),
+            'accessoryList' => $page->getPartsList()->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds())
         ]);
     }
 
@@ -38,10 +35,8 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
-        $items = ProductBuyListItemCollection::createFromProducts($page->getProducts()->getEntities());
-
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/parts-list.html.twig', [
-            'partsList' => $items
+            'partsList' => $page->getPartsList()
         ]);
     }
 
@@ -50,11 +45,9 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
-        $items = ProductBuyListItemCollection::createFromProducts($page->getProducts()->getEntities());
-
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator.html.twig', [
             'page' => $page,
-            'accessoryList' => $items->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds()),
+            'accessoryList' => $page->getPartsList()->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds()),
             'logicalConfigurator' => $page->getCalculator()->getLogicalConfigurator($request, $salesChannelContext, $page->getPartsListConfigurator()),
         ]);
     }

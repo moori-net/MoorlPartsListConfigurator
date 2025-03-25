@@ -19,6 +19,17 @@ class PartsListConfiguratorFilterEntity extends Entity
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
     protected ?PropertyGroupOptionCollection $options = null;
     protected array $productStreamIds = [];
+    protected ?array $logicalConfigurator = null;
+
+    public function getLogicalConfigurator(): ?array
+    {
+        return $this->logicalConfigurator;
+    }
+
+    public function setLogicalConfigurator(?array $logicalConfigurator): void
+    {
+        $this->logicalConfigurator = $logicalConfigurator;
+    }
 
     public function getProductStreamIds(): array
     {

@@ -17,6 +17,7 @@
                     configuratorSettings: filter.options.groupByPropertyGroups,
                     logical: filter.logical,
                     identifier: filter.id,
+                    accessoryList: page.partsList.filterByProductStreamIds(filter.productStreamIds)
                 } %}
             {% endif %}
         {% endfor %}

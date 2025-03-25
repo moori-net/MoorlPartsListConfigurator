@@ -2,7 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
-use MoorlFoundation\Core\Content\ProductBuyList\ProductBuyListItemEntity;
+use MoorlFoundation\Core\Content\PartsList\ProductBuyListItemEntity;
 use Shopware\Core\Content\ProductStream\ProductStreamEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;

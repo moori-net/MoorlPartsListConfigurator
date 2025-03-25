@@ -6,6 +6,7 @@ use Moorl\PartsListConfigurator\Core\Calculator\CalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
+use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use Shopware\Core\Content\Cms\CmsPageEntity;
 use Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingResult;
 use Shopware\Storefront\Page\Page;
@@ -15,7 +16,19 @@ class PartsListConfiguratorPage extends Page
     protected SalesChannelPartsListConfiguratorEntity $partsListConfigurator;
     protected ?CmsPageEntity $cmsPage = null;
     protected ?ProductListingResult $products = null;
+    protected ?PartsListCollection $partsList = null;
     protected ?CalculatorInterface $calculator = null;
+
+    public function getPartsList(): ?PartsListCollection
+    {
+        return $this->partsList;
+    }
+
+    public function setPartsList(?PartsListCollection $partsList): PartsListConfiguratorPage
+    {
+        $this->partsList = $partsList;
+        return $this;
+    }
 
     public function getCalculator(): ?CalculatorInterface
     {

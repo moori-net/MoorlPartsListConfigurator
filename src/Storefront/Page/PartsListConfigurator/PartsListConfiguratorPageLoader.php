@@ -7,6 +7,7 @@ use Doctrine\DBAL\Connection;
 use Moorl\PartsListConfigurator\Core\Calculator\CalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
+use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
@@ -46,7 +47,7 @@ class PartsListConfiguratorPageLoader
         return $this->cartService;
     }
 
-    public function load(Request $request, SalesChannelContext $context): PartsListConfiguratorPage
+    public function load(Request $request, SalesChannelContext $salesChannelContext): PartsListConfiguratorPage
     {
         $partsListConfiguratorId = $request->attributes->get('partsListConfiguratorId');
         if (!$partsListConfiguratorId) {
@@ -54,7 +55,7 @@ class PartsListConfiguratorPageLoader
         }
         
         $criteria = new Criteria();
-        $result = $this->partsListConfiguratorDetailRoute->load($partsListConfiguratorId, $request, $context, $criteria);
+        $result = $this->partsListConfiguratorDetailRoute->load($partsListConfiguratorId, $request, $salesChannelContext, $criteria);
         /** @var SalesChannelPartsListConfiguratorEntity $partsListConfigurator */
         $partsListConfigurator = $result->getPartsListConfigurator();
 
@@ -71,6 +72,7 @@ class PartsListConfiguratorPageLoader
         }
 
         $partsListConfigurator->getFilters()->sortByPosition();
+        $calculator = $this->getCalculatorByName($partsListConfigurator->getCalculator());
 
         $mainFilters = [];
         foreach ($partsListConfigurator->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
@@ -79,7 +81,20 @@ class PartsListConfiguratorPageLoader
 
             foreach ($partsListConfigurator->getFilters() as $filter) {
                 if ($filter->getLogical()) {
+                    if (!in_array($partsListConfiguratorProductStream->getId(), $filter->getPartsListConfiguratorProductStreamIds())) {
+                        continue;
+                    }
+
                     $filter->addProductStreamId($partsListConfiguratorProductStream->getProductStreamId());
+
+                    $request->query->set('group', $filter->getTechnicalName());
+
+                    $filter->setLogicalConfigurator($calculator->getLogicalConfigurator(
+                        $request,
+                        $salesChannelContext,
+                        $partsListConfigurator
+                    ));
+
                     continue;
                 }
                 $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
@@ -111,20 +126,23 @@ class PartsListConfiguratorPageLoader
         ]));
 
         $result = $this->productListingRoute->load(
-            $context->getSalesChannel()->getNavigationCategoryId(),
+            $salesChannelContext->getSalesChannel()->getNavigationCategoryId(),
             $request,
-            $context,
+            $salesChannelContext,
             $criteria
         );
         $products = $result->getResult();
 
-        $page = $this->genericLoader->load($request, $context);
+        $partsList = PartsListCollection::createFromProducts($products->getEntities());
+
+        $page = $this->genericLoader->load($request, $salesChannelContext);
 
         /** @var PartsListConfiguratorPage $page */
         $page = PartsListConfiguratorPage::createFrom($page);
         $page->setPartsListConfigurator($partsListConfigurator);
         $page->setCmsPage($partsListConfigurator->getCmsPage());
         $page->setProducts($products);
+        $page->setPartsList($partsList);
         $page->setCalculator($this->getCalculatorByName($partsListConfigurator->getCalculator()));
 
         $this->loadMetaData($page);
