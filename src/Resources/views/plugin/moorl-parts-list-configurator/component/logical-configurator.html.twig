@@ -3,11 +3,11 @@
         {% if logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT' %}
             {% for element in logicalConfigurator.elements %}
                 <div class="row">
-                    <div class="col-3 product-detail-configurator-group-title">
+                    <div class="col-2 product-detail-configurator-group-title">
                         {{ "moorl-parts-list-configurator.logical-configurator.properties.#{element.name}"|trans }}
                     </div>
 
-                    <div class="col-9">
+                    <div class="col-10">
                         <div class="input-group mb-2">
                             <span class="input-group-text">
                                 {{ "moorl-parts-list-configurator.logical-configurator.properties.totalWidth"|trans }}

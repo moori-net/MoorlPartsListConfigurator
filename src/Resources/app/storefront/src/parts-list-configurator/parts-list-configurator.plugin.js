@@ -14,6 +14,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._filters = {
             options: []
         };
+        this._timeout = null;
 
         this._partsListEl = document.getElementById('partsList');
         this._accessoryList = document.getElementById('accessoryList');
@@ -53,18 +54,28 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _refresh(source) {
-        this._loadHistory();
-        this._loadPartsList();
-
-        if (source !== 'options') {
-            return;
+        if (this._timeout) {
+            clearTimeout(this._timeout);
+            this._timeout = null;
         }
 
-        this._loadAccessoryList();
+        this._loadHistory();
 
-        this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
-            this._loadLogicalConfigurator(groupEl);
-        });
+        this._timeout = setTimeout(() => {
+            this._loadPartsList();
+
+            if (source !== 'options') {
+                return;
+            }
+
+            this._loadAccessoryList();
+
+            this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
+                this._loadLogicalConfigurator(groupEl);
+            });
+
+            this._timeout = null;
+        }, 1000);
     }
 
     _loadList(currentEl, type) {
