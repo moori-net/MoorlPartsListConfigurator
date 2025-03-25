@@ -10,7 +10,6 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     };
 
     init() {
-        this._urlFilterParams = querystring.parse(HistoryUtil.getSearch());
         this._client = new HttpClient(window.accessKey, window.contextToken);
         this._filters = {
             options: []
@@ -20,40 +19,55 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._accessoryList = document.getElementById('accessoryList');
         this._formEl = this.el.querySelector('form');
 
+        this._formEl.querySelectorAll('.js-group').forEach(() => {
+            this.options.optionCount++;
+        });
+
         this._setFilterState();
         this._registerEvents();
-        this._refresh();
+        this._refresh('options');
     }
 
     _setFilterState() {
-        if (Object.keys(this._urlFilterParams).length > 0) {
-            this._setValuesFromUrl(this._urlFilterParams);
+        const query = querystring.parse(HistoryUtil.getSearch())
+
+        if (Object.keys(query).length > 0) {
+            this._setValuesFromUrl(query);
         }
     }
 
     _registerEvents() {
         this._formEl.querySelectorAll('input[type=radio]').forEach((el) => {
             ['keyup', 'change', 'force'].forEach(evt => {
-                el.addEventListener(evt, () => {this._refresh();}, false);
+                el.addEventListener(evt, () => {this._refresh('options');}, false);
             });
         });
     }
 
-    _refresh() {
+    _registerListEvents(currentEl) {
+        currentEl.querySelectorAll('input[type=number]').forEach((el) => {
+            ['change'].forEach(evt => {
+                el.addEventListener(evt, () => {this._refresh('list');}, false);
+            });
+        });
+    }
+
+    _refresh(source) {
         this._loadHistory();
         this._loadPartsList();
+
+        if (source !== 'options') {
+            return;
+        }
+
         this._loadAccessoryList();
 
-        this.options.optionCount = 0;
-
         this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
-            this.options.optionCount++;
-
             this._loadLogicalConfigurator(groupEl);
         });
     }
 
-    _loadPartsList() {
+    _loadList(currentEl, type) {
         if (this._filters.options.length < this.options.optionCount) {
             return;
         }
@@ -62,25 +76,20 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         let query = querystring.stringify(mapped);
 
-        this._client.get(this.options.url + "/parts-list?" + query, response => {
-            this._partsListEl.innerHTML = response;
+        this._client.get(this.options.url + "/" + type + "?" + query, response => {
+            currentEl.innerHTML = response;
             window.PluginManager.initializePlugins();
+            this._setFilterState();
+            this._registerListEvents(currentEl);
         });
     }
 
+    _loadPartsList() {
+        this._loadList(this._partsListEl, 'parts-list');
+    }
+
     _loadAccessoryList() {
-        if (this._filters.options.length < this.options.optionCount) {
-            return;
-        }
-
-        const mapped = this._mapFilters(this._filters);
-
-        let query = querystring.stringify(mapped);
-
-        this._client.get(this.options.url + "/accessory-list?" + query, response => {
-            this._accessoryList.innerHTML = response;
-            window.PluginManager.initializePlugins();
-        });
+        this._loadList(this._accessoryList, 'accessory-list');
     }
 
     _loadLogicalConfigurator(groupEl) {
@@ -88,34 +97,28 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             return;
         }
 
-        if (this._filters.options.length < this.options.optionCount) {
-            return;
-        }
-
         this._filters.group = groupEl.dataset.technicalName;
 
-        const mapped = this._mapFilters(this._filters);
-        const logicalConfiguratorEl = groupEl.querySelector('.js-logical-configurator');
-
-        let query = querystring.stringify(mapped);
-
-        this._client.get(this.options.url + "/logical-configurator?" + query, response => {
-            logicalConfiguratorEl.innerHTML = response;
-            window.PluginManager.initializePlugins();
-        });
+        this._loadList(
+            groupEl.querySelector('.js-logical-configurator'),
+            'logical-configurator'
+        );
     }
 
     _loadHistory() {
-        this._filters = {
-            options: [],
-        };
+        this._filters = Object.assign(
+            querystring.parse(HistoryUtil.getSearch()),
+            {options: []}
+        );
 
         this._formEl.querySelectorAll('input[type=radio]').forEach((el) => {
             if (el.checked) {
-                let initiator = el.dataset.initiator;
-
                 this._filters.options.push(el.value);
             }
+        });
+
+        this._formEl.querySelectorAll('input[type=number]').forEach((el) => {
+            this._filters[el.name] = el.value;
         });
 
         const mapped = this._mapFilters(this._filters);
@@ -127,15 +130,17 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
     _setValuesFromUrl(params = {}) {
         for (const [key, value] of Object.entries(params)) {
-            const ids = value ? value.split('|') : [];
+            if (key === 'options') {
+                const ids = value ? value.split('|') : [];
 
-            ids.forEach(id => {
-                const checkboxEl = this.el.querySelector('[value="' + id + '"]');
-
-                if (checkboxEl) {
-                    checkboxEl.checked = true;
-                }
-            });
+                ids.forEach(id => {
+                    const checkboxEl = this.el.querySelector('input[type=radio][value="' + id + '"]');
+                    if (checkboxEl) {checkboxEl.checked = true;}
+                });
+            } else {
+                const numberEl = this.el.querySelector('input[type=number][name="' + key + '"]');
+                if (numberEl) {numberEl.value = value;}
+            }
         }
     }
 

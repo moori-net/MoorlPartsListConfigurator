@@ -36,8 +36,10 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
-        return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/parts-list.html.twig', [
-            'partsList' => $page->getPartsList()
+        return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
+            'items' => $page->getPartsList(),
+            'namePrefix' => 'parts',
+            'options' => []
         ]);
     }
 
@@ -46,8 +48,9 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
-        return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig', [
+        return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
             'items' => $page->getPartsList()->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds()),
+            'namePrefix' => 'accessory',
             'options' => []
         ]);
     }

@@ -2,8 +2,6 @@
     {% block parts_list_logical_configurator %}
         {% if logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT' %}
             {% for element in logicalConfigurator.elements %}
-                <hr>
-
                 <div class="row">
                     <div class="col-3 product-detail-configurator-group-title">
                         {{ "moorl-parts-list-configurator.logical-configurator.properties.#{element.name}"|trans }}
@@ -24,8 +22,9 @@
                             <span class="input-group-text">mm</span>
                         </div>
 
-                        {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig' with {
+                        {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig' with {
                             items: accessoryList,
+                            namePrefix: element.name,
                             options: {
                                 variant: 'slider'
                             }

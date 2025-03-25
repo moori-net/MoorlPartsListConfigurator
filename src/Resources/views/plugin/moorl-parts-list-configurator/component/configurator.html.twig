@@ -81,15 +81,7 @@
                 </div>
 
                 {% if logical %}
-                    <div class="js-logical-configurator">
-                        {% sw_include '@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator.html.twig' with {
-                            items: accessoryList,
-                            logicalConfigurator: filter.logicalConfigurator,
-                            options: {
-                                variant: 'slider'
-                            }
-                        } %}
-                    </div>
+                    <div class="js-logical-configurator"><span class="loader"></span></div>
                 {% endif %}
             </div>
         {% endif %}

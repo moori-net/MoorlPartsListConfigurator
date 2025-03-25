@@ -8,7 +8,7 @@
         data-moorl-parts-list-configurator="true"
         data-moorl-parts-list-configurator-options="{{ config|json_encode }}"
 >
-    <form action="{{ path('frontend.moorl.parts.list.configurator.parts.list', {partsListConfiguratorId: partsListConfigurator.id}) }}">
+    <form class="mb-4">
         {% for filter in partsListConfigurator.getFilters %}
             {% if not filter.fixed %}
                 {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
@@ -22,28 +22,19 @@
 
         {% if accessoryList.count > 0 %}
             <div class="product-detail-configurator-group-title">
-                {{ "moorl-parts-list-configurator.accessories"|trans }}
+                {{ "moorl-parts-list-configurator.accessoryList"|trans }}
             </div>
         {% endif %}
 
-        <div id="accessoryList">
-            {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig' with {
-                items: accessoryList,
-                options: {
-                    variant: 'slider'
-                }
-            } %}
-        </div>
+        <div id="accessoryList"><span class="loader"></span></div>
     </form>
 
-    <hr>
-
-    <div id="partsList">
-        {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/product-parts-list/index.html.twig' with {
-            items: partsList,
-            options: {
-                variant: 'slider'
-            }
-        } %}
+    <div class="card">
+        <div class="card-title">
+            {{ "moorl-parts-list-configurator.partsList"|trans }}
+        </div>
+        <div class="card-body">
+            <div id="partsList"><span class="loader"></span></div>
+        </div>
     </div>
 </div>
