@@ -83,21 +83,31 @@ class PartsListConfiguratorPageLoader
 
             foreach ($partsListConfigurator->getFilters() as $filter) {
                 if ($filter->getLogical()) {
-                    if (!in_array($partsListConfiguratorProductStream->getId(), $filter->getPartsListConfiguratorProductStreamIds())) {
+                    if (!in_array(
+                        $partsListConfiguratorProductStream->getId(),
+                        $filter->getPartsListConfiguratorProductStreamIds()
+                    )) {
                         continue;
                     }
 
                     $filter->addProductStreamId($partsListConfiguratorProductStream->getProductStreamId());
 
+                    if ($filter->getLogicalConfigurator()) {
+                        continue;
+                    }
+
+                    // Ein logischer Filter sollte nur eine Gruppe haben,
+                    // weil der logische Konfigurator des Filters anhand des technischen Namens der Gruppe geladen wird
                     $filter->setLogicalConfigurator($calculator->getLogicalConfigurator(
                         $request,
                         $salesChannelContext,
                         $partsListConfigurator,
-                        $filter->getOptions()->getGroups()->first()->getTranslation('customFields')['moorl_pl_name']
+                        $filter->getOptions()->first()->getGroup()->getTranslation('customFields')['moorl_pl_name']
                     ));
 
                     continue;
                 }
+
                 $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
 
                 if (in_array($partsListConfiguratorProductStream->getId(), $filter->getPartsListConfiguratorProductStreamIds())) {

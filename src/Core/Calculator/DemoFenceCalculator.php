@@ -55,31 +55,14 @@ class DemoFenceCalculator implements CalculatorInterface
     public function getExpectedPropertyGroups(): array
     {
         return [
-            'COLOR',
             'PARTS_LIST_LAYOUT',
-            'HEIGHT',
-            'LENGTH',
-            'PARTS_LIST_POST_TYPE',
-            'PARTS_LIST_POST_MOUNTING',
-            'PARTS_LIST_POST_FLOOR_MOUNTING',
+            'LENGTH'
         ];
     }
 
     public function getPropertyGroupConfig(): array
     {
         return [
-            [
-                'technicalName' => 'COLOR',
-                'required' => true
-            ],
-            [
-                'technicalName' => 'HEIGHT',
-                'required' => true
-            ],
-            [
-                'technicalName' => 'PARTS_LIST_POST_TYPE',
-                'hidden' => true
-            ],
             [
                 'technicalName' => 'PARTS_LIST_LAYOUT',
                 'options' => [
