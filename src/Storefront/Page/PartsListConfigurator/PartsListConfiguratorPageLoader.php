@@ -72,6 +72,8 @@ class PartsListConfiguratorPageLoader
         }
 
         $partsListConfigurator->getFilters()->sortByPosition();
+        $partsListConfigurator->mergeCurrentOptionIds($this->getPropIds($request, 'options'));
+
         $calculator = $this->getCalculatorByName($partsListConfigurator->getCalculator());
 
         $mainFilters = [];
@@ -87,7 +89,7 @@ class PartsListConfiguratorPageLoader
 
                     $filter->addProductStreamId($partsListConfiguratorProductStream->getProductStreamId());
 
-                    $request->query->set('group', $filter->getTechnicalName());
+                    $request->query->set('group', 'PARTS_LIST_LAYOUT');
 
                     $filter->setLogicalConfigurator($calculator->getLogicalConfigurator(
                         $request,
@@ -146,8 +148,6 @@ class PartsListConfiguratorPageLoader
         $page->setCalculator($this->getCalculatorByName($partsListConfigurator->getCalculator()));
 
         $this->loadMetaData($page);
-
-        $partsListConfigurator->mergeCurrentOptionIds($this->getPropIds($request, 'options'));
 
         return $page;
     }
