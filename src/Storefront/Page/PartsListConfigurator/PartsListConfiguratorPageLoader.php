@@ -102,7 +102,7 @@ class PartsListConfiguratorPageLoader
                         $request,
                         $salesChannelContext,
                         $partsListConfigurator,
-                        $filter->getOptions()->first()->getGroup()->getTranslation('customFields')['moorl_pl_name']
+                        $filter->getGroupTechnicalName()
                     ));
 
                     continue;
@@ -135,6 +135,8 @@ class PartsListConfiguratorPageLoader
         $criteria->addPostFilter(new AndFilter([
             new OrFilter($mainFilters)
         ]));
+
+        $criteria->setLimit(100);
 
         $result = $this->productListingRoute->load(
             $salesChannelContext->getSalesChannel()->getNavigationCategoryId(),

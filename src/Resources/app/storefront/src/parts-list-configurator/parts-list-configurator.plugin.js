@@ -5,10 +5,8 @@ import querystring from 'query-string';
 
 export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     static options = {
-        partsListConfiguratorId: null,
-        propertyGroupConfig: [],
-        partsListUrl: null,
-        logicalConfiguratorUrl: null,
+        url: null,
+        optionCount: 0
     };
 
     init() {
@@ -19,10 +17,12 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         };
 
         this._partsListEl = document.getElementById('partsList');
+        this._accessoryList = document.getElementById('accessoryList');
         this._formEl = this.el.querySelector('form');
 
         this._setFilterState();
         this._registerEvents();
+        this._refresh();
     }
 
     _setFilterState() {
@@ -32,81 +32,63 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _registerEvents() {
-        this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
-            groupEl.querySelectorAll('input[type=radio]').forEach((el) => {
-                ['keyup', 'change', 'force'].forEach(evt => {
-                    el.addEventListener(evt, () => {
-                        this._loadHistory();
-                        this._loadLogicalConfigurator(groupEl);
-                        this._loadPartsList();
-                    }, false);
-                });
-            });
-        });
-    }
-
-    _registerInputEvents() {
-        this._formEl.querySelectorAll('input[type=number]').forEach((el) => {
+        this._formEl.querySelectorAll('input[type=radio]').forEach((el) => {
             ['keyup', 'change', 'force'].forEach(evt => {
-                el.addEventListener(evt, () => {
-                    this._loadHistory();
-                    this._loadPartsList();
-                }, false);
+                el.addEventListener(evt, () => {this._refresh();}, false);
             });
         });
     }
 
-    _refreshForm(el) {}
+    _refresh() {
+        this._loadHistory();
+        this._loadPartsList();
+        this._loadAccessoryList();
 
-    _buildInputElements(option) {
-        const newEl = document.createElement("div");
-        const labelEl = document.createElement("label");
+        this.options.optionCount = 0;
 
-        labelEl.innerText = option.name;
+        this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
+            this.options.optionCount++;
 
-        newEl.appendChild(labelEl);
-
-        option.elements.forEach((element) => {
-            const inputGroupEl = document.createElement("div");
-            const labelEl = document.createElement("span");
-            const inputEl = document.createElement("input");
-            const appendEl = document.createElement("span");
-
-            inputGroupEl.classList.add('input-group','mb-2');
-            labelEl.innerText = element.name;
-            labelEl.classList.add('input-group-text');
-            inputEl.type = element.type;
-            inputEl.name = element.name;
-            inputEl.value = this._filters[element.name] ?? '3000';
-            inputEl.min = element.min ?? '1000';
-            inputEl.step = element.step ?? '500';
-            inputEl.classList.add('form-control');
-            appendEl.innerText = element.unit ?? 'mm';
-            appendEl.classList.add('input-group-text');
-
-            inputGroupEl.appendChild(labelEl);
-            inputGroupEl.appendChild(inputEl);
-            inputGroupEl.appendChild(appendEl);
-
-            newEl.appendChild(inputGroupEl);
+            this._loadLogicalConfigurator(groupEl);
         });
-
-        return newEl;
     }
 
     _loadPartsList() {
+        if (this._filters.options.length < this.options.optionCount) {
+            return;
+        }
+
         const mapped = this._mapFilters(this._filters);
 
         let query = querystring.stringify(mapped);
 
-        this._client.get(this.options.partsListUrl + "?" + query, response => {
+        this._client.get(this.options.url + "/parts-list?" + query, response => {
             this._partsListEl.innerHTML = response;
+            window.PluginManager.initializePlugins();
+        });
+    }
+
+    _loadAccessoryList() {
+        if (this._filters.options.length < this.options.optionCount) {
+            return;
+        }
+
+        const mapped = this._mapFilters(this._filters);
+
+        let query = querystring.stringify(mapped);
+
+        this._client.get(this.options.url + "/accessory-list?" + query, response => {
+            this._accessoryList.innerHTML = response;
             window.PluginManager.initializePlugins();
         });
     }
 
     _loadLogicalConfigurator(groupEl) {
         if (!groupEl.dataset.logical) {
+            return;
+        }
+
+        if (this._filters.options.length < this.options.optionCount) {
             return;
         }
 
@@ -117,7 +99,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         let query = querystring.stringify(mapped);
 
-        this._client.get(this.options.logicalConfiguratorUrl + "?" + query, response => {
+        this._client.get(this.options.url + "/logical-configurator?" + query, response => {
             logicalConfiguratorEl.innerHTML = response;
             window.PluginManager.initializePlugins();
         });
@@ -134,10 +116,6 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
                 this._filters.options.push(el.value);
             }
-        });
-
-        this._formEl.querySelectorAll('input[type=number]').forEach((el) => {
-            this._filters[el.name] = el.value;
         });
 
         const mapped = this._mapFilters(this._filters);

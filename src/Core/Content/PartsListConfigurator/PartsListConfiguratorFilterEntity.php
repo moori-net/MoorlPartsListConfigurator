@@ -21,6 +21,13 @@ class PartsListConfiguratorFilterEntity extends Entity
     protected array $productStreamIds = [];
     protected ?array $logicalConfigurator = null;
 
+    public function getGroupTechnicalName(): ?string
+    {
+        $customFields = $this->getOptions()?->first()?->getGroup()?->getTranslation('customFields');
+
+        return $customFields['moorl_pl_name'] ?? null;
+    }
+
     public function getLogicalConfigurator(): ?array
     {
         return $this->logicalConfigurator;

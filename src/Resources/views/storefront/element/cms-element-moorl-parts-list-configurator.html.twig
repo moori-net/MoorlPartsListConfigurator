@@ -1,8 +1,6 @@
 {% set partsListConfigurator = page.partsListConfigurator %}
 {% set config = {
-    partsListUrl: path('frontend.moorl.parts.list.configurator.parts.list', {partsListConfiguratorId: partsListConfigurator.id}),
-    logicalConfiguratorUrl: path('frontend.moorl.parts.list.configurator.logical.configurator', {partsListConfiguratorId: partsListConfigurator.id}),
-    propertyGroupConfig: page.calculator.getPropertyGroupConfig
+    url: path('frontend.moorl.parts.list.configurator.detail', {partsListConfiguratorId: partsListConfigurator.id})
 } %}
 
 <div
