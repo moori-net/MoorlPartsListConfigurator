@@ -4,12 +4,6 @@
     <card>
         <title>General</title>
         <title lang="de-DE">Einstellungen</title>
-
-        <component name="sw-entity-single-select">
-            <name>widthPropertyGroupId</name>
-            <entity>property_group</entity>
-            <label>Property group for width</label>
-        </component>
     </card>
 
     <card>

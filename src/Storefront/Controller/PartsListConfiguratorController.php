@@ -36,8 +36,18 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
 
+        $partsListCalculator = $page->getCalculator();
+
+        $partsList = $partsListCalculator->calculatePartsList(
+            $request,
+            $salesChannelContext,
+            $page->getPartsListConfigurator(),
+            $page->getPartsList(),
+            $page->getProducts()->getEntities()
+        );
+
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
-            'items' => $page->getPartsList(),
+            'items' => $partsList,
             'namePrefix' => 'parts',
             'options' => []
         ]);

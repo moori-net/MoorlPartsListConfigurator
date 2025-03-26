@@ -4,7 +4,7 @@ namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
-use Moorl\PartsListConfigurator\Core\Calculator\CalculatorInterface;
+use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
@@ -29,7 +29,7 @@ class PartsListConfiguratorPageLoader
     public const CRITERIA_STATE = 'moorl-parts-list-configurator-criteria';
 
     /**
-     * @param CalculatorInterface[] $calculators
+     * @param PartsListCalculatorInterface[] $partsListCalculators
      */
     public function __construct(
         private readonly GenericPageLoaderInterface $genericLoader,
@@ -37,7 +37,7 @@ class PartsListConfiguratorPageLoader
         private readonly AbstractProductListingRoute $productListingRoute,
         private readonly CartService $cartService,
         private readonly Connection $connection,
-        private readonly iterable $calculators
+        private readonly iterable $partsListCalculators
     )
     {
     }
@@ -74,7 +74,7 @@ class PartsListConfiguratorPageLoader
         $partsListConfigurator->getFilters()->sortByPosition();
         $partsListConfigurator->setCurrentOptionIds($this->getPropIds($request, 'options'));
 
-        $calculator = $this->getCalculatorByName($partsListConfigurator->getCalculator());
+        $calculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculator());
 
         $mainFilters = [];
         foreach ($partsListConfigurator->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
@@ -156,7 +156,7 @@ class PartsListConfiguratorPageLoader
         $page->setCmsPage($partsListConfigurator->getCmsPage());
         $page->setProducts($products);
         $page->setPartsList($partsList);
-        $page->setCalculator($this->getCalculatorByName($partsListConfigurator->getCalculator()));
+        $page->setCalculator($this->getPartsListCalculatorByName($partsListConfigurator->getCalculator()));
 
         $this->loadMetaData($page);
 
@@ -231,11 +231,11 @@ class PartsListConfiguratorPageLoader
         return new AndFilter($filters);
     }
 
-    private function getCalculatorByName(string $name): CalculatorInterface
+    private function getPartsListCalculatorByName(string $name): PartsListCalculatorInterface
     {
-        foreach ($this->calculators as $calculator) {
-            if ($calculator->getName() === $name) {
-                return $calculator;
+        foreach ($this->partsListCalculators as $partsListCalculator) {
+            if ($partsListCalculator->getName() === $name) {
+                return $partsListCalculator;
             }
         }
     }

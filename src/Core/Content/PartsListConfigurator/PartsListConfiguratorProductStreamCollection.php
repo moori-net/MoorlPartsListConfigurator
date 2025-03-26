@@ -31,4 +31,11 @@ class PartsListConfiguratorProductStreamCollection extends EntityCollection
             fn(PartsListConfiguratorProductStreamEntity $entity) => $entity->getTechnicalName() === $technicalName
         )->first();
     }
+
+    public function getByProductStreamTechnicalName(string $technicalName): ?PartsListConfiguratorProductStreamEntity
+    {
+        return $this->filter(
+            static fn(PartsListConfiguratorProductStreamEntity $entity) => $entity->getProductStream()->getTranslation('customFields')['moorl_pl_name'] === $technicalName
+        )->first();
+    }
 }

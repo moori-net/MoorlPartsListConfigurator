@@ -2,7 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 
-use Moorl\PartsListConfigurator\Core\Calculator\CalculatorInterface;
+use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
@@ -17,7 +17,7 @@ class PartsListConfiguratorPage extends Page
     protected ?CmsPageEntity $cmsPage = null;
     protected ?ProductListingResult $products = null;
     protected ?PartsListCollection $partsList = null;
-    protected ?CalculatorInterface $calculator = null;
+    protected ?PartsListCalculatorInterface $calculator = null;
 
     public function getPartsList(): ?PartsListCollection
     {
@@ -30,12 +30,12 @@ class PartsListConfiguratorPage extends Page
         return $this;
     }
 
-    public function getCalculator(): ?CalculatorInterface
+    public function getCalculator(): ?PartsListCalculatorInterface
     {
         return $this->calculator;
     }
 
-    public function setCalculator(?CalculatorInterface $calculator): void
+    public function setCalculator(?PartsListCalculatorInterface $calculator): void
     {
         $this->calculator = $calculator;
     }

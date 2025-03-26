@@ -4,10 +4,20 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <imports>
+        <import resource="monolog.xml"/>
         <import resource="data.xml"/>
     </imports>
 
     <services>
+        <service id="Moorl\PartsListConfigurator\Core\Service\PartsListService" public="true">
+            <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry"/>
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <argument type="service" id="Shopware\Core\Checkout\Cart\SalesChannel\CartService"/>
+            <argument type="service" id="monolog.logger.moorl_parts_list_channel"/>
+            <argument type="tagged" tag="moorl.parts.list.calculator"/>
+        </service>
+
         <!-- Entities -->
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition">
             <tag name="shopware.entity.definition" entity="moorl_pl"/>
@@ -109,6 +119,8 @@
 
         <!-- Calculators -->
         <service id="Moorl\PartsListConfigurator\Core\Calculator\DemoFenceCalculator">
+            <argument type="service" id="Moorl\PartsListConfigurator\Core\Service\PartsListService"/>
+
             <tag name="moorl.parts.list.calculator"/>
         </service>
     </services>
