@@ -5,21 +5,20 @@ namespace Moorl\PartsListConfigurator\Core\Calculator;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\Core\Service\PartsListService;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
+use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
 use Shopware\Core\Content\Product\ProductCollection;
+use Shopware\Core\Content\ProductStream\ProductStreamCollection;
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 use Shopware\Core\Content\Property\PropertyGroupCollection;
 use Shopware\Core\Content\Property\PropertyGroupDefinition;
-use Shopware\Core\Content\Property\PropertyGroupEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 
 class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsListCalculatorInterface
 {
-    public function __construct(
-        private readonly PartsListService $partsListService
-    )
+    public function __construct(private readonly PartsListService $partsListService)
     {
     }
 
@@ -89,17 +88,6 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         ];
     }
 
-    public function calculate(
-        Request $request,
-        SalesChannelContext $salesChannelContext,
-        PartsListConfiguratorEntity $partsListConfigurator
-    ): PartsListCollection
-    {
-        $productBuyList = new PartsListCollection();
-
-        return $productBuyList;
-    }
-
     public function calculatePartsList(
         Request $request,
         SalesChannelContext $salesChannelContext,
@@ -108,8 +96,8 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         ProductCollection $products
     ): PartsListCollection
     {
+        // Logische Konfiguratoren laden
         $logicalConfigurators = [];
-
         foreach ($this->getPropertyGroupConfig() as $item) {
             $logicalConfigurators[$item['technicalName']] = $this->getLogicalConfigurator(
                 $request,
@@ -119,68 +107,94 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
             );
         }
 
-        // Alle Optionen für Breite laden
+        // Alle verfügbaren Produkt-Streams laden
+        $productStreams = new ProductStreamCollection();
+        foreach ($partsListConfigurator->getFilters() as $filter) {
+            $productStreams->merge($filter->getProductStreams());
+        }
+
+        // Speichere die lesbaren technischen Namen der Produkt-Streams
+        foreach ($productStreams as $productStream) {
+            $productStreamTechnicalName = $productStream->getTranslation('customFields')['moorl_pl_name'] ?? null;
+            if ($productStreamTechnicalName) {
+                foreach ($partsList->filterByProductStreamIds([$productStream->getId()]) as $item) {
+                    $item->addProductStream($productStreamTechnicalName);
+                }
+            }
+        }
+
+        // Alle Optionen laden
         $criteria = new Criteria();
-        //$criteria->addFilter(new EqualsFilter('customFields.moorl_pl_name', 'LENGTH'));
         $criteria->addAssociation('options');
         $propertyGroupRepository = $this->partsListService->getRepository(PropertyGroupDefinition::ENTITY_NAME);
         /** @var PropertyGroupCollection $propertyGroups */
         $propertyGroups = $propertyGroupRepository->search($criteria, $salesChannelContext->getContext())->getEntities();
 
-        // Speichere die Breite in die Stücklisten-Positionen, für die spätere Berechnung
+        // Speichere die lesbaren technischen Namen der Optionen
         foreach ($partsList as $item) {
             foreach ($propertyGroups as $propertyGroup) {
-                $groupTechnicalName = $propertyGroup->getTranslation('customFields')['moorl_pl_name'] ?? null;
-
                 foreach ($propertyGroup->getOptions() as $option) {
-                    $optionTechnicalName = $option->getTranslation('customFields')['moorl_pl_name'] ?? null;
-                    if ($optionTechnicalName) {
-                        $item->setGroup($option->getTranslation('customFields')['moorl_pl_name']);
+                    if (!$this->optionOrPropertyMatch($item, $option)) {
+                        continue;
                     }
 
-                    if ($groupTechnicalName === 'LENGTH') {
-                        if ($item->getProduct()->getOptionIds() && in_array($option->getId(), $item->getProduct()->getOptionIds())) {
-                            $item->setCalcX((int) $option->getTranslation('name'));
-                            continue 2;
-                        }
+                    $groupTechnicalName = $propertyGroup->getTranslation('customFields')['moorl_pl_name'] ?? null;
+                    $optionTechnicalName = $option->getTranslation('customFields')['moorl_pl_name'] ?? null;
+                    $item->addGroup($groupTechnicalName);
+                    $item->addOption($optionTechnicalName);
 
-                        if ($item->getProduct()->getPropertyIds() && in_array($option->getId(), $item->getProduct()->getPropertyIds())) {
-                            $item->setCalcX((int) $option->getTranslation('name'));
-                            continue 2;
-                        }
+                    // Produkte mit einer Längen-Eigenschaft sollen den Wert der Länge für eine spätere Berechnung erhalten
+                    if ($groupTechnicalName === 'LENGTH') {
+                        $item->setCalcX((int) $option->getTranslation('name'));
                     }
                 }
             }
         }
 
-        // TODO: Eckpfosten auf -1 setzen, weil mindestens eine Seite berechnet wird
-
-        // Setze Gruppe für Zaunmatten
-        $fenceProductStreamId = $partsListConfigurator
-            ->getPartsListConfiguratorProductStreams()
-            ->getByTechnicalName('fences')
-            ->getProductStreamId();
-
-        foreach ($partsList->filterByProductStreamIds([$fenceProductStreamId]) as $item) {
-            dd($item);
-            $item->setGroup('fences');
-        }
+        // Setze Mengen anhand des Requests
+        $this->setQuantityFromRequest(
+            $request,
+            $partsList->filterByProductStream('OPTIONAL_ACCESSORIES'),
+            "accessory"
+        );
 
         // Für die Berechnung werden erst die großen Produkte verwendet und später mit kleinen Produkten ergänzt
         $partsList->sortByCalcX();
 
+        // Starte Berechnung
         foreach ($logicalConfigurators as $logicalConfigurator) {
             if (isset($logicalConfigurator['elements'])) {
                 foreach ($logicalConfigurator['elements'] as $element) {
+                    // Setze Mengen anhand des Requests
+                    $this->setQuantityFromRequest(
+                        $request,
+                        $partsList->filterByProductStream('LAYOUT_ACCESSORIES'),
+                        $element['name']
+                    );
+
+                    // Starte Berechnung für Seite
                     $this->calculatePartsListForSide($request, $partsList, $element['name']);
                 }
             }
         }
 
-        // Optionales Zubehör hinzufügen
-        $this->calculatePartsListItemQuantity($request, $partsList, "accessory", "accessories");
+        // Ermittlung der Pfosten
+        $cornerPost = $partsList->filterByOption('PARTS_LIST_POST_TYPE_CORNER')->first();
+        $sidePost = $partsList->filterByOption('PARTS_LIST_POST_TYPE_SIDE')->first();
 
+        // einen Eckpfosten wieder abziehen
+        $cornerPost->setQuantity($cornerPost->getQuantity() - 1);
 
+        // einen Seitenpfosten hinzufügen
+        $sidePost->setQuantity(1);
+
+        // einen Seitenpfosten pro Zaunmatte hinzufügen
+        foreach ($partsList->filterByProductStream("FENCES") as $item) {
+            $sidePost->setQuantity($item->getQuantity() + $sidePost->getQuantity());
+        }
+
+        // die Anzahl der Eckpfosten wieder abziehen
+        $sidePost->setQuantity($sidePost->getQuantity() - $cornerPost->getQuantity());
 
         return $partsList;
     }
@@ -194,43 +208,39 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
             throw RoutingException::missingRequestParameter($parameterName);
         }
 
-        $this->partsListService->debug(sprintf(
-            "Got length %d for side %s",
-            $length,
-            $parameterName
-        ));
+        $this->partsListService->debug(sprintf("Got length %d for side %s", $length, $parameterName));
 
-        // TODO: Pro Seite ein Eckpfosten hinzufügen
-
-        $this->calculatePartsListItemQuantity($request, $partsList, $sideName, "doors");
+        // Eckpfosten pro Seite hinzufügen
+        $cornerPost = $partsList->filterByOption('PARTS_LIST_POST_TYPE_CORNER')->first();
+        $cornerPost->setQuantity($cornerPost->getQuantity() + 1);
 
         // Fest definiertes Zubehör wird von der Gesamtlänge abgezogen,
         // die übrige Gesamtlänge wird für die Berechnung der Zaunmatten verwendet
-        foreach ($partsList->filterByGroup("doors") as $item) {
+        foreach ($partsList->filterByProductStream('LAYOUT_ACCESSORIES') as $item) {
             $this->partsListService->debug(sprintf(
                 "%s have a length of %d and is given %d-times - the remaining length for %s is %d",
                 $item->getProduct()->getTranslation('name'),
                 $item->getCalcX(),
-                $item->getCalcY(),
+                $item->getTemporaryQuantity(),
                 $sideName,
                 $length
             ));
 
-            $length = $length - $item->getCalcY() * $item->getCalcX();
+            $length = $length - $item->getTemporaryQuantity() * $item->getCalcX();
             if ($length < 0) {
                 throw new \Exception(sprintf(
                     "Error, the length of %d * %s is to big",
-                    $item->getCalcY(),
+                    $item->getTemporaryQuantity(),
                     $item->getCalcX()
                 ));
             }
 
             // Zurücksetzen und für die Berechnung der folgenden Seite vorbereiten
-            $item->setCalcY(0);
+            $item->setTemporaryQuantity(0);
         }
 
         // Verwende die übrige Länge, um die Zaunmatten einzufügen
-        foreach ($partsList->filterByGroup("fences") as $item) {
+        foreach ($partsList->filterByProductStream("FENCES") as $item) {
             $quantity = (int) floor($length / $item->getCalcX());
 
             $length = $length - ($quantity * $item->getCalcX());
@@ -247,14 +257,10 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
             $item->setQuantity($item->getQuantity() + $quantity);
         }
 
-        $this->partsListService->debug(sprintf(
-            "the remaining length for %s is %d",
-            $sideName,
-            $length
-        ));
+        $this->partsListService->debug(sprintf("the remaining length for %s is %d", $sideName, $length));
     }
 
-    private function calculatePartsListItemQuantity(Request $request, PartsListCollection $partsList, string $name, string $group): void
+    private function setQuantityFromRequest(Request $request, PartsListCollection $partsList, string $name): void
     {
         foreach ($partsList as $item) {
             $parameterName = sprintf(
@@ -264,7 +270,6 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
             );
 
             $itemQuantity = (int) $request->query->get($parameterName);
-            dump($itemQuantity);
             if (!$itemQuantity) {
                 continue;
             }
@@ -277,8 +282,15 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
 
             $item->setQuantity($item->getQuantity() + $itemQuantity);
             // Wird nach der Berechnung der Länge für die aktuelle Seite wieder zurückgesetzt
-            $item->setCalcY($item->getCalcY() + $itemQuantity);
-            $item->setGroup($group);
+            $item->setTemporaryQuantity($itemQuantity);
         }
+    }
+
+    private function optionOrPropertyMatch(PartsListEntity $item, PropertyGroupOptionEntity $option): bool
+    {
+        return (
+            ($item->getProduct()->getOptionIds() && in_array($option->getId(), $item->getProduct()->getOptionIds())) ||
+            ($item->getProduct()->getPropertyIds() && in_array($option->getId(), $item->getProduct()->getPropertyIds()))
+        );
     }
 }

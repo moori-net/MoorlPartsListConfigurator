@@ -14,7 +14,6 @@ class PartsListConfiguratorFilterEntity extends Entity
     protected string $partsListConfiguratorId;
     protected bool $logical = false;
     protected bool $fixed = false;
-    protected array $partsListConfiguratorProductStreamIds;
     protected int $position;
     protected ?string $technicalName = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
@@ -77,16 +76,6 @@ class PartsListConfiguratorFilterEntity extends Entity
     public function setPartsListConfiguratorId(string $partsListConfiguratorId): void
     {
         $this->partsListConfiguratorId = $partsListConfiguratorId;
-    }
-
-    public function getPartsListConfiguratorProductStreamIds(): array
-    {
-        return $this->partsListConfiguratorProductStreamIds;
-    }
-
-    public function setPartsListConfiguratorProductStreamIds(array $partsListConfiguratorProductStreamIds): void
-    {
-        $this->partsListConfiguratorProductStreamIds = $partsListConfiguratorProductStreamIds;
     }
 
     public function getPosition(): int

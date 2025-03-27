@@ -85,7 +85,7 @@ class PartsListConfiguratorController extends StorefrontController
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator.html.twig', [
             'page' => $page,
-            'accessoryList' => $page->getPartsList()->filterByProductStreamIds($currentFilter->getProductStreamIds()),
+            'accessoryList' => $page->getPartsList()->filterByProductStreamIds($currentFilter->getProductStreams()->getKeys()),
             'logicalConfigurator' => $currentFilter->getLogicalConfigurator(),
         ]);
     }

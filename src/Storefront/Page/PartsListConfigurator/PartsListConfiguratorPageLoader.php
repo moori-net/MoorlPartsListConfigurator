@@ -11,6 +11,7 @@ use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
+use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\AndFilter;
@@ -63,10 +64,6 @@ class PartsListConfiguratorPageLoader
             throw new PageNotFoundException($partsListConfigurator->getId());
         }
 
-        if ($partsListConfigurator->getPartsListConfiguratorProductStreams()->count() === 0) {
-            throw new PageNotFoundException($partsListConfigurator->getId());
-        }
-
         if ($partsListConfigurator->getFilters()->count() === 0) {
             throw new PageNotFoundException($partsListConfigurator->getId());
         }
@@ -76,21 +73,21 @@ class PartsListConfiguratorPageLoader
 
         $calculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculator());
 
+        $productStreams = new ProductStreamCollection();
+        foreach ($partsListConfigurator->getFilters() as $filter) {
+            $productStreams->merge($filter->getProductStreams());
+        }
+
         $mainFilters = [];
-        foreach ($partsListConfigurator->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
-            $streamFilter = new ContainsFilter('streamIds', $partsListConfiguratorProductStream->getProductStreamId());
+        foreach ($productStreams as $productStream) {
+            $streamFilter = new ContainsFilter('streamIds', $productStream->getId());
             $propertyFilters = [];
 
             foreach ($partsListConfigurator->getFilters() as $filter) {
                 if ($filter->getLogical()) {
-                    if (!in_array(
-                        $partsListConfiguratorProductStream->getId(),
-                        $filter->getPartsListConfiguratorProductStreamIds()
-                    )) {
-                        continue;
+                    if ($filter->getProductStreams()->has($productStream->getId())) {
+                        //continue;
                     }
-
-                    $filter->addProductStreamId($partsListConfiguratorProductStream->getProductStreamId());
 
                     if ($filter->getLogicalConfigurator()) {
                         continue;
@@ -110,12 +107,12 @@ class PartsListConfiguratorPageLoader
 
                 $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
 
-                if (in_array($partsListConfiguratorProductStream->getId(), $filter->getPartsListConfiguratorProductStreamIds())) {
+                if ($filter->getProductStreams()->has($productStream->getId())) {
                     $propertyFilters[] = $this->getPropertyFilter($request, $optionIds, 'options', $filter->getFixed());
                 }
             }
 
-            if ($partsListConfiguratorProductStream->getAccessory()) {
+            if ($productStream->getTranslation('customFields')['moorl_pl_optional'] ?? false) {
                 $mainFilters[] = new AndFilter([
                     $streamFilter,
                     new OrFilter([

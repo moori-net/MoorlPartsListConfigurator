@@ -20,11 +20,6 @@ interface PartsListCalculatorInterface
         PartsListConfiguratorEntity $partsListConfigurator,
         ?string $groupTechnicalName = null
     );
-    public function calculate(
-        Request $request,
-        SalesChannelContext $salesChannelContext,
-        PartsListConfiguratorEntity $partsListConfigurator
-    ): PartsListCollection;
 
     public function calculatePartsList(
         Request $request,

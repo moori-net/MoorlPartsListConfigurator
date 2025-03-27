@@ -4,6 +4,7 @@ namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesCh
 
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\MoorlPartsListConfigurator;
+use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 
 class SalesChannelPartsListConfiguratorEntity extends PartsListConfiguratorEntity
 {
@@ -49,12 +50,17 @@ class SalesChannelPartsListConfiguratorEntity extends PartsListConfiguratorEntit
     {
         $productStreamIds = [];
 
-        foreach ($this->getPartsListConfiguratorProductStreams() as $partsListConfiguratorProductStream) {
-            if ($partsListConfiguratorProductStream->getAccessory()) {
-                $productStreamIds[] = $partsListConfiguratorProductStream->getProductStreamId();
+        $productStreams = new ProductStreamCollection();
+        foreach ($this->getFilters() as $filter) {
+            $productStreams->merge($filter->getProductStreams());
+        }
+
+        foreach ($productStreams as $productStream) {
+            if ($productStream->getTranslation('customFields')['moorl_pl_optional'] ?? false) {
+                $productStreamIds[] = $productStream->getId();
             }
         }
 
-        return $productStreamIds;
+        return array_unique($productStreamIds);
     }
 }
