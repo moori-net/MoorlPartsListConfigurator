@@ -162,9 +162,6 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
                     $item->getCalcX()
                 ));
             }
-
-            // Zurücksetzen und für die Berechnung der folgenden Seite vorbereiten
-            $item->setTemporaryQuantity(0);
         }
 
         // Verwende die übrige Länge, um die Zaunmatten einzufügen
