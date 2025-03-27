@@ -8,10 +8,15 @@ use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
+use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
+use Shopware\Core\Checkout\Cart\Cart;
+use Shopware\Core\Checkout\Cart\LineItem\LineItem;
 use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
 use Shopware\Core\Content\ProductStream\ProductStreamCollection;
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\AndFilter;
@@ -28,6 +33,8 @@ use Symfony\Component\HttpFoundation\Request;
 class PartsListConfiguratorPageLoader
 {
     public const CRITERIA_STATE = 'moorl-parts-list-configurator-criteria';
+    public const OPT_PROXY_CART = 'proxy-cart';
+    public const OPT_CALCULATE = 'calculate';
 
     /**
      * @param PartsListCalculatorInterface[] $partsListCalculators
@@ -48,7 +55,11 @@ class PartsListConfiguratorPageLoader
         return $this->cartService;
     }
 
-    public function load(Request $request, SalesChannelContext $salesChannelContext): PartsListConfiguratorPage
+    public function load(
+        Request $request,
+        SalesChannelContext $salesChannelContext,
+        array $loadingOptions = []
+    ): PartsListConfiguratorPage
     {
         $partsListConfiguratorId = $request->attributes->get('partsListConfiguratorId');
         if (!$partsListConfiguratorId) {
@@ -74,8 +85,10 @@ class PartsListConfiguratorPageLoader
         $calculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculator());
 
         $productStreams = new ProductStreamCollection();
+        $options = new PropertyGroupOptionCollection();
         foreach ($partsListConfigurator->getFilters() as $filter) {
             $productStreams->merge($filter->getProductStreams());
+            $options->merge($filter->getOptions());
         }
 
         $mainFilters = [];
@@ -145,6 +158,18 @@ class PartsListConfiguratorPageLoader
 
         $partsList = PartsListCollection::createFromProducts($products->getEntities());
 
+        $this->enrichPartsList($partsList, $productStreams, $options);
+
+        if (in_array(self::OPT_CALCULATE, $loadingOptions)) {
+            $partsListCalculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculator());
+            $partsListCalculator->calculatePartsList(
+                $request,
+                $salesChannelContext,
+                $partsListConfigurator,
+                $partsList
+            );
+        }
+
         $page = $this->genericLoader->load($request, $salesChannelContext);
 
         /** @var PartsListConfiguratorPage $page */
@@ -153,11 +178,73 @@ class PartsListConfiguratorPageLoader
         $page->setCmsPage($partsListConfigurator->getCmsPage());
         $page->setProducts($products);
         $page->setPartsList($partsList);
+        if (in_array(self::OPT_PROXY_CART, $loadingOptions)) {
+            $page->setCart($this->createProxyCart($partsList, $salesChannelContext));
+        }
         $page->setCalculator($this->getPartsListCalculatorByName($partsListConfigurator->getCalculator()));
 
         $this->loadMetaData($page);
 
         return $page;
+    }
+
+    private function createProxyCart(PartsListCollection $partsList, SalesChannelContext $salesChannelContext): Cart
+    {
+        $cart = new Cart(Uuid::randomHex());
+
+        foreach ($partsList->filterByQuantity() as $item) {
+            $cart->getLineItems()->add(new LineItem(
+                $item->getId(),
+                LineItem::PRODUCT_LINE_ITEM_TYPE,
+                $item->getProductId(),
+                $item->getQuantity()
+            ));
+        }
+
+        $this->cartService->recalculate($cart, $salesChannelContext);
+
+        return $cart;
+    }
+
+    private function enrichPartsList(
+        PartsListCollection $partsList,
+        ProductStreamCollection $productStreams,
+        PropertyGroupOptionCollection $options
+    ): void
+    {
+        foreach ($productStreams as $productStream) {
+            $productStreamTechnicalName = $productStream->getTranslation('customFields')['moorl_pl_name'] ?? null;
+            if ($productStreamTechnicalName) {
+                foreach ($partsList->filterByProductStreamIds([$productStream->getId()]) as $item) {
+                    $item->addProductStream($productStreamTechnicalName);
+                }
+            }
+        }
+
+        foreach ($options as $option) {
+            foreach ($partsList as $item) {
+                if (!$this->optionOrPropertyMatch($item, $option)) {
+                    continue;
+                }
+
+                $groupTechnicalName = $option->getGroup()->getTranslation('customFields')['moorl_pl_name'] ?? null;
+                $item->addGroup($groupTechnicalName);
+
+                $optionTechnicalName = $option->getTranslation('customFields')['moorl_pl_name'] ?? null;
+                $item->addOption($optionTechnicalName);
+
+                $groupCalculators = $option->getGroup()->getTranslation('customFields')['moorl_pl_calculators'] ?? [];
+                if (in_array("x", $groupCalculators)) {
+                    $item->setCalcX((int) $option->getTranslation('name'));
+                }
+                if (in_array("y", $groupCalculators)) {
+                    $item->setCalcY((int) $option->getTranslation('name'));
+                }
+                if (in_array("z", $groupCalculators)) {
+                    $item->setCalcZ((int) $option->getTranslation('name'));
+                }
+            }
+        }
     }
 
     private function loadMetaData(PartsListConfiguratorPage $page): void
@@ -178,17 +265,6 @@ class PartsListConfiguratorPageLoader
 
         $metaTitleParts = [$page->getPartsListConfigurator()->getTranslation('name')];
         $metaInformation->setMetaTitle(implode(' | ', $metaTitleParts));
-    }
-
-    private function getFilterProductStreamIds(
-        Request $request,
-        string $prop = "tag"
-    ): ?array
-    {
-        $ids = $this->getPropIds($request, $prop);
-        if (empty($ids)) {
-            return new AndFilter([]);
-        }
     }
 
     private function getPropertyFilter(
@@ -237,7 +313,7 @@ class PartsListConfiguratorPageLoader
         }
     }
 
-    protected function getPropIds(Request $request, string $prop = "tag", ?array $defaultIds = null): array
+    private function getPropIds(Request $request, string $prop = "tag", ?array $defaultIds = null): array
     {
         $ids = $request->query->get($prop);
         if ($request->isMethod(Request::METHOD_POST)) {
@@ -257,5 +333,13 @@ class PartsListConfiguratorPageLoader
         });
 
         return $ids;
+    }
+
+    private function optionOrPropertyMatch(PartsListEntity $item, PropertyGroupOptionEntity $option): bool
+    {
+        return (
+            ($item->getProduct()->getOptionIds() && in_array($option->getId(), $item->getProduct()->getOptionIds())) ||
+            ($item->getProduct()->getPropertyIds() && in_array($option->getId(), $item->getProduct()->getPropertyIds()))
+        );
     }
 }

@@ -7,6 +7,7 @@ use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConf
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
+use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Content\Cms\CmsPageEntity;
 use Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingResult;
 use Shopware\Storefront\Page\Page;
@@ -18,6 +19,17 @@ class PartsListConfiguratorPage extends Page
     protected ?ProductListingResult $products = null;
     protected ?PartsListCollection $partsList = null;
     protected ?PartsListCalculatorInterface $calculator = null;
+    protected ?Cart $cart = null;
+
+    public function getCart(): ?Cart
+    {
+        return $this->cart;
+    }
+
+    public function setCart(?Cart $cart): void
+    {
+        $this->cart = $cart;
+    }
 
     public function getPartsList(): ?PartsListCollection
     {

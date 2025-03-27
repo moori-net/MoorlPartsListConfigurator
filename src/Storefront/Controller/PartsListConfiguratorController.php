@@ -31,23 +31,37 @@ class PartsListConfiguratorController extends StorefrontController
         ]);
     }
 
+    #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/proxy-cart', name: 'frontend.moorl.parts.list.configurator.proxy.cart', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
+    public function proxyCart(SalesChannelContext $salesChannelContext, Request $request): Response
+    {
+        $page = $this->partsListConfiguratorPageLoader->load(
+            $request,
+            $salesChannelContext,
+            [
+                PartsListConfiguratorPageLoader::OPT_CALCULATE,
+                PartsListConfiguratorPageLoader::OPT_PROXY_CART
+            ]
+        );
+
+        return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/proxy-cart/index.html.twig', [
+            'page' => $page
+        ]);
+    }
+
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/parts-list', name: 'frontend.moorl.parts.list.configurator.parts.list', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
     public function partsList(SalesChannelContext $salesChannelContext, Request $request): Response
     {
-        $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
-
-        $partsListCalculator = $page->getCalculator();
-
-        $partsList = $partsListCalculator->calculatePartsList(
+        $page = $this->partsListConfiguratorPageLoader->load(
             $request,
             $salesChannelContext,
-            $page->getPartsListConfigurator(),
-            $page->getPartsList(),
-            $page->getProducts()->getEntities()
+            [
+                PartsListConfiguratorPageLoader::OPT_CALCULATE,
+                PartsListConfiguratorPageLoader::OPT_PROXY_CART
+            ]
         );
 
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
-            'items' => $partsList,
+            'items' => $page->getPartsList()->filterByQuantity(),
             'namePrefix' => 'parts',
             'options' => []
         ]);
@@ -75,7 +89,6 @@ class PartsListConfiguratorController extends StorefrontController
         }
 
         $currentFilter = null;
-
         foreach ($page->getPartsListConfigurator()->getFilters() as $filter) {
             if ($filter->getGroupTechnicalName() === $groupTechnicalName) {
                 $currentFilter = $filter;

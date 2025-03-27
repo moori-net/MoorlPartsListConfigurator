@@ -101,10 +101,11 @@
   {
     "id": "{ID:LENGTH}",
     "position": 11,
-    "name": "Breite",
+    "name": "Länge",
     "sortingType": "position",
     "customFields": {
-      "moorl_pl_name": "LENGTH"
+      "moorl_pl_name": "LENGTH",
+      "moorl_pl_calculators": ["x"]
     },
     "options": [
       {"id": "{MD5:LENGTH_1000}", "position": 0, "name": "1000"},

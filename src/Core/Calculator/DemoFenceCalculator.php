@@ -76,8 +76,7 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         Request $request,
         SalesChannelContext $salesChannelContext,
         PartsListConfiguratorEntity $partsListConfigurator,
-        PartsListCollection $partsList,
-        ProductCollection $products
+        PartsListCollection $partsList
     ): PartsListCollection
     {
         // Logische Konfiguratoren laden

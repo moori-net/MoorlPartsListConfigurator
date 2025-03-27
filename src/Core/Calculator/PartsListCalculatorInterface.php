@@ -23,7 +23,6 @@ interface PartsListCalculatorInterface
         Request $request,
         SalesChannelContext $salesChannelContext,
         PartsListConfiguratorEntity $partsListConfigurator,
-        PartsListCollection $partsList,
-        ProductCollection $products
+        PartsListCollection $partsList
     ): PartsListCollection;
 }

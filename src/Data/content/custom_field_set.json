@@ -71,6 +71,29 @@
             "de-DE": "Optionales Zubehör"
           }
         }
+      },
+      {
+        "name": "moorl_pl_calculators",
+        "type": "select",
+        "config": {
+          "_skipEnrichData": true,
+          "label": {
+            "en-GB": "Chose calculator",
+            "de-DE": "Kalkulation auswählen"
+          },
+          "helpText": {
+            "en-GB": "Saves the value of the option as an integer value for later processing",
+            "de-DE": "Speichert den Wert der Option als Integer-Wert für die spätere Verarbeitung"
+          },
+          "options": [
+            {"label": {"en-GB": "Calculator-X"}, "value": "x"},
+            {"label": {"en-GB": "Calculator-Y"}, "value": "y"},
+            {"label": {"en-GB": "Calculator-Z"}, "value": "z"}
+          ],
+          "componentName": "sw-multi-select",
+          "customFieldType": "select",
+          "customFieldPosition": 1
+        }
       }
     ]
   }

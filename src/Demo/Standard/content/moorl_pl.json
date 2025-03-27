@@ -35,6 +35,20 @@
         ]
       },
       {
+        "id": "{ID:FC01_FILTER_LENGTH}",
+        "position": 0,
+        "technicalName": "length",
+        "fixed": true,
+        "logical": true,
+        "productStreams": [],
+        "options": [
+          {"id": "{MD5:LENGTH_1000}"},
+          {"id": "{MD5:LENGTH_1500}"},
+          {"id": "{MD5:LENGTH_2000}"},
+          {"id": "{MD5:LENGTH_2500}"}
+        ]
+      },
+      {
         "id": "{ID:FC01_FILTER_COLOR}",
         "position": 1,
         "technicalName": "color",
