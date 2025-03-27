@@ -27,16 +27,16 @@
             <tag name="shopware.entity.definition" entity="moorl_pl_translation"/>
         </service>
 
-        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorProductStreamDefinition">
-            <tag name="shopware.entity.definition" entity="moorl_pl_product_stream"/>
-        </service>
-
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterDefinition">
             <tag name="shopware.entity.definition" entity="moorl_pl_filter"/>
         </service>
 
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterOptionDefinition">
             <tag name="shopware.entity.definition" entity="moorl_pl_filter_option"/>
+        </service>
+
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterProductStreamDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_filter_product_stream"/>
         </service>
 
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorMediaDefinition">

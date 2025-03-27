@@ -4,41 +4,14 @@
     "coverId": "{ID:MEDIA_1}",
     "active": true,
     "name": "Demo Zaunkonfigurator 6/5/6",
-    "partsListConfiguratorProductStreams": [
-      {
-        "id": "{ID:FC01_STREAM_FENCES}",
-        "productStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST}",
-        "position": 1,
-        "technicalName": "fences"
-      },
-      {
-        "id": "{ID:FC01_STREAM_POSTS}",
-        "productStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_POST}",
-        "position": 2,
-        "technicalName": "posts"
-      },
-      {
-        "id": "{ID:FC01_STREAM_OTHER}",
-        "productStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_OTHER}",
-        "position": 3,
-        "technicalName": "other"
-      },
-      {
-        "id": "{ID:FC01_STREAM_ACCESSORY}",
-        "productStreamId": "{ID:STREAM_CATEGORY_PARTS_LIST_ACCESSORY}",
-        "position": 4,
-        "accessory": true,
-        "technicalName": "accessory"
-      }
-    ],
     "filters": [
       {
         "id": "{ID:FC01_FILTER_LAYOUT}",
         "position": 10,
         "technicalName": "layout",
         "logical": true,
-        "partsListConfiguratorProductStreamIds": [
-          "{ID:FC01_STREAM_OTHER}"
+        "productStreams": [
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
         ],
         "options": [
           {"id": "{MD5:PARTS_LIST_LAYOUT_1}"},
@@ -52,10 +25,10 @@
         "position": 0,
         "technicalName": "fixed",
         "fixed": true,
-        "partsListConfiguratorProductStreamIds": [
-          "{ID:FC01_STREAM_FENCES}",
-          "{ID:FC01_STREAM_POSTS}",
-          "{ID:FC01_STREAM_OTHER}"
+        "productStreams": [
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
         ],
         "options": [
           {"id": "{MD5:LINE_656}"}
@@ -65,11 +38,11 @@
         "id": "{ID:FC01_FILTER_COLOR}",
         "position": 1,
         "technicalName": "color",
-        "partsListConfiguratorProductStreamIds": [
-          "{ID:FC01_STREAM_FENCES}",
-          "{ID:FC01_STREAM_POSTS}",
-          "{ID:FC01_STREAM_OTHER}",
-          "{ID:FC01_STREAM_ACCESSORY}"
+        "productStreams": [
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"},
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}"}
         ],
         "options": [
           {"id": "{MD5:COLOR_RAL_6005}"},
@@ -81,10 +54,10 @@
         "id": "{ID:FC01_FILTER_HEIGHT}",
         "position": 1,
         "technicalName": "height",
-        "partsListConfiguratorProductStreamIds": [
-          "{ID:FC01_STREAM_FENCES}",
-          "{ID:FC01_STREAM_POSTS}",
-          "{ID:FC01_STREAM_OTHER}"
+        "productStreams": [
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
         ],
         "options": [
           {"id": "{MD5:HEIGHT_600}"},
@@ -97,8 +70,8 @@
         "id": "{ID:FC01_FILTER_POSTS}",
         "position": 2,
         "technicalName": "posts",
-        "partsListConfiguratorProductStreamIds": [
-          "{ID:FC01_STREAM_POSTS}"
+        "productStreams": [
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"}
         ],
         "options": [
           {"id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},

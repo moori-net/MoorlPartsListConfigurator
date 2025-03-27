@@ -26,6 +26,7 @@ class MoorlPartsListConfigurator extends Plugin
         'moorl_pl_product_stream',
         'moorl_pl_filter',
         'moorl_pl_filter_option',
+        'moorl_pl_filter_product_stream',
         'moorl_pl_media',
     ];
     final public const SHOPWARE_TABLES = [

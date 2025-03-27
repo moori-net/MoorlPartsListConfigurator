@@ -17,6 +17,7 @@
             "deleteCreatorTypeError": "This type cannot be removed because there are active assignments or the type is a default value."
         },
         "properties": {
+            "productStreams": "Product streams",
             "accessory": "Accessory",
             "fixed": "Fixed",
             "logical": "Logical",

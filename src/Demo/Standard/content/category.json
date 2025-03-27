@@ -1,26 +1,26 @@
 [
     {
-        "id": "{ID:CATEGORY_PARTS_LIST_FENCE}",
+        "id": "{ID:CATEGORY_PARTS_LIST_FENCES}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
-        "name": "Zäune"
+        "name": "Zaunmatten"
     },
     {
-        "id": "{ID:CATEGORY_PARTS_LIST_POST}",
+        "id": "{ID:CATEGORY_PARTS_LIST_POSTS}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
         "name": "Pfosten"
     },
     {
-        "id": "{ID:CATEGORY_PARTS_LIST_DOOR}",
+        "id": "{ID:CATEGORY_PARTS_LIST_DOORS}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
         "name": "Tore"
     },
     {
-        "id": "{ID:CATEGORY_PARTS_LIST_ACCESSORY}",
+        "id": "{ID:CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
-        "name": "Zubehör"
+        "name": "Optionales Zubehör"
     }
 ]

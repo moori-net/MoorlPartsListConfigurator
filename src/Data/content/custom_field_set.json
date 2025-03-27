@@ -59,6 +59,18 @@
             "de-DE": "Alternatives Bild"
           }
         }
+      },
+      {
+        "name": "moorl_pl_optional",
+        "type": "bool",
+        "config": {
+          "componentName": "sw-switch-field",
+          "customFieldType": "switch",
+          "label": {
+            "en-GB": "Optional accessories",
+            "de-DE": "Optionales Zubehör"
+          }
+        }
       }
     ]
   }

@@ -23,7 +23,7 @@ class PartsListConfiguratorEntity extends Entity
     protected ?string $coverId = null;
     protected ?string $teaser = null;
     protected string $calculator;
-    protected ?PartsListConfiguratorProductStreamCollection $partsListConfiguratorProductStreams = null;
+
     protected ?PartsListConfiguratorFilterCollection $filters = null;
     protected ?PartsListConfiguratorMediaCollection $media = null;
     protected ?PartsListConfiguratorMediaEntity $cover = null;
@@ -66,16 +66,6 @@ class PartsListConfiguratorEntity extends Entity
     public function setCalculator(string $calculator): void
     {
         $this->calculator = $calculator;
-    }
-
-    public function getPartsListConfiguratorProductStreams(): ?PartsListConfiguratorProductStreamCollection
-    {
-        return $this->partsListConfiguratorProductStreams;
-    }
-
-    public function setPartsListConfiguratorProductStreams(?PartsListConfiguratorProductStreamCollection $partsListConfiguratorProductStreams): void
-    {
-        $this->partsListConfiguratorProductStreams = $partsListConfiguratorProductStreams;
     }
 
     public function getFilters(): ?PartsListConfiguratorFilterCollection

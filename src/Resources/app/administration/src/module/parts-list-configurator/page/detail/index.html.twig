@@ -64,23 +64,6 @@
                         <sw-card
                                 v-if="active === 'assignment'"
                                 :isLoading="isLoading"
-                                :title="$tc('moorl-parts-list-configurator.cards.partsListConfiguratorProductStreams')"
-                                class="moorl-entity-grid"
-                        >
-                            <moorl-entity-grid
-                                    key="moorl_pl_product_stream"
-                                    entity="moorl_pl_product_stream"
-                                    snippetSrc="moorl-parts-list-configurator"
-                                    :isLoading="isLoading"
-                                    :filterColumns="partsListProductStreamFilterColumns"
-                                    :criteria="partsListProductStreamCriteria"
-                                    :default-item="{ partsListConfiguratorId: item.id }"
-                            />
-                        </sw-card>
-
-                        <sw-card
-                                v-if="active === 'assignment'"
-                                :isLoading="isLoading"
                                 :title="$tc('moorl-parts-list-configurator.cards.filters')"
                                 class="moorl-entity-grid"
                         >

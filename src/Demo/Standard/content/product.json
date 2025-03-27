@@ -15,7 +15,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST_FENCE}"
+                "id": "{ID:CATEGORY_PARTS_LIST_FENCES}"
             }
         ],
         "cover": {
@@ -52,7 +52,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST_FENCE}"
+                "id": "{ID:CATEGORY_PARTS_LIST_FENCES}"
             }
         ],
         "cover": {
@@ -89,7 +89,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST_POST}"
+                "id": "{ID:CATEGORY_PARTS_LIST_POSTS}"
             }
         ],
         "cover": {
@@ -132,7 +132,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST_POST}"
+                "id": "{ID:CATEGORY_PARTS_LIST_POSTS}"
             }
         ],
         "cover": {
@@ -175,7 +175,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST_DOOR}"
+                "id": "{ID:CATEGORY_PARTS_LIST_DOORS}"
             }
         ],
         "cover": {
@@ -212,7 +212,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST_DOOR}"
+                "id": "{ID:CATEGORY_PARTS_LIST_DOORS}"
             }
         ],
         "cover": {
@@ -249,7 +249,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST_ACCESSORY}"
+                "id": "{ID:CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}",
             }
         ],
         "cover": {
@@ -272,7 +272,7 @@
         ],
         "categories": [
             {
-                "id": "{ID:CATEGORY_PARTS_LIST_ACCESSORY}"
+                "id": "{ID:CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}"
             }
         ],
         "cover": {

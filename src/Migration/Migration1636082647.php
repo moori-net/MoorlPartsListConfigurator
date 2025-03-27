@@ -61,24 +61,19 @@ SQL;
         $connection->executeStatement($sql);
 
         $sql = <<<SQL
-CREATE TABLE IF NOT EXISTS `moorl_pl_product_stream` (
+CREATE TABLE IF NOT EXISTS `moorl_pl_filter` (
     `id` BINARY(16) NOT NULL,
     `moorl_pl_id` BINARY(16) NOT NULL,
-    `product_stream_id` BINARY(16) NOT NULL,
     `position` INT(11) NOT NULL,
-    `accessory` TINYINT NOT NULL,
-    `technical_name` varchar(255) NOT NULL,
+    `technical_name` varchar(255),
+    `fixed` TINYINT NOT NULL,
+    `logical` TINYINT NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3),
     
     PRIMARY KEY (`id`),
-    UNIQUE KEY `uniq.moorl_pl_product_stream.moorl_pl_id` (`moorl_pl_id`, `technical_name`),
     
-    CONSTRAINT `fk.moorl_pl_product_stream.product_stream_id`
-        FOREIGN KEY (`product_stream_id`)
-        REFERENCES `product_stream` (`id`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk.moorl_pl_product_stream.moorl_pl_id`
+    CONSTRAINT `fk.moorl_pl_filter.moorl_pl_id`
         FOREIGN KEY (`moorl_pl_id`)
         REFERENCES `moorl_pl` (`id`)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -87,23 +82,19 @@ SQL;
         $connection->executeStatement($sql);
 
         $sql = <<<SQL
-CREATE TABLE IF NOT EXISTS `moorl_pl_filter` (
-    `id` BINARY(16) NOT NULL,
-    `moorl_pl_id` BINARY(16) NOT NULL,
-    `moorl_pl_product_stream_ids` json NULL,
-    `position` INT(11) NOT NULL,
-    `technical_name` varchar(255) NOT NULL,
-    `fixed` TINYINT NOT NULL,
-    `logical` TINYINT NOT NULL,
-    `created_at` DATETIME(3) NOT NULL,
-    `updated_at` DATETIME(3),
+CREATE TABLE IF NOT EXISTS `moorl_pl_filter_product_stream` (
+    `moorl_pl_filter_id` BINARY(16) NOT NULL,
+    `product_stream_id` BINARY(16) NOT NULL,
     
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uniq.moorl_pl_filter.moorl_pl_id` (`moorl_pl_id`, `technical_name`),
+    PRIMARY KEY (`moorl_pl_filter_id`, `product_stream_id`),
     
-    CONSTRAINT `fk.moorl_pl_filter.moorl_pl_id`
-        FOREIGN KEY (`moorl_pl_id`)
-        REFERENCES `moorl_pl` (`id`)
+    CONSTRAINT `fk.moorl_pl_filter_product_stream.product_stream_id`
+        FOREIGN KEY (`product_stream_id`)
+        REFERENCES `product_stream` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk.moorl_pl_filter_product_stream.moorl_pl_filter_id`
+        FOREIGN KEY (`moorl_pl_filter_id`)
+        REFERENCES `moorl_pl_filter` (`id`)
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 SQL;

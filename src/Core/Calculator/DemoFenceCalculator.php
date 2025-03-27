@@ -6,6 +6,7 @@ use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConf
 use Moorl\PartsListConfigurator\Core\Service\PartsListService;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use Shopware\Core\Content\Product\ProductCollection;
+use Shopware\Core\Content\Property\PropertyGroupCollection;
 use Shopware\Core\Content\Property\PropertyGroupDefinition;
 use Shopware\Core\Content\Property\PropertyGroupEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -120,23 +121,34 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
 
         // Alle Optionen für Breite laden
         $criteria = new Criteria();
-        $criteria->addFilter(new EqualsFilter('customFields.moorl_pl_name', 'LENGTH'));
+        //$criteria->addFilter(new EqualsFilter('customFields.moorl_pl_name', 'LENGTH'));
         $criteria->addAssociation('options');
         $propertyGroupRepository = $this->partsListService->getRepository(PropertyGroupDefinition::ENTITY_NAME);
-        /** @var PropertyGroupEntity $propertyGroup */
-        $propertyGroup = $propertyGroupRepository->search($criteria, $salesChannelContext->getContext())->first();
+        /** @var PropertyGroupCollection $propertyGroups */
+        $propertyGroups = $propertyGroupRepository->search($criteria, $salesChannelContext->getContext())->getEntities();
 
         // Speichere die Breite in die Stücklisten-Positionen, für die spätere Berechnung
         foreach ($partsList as $item) {
-            foreach ($propertyGroup->getOptions() as $option) {
-                if ($item->getProduct()->getOptionIds() && in_array($option->getId(), $item->getProduct()->getOptionIds())) {
-                    $item->setCalcX((int) $option->getTranslation('name'));
-                    continue 2;
-                }
+            foreach ($propertyGroups as $propertyGroup) {
+                $groupTechnicalName = $propertyGroup->getTranslation('customFields')['moorl_pl_name'] ?? null;
 
-                if ($item->getProduct()->getPropertyIds() && in_array($option->getId(), $item->getProduct()->getPropertyIds())) {
-                    $item->setCalcX((int) $option->getTranslation('name'));
-                    continue 2;
+                foreach ($propertyGroup->getOptions() as $option) {
+                    $optionTechnicalName = $option->getTranslation('customFields')['moorl_pl_name'] ?? null;
+                    if ($optionTechnicalName) {
+                        $item->setGroup($option->getTranslation('customFields')['moorl_pl_name']);
+                    }
+
+                    if ($groupTechnicalName === 'LENGTH') {
+                        if ($item->getProduct()->getOptionIds() && in_array($option->getId(), $item->getProduct()->getOptionIds())) {
+                            $item->setCalcX((int) $option->getTranslation('name'));
+                            continue 2;
+                        }
+
+                        if ($item->getProduct()->getPropertyIds() && in_array($option->getId(), $item->getProduct()->getPropertyIds())) {
+                            $item->setCalcX((int) $option->getTranslation('name'));
+                            continue 2;
+                        }
+                    }
                 }
             }
         }
@@ -150,6 +162,7 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
             ->getProductStreamId();
 
         foreach ($partsList->filterByProductStreamIds([$fenceProductStreamId]) as $item) {
+            dd($item);
             $item->setGroup('fences');
         }
 

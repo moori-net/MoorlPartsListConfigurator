@@ -98,23 +98,9 @@ Component.register('moorl-parts-list-configurator-detail', {
         partsListFilterCriteria() {
             const criteria = new Criteria();
             criteria.addAssociation('options');
+            criteria.addAssociation('productStreams');
             return criteria;
         },
-
-        partsListProductStreamFilterColumns() {
-            return [
-                'accessory',
-                'position',
-                'technicalName',
-                'productStream.name',
-            ];
-        },
-
-        partsListProductStreamCriteria() {
-            const criteria = new Criteria();
-            criteria.addAssociation('productStream');
-            return criteria;
-        }
     },
 
     watch: {

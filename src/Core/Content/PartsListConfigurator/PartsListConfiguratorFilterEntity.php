@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
@@ -18,7 +19,7 @@ class PartsListConfiguratorFilterEntity extends Entity
     protected ?string $technicalName = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
     protected ?PropertyGroupOptionCollection $options = null;
-    protected array $productStreamIds = [];
+    protected ?ProductStreamCollection $productStreams = null;
     protected ?array $logicalConfigurator = null;
 
     public function getGroupTechnicalName(): ?string
@@ -26,6 +27,16 @@ class PartsListConfiguratorFilterEntity extends Entity
         $customFields = $this->getOptions()?->first()?->getGroup()?->getTranslation('customFields');
 
         return $customFields['moorl_pl_name'] ?? null;
+    }
+
+    public function getProductStreams(): ?ProductStreamCollection
+    {
+        return $this->productStreams;
+    }
+
+    public function setProductStreams(?ProductStreamCollection $productStreams): void
+    {
+        $this->productStreams = $productStreams;
     }
 
     public function getLogicalConfigurator(): ?array
@@ -36,16 +47,6 @@ class PartsListConfiguratorFilterEntity extends Entity
     public function setLogicalConfigurator(?array $logicalConfigurator): void
     {
         $this->logicalConfigurator = $logicalConfigurator;
-    }
-
-    public function getProductStreamIds(): array
-    {
-        return $this->productStreamIds;
-    }
-
-    public function addProductStreamId(string $productStreamId): void
-    {
-        $this->productStreamIds[] = $productStreamId;
     }
 
     public function getLogical(): bool
