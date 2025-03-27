@@ -13,9 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(defaults: ['_routeScope' => ['storefront']])]
 class PartsListConfiguratorController extends StorefrontController
 {
-    public function __construct(
-        private readonly PartsListConfiguratorPageLoader $partsListConfiguratorPageLoader
-    )
+    public function __construct(private readonly PartsListConfiguratorPageLoader $partsListConfiguratorPageLoader)
     {
     }
 

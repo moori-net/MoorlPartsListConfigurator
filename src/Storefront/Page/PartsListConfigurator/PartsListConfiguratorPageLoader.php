@@ -160,8 +160,8 @@ class PartsListConfiguratorPageLoader
 
         $this->enrichPartsList($partsList, $productStreams, $options);
 
+        $partsListCalculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculator());
         if (in_array(self::OPT_CALCULATE, $loadingOptions)) {
-            $partsListCalculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculator());
             $partsListCalculator->calculatePartsList(
                 $request,
                 $salesChannelContext,
@@ -181,7 +181,7 @@ class PartsListConfiguratorPageLoader
         if (in_array(self::OPT_PROXY_CART, $loadingOptions)) {
             $page->setCart($this->createProxyCart($partsList, $salesChannelContext));
         }
-        $page->setCalculator($this->getPartsListCalculatorByName($partsListConfigurator->getCalculator()));
+        $page->setCalculator($partsListCalculator);
 
         $this->loadMetaData($page);
 

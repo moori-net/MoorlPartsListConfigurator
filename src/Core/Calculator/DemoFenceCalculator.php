@@ -5,13 +5,6 @@ namespace Moorl\PartsListConfigurator\Core\Calculator;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\Core\Service\PartsListService;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
-use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
-use Shopware\Core\Content\Product\ProductCollection;
-use Shopware\Core\Content\ProductStream\ProductStreamCollection;
-use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
-use Shopware\Core\Content\Property\PropertyGroupCollection;
-use Shopware\Core\Content\Property\PropertyGroupDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,36 +28,32 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
                 'options' => [
                     [
                         'technicalName' => 'PARTS_LIST_LAYOUT_1',
-                        'name' => 'length',
                         'elements' => [
-                            ['name' => 'side_a', 'type' => 'number']
+                            'side_a'
                         ]
                     ],
                     [
                         'technicalName' => 'PARTS_LIST_LAYOUT_2',
-                        'name' => 'length',
                         'elements' => [
-                            ['name' => 'side_a', 'type' => 'number'],
-                            ['name' => 'side_b', 'type' => 'number']
+                            'side_a',
+                            'side_b'
                         ]
                     ],
                     [
                         'technicalName' => 'PARTS_LIST_LAYOUT_3',
-                        'name' => 'length',
                         'elements' => [
-                            ['name' => 'side_a', 'type' => 'number'],
-                            ['name' => 'side_b', 'type' => 'number'],
-                            ['name' => 'side_c', 'type' => 'number'],
+                            'side_a',
+                            'side_b',
+                            'side_c'
                         ]
                     ],
                     [
                         'technicalName' => 'PARTS_LIST_LAYOUT_4',
-                        'name' => 'length',
                         'elements' => [
-                            ['name' => 'side_a', 'type' => 'number'],
-                            ['name' => 'side_b', 'type' => 'number'],
-                            ['name' => 'side_c', 'type' => 'number'],
-                            ['name' => 'side_d', 'type' => 'number'],
+                            'side_a',
+                            'side_b',
+                            'side_c',
+                            'side_d'
                         ]
                     ]
                 ]
@@ -90,50 +79,6 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
             );
         }
 
-        // Alle verfügbaren Produkt-Streams laden
-        $productStreams = new ProductStreamCollection();
-        foreach ($partsListConfigurator->getFilters() as $filter) {
-            $productStreams->merge($filter->getProductStreams());
-        }
-
-        // Speichere die lesbaren technischen Namen der Produkt-Streams
-        foreach ($productStreams as $productStream) {
-            $productStreamTechnicalName = $productStream->getTranslation('customFields')['moorl_pl_name'] ?? null;
-            if ($productStreamTechnicalName) {
-                foreach ($partsList->filterByProductStreamIds([$productStream->getId()]) as $item) {
-                    $item->addProductStream($productStreamTechnicalName);
-                }
-            }
-        }
-
-        // Alle Optionen laden
-        $criteria = new Criteria();
-        $criteria->addAssociation('options');
-        $propertyGroupRepository = $this->partsListService->getRepository(PropertyGroupDefinition::ENTITY_NAME);
-        /** @var PropertyGroupCollection $propertyGroups */
-        $propertyGroups = $propertyGroupRepository->search($criteria, $salesChannelContext->getContext())->getEntities();
-
-        // Speichere die lesbaren technischen Namen der Optionen
-        foreach ($partsList as $item) {
-            foreach ($propertyGroups as $propertyGroup) {
-                foreach ($propertyGroup->getOptions() as $option) {
-                    if (!$this->optionOrPropertyMatch($item, $option)) {
-                        continue;
-                    }
-
-                    $groupTechnicalName = $propertyGroup->getTranslation('customFields')['moorl_pl_name'] ?? null;
-                    $optionTechnicalName = $option->getTranslation('customFields')['moorl_pl_name'] ?? null;
-                    $item->addGroup($groupTechnicalName);
-                    $item->addOption($optionTechnicalName);
-
-                    // Produkte mit einer Längen-Eigenschaft sollen den Wert der Länge für eine spätere Berechnung erhalten
-                    if ($groupTechnicalName === 'LENGTH') {
-                        $item->setCalcX((int) $option->getTranslation('name'));
-                    }
-                }
-            }
-        }
-
         // Setze Mengen anhand des Requests
         $this->setQuantityFromRequest(
             $request,
@@ -152,11 +97,11 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
                     $this->setQuantityFromRequest(
                         $request,
                         $partsList->filterByProductStream('LAYOUT_ACCESSORIES'),
-                        $element['name']
+                        $element
                     );
 
                     // Starte Berechnung für Seite
-                    $this->calculatePartsListForSide($request, $partsList, $element['name']);
+                    $this->calculatePartsListForSide($request, $partsList, $element);
                 }
             }
         }

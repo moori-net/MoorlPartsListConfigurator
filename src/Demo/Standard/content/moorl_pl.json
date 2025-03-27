@@ -37,7 +37,7 @@
       {
         "id": "{ID:FC01_FILTER_LENGTH}",
         "position": 0,
-        "technicalName": "length",
+        "technicalName": "internal",
         "fixed": true,
         "logical": true,
         "productStreams": [],
@@ -45,7 +45,9 @@
           {"id": "{MD5:LENGTH_1000}"},
           {"id": "{MD5:LENGTH_1500}"},
           {"id": "{MD5:LENGTH_2000}"},
-          {"id": "{MD5:LENGTH_2500}"}
+          {"id": "{MD5:LENGTH_2500}"},
+          {"id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}"},
+          {"id": "{MD5:PARTS_LIST_POST_TYPE_CORNER}"}
         ]
       },
       {
