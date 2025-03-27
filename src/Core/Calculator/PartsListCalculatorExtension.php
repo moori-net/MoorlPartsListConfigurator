@@ -3,6 +3,9 @@
 namespace Moorl\PartsListConfigurator\Core\Calculator;
 
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
+use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
+use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,6 +47,33 @@ class PartsListCalculatorExtension
         $option['optionTechnicalName'] = $optionTechnicalName;
 
         return $option;
+    }
+
+    public function setQuantityFromRequest(Request $request, PartsListCollection $partsList, string $name): void
+    {
+        foreach ($partsList as $item) {
+            $parameterName = sprintf(
+                "%s_%s",
+                $name,
+                $item->getProduct()->getParentId() ?: $item->getProductId()
+            );
+
+            $itemQuantity = (int) $request->query->get($parameterName);
+            if (!$itemQuantity) {
+                continue;
+            }
+
+            $item->setQuantity($item->getQuantity() + $itemQuantity);
+            $item->setTemporaryQuantity($itemQuantity);
+        }
+    }
+
+    public function optionOrPropertyMatch(PartsListEntity $item, PropertyGroupOptionEntity $option): bool
+    {
+        return (
+            ($item->getProduct()->getOptionIds() && in_array($option->getId(), $item->getProduct()->getOptionIds())) ||
+            ($item->getProduct()->getPropertyIds() && in_array($option->getId(), $item->getProduct()->getPropertyIds()))
+        );
     }
 
     public function getPropertyGroupConfig(): array

@@ -27,14 +27,6 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         return 'demo-fence';
     }
 
-    public function getExpectedPropertyGroups(): array
-    {
-        return [
-            'PARTS_LIST_LAYOUT',
-            'LENGTH'
-        ];
-    }
-
     public function getPropertyGroupConfig(): array
     {
         return [
@@ -77,14 +69,6 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
                     ]
                 ]
             ]
-        ];
-    }
-
-    public function getExpectedPropertyGroupOptions(): array
-    {
-        return [
-            'PARTS_LIST_POST_TYPE_SIDE',
-            'PARTS_LIST_POST_TYPE_CORNER',
         ];
     }
 
@@ -258,39 +242,5 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         }
 
         $this->partsListService->debug(sprintf("the remaining length for %s is %d", $sideName, $length));
-    }
-
-    private function setQuantityFromRequest(Request $request, PartsListCollection $partsList, string $name): void
-    {
-        foreach ($partsList as $item) {
-            $parameterName = sprintf(
-                "%s_%s",
-                $name,
-                $item->getProduct()->getParentId() ?: $item->getProductId()
-            );
-
-            $itemQuantity = (int) $request->query->get($parameterName);
-            if (!$itemQuantity) {
-                continue;
-            }
-
-            $this->partsListService->debug(sprintf(
-                "Got quantity %d for product %s",
-                $itemQuantity,
-                $parameterName
-            ));
-
-            $item->setQuantity($item->getQuantity() + $itemQuantity);
-            // Wird nach der Berechnung der Länge für die aktuelle Seite wieder zurückgesetzt
-            $item->setTemporaryQuantity($itemQuantity);
-        }
-    }
-
-    private function optionOrPropertyMatch(PartsListEntity $item, PropertyGroupOptionEntity $option): bool
-    {
-        return (
-            ($item->getProduct()->getOptionIds() && in_array($option->getId(), $item->getProduct()->getOptionIds())) ||
-            ($item->getProduct()->getPropertyIds() && in_array($option->getId(), $item->getProduct()->getPropertyIds()))
-        );
     }
 }
