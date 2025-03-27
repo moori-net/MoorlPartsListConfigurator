@@ -1,2 +1,16 @@
 {
+  "moorl-parts-list-configurator": {
+    "partsListConfigurators": "Parts list configurators",
+    "logical-configurator": {
+      "properties": {
+        "totalLength": "Total length",
+        "side_a": "Side A",
+        "side_b": "Side B",
+        "side_c": "Side C",
+        "side_d": "Side D"
+      }
+    },
+    "accessoryList": "Optional accessories",
+    "partsList": "Parts list"
+  }
 }
