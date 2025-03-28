@@ -210,12 +210,9 @@ class PartsListConfiguratorPageLoader
             md5($partsListConfiguratorId . $salesChannelContext->getToken()),
             $salesChannelContext
         );
-
-        $cart->setLineItems(new LineItemCollection([]));
-
-        $cart = $this->cartService->add($cart, $lineItems, $salesChannelContext);
-
-        //dd($cart);
+        $cart->setSource('moorl_pl');
+        $cart->setLineItems(new LineItemCollection($lineItems));
+        $cart = $this->cartService->recalculate($cart, $salesChannelContext);
 
         return $cart;
     }
