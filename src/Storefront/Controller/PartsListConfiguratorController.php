@@ -20,7 +20,14 @@ class PartsListConfiguratorController extends StorefrontController
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}', name: 'frontend.moorl.parts.list.configurator.detail', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
     public function detail(SalesChannelContext $salesChannelContext, Request $request): Response
     {
-        $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
+        $page = $this->partsListConfiguratorPageLoader->load(
+            $request,
+            $salesChannelContext,
+            [
+                PartsListConfiguratorPageLoader::OPT_CALCULATE,
+                PartsListConfiguratorPageLoader::OPT_PROXY_CART
+            ]
+        );
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/page/content/parts-list-configurator-detail.html.twig', [
             'page' => $page,
@@ -41,14 +48,20 @@ class PartsListConfiguratorController extends StorefrontController
             ]
         );
 
+        //dd($page->getCart()->getLineItems()->filterType('promotion'));
+
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/proxy-cart/index.html.twig', [
-            'page' => $page
+            'context' => $salesChannelContext,
+            'cart' => $page->getCart(),
+            'options' => []
         ]);
     }
 
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/parts-list', name: 'frontend.moorl.parts.list.configurator.parts.list', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
     public function partsList(SalesChannelContext $salesChannelContext, Request $request): Response
     {
+        return $this->proxyCart($salesChannelContext, $request);
+
         $page = $this->partsListConfiguratorPageLoader->load(
             $request,
             $salesChannelContext,

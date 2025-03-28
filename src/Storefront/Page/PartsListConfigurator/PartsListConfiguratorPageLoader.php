@@ -11,6 +11,7 @@ use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
 use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Checkout\Cart\LineItem\LineItem;
+use Shopware\Core\Checkout\Cart\LineItem\LineItemCollection;
 use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
@@ -179,7 +180,7 @@ class PartsListConfiguratorPageLoader
         $page->setProducts($products);
         $page->setPartsList($partsList);
         if (in_array(self::OPT_PROXY_CART, $loadingOptions)) {
-            $page->setCart($this->createProxyCart($partsList, $salesChannelContext));
+            $page->setCart($this->createProxyCart($partsListConfiguratorId, $partsList, $salesChannelContext));
         }
         $page->setCalculator($partsListCalculator);
 
@@ -188,20 +189,33 @@ class PartsListConfiguratorPageLoader
         return $page;
     }
 
-    private function createProxyCart(PartsListCollection $partsList, SalesChannelContext $salesChannelContext): Cart
+    private function createProxyCart(string $partsListConfiguratorId, PartsListCollection $partsList, SalesChannelContext $salesChannelContext): Cart
     {
-        $cart = new Cart(Uuid::randomHex());
-
+        $lineItems = [];
         foreach ($partsList->filterByQuantity() as $item) {
-            $cart->getLineItems()->add(new LineItem(
+            $lineItem = new LineItem(
                 $item->getId(),
                 LineItem::PRODUCT_LINE_ITEM_TYPE,
                 $item->getProductId(),
                 $item->getQuantity()
-            ));
+            );
+
+            $lineItem->setStackable(true);
+            $lineItem->setRemovable(true);
+
+            $lineItems[] = $lineItem;
         }
 
-        $this->cartService->recalculate($cart, $salesChannelContext);
+        $cart = $this->cartService->getCart(
+            md5($partsListConfiguratorId . $salesChannelContext->getToken()),
+            $salesChannelContext
+        );
+
+        $cart->setLineItems(new LineItemCollection([]));
+
+        $cart = $this->cartService->add($cart, $lineItems, $salesChannelContext);
+
+        //dd($cart);
 
         return $cart;
     }

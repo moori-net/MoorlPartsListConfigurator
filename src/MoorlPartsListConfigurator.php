@@ -44,7 +44,8 @@ class MoorlPartsListConfigurator extends Plugin
         'product_visibility',
         'product_option',
         'product_configurator_setting',
-        'custom_field_set'
+        'custom_field_set',
+        'promotion'
     ];
 
     public function activate(ActivateContext $activateContext): void
