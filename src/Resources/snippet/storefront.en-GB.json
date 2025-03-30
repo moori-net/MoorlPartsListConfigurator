@@ -11,6 +11,7 @@
             }
         },
         "accessoryList": "Optional accessories",
-        "partsList": "Parts list"
+        "partsList": "Parts list",
+        "load": "Calculate parts list"
     }
 }

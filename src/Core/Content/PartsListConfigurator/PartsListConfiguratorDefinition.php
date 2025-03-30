@@ -2,7 +2,6 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
-use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEntityCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
 use Shopware\Core\Content\Cms\CmsPageDefinition;
 use Shopware\Core\Content\Seo\SeoUrl\SeoUrlDefinition;
@@ -47,6 +46,7 @@ class PartsListConfiguratorDefinition extends EntityDefinition
         return [
             'active' => false,
             'calculator' => 'demo-fence',
+            'type' => 'calculator',
         ];
     }
 
@@ -58,7 +58,8 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             new FkField('cms_page_id', 'cmsPageId', CmsPageDefinition::class),
             (new BoolField('active', 'active'))->addFlags(new EditField('switch')),
 
-            new StringField('calculator', 'calculator'),
+            (new StringField('type', 'type')),
+            (new StringField('calculator', 'calculator')),
 
             (new TranslatedField('name'))->addFlags(new Required(), new SearchRanking(SearchRanking::HIGH_SEARCH_RANKING), new EditField('text')),
             (new TranslatedField('teaser'))->addFlags(new EditField('textarea')),
@@ -77,11 +78,6 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             (new OneToManyAssociationField('filters', PartsListConfiguratorFilterDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
         ];
 
-        $fieldCollection = new FieldCollection(array_merge(
-            $collection,
-            FieldMultiEntityCollection::getFieldItems([])
-        ));
-
-        return $fieldCollection;
+        return new FieldCollection($collection);
     }
 }

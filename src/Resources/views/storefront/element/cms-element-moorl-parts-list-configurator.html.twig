@@ -29,7 +29,11 @@
         <div id="accessoryList"><span class="loader"></span></div>
     </form>
 
-    {{ "moorl-parts-list-configurator.partsList"|trans }}
+    <div class="d-grid mb-4">
+        <button class="js-load-button btn btn-light">
+            {{ "moorl-parts-list-configurator.load"|trans }}
+        </button>
+    </div>
 
     <div id="partsList"><span class="loader"></span></div>
 </div>

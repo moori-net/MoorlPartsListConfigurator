@@ -5,6 +5,7 @@ import querystring from 'query-string';
 
 export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     static options = {
+        type: 'calculator',
         url: null,
         optionCount: 0
     };
@@ -19,6 +20,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._partsListEl = document.getElementById('partsList');
         this._accessoryList = document.getElementById('accessoryList');
         this._formEl = this.el.querySelector('form');
+        this._loadButton = this.el.querySelector('.js-load-button');
 
         this._formEl.querySelectorAll('.js-group').forEach(() => {
             this.options.optionCount++;
@@ -43,6 +45,18 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 el.addEventListener(evt, () => {this._refresh('options');}, false);
             });
         });
+
+        this._loadButton.addEventListener('click', () => {
+            this._loadHistory();
+
+            this._loadButton.disabled = true;
+
+            if (this.options.type === 'calculator') {
+                this._loadProxyCart();
+            } else {
+                this._loadPartsList();
+            }
+        });
     }
 
     _registerListEvents(currentEl) {
@@ -61,9 +75,10 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         this._loadHistory();
 
-        this._timeout = setTimeout(() => {
-            this._loadPartsList();
+        this._partsListEl.innerHTML = "";
+        this._loadButton.disabled = false;
 
+        this._timeout = setTimeout(() => {
             if (source !== 'options') {
                 return;
             }
@@ -97,6 +112,10 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
     _loadPartsList() {
         this._loadList(this._partsListEl, 'parts-list');
+    }
+
+    _loadProxyCart() {
+        this._loadList(this._partsListEl, 'proxy-cart');
     }
 
     _loadAccessoryList() {

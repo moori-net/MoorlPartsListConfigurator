@@ -156,11 +156,7 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
 
             $length = $length - $item->getTemporaryQuantity() * $item->getCalcX();
             if ($length < 0) {
-                throw new \Exception(sprintf(
-                    "Error, the length of %d * %s is to big",
-                    $item->getTemporaryQuantity(),
-                    $item->getCalcX()
-                ));
+                throw PartsListCalculatorException::calculationAborted($sideName);
             }
         }
 

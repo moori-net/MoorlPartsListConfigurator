@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Storefront\Controller;
 
+use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorException;
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -22,11 +23,7 @@ class PartsListConfiguratorController extends StorefrontController
     {
         $page = $this->partsListConfiguratorPageLoader->load(
             $request,
-            $salesChannelContext,
-            [
-                PartsListConfiguratorPageLoader::OPT_CALCULATE,
-                PartsListConfiguratorPageLoader::OPT_PROXY_CART
-            ]
+            $salesChannelContext
         );
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/page/content/parts-list-configurator-detail.html.twig', [
@@ -39,16 +36,20 @@ class PartsListConfiguratorController extends StorefrontController
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/proxy-cart', name: 'frontend.moorl.parts.list.configurator.proxy.cart', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
     public function proxyCart(SalesChannelContext $salesChannelContext, Request $request): Response
     {
-        $page = $this->partsListConfiguratorPageLoader->load(
-            $request,
-            $salesChannelContext,
-            [
-                PartsListConfiguratorPageLoader::OPT_CALCULATE,
-                PartsListConfiguratorPageLoader::OPT_PROXY_CART
-            ]
-        );
-
-        //dd($page->getCart()->getLineItems()->filterType('promotion'));
+        try {
+            $page = $this->partsListConfiguratorPageLoader->load(
+                $request,
+                $salesChannelContext,
+                [
+                    PartsListConfiguratorPageLoader::OPT_CALCULATE,
+                    PartsListConfiguratorPageLoader::OPT_PROXY_CART
+                ]
+            );
+        } catch (PartsListCalculatorException $exception) {
+            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
+                'exception' => $exception
+            ]);
+        }
 
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/proxy-cart/index.html.twig', [
             'context' => $salesChannelContext,
@@ -60,16 +61,20 @@ class PartsListConfiguratorController extends StorefrontController
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/parts-list', name: 'frontend.moorl.parts.list.configurator.parts.list', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
     public function partsList(SalesChannelContext $salesChannelContext, Request $request): Response
     {
-        return $this->proxyCart($salesChannelContext, $request);
-
-        $page = $this->partsListConfiguratorPageLoader->load(
-            $request,
-            $salesChannelContext,
-            [
-                PartsListConfiguratorPageLoader::OPT_CALCULATE,
-                PartsListConfiguratorPageLoader::OPT_PROXY_CART
-            ]
-        );
+        try {
+            $page = $this->partsListConfiguratorPageLoader->load(
+                $request,
+                $salesChannelContext,
+                [
+                    PartsListConfiguratorPageLoader::OPT_CALCULATE,
+                    PartsListConfiguratorPageLoader::OPT_PROXY_CART
+                ]
+            );
+        } catch (PartsListCalculatorException $exception) {
+            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
+                'exception' => $exception
+            ]);
+        }
 
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
             'items' => $page->getPartsList()->filterByQuantity(),

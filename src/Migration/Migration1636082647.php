@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `moorl_pl` (
     `parts_list_configurator_media_id` BINARY(16),
     `cms_page_id` BINARY(16),
     `active` TINYINT NOT NULL,
+    `type` varchar(255),
     `calculator` varchar(255),
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3),
