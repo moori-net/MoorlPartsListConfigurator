@@ -3,8 +3,6 @@
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
-use MoorlFoundation\Core\System\EntityMigrationInterface;
-use MoorlFoundation\Core\System\MigrationEntityDefinition;
 use Shopware\Core\Content\Cms\CmsPageDefinition;
 use Shopware\Core\Content\Seo\SeoUrl\SeoUrlDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
@@ -52,11 +50,6 @@ class PartsListConfiguratorDefinition extends EntityDefinition
         ];
     }
 
-    public function getMigrationFields(): FieldCollection
-    {
-        return $this->defineFields();
-    }
-
     protected function defineFields(): FieldCollection
     {
         $collection = [
@@ -76,6 +69,8 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             (new TranslatedField('metaDescription'))->addFlags(new EditField('textarea')),
             (new TranslatedField('slotConfig'))->addFlags(),
             (new OneToManyAssociationField('seoUrls', SeoUrlDefinition::class, 'foreign_key'))->addFlags(new ApiAware()),
+
+            (new StringField('ddd', 'ddd'))->addFlags(new EditField('text')),
 
             (new TranslationsAssociationField(PartsListConfiguratorTranslationDefinition::class, 'moorl_pl_id'))->addFlags(new Required()),
 

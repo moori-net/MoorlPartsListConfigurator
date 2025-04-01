@@ -8,7 +8,6 @@ use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
-use Shopware\Core\Framework\Plugin\Context\InstallContext;
 
 class MoorlPartsListConfigurator extends Plugin
 {
@@ -49,11 +48,6 @@ class MoorlPartsListConfigurator extends Plugin
         'custom_field_set',
         'promotion'
     ];
-
-    public function install(InstallContext $installContext): void
-    {
-        parent::install($installContext);
-    }
 
     public function activate(ActivateContext $activateContext): void
     {
