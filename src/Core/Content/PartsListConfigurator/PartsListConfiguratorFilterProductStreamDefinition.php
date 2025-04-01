@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use MoorlFoundation\Core\System\EntityMigrationInterface;
 use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
@@ -17,6 +18,11 @@ class PartsListConfiguratorFilterProductStreamDefinition extends MappingEntityDe
     public function getEntityName(): string
     {
         return self::ENTITY_NAME;
+    }
+
+    public function getMigrationFields(): FieldCollection
+    {
+        return $this->defineFields();
     }
 
     protected function defineFields(): FieldCollection

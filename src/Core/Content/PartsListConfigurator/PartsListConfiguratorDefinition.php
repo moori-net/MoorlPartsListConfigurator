@@ -3,6 +3,8 @@
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
+use MoorlFoundation\Core\System\EntityMigrationInterface;
+use MoorlFoundation\Core\System\MigrationEntityDefinition;
 use Shopware\Core\Content\Cms\CmsPageDefinition;
 use Shopware\Core\Content\Seo\SeoUrl\SeoUrlDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
@@ -48,6 +50,11 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             'calculator' => 'demo-fence',
             'type' => 'calculator',
         ];
+    }
+
+    public function getMigrationFields(): FieldCollection
+    {
+        return $this->defineFields();
     }
 
     protected function defineFields(): FieldCollection

@@ -17,6 +17,9 @@ class Migration1636082647 extends MigrationStep
 
     public function update(Connection $connection): void
     {
+        return;
+
+
         $sql = <<<SQL
 CREATE TABLE IF NOT EXISTS `moorl_pl` (
     `id` BINARY(16) NOT NULL,

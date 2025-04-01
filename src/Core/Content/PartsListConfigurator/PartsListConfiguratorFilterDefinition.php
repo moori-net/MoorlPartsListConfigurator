@@ -64,7 +64,11 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
             (new IntField('position', 'position'))->addFlags(new ApiAware(), new EditField('number')),
             (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new EditField('text')),
 
-            (new ManyToOneAssociationField('partsListConfigurator', 'moorl_pl_id', PartsListConfiguratorDefinition::class, 'id', false))->addFlags(),
+            (new ManyToOneAssociationField(
+                'partsListConfigurator',
+                'moorl_pl_id',
+                PartsListConfiguratorDefinition::class
+            ))->addFlags(),
             (new ManyToManyAssociationField(
                 'options',
                 PropertyGroupOptionDefinition::class,
