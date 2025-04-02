@@ -14,9 +14,11 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\NoConstraint;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SearchRanking;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SetNullOnDelete;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ReferenceVersionField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
@@ -56,6 +58,7 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
             (new FkField('parts_list_configurator_media_id', 'coverId', PartsListConfiguratorMediaDefinition::class))->addFlags(new ApiAware(), new NoConstraint()),
             new FkField('cms_page_id', 'cmsPageId', CmsPageDefinition::class),
+            (new ReferenceVersionField(CmsPageDefinition::class))->addFlags(new Required(), new ApiAware()),
             (new BoolField('active', 'active'))->addFlags(new EditField('switch')),
 
             (new StringField('type', 'type')),
@@ -70,11 +73,9 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             (new TranslatedField('slotConfig'))->addFlags(),
             (new OneToManyAssociationField('seoUrls', SeoUrlDefinition::class, 'foreign_key'))->addFlags(new ApiAware()),
 
-            (new StringField('ddd', 'ddd'))->addFlags(new EditField('text')),
-
             (new TranslationsAssociationField(PartsListConfiguratorTranslationDefinition::class, 'moorl_pl_id'))->addFlags(new Required()),
 
-            (new ManyToOneAssociationField('cmsPage', 'cms_page_id', CmsPageDefinition::class))->addFlags(),
+            (new ManyToOneAssociationField('cmsPage', 'cms_page_id', CmsPageDefinition::class))->addFlags(new SetNullOnDelete()),
             (new ManyToOneAssociationField('cover', 'parts_list_configurator_media_id', PartsListConfiguratorMediaDefinition::class, 'id'))->addFlags(new ApiAware()),
             (new OneToManyAssociationField('media', PartsListConfiguratorMediaDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
             (new OneToManyAssociationField('filters', PartsListConfiguratorFilterDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),

@@ -68,7 +68,7 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
                 'partsListConfigurator',
                 'moorl_pl_id',
                 PartsListConfiguratorDefinition::class
-            ))->addFlags(),
+            ))->addFlags(new CascadeDelete()),
             (new ManyToManyAssociationField(
                 'options',
                 PropertyGroupOptionDefinition::class,
