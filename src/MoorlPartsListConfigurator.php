@@ -3,7 +3,6 @@
 namespace Moorl\PartsListConfigurator;
 
 use MoorlFoundation\Core\PluginLifecycleHelper;
-use MoorlFoundation\Core\PluginMigrationHelper;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
@@ -53,7 +52,6 @@ class MoorlPartsListConfigurator extends Plugin
     {
         parent::activate($activateContext);
 
-        PluginMigrationHelper::update(self::class, $this->container);
         PluginLifecycleHelper::update(self::class, $this->container);
     }
 
@@ -61,7 +59,6 @@ class MoorlPartsListConfigurator extends Plugin
     {
         parent::update($updateContext);
 
-        PluginMigrationHelper::update(self::class, $this->container);
         PluginLifecycleHelper::update(self::class, $this->container);
     }
 
@@ -72,7 +69,6 @@ class MoorlPartsListConfigurator extends Plugin
             return;
         }
 
-        PluginMigrationHelper::uninstall(self::class, $this->container);
         PluginLifecycleHelper::uninstall(self::class, $this->container);
     }
 }
