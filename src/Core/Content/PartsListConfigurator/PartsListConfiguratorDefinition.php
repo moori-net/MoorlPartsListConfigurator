@@ -58,7 +58,7 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
             (new FkField('parts_list_configurator_media_id', 'coverId', PartsListConfiguratorMediaDefinition::class))->addFlags(new ApiAware(), new NoConstraint()),
             new FkField('cms_page_id', 'cmsPageId', CmsPageDefinition::class),
-            (new ReferenceVersionField(CmsPageDefinition::class))->addFlags(new Required(), new ApiAware()),
+            (new ReferenceVersionField(CmsPageDefinition::class))->addFlags(new ApiAware()),
             (new BoolField('active', 'active'))->addFlags(new EditField('switch')),
 
             (new StringField('type', 'type')),
