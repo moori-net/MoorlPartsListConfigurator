@@ -10,6 +10,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\MappingEntityDefinition;
 class PartsListConfiguratorFilterProductStreamDefinition extends MappingEntityDefinition
 {
     final public const ENTITY_NAME = 'moorl_pl_filter_product_stream';
+    final public const PROPERTY_NAME = 'productStream';
 
     public function getEntityName(): string
     {

@@ -10,6 +10,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\MappingEntityDefinition;
 class PartsListConfiguratorFilterOptionDefinition extends MappingEntityDefinition
 {
     final public const ENTITY_NAME = 'moorl_pl_filter_option';
+    final public const PROPERTY_NAME = 'option';
 
     public function getEntityName(): string
     {

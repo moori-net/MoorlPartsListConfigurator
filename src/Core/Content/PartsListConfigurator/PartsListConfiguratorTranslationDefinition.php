@@ -32,8 +32,6 @@ class PartsListConfiguratorTranslationDefinition extends EntityTranslationDefini
 
     protected function defineFields(): FieldCollection
     {
-        $collection = FieldThingCollection::getTranslatedFieldItems();
-
-        return new FieldCollection($collection);
+        return new FieldCollection(FieldThingCollection::getTranslatedFieldItems());
     }
 }

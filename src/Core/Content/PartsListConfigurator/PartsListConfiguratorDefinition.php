@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\ExtractedDefinition;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldEntityCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMediaGalleryMediaCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEntityCollection;
@@ -42,9 +43,11 @@ class PartsListConfiguratorDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
+        ExtractedDefinition::addVersionDefinition(self::class);
+
         return new FieldCollection(array_merge(
             FieldEntityCollection::getFieldItems(
-                parentClass: self::class,
+                class: self::class,
                 translationReferenceClass: PartsListConfiguratorTranslationDefinition::class
             ),
             [

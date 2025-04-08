@@ -2,22 +2,18 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
-use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\ExtractedDefinition;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldEntityCollection;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEntityCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\VueComponent;
 use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\CascadeDelete;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToManyAssociationField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
@@ -57,34 +53,40 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
-        $ed = ExtractedDefinition::get(class: self::class);
-
-        return new FieldCollection([
-            (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
-            (new FkField('moorl_pl_id', 'partsListConfiguratorId', PartsListConfiguratorDefinition::class))->addFlags(new ApiAware(), new Required()),
-
-            (new BoolField('fixed', 'fixed'))->addFlags(new EditField('switch')),
-            (new BoolField('logical', 'logical'))->addFlags(new EditField('switch')),
-            (new IntField('position', 'position'))->addFlags(new ApiAware(), new EditField('number')),
-            (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new EditField('text')),
-
-            (new ManyToOneAssociationField(
-                'partsListConfigurator',
-                'moorl_pl_id',
-                PartsListConfiguratorDefinition::class
-            ))->addFlags(new CascadeDelete()),
-            (new ManyToManyAssociationField(
-                'options',
-                PropertyGroupOptionDefinition::class,
-                PartsListConfiguratorFilterOptionDefinition::class,
-                'moorl_pl_filter_id', 'property_group_option_id')
-            )->addFlags(new ApiAware(), new CascadeDelete(), new VueComponent('moorl-properties')),
-            (new ManyToManyAssociationField(
-                'productStreams',
-                ProductStreamDefinition::class,
-                PartsListConfiguratorFilterProductStreamDefinition::class,
-                'moorl_pl_filter_id', 'product_stream_id')
-            )->addFlags(new ApiAware(), new CascadeDelete(), new EditField()),
-        ]);
+        return new FieldCollection(array_merge(
+            FieldEntityCollection::getFieldItems(
+                class: self::class
+            ),
+            [
+                (new BoolField('fixed', 'fixed'))->addFlags(new EditField('switch')),
+                (new BoolField('logical', 'logical'))->addFlags(new EditField('switch')),
+                (new IntField('position', 'position'))->addFlags(new ApiAware(), new EditField('number')),
+                (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new EditField('text')),
+            ],
+            FieldMultiEntityCollection::getManyToOneFieldItems(
+                references: [
+                    [
+                        PartsListConfiguratorDefinition::class,
+                        [new Required()],
+                        [new CascadeDelete()]
+                    ]
+                ],
+            ),
+            FieldMultiEntityCollection::getManyToManyFieldItems(
+                parentClass: self::class,
+                references: [
+                    [
+                        PropertyGroupOptionDefinition::class,
+                        PartsListConfiguratorFilterOptionDefinition::class,
+                        [new VueComponent('moorl-properties')]
+                    ],
+                    [
+                        ProductStreamDefinition::class,
+                        PartsListConfiguratorFilterProductStreamDefinition::class,
+                        [new EditField()]
+                    ]
+                ],
+            ),
+        ));
     }
 }
