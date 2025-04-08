@@ -2,19 +2,19 @@
   {
     "id": "{ID:MEDIA_1}",
     "partsListConfiguratorId": "{ID:FC01}",
-    "position": 0,
+    "position": 1,
     "mediaId": "{MEDIA_FILE:product/fence-door.jpg}"
   },
   {
     "id": "{ID:MEDIA_2}",
     "partsListConfiguratorId": "{ID:FC01}",
-    "position": 1,
+    "position": 2,
     "mediaId": "{MEDIA_FILE:product/fence.jpg}"
   },
   {
     "id": "{ID:MEDIA_3}",
     "partsListConfiguratorId": "{ID:FC01}",
-    "position": 2,
+    "position": 3,
     "mediaId": "{MEDIA_FILE:product/fence-post.jpg}"
   }
 ]
