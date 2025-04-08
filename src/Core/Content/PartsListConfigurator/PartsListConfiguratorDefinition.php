@@ -2,31 +2,19 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
-use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
-use Shopware\Core\Content\Cms\CmsPageDefinition;
-use Shopware\Core\Content\Seo\SeoUrl\SeoUrlDefinition;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldEntityCollection;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMediaGalleryMediaCollection;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEntityCollection;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldThingCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\CascadeDelete;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\NoConstraint;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SearchRanking;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SetNullOnDelete;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ReferenceVersionField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class PartsListConfiguratorDefinition extends EntityDefinition
 {
     final public const ENTITY_NAME = 'moorl_pl';
+    final public const PROPERTY_NAME = 'partsListConfigurator';
 
     public function getEntityName(): string
     {
@@ -54,33 +42,26 @@ class PartsListConfiguratorDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
-        $collection = [
-            (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
-            (new FkField('parts_list_configurator_media_id', 'coverId', PartsListConfiguratorMediaDefinition::class))->addFlags(new ApiAware(), new NoConstraint()),
-            new FkField('cms_page_id', 'cmsPageId', CmsPageDefinition::class),
-            (new ReferenceVersionField(CmsPageDefinition::class))->addFlags(new ApiAware()),
-            (new BoolField('active', 'active'))->addFlags(new EditField('switch')),
-
-            (new StringField('type', 'type')),
-            (new StringField('calculator', 'calculator')),
-
-            (new TranslatedField('name'))->addFlags(new Required(), new SearchRanking(SearchRanking::HIGH_SEARCH_RANKING), new EditField('text')),
-            (new TranslatedField('teaser'))->addFlags(new EditField('textarea')),
-            (new TranslatedField('keywords'))->addFlags(new EditField('textarea')),
-            (new TranslatedField('description'))->addFlags(new EditField('textarea')),
-            (new TranslatedField('metaTitle'))->addFlags(new EditField('text')),
-            (new TranslatedField('metaDescription'))->addFlags(new EditField('textarea')),
-            (new TranslatedField('slotConfig'))->addFlags(),
-            (new OneToManyAssociationField('seoUrls', SeoUrlDefinition::class, 'foreign_key'))->addFlags(new ApiAware()),
-
-            (new TranslationsAssociationField(PartsListConfiguratorTranslationDefinition::class, 'moorl_pl_id'))->addFlags(new Required()),
-
-            (new ManyToOneAssociationField('cmsPage', 'cms_page_id', CmsPageDefinition::class))->addFlags(new SetNullOnDelete()),
-            (new ManyToOneAssociationField('cover', 'parts_list_configurator_media_id', PartsListConfiguratorMediaDefinition::class, 'id'))->addFlags(new ApiAware()),
-            (new OneToManyAssociationField('media', PartsListConfiguratorMediaDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new OneToManyAssociationField('filters', PartsListConfiguratorFilterDefinition::class, 'moorl_pl_id'))->addFlags(new ApiAware(), new CascadeDelete()),
-        ];
-
-        return new FieldCollection($collection);
+        return new FieldCollection(array_merge(
+            FieldEntityCollection::getFieldItems(
+                parentClass: self::class,
+                translationReferenceClass: PartsListConfiguratorTranslationDefinition::class
+            ),
+            [
+                (new StringField('type', 'type'))->addFlags(new Required()),
+                (new StringField('calculator', 'calculator'))
+            ],
+            FieldThingCollection::getFieldItems(
+                media: false
+            ),
+            FieldMediaGalleryMediaCollection::getFieldItems(
+                parentClass: self::class,
+                mediaReferenceClass: PartsListConfiguratorMediaDefinition::class
+            ),
+            FieldMultiEntityCollection::getOneToManyFieldItems(
+                parentClass: self::class,
+                referenceClasses: [PartsListConfiguratorFilterDefinition::class]
+            ),
+        ));
     }
 }

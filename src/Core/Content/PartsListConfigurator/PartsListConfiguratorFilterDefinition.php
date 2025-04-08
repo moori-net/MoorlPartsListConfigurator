@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\ExtractedDefinition;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\VueComponent;
 use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
@@ -23,6 +24,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 class PartsListConfiguratorFilterDefinition extends EntityDefinition
 {
     final public const ENTITY_NAME = 'moorl_pl_filter';
+    final public const PROPERTY_NAME = 'filter';
 
     public function getEntityName(): string
     {
@@ -55,6 +57,8 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
+        $ed = ExtractedDefinition::get(class: self::class);
+
         return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
             (new FkField('moorl_pl_id', 'partsListConfiguratorId', PartsListConfiguratorDefinition::class))->addFlags(new ApiAware(), new Required()),

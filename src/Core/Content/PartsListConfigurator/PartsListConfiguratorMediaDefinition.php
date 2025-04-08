@@ -2,18 +2,8 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
-use MoorlFoundation\Core\System\EntityMigrationInterface;
-use Shopware\Core\Content\Media\MediaDefinition;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMediaGalleryMediaCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\CustomFields;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\CascadeDelete;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class PartsListConfiguratorMediaDefinition extends EntityDefinition
@@ -42,26 +32,8 @@ class PartsListConfiguratorMediaDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
-        return new FieldCollection([
-            (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
-            (new FkField('moorl_pl_id', 'partsListConfiguratorId', PartsListConfiguratorDefinition::class))->addFlags(new ApiAware(), new Required()),
-            (new FkField('media_id', 'mediaId', MediaDefinition::class))->addFlags(new ApiAware(), new Required()),
-            (new IntField('position', 'position'))->addFlags(new ApiAware()),
-            (new ManyToOneAssociationField(
-                'partsListConfigurator',
-                'moorl_pl_id',
-                PartsListConfiguratorDefinition::class,
-                'id',
-                false
-            ))->addFlags(new CascadeDelete()),
-            (new ManyToOneAssociationField(
-                'media',
-                'media_id',
-                MediaDefinition::class,
-                'id',
-                true
-            ))->addFlags(new ApiAware(), new CascadeDelete()),
-            (new CustomFields())->addFlags(new ApiAware()),
-        ]);
+        return new FieldCollection(FieldMediaGalleryMediaCollection::getMediaFieldItems(
+            referenceClass: PartsListConfiguratorDefinition::class
+        ));
     }
 }

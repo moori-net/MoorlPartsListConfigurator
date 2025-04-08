@@ -9,6 +9,8 @@
         <sw-button variant="primary" :routerLink="{ name: 'moorl.parts.list.configurator.create' }">
             {{ $tc('global.default.add') }}
         </sw-button>
+
+        <moorl-demo-button pluginName="MoorlPartsListConfigurator" @on-finish="getList"/>
     </template>
 
     <template #language-switch>
@@ -30,7 +32,6 @@
                 :disable-data-fetching="true"
                 @page-change="onPageChange"
                 @column-sort="onSortColumn"
-        >
-        </sw-entity-listing>
+        />
     </template>
 </sw-page>
