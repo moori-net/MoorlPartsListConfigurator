@@ -33,6 +33,7 @@ class PartsListConfiguratorMediaDefinition extends EntityDefinition
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection(FieldMediaGalleryMediaCollection::getMediaFieldItems(
+            localClass: self::class,
             referenceClass: PartsListConfiguratorDefinition::class
         ));
     }

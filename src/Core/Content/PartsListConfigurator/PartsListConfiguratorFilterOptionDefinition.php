@@ -20,7 +20,10 @@ class PartsListConfiguratorFilterOptionDefinition extends MappingEntityDefinitio
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection(FieldMappingCollection::getFieldItems(
-            mappingClasses: [PartsListConfiguratorFilterDefinition::class, PropertyGroupOptionDefinition::class]
+            mappingClasses: [
+                PartsListConfiguratorFilterDefinition::class,
+                PropertyGroupOptionDefinition::class
+            ]
         ));
     }
 }

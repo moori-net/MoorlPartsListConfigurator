@@ -55,7 +55,7 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
     {
         return new FieldCollection(array_merge(
             FieldEntityCollection::getFieldItems(
-                class: self::class
+                localClass: self::class
             ),
             [
                 (new BoolField('fixed', 'fixed'))->addFlags(new EditField('switch')),
@@ -73,7 +73,7 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
                 ],
             ),
             FieldMultiEntityCollection::getManyToManyFieldItems(
-                parentClass: self::class,
+                localClass: self::class,
                 references: [
                     [
                         PropertyGroupOptionDefinition::class,

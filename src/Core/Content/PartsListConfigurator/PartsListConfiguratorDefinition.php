@@ -47,22 +47,20 @@ class PartsListConfiguratorDefinition extends EntityDefinition
 
         return new FieldCollection(array_merge(
             FieldEntityCollection::getFieldItems(
-                class: self::class,
+                localClass: self::class,
                 translationReferenceClass: PartsListConfiguratorTranslationDefinition::class
             ),
             [
                 (new StringField('type', 'type'))->addFlags(new Required()),
                 (new StringField('calculator', 'calculator'))
             ],
-            FieldThingCollection::getFieldItems(
-                media: false
-            ),
+            FieldThingCollection::getFieldItems(media: false),
             FieldMediaGalleryMediaCollection::getFieldItems(
-                parentClass: self::class,
+                localClass: self::class,
                 mediaReferenceClass: PartsListConfiguratorMediaDefinition::class
             ),
             FieldMultiEntityCollection::getOneToManyFieldItems(
-                parentClass: self::class,
+                localClass: self::class,
                 referenceClasses: [PartsListConfiguratorFilterDefinition::class]
             ),
         ));
