@@ -60,8 +60,8 @@ Shopware.Component.override('sw-cms-detail', {
         },
 
         _onPageTypeChange() {
-            console.log('onPageTypeChange');
-            console.log(this.page.type);
+
+
 
             if (this.page.type === 'parts_list_configurator_detail') {
                 this.processCreatorDetailType();
@@ -71,7 +71,7 @@ Shopware.Component.override('sw-cms-detail', {
         },
 
         _processCreatorDetailType() {
-            console.log('processCreatorDetailType');
+
 
             const creatorDetailBlocks = [
                 {
