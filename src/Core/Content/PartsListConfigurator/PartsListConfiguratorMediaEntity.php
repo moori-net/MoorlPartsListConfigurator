@@ -12,9 +12,9 @@ class PartsListConfiguratorMediaEntity extends Entity
     use EntityIdTrait;
     use EntityCustomFieldsTrait;
 
-    protected string $partsListConfiguratorId;
-    protected string $mediaId;
-    protected int $position;
+    protected string $partsListConfiguratorId = "";
+    protected string $mediaId = "";
+    protected int $position = 0;
     protected ?MediaEntity $media = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
 

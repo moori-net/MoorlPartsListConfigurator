@@ -20,7 +20,7 @@ class PartsListConfiguratorEntity extends Entity
     protected bool $active = false;
     protected ?string $coverId = null;
     protected ?string $teaser = null;
-    protected string $calculator;
+    protected string $calculator = "";
 
     protected ?PartsListConfiguratorFilterCollection $filters = null;
     protected ?PartsListConfiguratorMediaCollection $media = null;

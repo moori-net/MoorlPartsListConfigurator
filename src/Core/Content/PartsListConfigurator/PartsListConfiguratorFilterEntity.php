@@ -12,10 +12,10 @@ class PartsListConfiguratorFilterEntity extends Entity
 {
     use EntityIdTrait;
 
-    protected string $partsListConfiguratorId;
+    protected string $partsListConfiguratorId = "";
     protected bool $logical = false;
     protected bool $fixed = false;
-    protected int $position;
+    protected int $position = 0;
     protected ?string $technicalName = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
     protected ?PropertyGroupOptionCollection $options = null;
