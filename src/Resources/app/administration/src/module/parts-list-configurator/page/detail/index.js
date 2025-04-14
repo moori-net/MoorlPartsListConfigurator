@@ -79,7 +79,7 @@ Component.register('moorl-parts-list-configurator-detail', {
         },
 
         cmsPage() {
-            return Shopware.State.get('cmsPageState').currentPage;
+            return Shopware.Store.get('cmsPage').currentPage;
         },
 
         identifier() {
@@ -105,13 +105,13 @@ Component.register('moorl-parts-list-configurator-detail', {
 
     watch: {
         cmsPageId() {
-            Shopware.State.dispatch('cmsPageState/resetCmsPageState');
+            Shopware.Store.get('cmsPage').resetCmsPageState();
             this.getAssignedCmsPage();
         }
     },
 
     created() {
-        Shopware.State.dispatch('cmsPageState/resetCmsPageState');
+        Shopware.Store.get('cmsPage').resetCmsPageState();
 
         this.loadCustomFieldSets();
         this.getItem();
@@ -169,11 +169,11 @@ Component.register('moorl-parts-list-configurator-detail', {
         },
 
         updateSeoUrls() {
-            if (!Shopware.State.list().includes('swSeoUrl')) {
+            if (!Shopware.Store.list().includes('swSeoUrl')) {
                 return Promise.resolve();
             }
 
-            const seoUrls = Shopware.State.getters['swSeoUrl/getNewOrModifiedUrls']();
+            const seoUrls = Shopware.Store.getters['swSeoUrl/getNewOrModifiedUrls']();
 
             return Promise.all(seoUrls.map((seoUrl) => {
                 if (seoUrl.seoPathInfo) {
@@ -229,19 +229,15 @@ Component.register('moorl-parts-list-configurator-detail', {
                 }
 
                 this.updateCmsPageDataMapping();
-                Shopware.State.commit('cmsPageState/setCurrentPage', cmsPage);
+                Shopware.Store.get('cmsPage').setCurrentPage(cmsPage);
 
                 return this.cmsPage;
             });
         },
 
         updateCmsPageDataMapping() {
-            Shopware.State.commit('cmsPageState/setCurrentMappingEntity', 'moorl_pl');
-            Shopware.State.commit(
-                'cmsPageState/setCurrentMappingTypes',
-                this.cmsService.getEntityMappingTypes('moorl_pl'),
-            );
-            Shopware.State.commit('cmsPageState/setCurrentDemoEntity', this.item);
+            Shopware.Store.get('cmsPage').setCurrentMappingEntity('moorl_pl');
+            Shopware.Store.get('cmsPage').setCurrentMappingTypes(this.cmsService.getEntityMappingTypes('moorl_pl'));            Shopware.Store.get('cmsPage').setCurrentDemoEntity(this.item);
         },
 
         getCmsPageOverrides() {

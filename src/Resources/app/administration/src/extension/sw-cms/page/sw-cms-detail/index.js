@@ -56,7 +56,7 @@ Shopware.Component.override('sw-cms-detail', {
             const demoEntity = response[0];
 
             this.demoEntityId = demoEntity.id;
-            Shopware.State.commit('cmsPageState/setCurrentDemoEntity', demoEntity);
+            Shopware.Store.get('cmsPage').setCurrentDemoEntity(demoEntity);
         },
 
         _onPageTypeChange() {
