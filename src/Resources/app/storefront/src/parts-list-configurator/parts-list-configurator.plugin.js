@@ -1,7 +1,6 @@
 import Plugin from 'src/plugin-system/plugin.class';
 import HttpClient from 'src/service/http-client.service';
 import HistoryUtil from 'src/utility/history/history.util';
-import querystring from 'query-string';
 
 export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     static options = {
@@ -32,7 +31,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _setFilterState() {
-        const query = querystring.parse(HistoryUtil.getSearch())
+        const query = Object.fromEntries(new URLSearchParams(window.location.search).entries());
 
         if (Object.keys(query).length > 0) {
             this._setValuesFromUrl(query);
@@ -100,7 +99,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         const mapped = this._mapFilters(this._filters);
 
-        let query = querystring.stringify(mapped);
+        let query = new URLSearchParams(mapped).toString()
 
         this._client.get(this.options.url + "/" + type + "?" + query, response => {
             currentEl.innerHTML = response;
@@ -137,7 +136,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
     _loadHistory() {
         this._filters = Object.assign(
-            querystring.parse(HistoryUtil.getSearch()),
+            Object.fromEntries(new URLSearchParams(window.location.search).entries()),
             {options: []}
         );
 
@@ -153,7 +152,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         const mapped = this._mapFilters(this._filters);
 
-        let query = querystring.stringify(mapped);
+        let query = new URLSearchParams(mapped).toString()
 
         this._updateHistory(query);
     }
