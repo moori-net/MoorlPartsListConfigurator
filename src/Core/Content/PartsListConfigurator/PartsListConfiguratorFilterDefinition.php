@@ -58,10 +58,10 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
                 localClass: self::class
             ),
             [
-                (new BoolField('fixed', 'fixed'))->addFlags(new EditField('switch')),
-                (new BoolField('logical', 'logical'))->addFlags(new EditField('switch')),
-                (new IntField('position', 'position'))->addFlags(new ApiAware(), new EditField('number')),
-                (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new EditField('text')),
+                (new BoolField('fixed', 'fixed'))->addFlags(new EditField(EditField::SWITCH)),
+                (new BoolField('logical', 'logical'))->addFlags(new EditField(EditField::SWITCH)),
+                (new IntField('position', 'position'))->addFlags(new ApiAware(), new EditField(EditField::NUMBER)),
+                (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware(), new EditField(EditField::TEXT)),
             ],
             FieldMultiEntityCollection::getManyToOneFieldItems(
                 references: [
