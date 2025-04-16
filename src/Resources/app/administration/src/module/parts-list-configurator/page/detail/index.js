@@ -1,13 +1,12 @@
 import template from './index.html.twig';
 
-const {Component, Mixin} = Shopware;
 const {Criteria, ChangesetGenerator} = Shopware.Data;
 const utils = Shopware.Utils;
 const {mapPropertyErrors} = Shopware.Component.getComponentHelper();
 const type = Shopware.Utils.types;
 const {cloneDeep, merge} = Shopware.Utils.object;
 
-Component.register('moorl-parts-list-configurator-detail', {
+Shopware.Component.register('moorl-parts-list-configurator-detail', {
     template,
 
     inject: [
@@ -18,8 +17,8 @@ Component.register('moorl-parts-list-configurator-detail', {
     ],
 
     mixins: [
-        Mixin.getByName('notification'),
-        Mixin.getByName('placeholder')
+        Shopware.Mixin.getByName('notification'),
+        Shopware.Mixin.getByName('placeholder')
     ],
 
     metaInfo() {

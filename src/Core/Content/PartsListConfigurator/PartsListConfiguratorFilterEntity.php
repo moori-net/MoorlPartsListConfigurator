@@ -26,7 +26,6 @@ class PartsListConfiguratorFilterEntity extends Entity
     {
         WriteContext::class;
 
-
         $customFields = $this->getOptions()?->first()?->getGroup()?->getTranslation('customFields');
 
         return $customFields['moorl_pl_name'] ?? null;

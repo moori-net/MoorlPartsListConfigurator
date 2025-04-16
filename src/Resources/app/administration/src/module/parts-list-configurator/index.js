@@ -1,11 +1,9 @@
-const {Module} = Shopware;
-
 import './page/list';
 import './page/detail';
 import './page/create';
 import './style/main.scss';
 
-Module.register('moorl-parts-list-configurator', {
+Shopware.Module.register('moorl-parts-list-configurator', {
     type: 'plugin',
     name: 'moorl-parts-list-configurator',
     title: 'moorl-parts-list-configurator.general.partsListConfigurator',

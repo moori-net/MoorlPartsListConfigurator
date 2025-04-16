@@ -1,8 +1,6 @@
 import template from '../detail/index.html.twig';
 
-const {Component} = Shopware;
-
-Component.extend('moorl-parts-list-configurator-create', 'moorl-parts-list-configurator-detail', {
+Shopware.Component.extend('moorl-parts-list-configurator-create', 'moorl-parts-list-configurator-detail', {
     template,
 
     methods: {
