@@ -61,22 +61,17 @@
 
                 <template #content="{ active }">
                     {% block moorl_pl_detail_content %}
-                        <sw-card
+                        <moorl-entity-grid-card
                                 v-if="active === 'assignment'"
-                                :isLoading="isLoading"
                                 :title="$tc('moorl-parts-list-configurator.cards.filters')"
-                                class="moorl-entity-grid"
-                        >
-                            <moorl-entity-grid
-                                    key="moorl_pl_filter"
-                                    entity="moorl_pl_filter"
-                                    snippetSrc="moorl-parts-list-configurator"
-                                    :isLoading="isLoading"
-                                    :filterColumns="partsListFilterFilterColumns"
-                                    :criteria="partsListFilterCriteria"
-                                    :default-item="{ partsListConfiguratorId: item.id }"
-                            />
-                        </sw-card>
+                                key="moorl_pl_filter"
+                                entity="moorl_pl_filter"
+                                snippetSrc="moorl-parts-list-configurator"
+                                :isLoading="isLoading"
+                                :filterColumns="partsListFilterFilterColumns"
+                                :criteria="partsListFilterCriteria"
+                                :default-item="{ partsListConfiguratorId: item.id }"
+                        />
 
                         <moorl-layout-card
                                 v-bind="{ item, cmsPage, isLoading, pageTypes }"
