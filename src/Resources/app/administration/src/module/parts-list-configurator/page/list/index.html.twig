@@ -6,9 +6,9 @@
     </template>
 
     <template #smart-bar-actions>
-        <sw-button variant="primary" :routerLink="{ name: 'moorl.parts.list.configurator.create' }">
+        <mt-button variant="primary" :routerLink="{ name: 'moorl.parts.list.configurator.create' }">
             {{ $tc('global.default.add') }}
-        </sw-button>
+        </mt-button>
 
         <moorl-demo-button pluginName="MoorlPartsListConfigurator" @on-finish="getList"/>
     </template>
