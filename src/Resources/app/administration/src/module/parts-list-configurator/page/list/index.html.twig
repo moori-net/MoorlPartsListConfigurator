@@ -6,7 +6,7 @@
     </template>
 
     <template #smart-bar-actions>
-        <mt-button variant="primary" :routerLink="{ name: 'moorl.parts.list.configurator.create' }">
+        <mt-button variant="primary" @click="$router.push({name: 'moorl.parts.list.configurator.create'})">
             {{ $tc('global.default.add') }}
         </mt-button>
 

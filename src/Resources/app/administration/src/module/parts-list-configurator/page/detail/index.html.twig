@@ -1,6 +1,6 @@
 <sw-page class="moorl-parts-list-configurator-detail">
     <template #smart-bar-actions>
-        <mt-button :routerLink="{ name: 'moorl.creator.list' }">
+        <mt-button @click="$router.push({name: 'moorl.creator.list'})">
             {{ $tc('global.default.cancel') }}
         </mt-button>
 
