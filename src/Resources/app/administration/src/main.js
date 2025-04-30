@@ -10,7 +10,7 @@ onMoorlFoundationReady(() => {
     MoorlFoundation.ModuleHelper.registerModule({
         entity: 'moorl_pl',
         name: 'moorl-parts-list-configurator',
-        navigationParent: 'sw-content',
+        navigationParent: 'sw-catalogue',
         pageType: 'parts_list_configurator_detail',
         properties: [
             {name: 'active', visibility: 100},
