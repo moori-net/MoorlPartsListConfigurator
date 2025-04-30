@@ -8,5 +8,11 @@
         "entities": {
             "moorl_pl": "Parts list configurators"
         }
+    },
+    "moorl-parts-list-configurator": {
+        "type": {
+            "calculator": "Parts list calculator",
+            "filter": "Parts list filter"
+        }
     }
 }

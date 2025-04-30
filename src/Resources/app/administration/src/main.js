@@ -22,6 +22,19 @@ onMoorlFoundationReady(() => {
             filters: {
                 tab: 'relations',
                 componentName: 'moorl-entity-grid-card-v2'
+            },
+            type: {
+                componentName: 'moorl-select-field',
+                attributes: {
+                    customSet: [
+                        {value: 'calculator', label: 'moorl-parts-list-configurator.type.calculator'},
+                        {value: 'filter', label: 'moorl-parts-list-configurator.type.filter'},
+                    ]
+                }
+            },
+            calculator: {
+                conditions: [{property: 'type', value: 'calculator', operator: 'eq'}],
+                cols: 6
             }
         },
         cmsElements: [
