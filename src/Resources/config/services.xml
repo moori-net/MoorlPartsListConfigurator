@@ -108,6 +108,11 @@
             </call>
         </service>
 
+        <!-- Controllers -->
+        <service id="Moorl\PartsListConfigurator\Administration\Controller\PartsListConfiguratorController" public="true">
+            <argument type="service" id="Moorl\PartsListConfigurator\Core\Service\PartsListService"/>
+        </service>
+
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Listing\PartsListConfiguratorListingFeaturesSubscriber">
             <argument type="service" id="MoorlFoundation\Core\Service\SortingService"/>
 

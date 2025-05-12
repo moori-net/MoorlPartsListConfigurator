@@ -34,7 +34,11 @@ onMoorlFoundationReady(() => {
             },
             calculator: {
                 conditions: [{property: 'type', value: 'calculator', operator: 'eq'}],
-                cols: 6
+                cols: 6,
+                componentName: 'moorl-select-field',
+                attributes: {
+                    customSet: 'moorl-pl/get-parts-list-calculators'
+                }
             }
         },
         cmsElements: [

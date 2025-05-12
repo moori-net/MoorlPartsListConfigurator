@@ -35,4 +35,13 @@ class PartsListService
     {
         $this->logger->debug($message, $context);
     }
+
+    public function getPartsListCalculators(): array
+    {
+        $names = [];
+        foreach ($this->partsListCalculators as $c) {
+            $names[] = $c->getName();
+        }
+        return $names;
+    }
 }
