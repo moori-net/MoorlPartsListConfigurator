@@ -6,7 +6,8 @@
     },
     "global": {
         "entities": {
-            "moorl_pl": "Parts list configurators"
+            "moorl_pl": "Parts list configurators",
+            "moorl_pl_filter": "Configurator filters"
         }
     },
     "moorl-parts-list-configurator": {
