@@ -2,7 +2,7 @@
     {% block parts_list_logical_configurator %}
         {% if logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT' %}
             {% for element in logicalConfigurator.elements %}
-                <div class="row">
+                <div class="row my-3">
                     <div class="col-2 product-detail-configurator-group-title">
                         {{ "moorl-parts-list-configurator.logical-configurator.field.#{element}"|trans }}
                     </div>

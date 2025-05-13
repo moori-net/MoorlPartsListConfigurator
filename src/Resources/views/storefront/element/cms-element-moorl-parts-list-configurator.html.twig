@@ -23,21 +23,22 @@
                 {% endfor %}
 
                 {% if accessoryList.count > 0 %}
-                    <div class="product-detail-configurator-group-title">
+                    <legend class="product-detail-configurator-group-title fs-5 fw-bold">
+                        <span class="visually-hidden">Select&nbsp;</span>
                         {{ "moorl-parts-list-configurator.accessoryList"|trans }}
-                    </div>
+                    </legend>
                 {% endif %}
 
-                <div id="accessoryList"><span class="loader"></span></div>
+                <fieldset id="accessoryList" class="mb-3"><span class="loader"></span></fieldset>
             </form>
         </div>
     </div>
 
-    <div class="d-grid mb-4">
-        <button class="js-load-button btn btn-light">
+    <div class="d-grid my-3">
+        <button class="js-load-button btn btn-outline-primary">
             {{ "moorl-parts-list-configurator.load"|trans }}
         </button>
     </div>
 
-    <div id="partsList"><span class="loader"></span></div>
+    <fieldset id="partsList"><span class="loader"></span></fieldset>
 </div>
