@@ -2,7 +2,7 @@
     "moorl-parts-list-configurator": {
         "partsListConfigurators": "Parts list configurators",
         "logical-configurator": {
-            "properties": {
+            "field": {
                 "totalLength": "Total length",
                 "side_a": "Side A",
                 "side_b": "Side B",
