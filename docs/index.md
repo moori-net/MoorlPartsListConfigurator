@@ -1,3 +1,0 @@
-# Stücklisten Konfigurator
-
-In Arbeit...
