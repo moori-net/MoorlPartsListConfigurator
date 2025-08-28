@@ -17,3 +17,5 @@ tags:
 {file:snippets/docs_foundation_note.en.md}
 
 ---
+
+{file:snippets/docs_quickstart.en.md}
