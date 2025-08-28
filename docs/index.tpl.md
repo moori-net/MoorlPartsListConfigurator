@@ -10,12 +10,12 @@ tags:
 
 {var:description_de_de}
 
+---
+
 ![Vorschau](images/storefront-4.png)
 
 {file:snippets/docs_buy_plugin.md}
 
 {file:snippets/docs_foundation_note.md}
-
----
 
 {file:snippets/docs_quickstart.md}
