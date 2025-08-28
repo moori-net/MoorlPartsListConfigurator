@@ -7,7 +7,7 @@ use Shopware\Core\Framework\Struct\Struct;
 
 class PartsListConfiguratorListingStruct extends Struct
 {
-    protected ?EntitySearchResult $listing;
+    protected ?EntitySearchResult $listing = null;
 
     public function getListing(): ?EntitySearchResult
     {

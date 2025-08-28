@@ -2,10 +2,10 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\DataAbstractionLayer;
 
-use MoorlFoundation\Core\Framework\DataAbstractionLayer\Indexer\EntityIndexerTrait;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Doctrine\DBAL\Connection;
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Indexer\EntityIndexerTrait;
 use Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Indexing\EntityIndexer;
 use Shopware\Core\Framework\DataAbstractionLayer\Indexing\EntityIndexingMessage;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

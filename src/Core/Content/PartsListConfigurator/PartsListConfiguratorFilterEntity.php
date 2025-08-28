@@ -6,15 +6,16 @@ use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
+use Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext;
 
 class PartsListConfiguratorFilterEntity extends Entity
 {
     use EntityIdTrait;
 
-    protected string $partsListConfiguratorId;
+    protected string $partsListConfiguratorId = "";
     protected bool $logical = false;
     protected bool $fixed = false;
-    protected int $position;
+    protected int $position = 0;
     protected ?string $technicalName = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
     protected ?PropertyGroupOptionCollection $options = null;
@@ -23,6 +24,8 @@ class PartsListConfiguratorFilterEntity extends Entity
 
     public function getGroupTechnicalName(): ?string
     {
+        WriteContext::class;
+
         $customFields = $this->getOptions()?->first()?->getGroup()?->getTranslation('customFields');
 
         return $customFields['moorl_pl_name'] ?? null;

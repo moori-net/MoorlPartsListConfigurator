@@ -1,8 +1,6 @@
 import template from './sw-property-option-detail.html.twig';
 
-const {Component} = Shopware;
-
-Component.override('sw-property-option-detail', {
+Shopware.Component.override('sw-property-option-detail', {
     template,
 
     inject: [

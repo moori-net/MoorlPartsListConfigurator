@@ -1,9 +1,7 @@
-const {Application} = Shopware;
-
 import './config';
 import './component';
 
-Application.getContainer('service').cmsService.registerCmsElement({
+Shopware.Application.getContainer('service').cmsService.registerCmsElement({
     plugin: 'MoorlPartsListConfigurator',
     icon: 'regular-3d',
     name: 'moorl-parts-list-configurator',

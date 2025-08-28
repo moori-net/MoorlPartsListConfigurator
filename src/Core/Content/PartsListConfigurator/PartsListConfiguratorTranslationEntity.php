@@ -6,7 +6,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\TranslationEntity;
 
 class PartsListConfiguratorTranslationEntity extends TranslationEntity
 {
-    protected string $name;
+    protected string $name = "";
     protected ?string $role = null;
     protected ?string $teaser = null;
     protected ?string $description = null;

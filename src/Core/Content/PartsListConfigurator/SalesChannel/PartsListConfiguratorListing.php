@@ -2,8 +2,6 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel;
 
-use MoorlFoundation\Core\System\EntityListingExtension;
-use MoorlFoundation\Core\System\EntityListingInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Events\PartsListConfiguratorListingCriteriaEvent;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Events\PartsListConfiguratorListingResultEvent;
@@ -11,6 +9,8 @@ use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Events\PartsListConfiguratorSearchResultEvent;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Events\PartsListConfiguratorSuggestCriteriaEvent;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Events\PartsListConfiguratorSuggestResultEvent;
+use MoorlFoundation\Core\System\EntityListingExtension;
+use MoorlFoundation\Core\System\EntityListingInterface;
 use Shopware\Core\Content\Product\Events\ProductSearchResultEvent;
 use Shopware\Core\Content\Product\Events\ProductSuggestResultEvent;
 use Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingResult;

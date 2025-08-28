@@ -3,7 +3,6 @@
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldThingCollection;
-use MoorlFoundation\Core\System\EntityMigrationInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
@@ -31,15 +30,8 @@ class PartsListConfiguratorTranslationDefinition extends EntityTranslationDefini
         return PartsListConfiguratorDefinition::class;
     }
 
-    public function getMigrationFields(): FieldCollection
-    {
-        return $this->defineFields();
-    }
-
     protected function defineFields(): FieldCollection
     {
-        $collection = FieldThingCollection::getTranslatedFieldItems();
-
-        return new FieldCollection($collection);
+        return new FieldCollection(FieldThingCollection::getTranslatedFieldItems());
     }
 }

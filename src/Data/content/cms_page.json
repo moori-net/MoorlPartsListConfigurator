@@ -39,7 +39,7 @@
                         "id": "{ID:CMS_PAGE_FCD_BLOCK_1}",
                         "slots": [
                             {
-                                "type": "text",
+                                "type": "product-name",
                                 "slot": "slot-a",
                                 "config": {
                                     "content": {

@@ -1,89 +1,93 @@
-<div class="product-detail-configurator">
-    {% for group in configuratorSettings %}
-        {% if not group.translated.customFields.moorl_pl_hidden %}
-            <div
-                    class="js-group product-detail-configurator-group"
-                    data-identifier="{{ identifier }}"
-                    data-technical-name="{{ group.translated.customFields.moorl_pl_name }}"
-                    data-logical="{{ logical }}"
-            >
-                <div class="product-detail-configurator-group-title">
-                    {{ group.translated.name }}
-                </div>
+{% for group in configuratorSettings %}
+    {% if not group.translated.customFields.moorl_pl_hidden %}
+        <fieldset
+                class="js-group product-detail-configurator-group mb-3"
+                data-identifier="{{ identifier }}"
+                data-technical-name="{{ group.translated.customFields.moorl_pl_name }}"
+                data-logical="{{ logical }}"
+        >
+            <legend class="product-detail-configurator-group-title fs-5 fw-bold">
+                {{ 'component.product.configurator.legend'|trans({ '%group_name%': group.translated.name, '%hidden_cls%': 'visually-hidden' })|sw_sanitize }}
+            </legend>
 
-                <div class="product-detail-configurator-options">
-                    {% for option in group.options %}
-                        {% if elementId is defined and elementId is not null %}
-                            {% set optionIdentifier = [group.id, option.id, elementId]|join('-') %}
+            <div class="product-detail-configurator-options d-flex flex-wrap gap-2">
+                {% for option in group.options %}
+                    {% if elementId is defined and elementId is not null %}
+                        {% set optionIdentifier = [group.id, option.id, elementId]|join('-') %}
+                    {% else %}
+                        {% set optionIdentifier = [group.id, option.id]|join('-') %}
+                    {% endif %}
+
+                    {% set isActive = false %}
+
+                    {% set isCombinableCls = 'is-combinable' %}
+
+                    {% if option.id in product.optionIds %}
+                        {% set isActive = true %}
+                    {% endif %}
+
+                    {% if option.configuratorSetting.media %}
+                        {% set displayType = 'media' %}
+                        {% set media = option.configuratorSetting.media %}
+                    {% else %}
+                        {% set displayType = group.displayType %}
+                        {% if option.media %}
+                            {% set media = option.media %}
                         {% else %}
-                            {% set optionIdentifier = [group.id, option.id]|join('-') %}
+                            {% set media = false %}
                         {% endif %}
+                    {% endif %}
 
-                        {% set isActive = false %}
-                        {% set isCombinableCls = 'is-combinable' %}
+                    <div class="product-detail-configurator-option d-inline-flex">
+                        <input
+                                type="radio"
+                                name="{{ group.id }}"
+                                value="{{ option.id }}"
+                                class="product-detail-configurator-option-input {{ isCombinableCls }} btn-check"
+                                id="{{ optionIdentifier }}"
+                                aria-labelledby="{{ optionIdentifier }}-label"
+                                {% if isActive %}checked="checked"{% endif %}
+                                data-logical="{{ logical }}"
+                                data-technical-name="{{ option.translated.customFields.moorl_pl_name }}"
+                        >
 
-                        {% if option.id in product.optionIds %}
-                            {% set isActive = true %}
-                        {% endif %}
-
-                        {% if option.configuratorSetting.media %}
-                            {% set displayType = 'media' %}
-                            {% set media = option.configuratorSetting.media %}
-                        {% else %}
-                            {% set displayType = group.displayType %}
-                            {% if option.media %}
-                                {% set media = option.media %}
-                            {% else %}
-                                {% set media = false %}
+                        <label
+                                class="product-detail-configurator-option-label {{ isCombinableCls }} is-display-{{ displayType }} btn btn-outline-secondary d-inline-flex justify-content-center align-items-center"
+                                {% if displayType == 'color' and option.colorHexCode %}style="background-color: {{ option.colorHexCode }}"{% endif %}
+                                title="{{ option.translated.name }}"
+                                id="{{ optionIdentifier }}-label"
+                                for="{{ optionIdentifier }}"
+                                aria-hidden="true"
+                        >
+                            {% if displayType == 'media' and media %}
+                                {% sw_thumbnails 'configurator-option-img-thumbnails' with {
+                                    media: media,
+                                    sizes: {
+                                        default: '52px'
+                                    },
+                                    attributes: {
+                                        class: 'product-detail-configurator-option-image h-100',
+                                        role: 'presentation',
+                                    }
+                                } %}
                             {% endif %}
-                        {% endif %}
 
-                        <div class="product-detail-configurator-option">
-                            <input
-                                    type="radio"
-                                    name="{{ group.id }}"
-                                    value="{{ option.id }}"
-                                    class="product-detail-configurator-option-input{% if isCombinableCls %} {{ isCombinableCls }}{% endif %}"
-                                    title="{{ optionIdentifier }}"
-                                    id="{{ optionIdentifier }}"
-                                    data-logical="{{ logical }}"
-                                    data-technical-name="{{ option.translated.customFields.moorl_pl_name }}"
-                                    {% if isActive %}checked="checked"{% endif %}
-                            >
-
-                            <label
-                                    class="product-detail-configurator-option-label{% if isCombinableCls %} {{ isCombinableCls }}{% endif %} is-display-{{ displayType }}"
-                                    {% if displayType == 'color' and option.colorHexCode %}style="background-color: {{ option.colorHexCode }}"{% endif %}
-                                    title="{{ option.translated.name }}"
-                                    for="{{ optionIdentifier }}"
-                            >
-                                {% if displayType == 'media' and media %}
-                                    {% sw_thumbnails 'configurator-option-img-thumbnails' with {
-                                        media: media,
-                                        sizes: {
-                                            default: '52px'
-                                        },
-                                        attributes: {
-                                            class: 'product-detail-configurator-option-image',
-                                            alt: option.translated.name,
-                                            title: option.translated.name
-                                        }
-                                    } %}
-
-                                {% elseif displayType == 'text' or
-                                    (displayType == 'media' and not media) or
-                                    (displayType == 'color' and not option.colorHexCode) %}
-                                    {{ option.translated.name }}
-                                {% endif %}
-                            </label>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                {% if logical %}
-                    <div class="js-logical-configurator"><span class="loader"></span></div>
-                {% endif %}
+                            {% if displayType == 'media' and media or displayType == 'color' and option.colorHexCode %}
+                                <span class="visually-hidden">{{ option.translated.name }}</span>
+                            {% else %}
+                                {{ option.translated.name }}
+                            {% endif %}
+                            {% if not option.combinable %}
+                                <small class="visually-hidden">({{ 'detail.unavailableTooltip'|trans|sw_sanitize }})</small>
+                            {% endif %}
+                        </label>
+                    </div>
+                {% endfor %}
             </div>
-        {% endif %}
-    {% endfor %}
-</div>
+
+            {% if logical %}
+                <div class="js-logical-configurator"><span class="loader"></span></div>
+            {% endif %}
+        </fieldset>
+    {% endif %}
+{% endfor %}

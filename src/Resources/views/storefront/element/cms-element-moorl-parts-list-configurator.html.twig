@@ -8,32 +8,37 @@
         data-moorl-parts-list-configurator="true"
         data-moorl-parts-list-configurator-options="{{ config|json_encode }}"
 >
-    <form class="mb-4">
-        {% for filter in partsListConfigurator.getFilters %}
-            {% if not filter.fixed %}
-                {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
-                    configuratorSettings: filter.options.groupByPropertyGroups,
-                    logical: filter.logical,
-                    identifier: filter.id,
-                    accessoryList: page.partsList.filterByProductStreamIds(filter.productStreamIds)
-                } %}
-            {% endif %}
-        {% endfor %}
+    <div class="product-detail-configurator-container">
+        <div class="product-detail-configurator">
+            <form>
+                {% for filter in partsListConfigurator.getFilters %}
+                    {% if not filter.fixed %}
+                        {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
+                            configuratorSettings: filter.options.groupByPropertyGroups,
+                            logical: filter.logical,
+                            identifier: filter.id,
+                            accessoryList: page.partsList.filterByProductStreamIds(filter.productStreamIds)
+                        } %}
+                    {% endif %}
+                {% endfor %}
 
-        {% if accessoryList.count > 0 %}
-            <div class="product-detail-configurator-group-title">
-                {{ "moorl-parts-list-configurator.accessoryList"|trans }}
-            </div>
-        {% endif %}
+                {% if accessoryList.count > 0 %}
+                    <legend class="product-detail-configurator-group-title fs-5 fw-bold">
+                        <span class="visually-hidden">Select&nbsp;</span>
+                        {{ "moorl-parts-list-configurator.accessoryList"|trans }}
+                    </legend>
+                {% endif %}
 
-        <div id="accessoryList"><span class="loader"></span></div>
-    </form>
+                <fieldset id="accessoryList" class="mb-3"><span class="loader"></span></fieldset>
+            </form>
+        </div>
+    </div>
 
-    <div class="d-grid mb-4">
-        <button class="js-load-button btn btn-light">
+    <div class="d-grid my-3">
+        <button class="js-load-button btn btn-outline-primary">
             {{ "moorl-parts-list-configurator.load"|trans }}
         </button>
     </div>
 
-    <div id="partsList"><span class="loader"></span></div>
+    <fieldset id="partsList"><span class="loader"></span></fieldset>
 </div>

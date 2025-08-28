@@ -1,13 +1,12 @@
-const {Component, Mixin} = Shopware;
-const Criteria = Shopware.Data.Criteria;
+const {Criteria} = Shopware.Data;
 
 import template from './index.html.twig';
 
-Component.register('sw-cms-el-config-moorl-parts-list-configurator', {
+Shopware.Component.register('sw-cms-el-config-moorl-parts-list-configurator', {
     template,
 
     mixins: [
-        Mixin.getByName('cms-element')
+        Shopware.Mixin.getByName('cms-element')
     ],
 
     inject: ['repositoryFactory'],
@@ -31,13 +30,13 @@ Component.register('sw-cms-el-config-moorl-parts-list-configurator', {
         onChangePartsListConfigurator(formId) {
             if (!formId) {
                 this.element.config.partsListConfigurator.value = null;
-                this.$set(this.element.data, 'partsListConfigurator', null);
+                this.element.data.partsListConfigurator = null;
             } else {
                 const criteria = new Criteria();
 
                 this.formRepository.get(formId, Shopware.Context.api, criteria).then((form) => {
                     this.element.config.partsListConfigurator.value = formId;
-                    this.$set(this.element.data, 'partsListConfigurator', form);
+                    this.element.data.partsListConfigurator = form;
                 });
             }
 

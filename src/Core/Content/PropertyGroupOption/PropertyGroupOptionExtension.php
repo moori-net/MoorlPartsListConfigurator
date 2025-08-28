@@ -8,12 +8,11 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class PropertyGroupOptionExtension extends EntityExtension
 {
-    public function getDefinitionClass(): string
-    {
-        return PropertyGroupOptionDefinition::class;
-    }
-
     public function extendFields(FieldCollection $collection): void
     {
+    }
+    public function getEntityName(): string
+    {
+        return PropertyGroupOptionDefinition::ENTITY_NAME;
     }
 }

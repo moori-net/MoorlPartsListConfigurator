@@ -3,8 +3,6 @@
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
-use Shopware\Core\Content\Property\PropertyGroupCollection;
-use Shopware\Core\Content\Property\PropertyGroupEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 /**

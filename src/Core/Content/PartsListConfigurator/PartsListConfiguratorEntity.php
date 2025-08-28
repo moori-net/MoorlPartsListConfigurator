@@ -2,11 +2,9 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
-use Moorl\PartsListConfigurator\MoorlPartsListConfigurator;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingBaseTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingMetaTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingPageTrait;
-use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
@@ -22,7 +20,7 @@ class PartsListConfiguratorEntity extends Entity
     protected bool $active = false;
     protected ?string $coverId = null;
     protected ?string $teaser = null;
-    protected string $calculator;
+    protected string $calculator = "";
 
     protected ?PartsListConfiguratorFilterCollection $filters = null;
     protected ?PartsListConfiguratorMediaCollection $media = null;

@@ -106,9 +106,11 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
-            <call method="setTwig">
-                <argument type="service" id="twig"/>
-            </call>
+        </service>
+
+        <!-- Controllers -->
+        <service id="Moorl\PartsListConfigurator\Administration\Controller\PartsListConfiguratorController" public="true">
+            <argument type="service" id="Moorl\PartsListConfigurator\Core\Service\PartsListService"/>
         </service>
 
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Listing\PartsListConfiguratorListingFeaturesSubscriber">

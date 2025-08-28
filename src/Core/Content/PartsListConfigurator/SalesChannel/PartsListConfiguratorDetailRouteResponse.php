@@ -8,8 +8,6 @@ use Shopware\Core\System\SalesChannel\StoreApiResponse;
 
 class PartsListConfiguratorDetailRouteResponse extends StoreApiResponse
 {
-    protected $object;
-
     public function __construct(PartsListConfiguratorEntity $partsListConfigurator)
     {
         parent::__construct(new ArrayStruct([

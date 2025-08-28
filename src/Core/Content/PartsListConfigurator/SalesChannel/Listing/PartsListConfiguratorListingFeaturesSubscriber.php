@@ -2,7 +2,6 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Listing;
 
-use MoorlCreator\Core\Content\Creator\CreatorDefinition;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorDefinition;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Events\PartsListConfiguratorListingCriteriaEvent;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\Events\PartsListConfiguratorListingResultEvent;
@@ -13,13 +12,10 @@ use MoorlFoundation\Core\Content\Sorting\SortingCollection;
 use MoorlFoundation\Core\Service\SortingService;
 use Shopware\Core\Content\Product\Events\ProductListingCriteriaEvent;
 use Shopware\Core\Content\Product\Events\ProductListingResultEvent;
-use Shopware\Core\Content\Product\SalesChannel\Listing\Filter;
 use Shopware\Core\Content\Product\SalesChannel\Listing\FilterCollection;
 use Shopware\Core\Content\Product\SalesChannel\Sorting\ProductSortingEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\Bucket\FilterAggregation;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\Metric\EntityAggregation;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;

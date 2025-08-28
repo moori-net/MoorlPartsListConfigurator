@@ -6,41 +6,14 @@
     },
     "global": {
         "entities": {
-            "moorl_pl": "Parts list configurator"
+            "moorl_pl": "Parts list configurators",
+            "moorl_pl_filter": "Configurator filters"
         }
     },
     "moorl-parts-list-configurator": {
-        "general": {
-            "partsListConfigurator": "Parts list configurator"
-        },
-        "notification": {
-            "deleteCreatorTypeError": "This type cannot be removed because there are active assignments or the type is a default value."
-        },
-        "properties": {
-            "productStreams": "Product streams",
-            "accessory": "Accessory",
-            "fixed": "Fixed",
-            "logical": "Logical",
-            "calculator": "Calculator (technical name)",
-            "active": "Active",
-            "name": "Name",
-            "teaser": "Teaser",
-            "description": "Description",
-            "productStream": "Stream",
-            "salesChannels": "Sales Channels",
-            "position": "Position",
-            "technicalName": "Technical name",
-            "partsListConfiguratorProductStreamIds": "Parts list product streams",
-            "options": "Options"
-        },
-        "cards": {
-            "seo": "SEO",
-            "general": "General",
-            "assignment": "Assignments",
-            "layout": "Layout",
-            "filters": "Filter",
-            "media": "Media",
-            "partsListConfiguratorProductStreams": "Parts list product streams"
+        "type": {
+            "calculator": "Parts list calculator",
+            "filter": "Parts list filter"
         }
     }
 }
