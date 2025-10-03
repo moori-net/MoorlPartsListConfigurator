@@ -14,7 +14,7 @@
                 {% for filter in partsListConfigurator.getFilters %}
                     {% if not filter.fixed %}
                         {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
-                            configuratorSettings: filter.options.groupByPropertyGroups,
+                            configuratorSettings: filter.propertyGroupOptions.groupByPropertyGroups,
                             logical: filter.logical,
                             identifier: filter.id,
                             accessoryList: page.partsList.filterByProductStreamIds(filter.productStreamIds)

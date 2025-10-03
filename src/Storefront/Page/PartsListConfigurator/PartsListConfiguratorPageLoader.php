@@ -89,7 +89,7 @@ class PartsListConfiguratorPageLoader
         $options = new PropertyGroupOptionCollection();
         foreach ($partsListConfigurator->getFilters() as $filter) {
             $productStreams->merge($filter->getProductStreams());
-            $options->merge($filter->getOptions());
+            $options->merge($filter->getPropertyGroupOptions());
         }
 
         $mainFilters = [];
@@ -119,7 +119,7 @@ class PartsListConfiguratorPageLoader
                     continue;
                 }
 
-                $optionIds = array_values($filter->getOptions()?->getIds() ?: []);
+                $optionIds = array_values($filter->getPropertyGroupOptions()?->getIds() ?: []);
 
                 if ($filter->getProductStreams()->has($productStream->getId())) {
                     $propertyFilters[] = $this->getPropertyFilter($request, $optionIds, 'options', $filter->getFixed());
