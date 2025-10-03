@@ -35,11 +35,11 @@ class PartsListConfiguratorFilterCollection extends EntityCollection
     public function sortByPosition(): self
     {
         foreach ($this->getIterator() as $element) {
-            if ($element->getOptions() === null) {
+            if ($element->getPropertyGroupOptions() === null) {
                 continue;
             }
 
-            $element->getOptions()->sort(fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => $a->getPosition() > $b->getPosition());
+            $element->getPropertyGroupOptions()->sort(fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => $a->getPosition() > $b->getPosition());
         }
 
         $this->sort(fn(PartsListConfiguratorFilterEntity $a, PartsListConfiguratorFilterEntity $b) => $a->getPosition() > $b->getPosition());

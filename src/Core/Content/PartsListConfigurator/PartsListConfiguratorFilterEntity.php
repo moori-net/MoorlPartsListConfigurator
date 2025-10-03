@@ -6,7 +6,6 @@ use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
-use Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext;
 
 class PartsListConfiguratorFilterEntity extends Entity
 {
@@ -18,15 +17,23 @@ class PartsListConfiguratorFilterEntity extends Entity
     protected int $position = 0;
     protected ?string $technicalName = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
-    protected ?PropertyGroupOptionCollection $options = null;
+    protected ?PropertyGroupOptionCollection $propertyGroupOptions = null;
     protected ?ProductStreamCollection $productStreams = null;
     protected ?array $logicalConfigurator = null;
 
+    public function getPropertyGroupOptions(): ?PropertyGroupOptionCollection
+    {
+        return $this->propertyGroupOptions;
+    }
+
+    public function setPropertyGroupOptions(?PropertyGroupOptionCollection $propertyGroupOptions): void
+    {
+        $this->propertyGroupOptions = $propertyGroupOptions;
+    }
+
     public function getGroupTechnicalName(): ?string
     {
-        WriteContext::class;
-
-        $customFields = $this->getOptions()?->first()?->getGroup()?->getTranslation('customFields');
+        $customFields = $this->getPropertyGroupOptions()?->first()?->getGroup()?->getTranslation('customFields');
 
         return $customFields['moorl_pl_name'] ?? null;
     }
@@ -109,15 +116,5 @@ class PartsListConfiguratorFilterEntity extends Entity
     public function setPartsListConfigurator(?PartsListConfiguratorEntity $partsListConfigurator): void
     {
         $this->partsListConfigurator = $partsListConfigurator;
-    }
-
-    public function getOptions(): ?PropertyGroupOptionCollection
-    {
-        return $this->options;
-    }
-
-    public function setOptions(?PropertyGroupOptionCollection $options): void
-    {
-        $this->options = $options;
     }
 }

@@ -32,7 +32,7 @@ class SalesChannelPartsListConfiguratorEntity extends PartsListConfiguratorEntit
     public function findOptionTechnicalName(string $groupTechnicalName): ?string
     {
         foreach ($this->getFilters() as $filter) {
-            foreach ($filter->getOptions() as $option) {
+            foreach ($filter->getPropertyGroupOptions() as $option) {
                 if (!in_array($option->getId(), $this->currentOptionIds)) {
                     continue;
                 }
