@@ -47,9 +47,7 @@ class PartsListConfiguratorPageLoader
         private readonly CartService $cartService,
         private readonly Connection $connection,
         private readonly iterable $partsListCalculators
-    )
-    {
-    }
+    ){}
 
     public function getCartService(): CartService
     {
@@ -322,6 +320,8 @@ class PartsListConfiguratorPageLoader
                 return $partsListCalculator;
             }
         }
+
+        throw new \RuntimeException(sprintf('Unknown parts list calculator named "%s".', $name));
     }
 
     private function getPropIds(Request $request, string $prop = "tag", ?array $defaultIds = null): array

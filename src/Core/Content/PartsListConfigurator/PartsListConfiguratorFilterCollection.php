@@ -39,11 +39,22 @@ class PartsListConfiguratorFilterCollection extends EntityCollection
                 continue;
             }
 
-            $element->getPropertyGroupOptions()->sort(fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => $a->getPosition() > $b->getPosition());
+            $element->getPropertyGroupOptions()->sort(
+                fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => $this->getPosition($a) > $this->getPosition($b)
+            );
+
+            $element->getPropertyGroupOptions()->sort(
+                fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => strnatcasecmp($a->getTranslation('name'), $b->getTranslation('name'))
+            );
         }
 
         $this->sort(fn(PartsListConfiguratorFilterEntity $a, PartsListConfiguratorFilterEntity $b) => $a->getPosition() > $b->getPosition());
 
         return $this;
+    }
+
+    private function getPosition(PropertyGroupOptionEntity $a): int
+    {
+        return (int)($a->getTranslation('position') ?: $a->getPosition());
     }
 }
