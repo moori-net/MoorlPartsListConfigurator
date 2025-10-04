@@ -2,7 +2,14 @@
     {
         "id": "{ID:PRODUCT_FENCE_656}",
         "active": true,
-        "name": "Zaun (6/5/6)",
+        "translations": {
+            "{de-DE}": {
+                "name": "Zaunmatten (6/5/6)"
+            },
+            "{en-GB}": {
+                "name": "Fence panel (6/5/6)"
+            }
+        },
         "productNumber": "FENCE_656",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
@@ -39,7 +46,14 @@
     {
         "id": "{ID:PRODUCT_FENCE_868}",
         "active": true,
-        "name": "Zaun (8/6/8)",
+        "translations": {
+            "{de-DE}": {
+                "name": "Zaunmatten (8/6/8)"
+            },
+            "{en-GB}": {
+                "name": "Fence panel (8/6/8)"
+            }
+        },
         "productNumber": "FENCE_868",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
@@ -76,7 +90,14 @@
     {
         "id": "{ID:PRODUCT_POST_SMALL}",
         "active": true,
-        "name": "Pfosten (Klein)",
+        "translations": {
+            "{de-DE}": {
+                "name": "Pfosten (Klein)"
+            },
+            "{en-GB}": {
+                "name": "Post (Small)"
+            }
+        },
         "productNumber": "POST_SMALL",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
@@ -119,7 +140,14 @@
     {
         "id": "{ID:PRODUCT_POST_LARGE}",
         "active": true,
-        "name": "Pfosten (Groß)",
+        "translations": {
+            "{de-DE}": {
+                "name": "Pfosten (Groß)"
+            },
+            "{en-GB}": {
+                "name": "Post (Large)"
+            }
+        },
         "productNumber": "POST_LARGE",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
@@ -162,7 +190,14 @@
     {
         "id": "{ID:PRODUCT_DOOR_SMALL}",
         "active": true,
-        "name": "Tor (Klein)",
+        "translations": {
+            "{de-DE}": {
+                "name": "Tor (Klein)"
+            },
+            "{en-GB}": {
+                "name": "Gate (Small)"
+            }
+        },
         "productNumber": "DOOR_SMALL",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
@@ -199,7 +234,14 @@
     {
         "id": "{ID:PRODUCT_DOOR_LARGE}",
         "active": true,
-        "name": "Tor (Groß)",
+        "translations": {
+            "{de-DE}": {
+                "name": "Tor (Groß)"
+            },
+            "{en-GB}": {
+                "name": "Gate (Large)"
+            }
+        },
         "productNumber": "DOOR_LARGE",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
@@ -259,7 +301,14 @@
     {
         "id": "{ID:PRODUCT_DOSE}",
         "active": true,
-        "name": "Sprühdose (400ml)",
+        "translations": {
+            "{de-DE}": {
+                "name": "Sprühdose (400ml)"
+            },
+            "{en-GB}": {
+                "name": "Spray (400ml)"
+            }
+        },
         "productNumber": "DOSE",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",

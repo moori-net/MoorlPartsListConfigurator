@@ -2,7 +2,7 @@
   {
     "id": "{ID:PROMOTION_1}",
     "active": true,
-    "name": "20% RABATT",
+    "name": "20% Discount",
     "code": "GZ24",
     "useCodes": false,
     "salesChannels": [

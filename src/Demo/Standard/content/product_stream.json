@@ -1,7 +1,7 @@
 [
   {
     "id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}",
-    "name": "Zaunmatten",
+    "name": "Fence panels",
     "filters": [
       {
         "type": "multi",
@@ -27,7 +27,7 @@
   },
   {
     "id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}",
-    "name": "Pfosten",
+    "name": "Posts",
     "filters": [
       {
         "type": "multi",
@@ -53,7 +53,7 @@
   },
   {
     "id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}",
-    "name": "Tore",
+    "name": "Gates",
     "filters": [
       {
         "type": "multi",
@@ -79,7 +79,7 @@
   },
   {
     "id": "{ID:STREAM_CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}",
-    "name": "Zubehör",
+    "name": "Accessories",
     "filters": [
       {
         "type": "multi",

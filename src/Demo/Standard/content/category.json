@@ -1,26 +1,67 @@
 [
     {
-        "id": "{ID:CATEGORY_PARTS_LIST_FENCES}",
+        "id": "{ID:CATEGORY_PARTS_LIST}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
         "active": true,
-        "name": "Zaunmatten"
+        "translations": {
+            "{de-DE}": {
+                "name": "Stücklisten Konfigurator"
+            },
+            "{en-GB}": {
+                "name": "Parts list configurator"
+            }
+        }
+    },
+    {
+        "id": "{ID:CATEGORY_PARTS_LIST_FENCES}",
+        "parentId": "{ID:CATEGORY_PARTS_LIST}",
+        "active": true,
+        "translations": {
+            "{de-DE}": {
+                "name": "Zaunmatten"
+            },
+            "{en-GB}": {
+                "name": "Fence panels"
+            }
+        }
     },
     {
         "id": "{ID:CATEGORY_PARTS_LIST_POSTS}",
-        "parentId": "{NAVIGATION_CATEGORY_ID}",
+        "parentId": "{ID:CATEGORY_PARTS_LIST}",
         "active": true,
-        "name": "Pfosten"
+        "translations": {
+            "{de-DE}": {
+                "name": "Pfosten"
+            },
+            "{en-GB}": {
+                "name": "Posts"
+            }
+        }
     },
     {
         "id": "{ID:CATEGORY_PARTS_LIST_DOORS}",
-        "parentId": "{NAVIGATION_CATEGORY_ID}",
+        "parentId": "{ID:CATEGORY_PARTS_LIST}",
         "active": true,
-        "name": "Tore"
+        "translations": {
+            "{de-DE}": {
+                "name": "Tore"
+            },
+            "{en-GB}": {
+                "name": "Gates"
+            }
+        }
     },
     {
         "id": "{ID:CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}",
-        "parentId": "{NAVIGATION_CATEGORY_ID}",
+        "parentId": "{ID:CATEGORY_PARTS_LIST}",
         "active": true,
-        "name": "Optionales Zubehör"
+        "translations": {
+            "{de-DE}": {
+                "name": "Zubehör"
+            },
+            "{en-GB}": {
+                "name": "Accessories"
+            }
+        }
     }
 ]
