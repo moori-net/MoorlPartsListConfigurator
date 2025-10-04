@@ -21,6 +21,7 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
 {
     final public const ENTITY_NAME = 'moorl_pl_filter';
     final public const PROPERTY_NAME = 'filter';
+    final public const EXTENSION_COLLECTION_NAME = 'moorlPlFilters';
 
     public function getEntityName(): string
     {
