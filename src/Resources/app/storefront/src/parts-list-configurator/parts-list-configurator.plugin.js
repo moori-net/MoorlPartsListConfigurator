@@ -6,7 +6,8 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     static options = {
         type: 'calculator',
         url: null,
-        optionCount: 0
+        optionCount: 0,
+        loaderClass: 'loader'
     };
 
     init() {
@@ -15,19 +16,42 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             options: []
         };
         this._timeout = null;
+        this._step = 0;
 
         this._partsListEl = document.getElementById('partsList');
         this._accessoryList = document.getElementById('accessoryList');
         this._formEl = this.el.querySelector('form');
         this._loadButton = this.el.querySelector('.js-load-button');
 
-        this._formEl.querySelectorAll('.js-group').forEach(() => {
+        this._formEl.querySelectorAll('.js-group').forEach(groupEl => {
             this.options.optionCount++;
+
+            const stepEl = groupEl.querySelector('[data-step]');
+            if (!stepEl) {
+                return;
+            }
+            stepEl.innerText = this.options.optionCount;
         });
 
         this._setFilterState();
         this._registerEvents();
         this._refresh('options');
+    }
+
+    _loaderElement() {
+        const wrapper = document.createElement("div");
+        wrapper.classList.add(
+            "d-flex",
+            "justify-content-center",
+            "align-items-center",
+            "p-5"
+        );
+
+        const loader = document.createElement("span");
+        loader.classList.add(this.options.loaderClass);
+
+        wrapper.appendChild(loader);
+        return wrapper;
     }
 
     _setFilterState() {
@@ -48,6 +72,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._loadButton.addEventListener('click', () => {
             this._loadHistory();
 
+            this._partsListEl.style.display = "";
             this._loadButton.disabled = true;
 
             if (this.options.type === 'calculator') {
@@ -74,7 +99,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         this._loadHistory();
 
-        this._partsListEl.innerHTML = "";
+        this._partsListEl.style.display = "none";
         this._loadButton.disabled = false;
 
         this._timeout = setTimeout(() => {
@@ -97,15 +122,29 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             return;
         }
 
+        this._showHiddenElements();
+
+        const currentContentEl = currentEl.querySelector("[data-content]") ?? currentEl;
+
+        currentContentEl.replaceChildren(this._loaderElement());
+
         const mapped = this._mapFilters(this._filters);
 
         let query = new URLSearchParams(mapped).toString()
 
         this._client.get(this.options.url + "/" + type + "?" + query, response => {
-            currentEl.innerHTML = response;
+            currentContentEl.innerHTML = response;
             window.PluginManager.initializePlugins();
             this._setFilterState();
-            this._registerListEvents(currentEl);
+            this._registerListEvents(currentContentEl);
+        });
+    }
+
+    _showHiddenElements() {
+        const elements = this.el.querySelectorAll('[data-hide-on-load]');
+
+        elements.forEach(element => {
+            element.style.display = "";
         });
     }
 

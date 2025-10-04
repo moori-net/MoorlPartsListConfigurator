@@ -19,7 +19,7 @@
             }
         ],
         "cover": {
-            "mediaId": "{MEDIA_FILE:product/fence.jpg}"
+            "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
         },
         "properties": [
             {"id": "{MD5:LINE_656}"}
@@ -56,7 +56,7 @@
             }
         ],
         "cover": {
-            "mediaId": "{MEDIA_FILE:product/fence.jpg}"
+            "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
         },
         "properties": [
             {"id": "{MD5:LINE_868}"}

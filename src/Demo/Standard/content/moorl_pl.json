@@ -3,7 +3,16 @@
     "id": "{ID:FC01}",
     "coverId": "{ID:MEDIA_1}",
     "active": true,
-    "name": "Demo Zaunkonfigurator 6/5/6",
+    "translations": {
+      "{de-DE}": {
+        "name": "Demo Zaunkonfigurator 6/5/6",
+        "description": "{READ_FILE:descriptions/moorl_pl-de-DE.html}"
+      },
+      "{en-GB}": {
+        "name": "Demo fence configurator 6/5/6",
+        "description": "{READ_FILE:descriptions/moorl_pl-en-GB.html}"
+      }
+    },
     "filters": [
       {
         "id": "{ID:FC01_FILTER_LAYOUT}",
@@ -105,7 +114,16 @@
     "id": "{ID:FC02}",
     "coverId": "{ID:MEDIA_1}",
     "active": true,
-    "name": "Demo Zaunkonfigurator 8/6/8",
+    "translations": {
+      "{de-DE}": {
+        "name": "Demo Zaunkonfigurator 8/6/8",
+        "description": "{READ_FILE:descriptions/moorl_pl-de-DE.html}"
+      },
+      "{en-GB}": {
+        "name": "Demo fence configurator 8/6/8",
+        "description": "{READ_FILE:descriptions/moorl_pl-en-GB.html}"
+      }
+    },
     "filters": [
       {
         "id": "{ID:FC02_FILTER_LAYOUT}",

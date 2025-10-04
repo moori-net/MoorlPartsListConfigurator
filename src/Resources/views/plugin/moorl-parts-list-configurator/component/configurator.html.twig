@@ -6,7 +6,8 @@
                 data-technical-name="{{ group.translated.customFields.moorl_pl_name }}"
                 data-logical="{{ logical }}"
         >
-            <legend class="product-detail-configurator-group-title fs-5 fw-bold">
+            <legend class="h3">
+                <span data-step>{{ step }}</span>.
                 {{ 'component.product.configurator.legend'|trans({ '%group_name%': group.translated.name, '%hidden_cls%': 'visually-hidden' })|sw_sanitize }}
             </legend>
 
@@ -86,7 +87,7 @@
             </div>
 
             {% if logical %}
-                <div class="js-logical-configurator"><span class="loader"></span></div>
+                <div class="js-logical-configurator"></div>
             {% endif %}
         </fieldset>
     {% endif %}

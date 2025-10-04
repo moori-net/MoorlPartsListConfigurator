@@ -3,18 +3,36 @@
     "id": "{ID:MEDIA_1}",
     "partsListConfiguratorId": "{ID:FC01}",
     "position": 1,
-    "mediaId": "{MEDIA_FILE:product/fence-door.jpg}"
+    "mediaId": "{MEDIA_FILE:product/fence-black-example.jpeg}"
   },
   {
     "id": "{ID:MEDIA_2}",
     "partsListConfiguratorId": "{ID:FC01}",
     "position": 2,
-    "mediaId": "{MEDIA_FILE:product/fence.jpg}"
+    "mediaId": "{MEDIA_FILE:product/fence-silver-example.jpeg}"
   },
   {
     "id": "{ID:MEDIA_3}",
     "partsListConfiguratorId": "{ID:FC01}",
     "position": 3,
-    "mediaId": "{MEDIA_FILE:product/fence-post.jpg}"
+    "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
+  },
+  {
+    "id": "{ID:MEDIA_4}",
+    "partsListConfiguratorId": "{ID:FC02}",
+    "position": 1,
+    "mediaId": "{MEDIA_FILE:product/fence-black-example.jpeg}"
+  },
+  {
+    "id": "{ID:MEDIA_5}",
+    "partsListConfiguratorId": "{ID:FC02}",
+    "position": 2,
+    "mediaId": "{MEDIA_FILE:product/fence-silver-example.jpeg}"
+  },
+  {
+    "id": "{ID:MEDIA_6}",
+    "partsListConfiguratorId": "{ID:FC02}",
+    "position": 3,
+    "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
   }
 ]
