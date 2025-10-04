@@ -23,22 +23,41 @@
                 {% endfor %}
 
                 {% if accessoryList.count > 0 %}
-                    <legend class="product-detail-configurator-group-title fs-5 fw-bold">
-                        <span class="visually-hidden">Select&nbsp;</span>
-                        {{ "moorl-parts-list-configurator.accessoryList"|trans }}
-                    </legend>
-                {% endif %}
+                    <fieldset
+                            data-hide-on-load
+                            id="accessoryList"
+                            class="mb-3"
+                            style="display: none"
+                    >
+                        <legend class="h3">
+                            {{ "moorl-parts-list-configurator.accessoryList"|trans }}
+                        </legend>
 
-                <fieldset id="accessoryList" class="mb-3"><span class="loader"></span></fieldset>
+                        <div data-content></div>
+                    </fieldset>
+                {% endif %}
             </form>
         </div>
     </div>
 
-    <div class="d-grid my-3">
+    <div
+            data-hide-on-load
+            class="d-grid my-3"
+            style="display: none"
+    >
         <button class="js-load-button btn btn-outline-primary">
             {{ "moorl-parts-list-configurator.load"|trans }}
         </button>
     </div>
 
-    <fieldset id="partsList"><span class="loader"></span></fieldset>
+    <fieldset
+            id="partsList"
+            style="display: none"
+    >
+        <legend class="h3">
+            {{ "moorl-parts-list-configurator.calculatedPartsList"|trans }}
+        </legend>
+
+        <div data-content></div>
+    </fieldset>
 </div>

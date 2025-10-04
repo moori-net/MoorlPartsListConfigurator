@@ -1,16 +1,18 @@
 {
   "moorl-parts-list-configurator": {
-    "partsListConfigurators": "Parts list configurators",
+    "partsListConfigurators": "Stücklisten-Konfiguratoren",
     "logical-configurator": {
       "field": {
-        "totalLength": "Total length",
-        "side_a": "Side A",
-        "side_b": "Side B",
-        "side_c": "Side C",
-        "side_d": "Side D"
+        "totalLength": "Gesamtlänge",
+        "side_a": "Seite A",
+        "side_b": "Seite B",
+        "side_c": "Seite C",
+        "side_d": "Seite D"
       }
     },
-    "accessoryList": "Optional accessories",
-    "partsList": "Parts list"
+    "accessoryList": "Optionale Zubehörteile",
+    "partsList": "Stückliste",
+    "load": "Stückliste berechnen",
+    "calculatedPartsList": "Berechnete Stückliste"
   }
 }
