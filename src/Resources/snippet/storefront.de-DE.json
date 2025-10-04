@@ -13,6 +13,7 @@
     "accessoryList": "Optionale Zubehörteile",
     "partsList": "Stückliste",
     "load": "Stückliste berechnen",
-    "calculatedPartsList": "Berechnete Stückliste"
+    "calculatedPartsList": "Berechnete Stückliste",
+    "calculatedPartsListError": "Bei der Berechnung ist ein Fehler aufgetreten, bitte überprüfen Sie Ihre Eingabe."
   }
 }

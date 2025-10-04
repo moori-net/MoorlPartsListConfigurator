@@ -1,1 +1,4 @@
-{{ dump(exception) }}
+{% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
+    type: "danger",
+    content: "moorl-parts-list-configurator.calculatedPartsListError"|trans|sw_sanitize
+} %}
