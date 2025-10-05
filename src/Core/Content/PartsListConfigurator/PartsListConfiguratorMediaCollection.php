@@ -3,6 +3,7 @@
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
 use Shopware\Core\Content\Media\MediaCollection;
+use Shopware\Core\Content\Product\Aggregate\ProductMedia\ProductMediaCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 /**
@@ -13,8 +14,9 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
  * @method PartsListConfiguratorMediaEntity|null get(string $key)
  * @method PartsListConfiguratorMediaEntity|null first()
  * @method PartsListConfiguratorMediaEntity|null last()
+ * @deprecated: https://github.com/shopware/shopware/issues/12841
  */
-class PartsListConfiguratorMediaCollection extends EntityCollection
+class PartsListConfiguratorMediaCollection extends ProductMediaCollection
 {
     public function getMedia(): MediaCollection
     {
