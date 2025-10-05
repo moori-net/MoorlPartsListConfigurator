@@ -14,6 +14,8 @@ tags:
 
 ---
 
+{file:snippets/docs_demo_plugin.md}
+
 {file:snippets/docs_buy_plugin.md}
 
 {file:snippets/docs_foundation_note.md}
