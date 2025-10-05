@@ -10,7 +10,31 @@
             "{en-GB}": {
                 "name": "Parts list configurator"
             }
-        }
+        },
+        "seoUrls": [
+            {
+                "id": "{ID:CATEGORY_PARTS_LIST_URL_DE}",
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "languageId": "{de-DE}",
+                "foreignKey": "{ID:CATEGORY_PARTS_LIST}",
+                "routeName": "frontend.navigation.page",
+                "pathInfo": "/navigation/{ID:CATEGORY_PARTS_LIST}",
+                "seoPathInfo": "MoorlPartsListConfigurator",
+                "isCanonical": true,
+                "isModified": true
+            },
+            {
+                "id": "{ID:CATEGORY_PARTS_LIST_URL_EN}",
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "languageId": "{en-GB}",
+                "foreignKey": "{ID:CATEGORY_PARTS_LIST}",
+                "routeName": "frontend.navigation.page",
+                "pathInfo": "/navigation/{ID:CATEGORY_PARTS_LIST}",
+                "seoPathInfo": "MoorlPartsListConfigurator",
+                "isCanonical": true,
+                "isModified": true
+            }
+        ]
     },
     {
         "id": "{ID:CATEGORY_PARTS_LIST_FENCES}",

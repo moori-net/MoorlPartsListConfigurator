@@ -28,6 +28,7 @@ class MoorlPartsListConfigurator extends Plugin
         'cms_block',
         'category',
         'category_translation',
+        'seo_url',
         'property_group',
         'product_stream', /* Insert before products because indexing */
         'product',
