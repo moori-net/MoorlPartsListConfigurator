@@ -19,7 +19,7 @@
                 "foreignKey": "{ID:CATEGORY_PARTS_LIST}",
                 "routeName": "frontend.navigation.page",
                 "pathInfo": "/navigation/{ID:CATEGORY_PARTS_LIST}",
-                "seoPathInfo": "{DATA_PLUGIN_NAME}",
+                "seoPathInfo": "MoorlPartsListConfigurator",
                 "isCanonical": true,
                 "isModified": true
             },
@@ -30,7 +30,7 @@
                 "foreignKey": "{ID:CATEGORY_PARTS_LIST}",
                 "routeName": "frontend.navigation.page",
                 "pathInfo": "/navigation/{ID:CATEGORY_PARTS_LIST}",
-                "seoPathInfo": "{DATA_PLUGIN_NAME}",
+                "seoPathInfo": "MoorlPartsListConfigurator",
                 "isCanonical": true,
                 "isModified": true
             }
