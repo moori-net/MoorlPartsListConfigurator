@@ -49,6 +49,13 @@ class PartsListCalculatorExtension
         return $option;
     }
 
+    public function removeParentIds(PartsListCollection $partsList): void
+    {
+        foreach ($partsList as $part) {
+            $part->getProduct()->setParentId(null);
+        }
+    }
+
     public function setQuantityFromRequest(Request $request, PartsListCollection $partsList, string $name): void
     {
         foreach ($partsList as $item) {

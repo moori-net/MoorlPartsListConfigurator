@@ -7,21 +7,34 @@ use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 
-interface PartsListCalculatorInterface
+class CoreCalculator extends PartsListCalculatorExtension implements PartsListCalculatorInterface
 {
-    public function getName(): string;
-    public function getPropertyGroupConfig(): array;
-    public function getLogicalConfigurator(
-        Request $request,
-        SalesChannelContext $salesChannelContext,
-        PartsListConfiguratorEntity $partsListConfigurator,
-        ?string $groupTechnicalName = null
-    );
+    public const NAME = 'core';
+
+    public function __construct()
+    {}
+
+    public function getName(): string
+    {
+        return self::NAME;
+    }
+
     public function calculatePartsList(
         Request $request,
         SalesChannelContext $salesChannelContext,
         PartsListConfiguratorEntity $partsListConfigurator,
         PartsListCollection $partsList
-    ): PartsListCollection;
-    public function removeParentIds(PartsListCollection $partsList): void;
+    ): PartsListCollection
+    {
+        $this->removeParentIds($partsList);
+
+        // Setze Mengen anhand des Requests
+        $this->setQuantityFromRequest(
+            $request,
+            $partsList,
+            self::NAME,
+        );
+
+        return $partsList;
+    }
 }

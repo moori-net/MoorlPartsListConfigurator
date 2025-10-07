@@ -2,11 +2,13 @@
 
 namespace Moorl\PartsListConfigurator\Storefront\Controller;
 
+use Moorl\PartsListConfigurator\Core\Calculator\CoreCalculator;
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorException;
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,8 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class PartsListConfiguratorController extends StorefrontController
 {
     public function __construct(private readonly PartsListConfiguratorPageLoader $partsListConfiguratorPageLoader)
-    {
-    }
+    {}
 
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}', name: 'frontend.moorl.parts.list.configurator.detail', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
     public function detail(SalesChannelContext $salesChannelContext, Request $request): Response
@@ -49,6 +50,10 @@ class PartsListConfiguratorController extends StorefrontController
             return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
                 'exception' => $exception
             ]);
+        } catch (BadRequestException $exception) {
+            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
+                'exception' => $exception
+            ]);
         }
 
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/proxy-cart/index.html.twig', [
@@ -65,20 +70,21 @@ class PartsListConfiguratorController extends StorefrontController
             $page = $this->partsListConfiguratorPageLoader->load(
                 $request,
                 $salesChannelContext,
-                [
-                    PartsListConfiguratorPageLoader::OPT_CALCULATE,
-                    PartsListConfiguratorPageLoader::OPT_PROXY_CART
-                ]
+                [PartsListConfiguratorPageLoader::OPT_NO_PARENT]
             );
         } catch (PartsListCalculatorException $exception) {
+            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
+                'exception' => $exception
+            ]);
+        } catch (BadRequestException $exception) {
             return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
                 'exception' => $exception
             ]);
         }
 
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
-            'items' => $page->getPartsList()->filterByQuantity(),
-            'namePrefix' => 'parts',
+            'items' => $page->getPartsList(),
+            'namePrefix' => CoreCalculator::NAME,
             'options' => []
         ]);
     }
@@ -86,7 +92,17 @@ class PartsListConfiguratorController extends StorefrontController
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/accessory-list', name: 'frontend.moorl.parts.list.configurator.accessory.list', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
     public function accessoryList(SalesChannelContext $salesChannelContext, Request $request): Response
     {
-        $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
+        try {
+            $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
+        } catch (PartsListCalculatorException $exception) {
+            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
+                'exception' => $exception
+            ]);
+        } catch (BadRequestException $exception) {
+            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
+                'exception' => $exception
+            ]);
+        }
 
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
             'items' => $page->getPartsList()->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds()),

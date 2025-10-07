@@ -1,6 +1,7 @@
 {% set partsListConfigurator = page.partsListConfigurator %}
 {% set config = {
-    url: path('frontend.moorl.parts.list.configurator.detail', {partsListConfiguratorId: partsListConfigurator.id})
+    url: path('frontend.moorl.parts.list.configurator.detail', {partsListConfiguratorId: partsListConfigurator.id}),
+    type: partsListConfigurator.type
 } %}
 
 <div
@@ -30,7 +31,11 @@
                             style="display: none"
                     >
                         <legend class="h3">
-                            {{ "moorl-parts-list-configurator.accessoryList"|trans }}
+                            {% if partsListConfigurator.type == 'calculator' %}
+                                {{ "moorl-parts-list-configurator.accessoryList"|trans }}
+                            {% else %}
+                                {{ "moorl-parts-list-configurator.partsList"|trans }}
+                            {% endif %}
                         </legend>
 
                         <div data-content></div>

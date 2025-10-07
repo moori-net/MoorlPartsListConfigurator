@@ -12,4 +12,10 @@
             </monolog:channels>
         </monolog:handler>
     </monolog:config>
+
+    <services>
+        <service id="moorl.parts.list.logger" class="MoorlFoundation\Core\Service\LoggerService" public="true">
+            <argument type="service" id="monolog.logger.moorl_parts_list_channel"/>
+        </service>
+    </services>
 </container>
