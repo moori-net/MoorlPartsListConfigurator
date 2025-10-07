@@ -14,7 +14,7 @@
             <argument type="service" id="Doctrine\DBAL\Connection"/>
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
             <argument type="service" id="Shopware\Core\Checkout\Cart\SalesChannel\CartService"/>
-            <argument type="service" id="monolog.logger.moorl_parts_list_channel"/>
+            <argument type="service" id="moorl.parts.list.logger"/>
             <argument type="tagged" tag="moorl.parts.list.calculator"/>
         </service>
 
@@ -97,6 +97,7 @@
             <argument type="service" id="Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingRoute"/>
             <argument type="service" id="Shopware\Core\Checkout\Cart\SalesChannel\CartService"/>
             <argument type="service" id="Doctrine\DBAL\Connection"/>
+            <argument type="service" id="moorl.parts.list.logger"/>
             <argument type="tagged" tag="moorl.parts.list.calculator"/>
         </service>
 
@@ -128,6 +129,10 @@
         </service>
 
         <!-- Calculators -->
+        <service id="Moorl\PartsListConfigurator\Core\Calculator\CoreCalculator">
+            <tag name="moorl.parts.list.calculator"/>
+        </service>
+
         <service id="Moorl\PartsListConfigurator\Core\Calculator\DemoFenceCalculator">
             <argument type="service" id="Moorl\PartsListConfigurator\Core\Service\PartsListService"/>
 

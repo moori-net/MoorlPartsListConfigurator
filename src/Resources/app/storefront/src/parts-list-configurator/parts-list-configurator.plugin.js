@@ -75,11 +75,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             this._partsListEl.style.display = "";
             this._loadButton.disabled = true;
 
-            if (this.options.type === 'calculator') {
-                this._loadProxyCart();
-            } else {
-                this._loadPartsList();
-            }
+            this._loadProxyCart();
         });
     }
 
@@ -107,7 +103,11 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 return;
             }
 
-            this._loadAccessoryList();
+            if (this.options.type === 'calculator') {
+                this._loadAccessoryList();
+            } else {
+                this._loadPartsList();
+            }
 
             this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
                 this._loadLogicalConfigurator(groupEl);
@@ -149,7 +149,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _loadPartsList() {
-        this._loadList(this._partsListEl, 'parts-list');
+        this._loadList(this._accessoryList, 'parts-list');
     }
 
     _loadProxyCart() {

@@ -4,11 +4,13 @@ namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
+use Moorl\PartsListConfigurator\Core\Calculator\CoreCalculator;
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
+use Psr\Log\LoggerInterface;
 use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Checkout\Cart\LineItem\LineItem;
 use Shopware\Core\Checkout\Cart\LineItem\LineItemCollection;
@@ -34,8 +36,9 @@ use Symfony\Component\HttpFoundation\Request;
 class PartsListConfiguratorPageLoader
 {
     public const CRITERIA_STATE = 'moorl-parts-list-configurator-criteria';
-    public const OPT_PROXY_CART = 'proxy-cart';
-    public const OPT_CALCULATE = 'calculate';
+    public const OPT_PROXY_CART = 'proxy-cart'; // Warenkorb berechnen
+    public const OPT_NO_PARENT = 'no-parent'; // Stückliste wird manuell eingegeben - Varianten können mehrfach vorkommen
+    public const OPT_CALCULATE = 'calculate'; // Berechnungen durchführen
 
     /**
      * @param PartsListCalculatorInterface[] $partsListCalculators
@@ -46,6 +49,7 @@ class PartsListConfiguratorPageLoader
         private readonly AbstractProductListingRoute $productListingRoute,
         private readonly CartService $cartService,
         private readonly Connection $connection,
+        private readonly LoggerInterface $logger,
         private readonly iterable $partsListCalculators
     ){}
 
@@ -81,7 +85,7 @@ class PartsListConfiguratorPageLoader
         $partsListConfigurator->getFilters()->sortByPosition();
         $partsListConfigurator->setCurrentOptionIds($this->getPropIds($request, 'options'));
 
-        $calculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculator());
+        $calculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculatorName());
 
         $productStreams = new ProductStreamCollection();
         $options = new PropertyGroupOptionCollection();
@@ -97,11 +101,21 @@ class PartsListConfiguratorPageLoader
 
             foreach ($partsListConfigurator->getFilters() as $filter) {
                 if ($filter->getLogical()) {
-                    if ($filter->getProductStreams()->has($productStream->getId())) {
-                        //continue;
-                    }
+                    /*if ($filter->getProductStreams()->has($productStream->getId())) {
+                        continue;
+                    }*/
 
                     if ($filter->getLogicalConfigurator()) {
+                        continue;
+                    }
+
+                    if ($calculator->getName() === CoreCalculator::NAME) {
+                        $this->logger->warning("Logical filter not allowed here.", [
+                            'partsListConfiguratorId' => $partsListConfiguratorId,
+                            'filterId' => $filter->getId(),
+                        ]);
+
+                        $partsListConfigurator->getFilters()->remove($filter->getId());
                         continue;
                     }
 
@@ -159,9 +173,13 @@ class PartsListConfiguratorPageLoader
 
         $this->enrichPartsList($partsList, $productStreams, $options);
 
-        $partsListCalculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculator());
+        // Parent ID entfernen, weil die Eingaben keine Variantenwechsel benötigen
+        if (in_array(self::OPT_NO_PARENT, $loadingOptions)) {
+            $calculator->removeParentIds($partsList);
+        }
+
         if (in_array(self::OPT_CALCULATE, $loadingOptions)) {
-            $partsListCalculator->calculatePartsList(
+            $calculator->calculatePartsList(
                 $request,
                 $salesChannelContext,
                 $partsListConfigurator,
@@ -180,7 +198,7 @@ class PartsListConfiguratorPageLoader
         if (in_array(self::OPT_PROXY_CART, $loadingOptions)) {
             $page->setCart($this->createProxyCart($partsListConfiguratorId, $partsList, $salesChannelContext));
         }
-        $page->setCalculator($partsListCalculator);
+        $page->setCalculator($calculator);
 
         $this->loadMetaData($page);
 

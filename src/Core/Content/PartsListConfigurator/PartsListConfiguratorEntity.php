@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use Moorl\PartsListConfigurator\Core\Calculator\CoreCalculator;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingBaseTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingMetaTrait;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\EntityThingPageTrait;
@@ -21,10 +22,26 @@ class PartsListConfiguratorEntity extends Entity
     protected ?string $coverId = null;
     protected ?string $teaser = null;
     protected string $calculator = "";
+    protected string $type;
 
     protected ?PartsListConfiguratorFilterCollection $filters = null;
     protected ?PartsListConfiguratorMediaCollection $media = null;
     protected ?PartsListConfiguratorMediaEntity $cover = null;
+
+    public function getCalculatorName(): string
+    {
+        return $this->getType() === 'calculator' ? $this->getCalculator() : CoreCalculator::NAME;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
 
     public function getActive(): bool
     {
