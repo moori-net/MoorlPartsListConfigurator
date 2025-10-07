@@ -66,12 +66,12 @@ class PartsListCalculatorExtension
             );
 
             $itemQuantity = (int) $request->query->get($parameterName);
+            $item->setTemporaryQuantity($itemQuantity);
             if (!$itemQuantity) {
                 continue;
             }
 
             $item->setQuantity($item->getQuantity() + $itemQuantity);
-            $item->setTemporaryQuantity($itemQuantity);
         }
     }
 
