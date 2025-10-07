@@ -128,7 +128,7 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
 
         // Überhang berücksichtigen
         if ($this->overhang > 0) {
-            $this->partsListService->debug(sprintf("Overhang detected: %s", $this->overhang));
+            $this->partsListService->debug(sprintf("Overhang detected: %d", $this->overhang));
 
             // Mindestlänge ermitteln
             $shortest = 0;
@@ -191,6 +191,9 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         // Verwende die übrige Länge, um die Zaunmatten einzufügen
         foreach ($partsList->filterByProductStream("FENCES") as $item) {
             $quantity = (int) floor($length / $item->getCalcX());
+            if ($quantity === 0) {
+                continue;
+            }
 
             $length = $length - ($quantity * $item->getCalcX());
 
@@ -206,9 +209,8 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
             $item->setQuantity($item->getQuantity() + $quantity);
         }
 
-        $this->partsListService->debug(sprintf("the remaining length for %s is %d", $sideName, $length));
-
         if ($length > 0) {
+            $this->partsListService->debug(sprintf("%s: Overhang is %d", $sideName, $length));
             $this->overhang += $length;
         }
     }
