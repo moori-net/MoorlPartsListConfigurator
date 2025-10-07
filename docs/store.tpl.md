@@ -1,6 +1,6 @@
 {file:snippets/foundation_note.md}
 
-{file:snippets/docs_demo_plugin.en.md}
+{file:snippets/docs_demo_plugin.md}
 
 **Einfach. Intuitiv. Fehlerfrei.**  
 Mit dem **Stücklisten Konfigurator** erstellen Sie komplexe Produktkonfigurationen - ganz ohne Programmierung und ohne Risiko für Fehlbestellungen.
