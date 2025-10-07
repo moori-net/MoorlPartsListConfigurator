@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsListCalculatorInterface
 {
-    private int $overhang = 0; // Füge Zaunmatten für den Überhang hinzu
+    private float $overhang = 0.00; // Füge Zaunmatten für den Überhang hinzu
 
     public function __construct(private readonly PartsListService $partsListService)
     {
@@ -137,8 +137,8 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
                     $shortest = $item->getCalcX();
                 }
             }
-            if ($shortest > $this->overhang) {
-                $this->overhang = $shortest;
+            if ($shortest > 0) {
+                $this->overhang = ceil($this->overhang / $shortest) * $shortest;
             }
 
             foreach ($partsList->filterByProductStream("FENCES") as $item) {
