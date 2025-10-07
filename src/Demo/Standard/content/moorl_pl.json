@@ -228,10 +228,10 @@
     "active": true,
     "translations": {
       "{de-DE}": {
-        "name": "Demo Zaunkonfigurator Stückliste"
+        "name": "Demo Zaun Stückliste"
       },
       "{en-GB}": {
-        "name": "Demo fence configurator parts list"
+        "name": "Demo fence parts list"
       }
     },
     "filters": [

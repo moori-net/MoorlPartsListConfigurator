@@ -1,7 +1,7 @@
 {
     "name": "moorl/parts-list-configurator",
     "description": "Parts list configurator",
-    "version": "1.7.6",
+    "version": "1.7.7",
     "license": "proprietary",
     "authors": [
         {
@@ -23,11 +23,11 @@
         "copyright": "(c) by moori",
         "label": {
             "de-DE": "Stücklisten Konfigurator",
-            "en-GB": "Parts list configurator"
+            "en-GB": "Parts List (BOM) Configurator"
         },
         "description": {
             "de-DE": "Mit dem Stücklisten Konfigurator lassen sich basierend auf Kompatibilitätsregeln einfache Konfiguratoren erstellen, die anhand vordefinierten Kriterien eine Stückliste zusammen stellt.",
-            "en-GB": "The parts list configurator allows you to create simple configurators based on compatibility rules, which compile a parts list using predefined criteria."
+            "en-GB": "The Parts List (BOM) Configurator allows you to create simple configurators based on compatibility rules, which compile a parts list using predefined criteria."
         },
         "manufacturerLink": {
             "de-DE": "https://docs.moori.net/",
