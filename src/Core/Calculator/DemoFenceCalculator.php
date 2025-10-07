@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsListCalculatorInterface
 {
+    private int $overhang = 0; // Füge Zaunmatten für den Überhang hinzu
+
     public function __construct(private readonly PartsListService $partsListService)
     {
     }
@@ -124,6 +126,28 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         // die Anzahl der Eckpfosten wieder abziehen
         $sidePost->setQuantity($sidePost->getQuantity() - $cornerPost->getQuantity());
 
+        // Überhang berücksichtigen
+        if ($this->overhang > 0) {
+            $this->partsListService->debug(sprintf("Overhang detected: %s", $this->overhang));
+
+            // Mindestlänge ermitteln
+            $shortest = 0;
+            foreach ($partsList->filterByProductStream("FENCES") as $item) {
+                if ($shortest === 0 || $item->getCalcX() < $shortest) {
+                    $shortest = $item->getCalcX();
+                }
+            }
+            if ($shortest > $this->overhang) {
+                $this->overhang = $shortest;
+            }
+
+            foreach ($partsList->filterByProductStream("FENCES") as $item) {
+                $quantity = (int) floor($this->overhang / $item->getCalcX());
+                $this->overhang = $this->overhang - ($quantity * $item->getCalcX());
+                $item->setQuantity($item->getQuantity() + $quantity);
+            }
+        }
+
         return $partsList;
     }
 
@@ -145,12 +169,16 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         // Fest definiertes Zubehör wird von der Gesamtlänge abgezogen,
         // die übrige Gesamtlänge wird für die Berechnung der Zaunmatten verwendet
         foreach ($partsList->filterByProductStream('LAYOUT_ACCESSORIES') as $item) {
+            if ($item->getTemporaryQuantity() === 0) {
+                continue;
+            }
+
             $this->partsListService->debug(sprintf(
-                "%s have a length of %d and is given %d-times - the remaining length for %s is %d",
+                "%s: %s have a length of %d and is given %d-times - the remaining length is %d",
+                $sideName,
                 $item->getProduct()->getTranslation('name'),
                 $item->getCalcX(),
                 $item->getTemporaryQuantity(),
-                $sideName,
                 $length
             ));
 
@@ -179,5 +207,9 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         }
 
         $this->partsListService->debug(sprintf("the remaining length for %s is %d", $sideName, $length));
+
+        if ($length > 0) {
+            $this->overhang += $length;
+        }
     }
 }
