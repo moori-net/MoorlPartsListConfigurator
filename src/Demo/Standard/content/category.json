@@ -2,6 +2,7 @@
     {
         "id": "{ID:CATEGORY_PARTS_LIST}",
         "parentId": "{NAVIGATION_CATEGORY_ID}",
+        "cmsPageId": "{ID:CMS_PAGE_ROOT}",
         "active": true,
         "translations": {
             "{de-DE}": {

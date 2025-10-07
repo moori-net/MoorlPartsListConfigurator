@@ -1,0 +1,321 @@
+[{
+    "translations": {
+        "{de-DE}": {
+            "name": "Stücklisten Konfigurator"
+        },
+        "{en-GB}": {
+            "name": "Parts list configurator"
+        }
+    },
+    "type": "product_list",
+    "id": "{ID:CMS_PAGE_ROOT}",
+    "sections": [
+        {
+            "position": 0,
+            "type": "default",
+            "sizingMode": "boxed",
+            "backgroundColor": "",
+            "backgroundMediaMode": "cover",
+            "visibility": {
+                "mobile": true,
+                "tablet": true,
+                "desktop": true
+            },
+            "id": "{ID:CMS_PAGE_ROOT_SECTION_1}",
+            "blocks": [
+                {
+                    "position": 0,
+                    "type": "text",
+                    "name": "Category name",
+                    "sectionPosition": "main",
+                    "marginTop": "20px",
+                    "marginBottom": "20px",
+                    "backgroundColor": "",
+                    "backgroundMediaMode": "cover",
+                    "visibility": {
+                        "mobile": true,
+                        "tablet": true,
+                        "desktop": true
+                    },
+                    "id": "{ID:CMS_PAGE_ROOT_BLOCK_1}",
+                    "slots": [
+                        {
+                            "type": "text",
+                            "slot": "content",
+                            "config": {
+                                "content": {
+                                    "source": "static",
+                                    "value": "<h1>{{ category.name }}</h1>"
+                                },
+                                "verticalAlign": {
+                                    "source": "static",
+                                    "value": null
+                                }
+                            },
+                            "id": "{ID:CMS_PAGE_ROOT_SLOT_1}"
+                        }
+                    ],
+                    "sizingMode": "boxed"
+                },
+                {
+                    "position": 1,
+                    "type": "moorl-column-layout-1",
+                    "sectionPosition": "main",
+                    "marginTop": "0",
+                    "marginBottom": "20px",
+                    "marginLeft": "0",
+                    "marginRight": "0",
+                    "backgroundColor": "",
+                    "backgroundMediaMode": "cover",
+                    "visibility": {
+                        "mobile": true,
+                        "tablet": true,
+                        "desktop": true
+                    },
+                    "id": "{ID:CMS_PAGE_ROOT_BLOCK_2}",
+                    "slots": [
+                        {
+                            "type": "parts-list-configurator-listing",
+                            "slot": "slot-a",
+                            "config": {
+                                "listingSource": {
+                                    "source": "static",
+                                    "value": "static"
+                                },
+                                "listingSorting": {
+                                    "source": "static",
+                                    "value": null
+                                },
+                                "foreignKey": {
+                                    "source": "static",
+                                    "value": null
+                                },
+                                "limit": {
+                                    "source": "static",
+                                    "value": 12
+                                },
+                                "listingItemIds": {
+                                    "source": "static",
+                                    "value": []
+                                },
+                                "listingHeaderTitle": {
+                                    "source": "static",
+                                    "value": null
+                                },
+                                "listingLayout": {
+                                    "source": "static",
+                                    "value": "grid"
+                                },
+                                "listingJustifyContent": {
+                                    "source": "static",
+                                    "value": "normal"
+                                },
+                                "itemLayout": {
+                                    "source": "static",
+                                    "value": "overlay"
+                                },
+                                "displayMode": {
+                                    "source": "static",
+                                    "value": "cover"
+                                },
+                                "itemLayoutTemplate": {
+                                    "source": "static",
+                                    "value": "@Storefront/storefront/component/product/card/box.html.twig"
+                                },
+                                "gapSize": {
+                                    "source": "static",
+                                    "value": "20px"
+                                },
+                                "itemWidth": {
+                                    "source": "static",
+                                    "value": "300px"
+                                },
+                                "itemHeight": {
+                                    "source": "static",
+                                    "value": "400px"
+                                },
+                                "itemPadding": {
+                                    "source": "static",
+                                    "value": "20px"
+                                },
+                                "hasButton": {
+                                    "source": "static",
+                                    "value": true
+                                },
+                                "buttonLabel": {
+                                    "source": "static",
+                                    "value": "Click here!"
+                                },
+                                "buttonClass": {
+                                    "source": "static",
+                                    "value": "btn btn-primary"
+                                },
+                                "urlNewTab": {
+                                    "source": "static",
+                                    "value": true
+                                },
+                                "textAlign": {
+                                    "source": "static",
+                                    "value": "left"
+                                },
+                                "contentLength": {
+                                    "source": "static",
+                                    "value": 150
+                                },
+                                "contentPadding": {
+                                    "source": "static",
+                                    "value": "20px"
+                                },
+                                "contentColor": {
+                                    "source": "static",
+                                    "value": ""
+                                },
+                                "contentBackgroundColor": {
+                                    "source": "static",
+                                    "value": "#ffffffb3"
+                                },
+                                "contentHighlightColor": {
+                                    "source": "static",
+                                    "value": ""
+                                },
+                                "itemBackgroundColor": {
+                                    "source": "static",
+                                    "value": ""
+                                },
+                                "itemHasBorder": {
+                                    "source": "static",
+                                    "value": true
+                                },
+                                "mode": {
+                                    "source": "static",
+                                    "value": "carousel"
+                                },
+                                "speed": {
+                                    "source": "static",
+                                    "value": 1000
+                                },
+                                "autoplayTimeout": {
+                                    "source": "static",
+                                    "value": 3000
+                                },
+                                "autoplay": {
+                                    "source": "static",
+                                    "value": true
+                                },
+                                "autoplayHoverPause": {
+                                    "source": "static",
+                                    "value": true
+                                },
+                                "mouseDrag": {
+                                    "source": "static",
+                                    "value": false
+                                },
+                                "animateIn": {
+                                    "source": "static",
+                                    "value": null
+                                },
+                                "animateOut": {
+                                    "source": "static",
+                                    "value": null
+                                },
+                                "navigationArrows": {
+                                    "source": "static",
+                                    "value": "outside"
+                                },
+                                "navigationDots": {
+                                    "source": "static",
+                                    "value": null
+                                }
+                            },
+                            "id": "{ID:CMS_PAGE_ROOT_SLOT_2}"
+                        }
+                    ],
+                    "sizingMode": "boxed"
+                },
+                {
+                    "position": 2,
+                    "type": "sidebar-filter",
+                    "name": "Filter",
+                    "sectionPosition": "main",
+                    "marginTop": "20px",
+                    "marginBottom": "20px",
+                    "backgroundColor": "",
+                    "backgroundMediaMode": "cover",
+                    "visibility": {
+                        "mobile": true,
+                        "tablet": true,
+                        "desktop": true
+                    },
+                    "id": "{ID:CMS_PAGE_ROOT_BLOCK_3}",
+                    "slots": [
+                        {
+                            "type": "sidebar-filter",
+                            "slot": "content",
+                            "config": {},
+                            "id": "{ID:CMS_PAGE_ROOT_SLOT_3}"
+                        }
+                    ],
+                    "sizingMode": "boxed"
+                },
+                {
+                    "position": 3,
+                    "type": "product-listing",
+                    "name": "Category listing",
+                    "sectionPosition": "main",
+                    "marginTop": "20px",
+                    "marginBottom": "20px",
+                    "backgroundColor": "",
+                    "backgroundMediaMode": "cover",
+                    "visibility": {
+                        "mobile": true,
+                        "tablet": true,
+                        "desktop": true
+                    },
+                    "id": "{ID:CMS_PAGE_ROOT_BLOCK_4}",
+                    "slots": [
+                        {
+                            "type": "product-listing",
+                            "slot": "content",
+                            "config": {
+                                "boxLayout": {
+                                    "source": "static",
+                                    "value": "standard"
+                                },
+                                "boxHeadlineLevel": {
+                                    "source": "static",
+                                    "value": 2
+                                },
+                                "showSorting": {
+                                    "source": "static",
+                                    "value": true
+                                },
+                                "useCustomSorting": {
+                                    "source": "static",
+                                    "value": false
+                                },
+                                "availableSortings": {
+                                    "source": "static",
+                                    "value": []
+                                },
+                                "defaultSorting": {
+                                    "source": "static",
+                                    "value": ""
+                                },
+                                "filters": {
+                                    "source": "static",
+                                    "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter"
+                                },
+                                "propertyWhitelist": {
+                                    "source": "static",
+                                    "value": []
+                                }
+                            },
+                            "id": "{ID:CMS_PAGE_ROOT_SLOT_4}"
+                        }
+                    ],
+                    "sizingMode": "boxed"
+                }
+            ]
+        }
+    ]
+}]
