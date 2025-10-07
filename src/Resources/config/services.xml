@@ -119,6 +119,14 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
+        <!-- CMS Resolver -->
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\Cms\PartsListConfiguratorListingCmsElementResolver">
+            <argument type="service" id="MoorlFoundation\Core\Service\SortingService"/>
+            <argument type="service" id="Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingRoute"/>
+
+            <tag name="shopware.cms.data_resolver"/>
+        </service>
+
         <!-- Calculators -->
         <service id="Moorl\PartsListConfigurator\Core\Calculator\DemoFenceCalculator">
             <argument type="service" id="Moorl\PartsListConfigurator\Core\Service\PartsListService"/>
