@@ -121,6 +121,9 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         if (this._filters.options.length < this.options.optionCount) {
             return;
         }
+        if (!currentEl) {
+            return;
+        }
 
         this._showHiddenElements();
 
