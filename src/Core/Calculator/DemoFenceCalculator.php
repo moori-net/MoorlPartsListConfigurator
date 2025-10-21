@@ -109,8 +109,8 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         }
 
         // Ermittlung der Pfosten
-        $cornerPost = $partsList->filterByOption('PARTS_LIST_POST_TYPE_CORNER')->first();
-        $sidePost = $partsList->filterByOption('PARTS_LIST_POST_TYPE_SIDE')->first();
+        $cornerPost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_CORNER');
+        $sidePost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_SIDE');
 
         // einen Eckpfosten wieder abziehen
         $cornerPost->setQuantity($cornerPost->getQuantity() - 1);
@@ -163,7 +163,7 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
         $this->partsListService->debug(sprintf("Got length %d for side %s", $length, $parameterName));
 
         // Eckpfosten pro Seite hinzufügen
-        $cornerPost = $partsList->filterByOption('PARTS_LIST_POST_TYPE_CORNER')->first();
+        $cornerPost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_CORNER');
         $cornerPost->setQuantity($cornerPost->getQuantity() + 1);
 
         // Fest definiertes Zubehör wird von der Gesamtlänge abgezogen,
