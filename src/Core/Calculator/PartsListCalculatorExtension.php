@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Calculator;
 
+use Appflix\DewaShop\Core\Content\Option\OptionEntity;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
@@ -86,5 +87,14 @@ class PartsListCalculatorExtension
     public function getPropertyGroupConfig(): array
     {
         return [];
+    }
+
+    protected function getByOption(PartsListCollection $partsList, string $option): PartsListEntity
+    {
+        $entity = $partsList->filterByOption($option)->first();
+        if (!$entity) {
+            throw PartsListCalculatorException::missingOption($option);
+        }
+        return $entity;
     }
 }
