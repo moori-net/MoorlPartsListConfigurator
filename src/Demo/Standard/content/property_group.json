@@ -155,10 +155,10 @@
       "moorl_pl_name": "HEIGHT"
     },
     "options": [
-      {"id": "{MD5:HEIGHT_600}", "position": 0, "name": "600"},
-      {"id": "{MD5:HEIGHT_800}", "position": 1, "name": "800"},
-      {"id": "{MD5:HEIGHT_1000}", "position": 2, "name": "1000"},
-      {"id": "{MD5:HEIGHT_1200}", "position": 3, "name": "1200"}
+      {"id": "{MD5:HEIGHT_600}", "position": 0, "name": "600 mm"},
+      {"id": "{MD5:HEIGHT_800}", "position": 1, "name": "800 mm"},
+      {"id": "{MD5:HEIGHT_1000}", "position": 2, "name": "1000 mm"},
+      {"id": "{MD5:HEIGHT_1200}", "position": 3, "name": "1200 mm"}
     ]
   },
   {
@@ -178,10 +178,10 @@
       "moorl_pl_calculators": ["x"]
     },
     "options": [
-      {"id": "{MD5:LENGTH_1000}", "position": 0, "name": "1000"},
-      {"id": "{MD5:LENGTH_1500}", "position": 1, "name": "1500"},
-      {"id": "{MD5:LENGTH_2000}", "position": 2, "name": "2000"},
-      {"id": "{MD5:LENGTH_2500}", "position": 3, "name": "2500"}
+      {"id": "{MD5:LENGTH_1000}", "position": 0, "name": "1000 mm"},
+      {"id": "{MD5:LENGTH_1500}", "position": 1, "name": "1500 mm"},
+      {"id": "{MD5:LENGTH_2000}", "position": 2, "name": "2000 mm"},
+      {"id": "{MD5:LENGTH_2500}", "position": 3, "name": "2500 mm"}
     ]
   },
   {

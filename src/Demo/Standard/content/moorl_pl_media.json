@@ -16,41 +16,5 @@
     "partsListConfiguratorId": "{ID:FC01}",
     "position": 3,
     "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
-  },
-  {
-    "id": "{ID:MEDIA_4}",
-    "partsListConfiguratorId": "{ID:FC02}",
-    "position": 1,
-    "mediaId": "{MEDIA_FILE:product/fence-black-example.jpeg}"
-  },
-  {
-    "id": "{ID:MEDIA_5}",
-    "partsListConfiguratorId": "{ID:FC02}",
-    "position": 2,
-    "mediaId": "{MEDIA_FILE:product/fence-silver-example.jpeg}"
-  },
-  {
-    "id": "{ID:MEDIA_6}",
-    "partsListConfiguratorId": "{ID:FC02}",
-    "position": 3,
-    "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
-  },
-  {
-    "id": "{ID:MEDIA_7}",
-    "partsListConfiguratorId": "{ID:FC03}",
-    "position": 1,
-    "mediaId": "{MEDIA_FILE:product/fence-black-example.jpeg}"
-  },
-  {
-    "id": "{ID:MEDIA_8}",
-    "partsListConfiguratorId": "{ID:FC03}",
-    "position": 2,
-    "mediaId": "{MEDIA_FILE:product/fence-silver-example.jpeg}"
-  },
-  {
-    "id": "{ID:MEDIA_9}",
-    "partsListConfiguratorId": "{ID:FC03}",
-    "position": 3,
-    "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
   }
 ]

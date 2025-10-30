@@ -92,211 +92,31 @@
         ]
       },
       {
-        "id": "{ID:FC01_FILTER_POSTS}",
+        "id": "{ID:FC01_FILTER_FLOOR_MOUNTING}",
         "position": 2,
-        "technicalName": "posts",
+        "technicalName": "floor_mounting",
         "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"}
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
+          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
         ],
         "propertyGroupOptions": [
-          {"id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
-          {"id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"},
           {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}"},
           {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
           {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}"},
           {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}"},
           {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}"}
         ]
-      }
-    ]
-  },
-  {
-    "id": "{ID:FC02}",
-    "coverId": "{ID:MEDIA_4}",
-    "active": true,
-    "translations": {
-      "{de-DE}": {
-        "name": "Demo Zaunkonfigurator 8/6/8",
-        "description": "{READ_FILE:descriptions/moorl_pl-de-DE.html}"
-      },
-      "{en-GB}": {
-        "name": "Demo fence configurator 8/6/8",
-        "description": "{READ_FILE:descriptions/moorl_pl-en-GB.html}"
-      }
-    },
-    "filters": [
-      {
-        "id": "{ID:FC02_FILTER_LAYOUT}",
-        "position": 10,
-        "technicalName": "layout",
-        "logical": true,
-        "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
-        ],
-        "propertyGroupOptions": [
-          {"id": "{MD5:PARTS_LIST_LAYOUT_1}"},
-          {"id": "{MD5:PARTS_LIST_LAYOUT_2}"},
-          {"id": "{MD5:PARTS_LIST_LAYOUT_3}"},
-          {"id": "{MD5:PARTS_LIST_LAYOUT_4}"}
-        ]
       },
       {
-        "id": "{ID:FC02_FILTER_FIXED}",
-        "position": 0,
-        "technicalName": "fixed",
-        "fixed": true,
-        "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
-        ],
-        "propertyGroupOptions": [
-          {"id": "{MD5:LINE_868}"}
-        ]
-      },
-      {
-        "id": "{ID:FC02_FILTER_LENGTH}",
-        "position": 0,
-        "technicalName": "internal",
-        "fixed": true,
-        "logical": true,
-        "productStreams": [],
-        "propertyGroupOptions": [
-          {"id": "{MD5:LENGTH_1000}"},
-          {"id": "{MD5:LENGTH_1500}"},
-          {"id": "{MD5:LENGTH_2000}"},
-          {"id": "{MD5:LENGTH_2500}"},
-          {"id": "{MD5:PARTS_LIST_POST_TYPE_SIDE}"},
-          {"id": "{MD5:PARTS_LIST_POST_TYPE_CORNER}"}
-        ]
-      },
-      {
-        "id": "{ID:FC02_FILTER_COLOR}",
-        "position": 1,
-        "technicalName": "color",
-        "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}"}
-        ],
-        "propertyGroupOptions": [
-          {"id": "{MD5:COLOR_RAL_6005}"},
-          {"id": "{MD5:COLOR_RAL_7016}"},
-          {"id": "{MD5:COLOR_NONE}"}
-        ]
-      },
-      {
-        "id": "{ID:FC02_FILTER_HEIGHT}",
-        "position": 1,
-        "technicalName": "height",
-        "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
-        ],
-        "propertyGroupOptions": [
-          {"id": "{MD5:HEIGHT_600}"},
-          {"id": "{MD5:HEIGHT_800}"},
-          {"id": "{MD5:HEIGHT_1000}"},
-          {"id": "{MD5:HEIGHT_1200}"}
-        ]
-      },
-      {
-        "id": "{ID:FC02_FILTER_POSTS}",
+        "id": "{ID:FC01_FILTER_POST_MOUNTING}",
         "position": 2,
-        "technicalName": "posts",
+        "technicalName": "post_mounting",
         "productStreams": [
           {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"}
         ],
         "propertyGroupOptions": [
           {"id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
-          {"id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}"}
-        ]
-      }
-    ]
-  },
-  {
-    "id": "{ID:FC03}",
-    "coverId": "{ID:MEDIA_8}",
-    "type": "filter",
-    "active": true,
-    "translations": {
-      "{de-DE}": {
-        "name": "Demo Zaun Stückliste"
-      },
-      "{en-GB}": {
-        "name": "Demo fence parts list"
-      }
-    },
-    "filters": [
-      {
-        "id": "{ID:FC03_FILTER_LINE}",
-        "position": 0,
-        "technicalName": "line",
-        "fixed": false,
-        "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
-        ],
-        "propertyGroupOptions": [
-          {"id": "{MD5:LINE_656}"},
-          {"id": "{MD5:LINE_868}"}
-        ]
-      },
-      {
-        "id": "{ID:FC03_FILTER_COLOR}",
-        "position": 1,
-        "technicalName": "color",
-        "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}"}
-        ],
-        "propertyGroupOptions": [
-          {"id": "{MD5:COLOR_RAL_6005}"},
-          {"id": "{MD5:COLOR_RAL_7016}"},
-          {"id": "{MD5:COLOR_NONE}"}
-        ]
-      },
-      {
-        "id": "{ID:FC03_FILTER_HEIGHT}",
-        "position": 1,
-        "technicalName": "height",
-        "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
-        ],
-        "propertyGroupOptions": [
-          {"id": "{MD5:HEIGHT_600}"},
-          {"id": "{MD5:HEIGHT_800}"},
-          {"id": "{MD5:HEIGHT_1000}"},
-          {"id": "{MD5:HEIGHT_1200}"}
-        ]
-      },
-      {
-        "id": "{ID:FC03_FILTER_POSTS}",
-        "position": 2,
-        "technicalName": "posts",
-        "productStreams": [
-          {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"}
-        ],
-        "propertyGroupOptions": [
-          {"id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
-          {"id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_CONCRETE_PLUS}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_DOWEL_L}"},
-          {"id": "{MD5:PARTS_LIST_POST_FLOOR_MOUNTING_SPIKE}"}
+          {"id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"}
         ]
       }
     ]
