@@ -2,6 +2,7 @@
 
 namespace Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator;
 
+use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\ExtractedDefinition;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldEntityCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEntityCollection;
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Field\Flags\EditField;
@@ -54,7 +55,9 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
-        return new FieldCollection(array_merge(
+        ExtractedDefinition::addVersionDefinition(self::class);
+
+        $fieldCollection = new FieldCollection(array_merge(
             FieldEntityCollection::getFieldItems(
                 localClass: self::class
             ),
@@ -69,7 +72,7 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
                     [
                         PartsListConfiguratorDefinition::class,
                         [new Required()],
-                        [new CascadeDelete()]
+                        []
                     ]
                 ],
             ),
@@ -89,5 +92,7 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
                 ],
             ),
         ));
+
+        return $fieldCollection;
     }
 }
