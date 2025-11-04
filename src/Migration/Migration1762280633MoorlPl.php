@@ -7,27 +7,26 @@ use MoorlFoundation\Core\Framework\DataAbstractionLayer\Dbal\EntityDefinitionQue
 use Shopware\Core\Framework\Migration\MigrationStep;
 use Shopware\Core\Framework\Plugin\Requirement\Exception\MissingRequirementException;
 
-class Migration1746001637MoorlPl extends MigrationStep
+class Migration1762280633MoorlPl extends MigrationStep
 {
-    public const OPERATION_HASH = 'bec7f8f75e78aa4b842d924414750c4a';
-    public const PLUGIN_VERSION = '0.0.3';
+    public const OPERATION_HASH = 'a3b4ce56ce10ffa8d5799f6ccdc323b0';
+    public const PLUGIN_VERSION = '1.7.14';
 
     public function getCreationTimestamp(): int
     {
-        return 1746001637;
+        return 1762280633;
     }
 
     public function update(Connection $connection): void
     {
         $sql = <<<SQL
-CREATE TABLE moorl_pl (id BINARY(16) NOT NULL, version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, type VARCHAR(255) DEFAULT 'calculator' NOT NULL, calculator VARCHAR(255) DEFAULT 'demo-fence', active TINYINT(1) DEFAULT 0, cms_page_id BINARY(16) DEFAULT NULL, cms_page_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425, moorl_pl_media_id BINARY(16) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY(id, version_id)) DEFAULT CHARACTER SET utf8mb4;
+CREATE TABLE moorl_pl (id BINARY(16) NOT NULL, cms_page_id BINARY(16) DEFAULT NULL, moorl_pl_media_id BINARY(16) DEFAULT NULL, version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, cms_page_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425, active TINYINT(1) DEFAULT 0, calculator VARCHAR(255) DEFAULT 'demo-fence', type VARCHAR(255) DEFAULT 'calculator' NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY (id, version_id)) DEFAULT CHARACTER SET utf8mb4;
 ALTER TABLE moorl_pl ADD CONSTRAINT `fk.moorl_pl.cms_page_id` FOREIGN KEY (cms_page_id, cms_page_version_id) REFERENCES cms_page (id, version_id) ON UPDATE CASCADE ON DELETE SET NULL;
 SQL;
 
         // Try to execute all queries at once
         try {
             $connection->executeStatement($sql);
-            $this->additionalCustomUpdate($connection);
             return;
         } catch (\Exception) {
             if (!class_exists(EntityDefinitionQueryHelper::class)) {
@@ -37,7 +36,7 @@ SQL;
 
         // Try to execute all queries step by step
         if (!EntityDefinitionQueryHelper::tableExists($connection, 'moorl_pl', '')) {
-            $sql = "CREATE TABLE moorl_pl (id BINARY(16) NOT NULL, version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, type VARCHAR(255) DEFAULT 'calculator' NOT NULL, calculator VARCHAR(255) DEFAULT 'demo-fence', active TINYINT(1) DEFAULT 0, cms_page_id BINARY(16) DEFAULT NULL, cms_page_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425, moorl_pl_media_id BINARY(16) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY(id, version_id)) DEFAULT CHARACTER SET utf8mb4;";
+            $sql = "CREATE TABLE moorl_pl (id BINARY(16) NOT NULL, cms_page_id BINARY(16) DEFAULT NULL, moorl_pl_media_id BINARY(16) DEFAULT NULL, version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, cms_page_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425, active TINYINT(1) DEFAULT 0, calculator VARCHAR(255) DEFAULT 'demo-fence', type VARCHAR(255) DEFAULT 'calculator' NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY (id, version_id)) DEFAULT CHARACTER SET utf8mb4;";
             EntityDefinitionQueryHelper::tryExecuteStatement($connection, $sql, 'moorl_pl');
         }
 
@@ -45,17 +44,5 @@ SQL;
             $sql = "ALTER TABLE moorl_pl ADD CONSTRAINT `fk.moorl_pl.cms_page_id` FOREIGN KEY (cms_page_id, cms_page_version_id) REFERENCES cms_page (id, version_id) ON UPDATE CASCADE ON DELETE SET NULL;";
             EntityDefinitionQueryHelper::tryExecuteStatement($connection, $sql, 'moorl_pl');
         }
-
-        $this->additionalCustomUpdate($connection);
-    }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // Add destructive update if necessary
-    }
-
-    private function additionalCustomUpdate(Connection $connection): void
-    {
-        // Add custom update if necessary
     }
 }
