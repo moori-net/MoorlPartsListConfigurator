@@ -9,13 +9,14 @@
 
                     <div class="col-10">
                         <div class="input-group mb-2">
-                            <span class="input-group-text">
+                            <label for="{{ element }}_length" class="input-group-text">
                                 {{ "moorl-parts-list-configurator.logical-configurator.field.totalLength"|trans }}
-                            </span>
+                            </label>
                             <input
                                     class="form-control"
                                     type="number"
                                     name="{{ element }}_length"
+                                    id="{{ element }}_length"
                                     min="2500"
                                     value="2500"
                                     step="500"
