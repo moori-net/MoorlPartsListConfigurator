@@ -7,20 +7,20 @@ use MoorlFoundation\Core\Framework\DataAbstractionLayer\Dbal\EntityDefinitionQue
 use Shopware\Core\Framework\Migration\MigrationStep;
 use Shopware\Core\Framework\Plugin\Requirement\Exception\MissingRequirementException;
 
-class Migration1746001638MoorlPlTranslation extends MigrationStep
+class Migration1762280634MoorlPlTranslation extends MigrationStep
 {
-    public const OPERATION_HASH = 'd1fe575d3fa328956fee7eb459ec181a';
-    public const PLUGIN_VERSION = '0.0.3';
+    public const OPERATION_HASH = '6a602a71094f46af66050c1ab98a6b83';
+    public const PLUGIN_VERSION = '1.7.14';
 
     public function getCreationTimestamp(): int
     {
-        return 1746001638;
+        return 1762280634;
     }
 
     public function update(Connection $connection): void
     {
         $sql = <<<SQL
-CREATE TABLE moorl_pl_translation (teaser LONGTEXT DEFAULT NULL, name VARCHAR(255) DEFAULT NULL, description LONGTEXT DEFAULT NULL, keywords LONGTEXT DEFAULT NULL, slot_config JSON DEFAULT NULL, meta_keywords LONGTEXT DEFAULT NULL, meta_title LONGTEXT DEFAULT NULL, meta_description LONGTEXT DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, moorl_pl_id BINARY(16) NOT NULL, language_id BINARY(16) NOT NULL, moorl_pl_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, PRIMARY KEY(moorl_pl_id, language_id, moorl_pl_version_id)) DEFAULT CHARACTER SET utf8mb4;
+CREATE TABLE moorl_pl_translation (language_id BINARY(16) NOT NULL, moorl_pl_id BINARY(16) NOT NULL, moorl_pl_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, slot_config JSON DEFAULT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, keywords LONGTEXT DEFAULT NULL, meta_description LONGTEXT DEFAULT NULL, meta_keywords LONGTEXT DEFAULT NULL, meta_title LONGTEXT DEFAULT NULL, teaser LONGTEXT DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY (moorl_pl_id, language_id, moorl_pl_version_id)) DEFAULT CHARACTER SET utf8mb4;
 ALTER TABLE moorl_pl_translation ADD CONSTRAINT `fk.moorl_pl_translation.moorl_pl_id` FOREIGN KEY (moorl_pl_id, moorl_pl_version_id) REFERENCES moorl_pl (id, version_id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE moorl_pl_translation ADD CONSTRAINT `fk.moorl_pl_translation.language_id` FOREIGN KEY (language_id) REFERENCES language (id) ON UPDATE CASCADE ON DELETE CASCADE;
 SQL;
@@ -28,7 +28,6 @@ SQL;
         // Try to execute all queries at once
         try {
             $connection->executeStatement($sql);
-            $this->additionalCustomUpdate($connection);
             return;
         } catch (\Exception) {
             if (!class_exists(EntityDefinitionQueryHelper::class)) {
@@ -38,7 +37,7 @@ SQL;
 
         // Try to execute all queries step by step
         if (!EntityDefinitionQueryHelper::tableExists($connection, 'moorl_pl_translation', '')) {
-            $sql = "CREATE TABLE moorl_pl_translation (teaser LONGTEXT DEFAULT NULL, name VARCHAR(255) DEFAULT NULL, description LONGTEXT DEFAULT NULL, keywords LONGTEXT DEFAULT NULL, slot_config JSON DEFAULT NULL, meta_keywords LONGTEXT DEFAULT NULL, meta_title LONGTEXT DEFAULT NULL, meta_description LONGTEXT DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, moorl_pl_id BINARY(16) NOT NULL, language_id BINARY(16) NOT NULL, moorl_pl_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, PRIMARY KEY(moorl_pl_id, language_id, moorl_pl_version_id)) DEFAULT CHARACTER SET utf8mb4;";
+            $sql = "CREATE TABLE moorl_pl_translation (language_id BINARY(16) NOT NULL, moorl_pl_id BINARY(16) NOT NULL, moorl_pl_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, slot_config JSON DEFAULT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, keywords LONGTEXT DEFAULT NULL, meta_description LONGTEXT DEFAULT NULL, meta_keywords LONGTEXT DEFAULT NULL, meta_title LONGTEXT DEFAULT NULL, teaser LONGTEXT DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY (moorl_pl_id, language_id, moorl_pl_version_id)) DEFAULT CHARACTER SET utf8mb4;";
             EntityDefinitionQueryHelper::tryExecuteStatement($connection, $sql, 'moorl_pl_translation');
         }
 
@@ -51,17 +50,5 @@ SQL;
             $sql = "ALTER TABLE moorl_pl_translation ADD CONSTRAINT `fk.moorl_pl_translation.language_id` FOREIGN KEY (language_id) REFERENCES language (id) ON UPDATE CASCADE ON DELETE CASCADE;";
             EntityDefinitionQueryHelper::tryExecuteStatement($connection, $sql, 'moorl_pl_translation');
         }
-
-        $this->additionalCustomUpdate($connection);
-    }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // Add destructive update if necessary
-    }
-
-    private function additionalCustomUpdate(Connection $connection): void
-    {
-        // Add custom update if necessary
     }
 }
