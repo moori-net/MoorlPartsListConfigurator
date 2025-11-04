@@ -20,7 +20,7 @@ class Migration1761674183MoorlPlFilterOption extends MigrationStep
     public function update(Connection $connection): void
     {
         $sql = <<<SQL
-ALTER TABLE moorl_pl_filter_option DROP FOREIGN KEY `fk`.`moorl_pl_filter_option`.`moorl_pl_filter_id`;
+ALTER TABLE moorl_pl_filter_option DROP FOREIGN KEY `fk.moorl_pl_filter_option.moorl_pl_filter_id`;
 ALTER TABLE moorl_pl_filter_option ADD moorl_pl_filter_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL;
 ALTER TABLE moorl_pl_filter_option ADD CONSTRAINT `fk.moorl_pl_filter_option.moorl_pl_filter_id` FOREIGN KEY (moorl_pl_filter_id, moorl_pl_filter_version_id) REFERENCES moorl_pl_filter (id, version_id) ON UPDATE CASCADE ON DELETE CASCADE;
 SQL;
@@ -38,7 +38,7 @@ SQL;
 
         // Try to execute all queries step by step
         if (EntityDefinitionQueryHelper::constraintExists($connection, 'moorl_pl_filter_option', 'fk`.`moorl_pl_filter_option`.`moorl_pl_filter_id')) {
-            $sql = "ALTER TABLE moorl_pl_filter_option DROP FOREIGN KEY `fk`.`moorl_pl_filter_option`.`moorl_pl_filter_id`;";
+            $sql = "ALTER TABLE moorl_pl_filter_option DROP FOREIGN KEY `fk.moorl_pl_filter_option.moorl_pl_filter_id`;";
             EntityDefinitionQueryHelper::tryExecuteStatement($connection, $sql, 'moorl_pl_filter_option');
         }
 
