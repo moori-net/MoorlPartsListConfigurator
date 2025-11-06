@@ -9,6 +9,7 @@ use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldMultiEnt
 use MoorlFoundation\Core\Framework\DataAbstractionLayer\Collection\FieldThingCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
@@ -52,7 +53,8 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             ),
             [
                 (new StringField('type', 'type'))->addFlags(new Required()),
-                (new StringField('calculator', 'calculator'))
+                (new StringField('calculator', 'calculator')),
+                (new JsonField('mapping', 'mapping'))
             ],
             FieldThingCollection::getFieldItems(media: false),
             FieldMediaGalleryMediaCollection::getFieldItems(

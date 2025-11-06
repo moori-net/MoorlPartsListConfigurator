@@ -1,0 +1,26 @@
+<div class="moorl-parts-list-calculator">
+    <template v-if="partsListConfigurator.type === 'calculator' && calculatorOptions.length > 0">
+        <moorl-select-field
+                v-model:value="partsListConfigurator.calculator"
+                @update:value="refresh"
+                :label="$tc('moorl-foundation.field.calculator')"
+                :customSet="calculatorOptions"
+        />
+
+        <sw-data-grid
+                v-if="mapping.length > 0"
+                :data-source="mapping"
+                :columns="gridColumns"
+                :show-selection="false"
+                :plain-appearance="true"
+                :show-actions="false"
+        >
+            <template #column-value="{ item, itemIndex }">
+                <sw-entity-single-select
+                        v-model:value="partsListConfigurator.mapping[item.name]"
+                        :entity="item.entity"
+                />
+            </template>
+        </sw-data-grid>
+    </template>
+</div>

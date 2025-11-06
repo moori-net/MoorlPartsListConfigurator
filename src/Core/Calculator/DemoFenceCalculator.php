@@ -5,6 +5,9 @@ namespace Moorl\PartsListConfigurator\Core\Calculator;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\Core\Service\PartsListService;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
+use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
+use Shopware\Core\Content\Property\PropertyGroupDefinition;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +23,29 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
     public function getName(): string
     {
         return 'demo-fence';
+    }
+
+    public function getMapping(): array
+    {
+        return [
+            ProductStreamDefinition::ENTITY_NAME => [
+                'OPTIONAL_ACCESSORIES',
+                'LAYOUT_ACCESSORIES',
+                'FENCES',
+            ],
+            PropertyGroupDefinition::ENTITY_NAME => [
+                'PARTS_LIST_LAYOUT',
+                'LENGTH',
+            ],
+            PropertyGroupOptionDefinition::ENTITY_NAME => [
+                'PARTS_LIST_LAYOUT_1',
+                'PARTS_LIST_LAYOUT_2',
+                'PARTS_LIST_LAYOUT_3',
+                'PARTS_LIST_LAYOUT_4',
+                'PARTS_LIST_POST_TYPE_CORNER',
+                'PARTS_LIST_POST_TYPE_SIDE'
+            ],
+        ];
     }
 
     public function getPropertyGroupConfig(): array
@@ -61,6 +87,11 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
                 ]
             ]
         ];
+    }
+
+    public function isCalcX(string $name): bool
+    {
+        return $name === 'LENGTH';
     }
 
     public function calculatePartsList(

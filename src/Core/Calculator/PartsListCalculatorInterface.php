@@ -9,7 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface PartsListCalculatorInterface
 {
+    public function isCalcX(string $name): bool;
+    public function isCalcY(string $name): bool;
+    public function isCalcZ(string $name): bool;
     public function getName(): string;
+    public function getMapping(): array;
     public function getPropertyGroupConfig(): array;
     public function getLogicalConfigurator(
         Request $request,

@@ -23,6 +23,7 @@ class PartsListConfiguratorEntity extends Entity
     protected ?string $teaser = null;
     protected string $calculator = "";
     protected string $type;
+    protected ?array $mapping = null;
 
     protected ?PartsListConfiguratorFilterCollection $filters = null;
     protected ?PartsListConfiguratorMediaCollection $media = null;
@@ -31,6 +32,27 @@ class PartsListConfiguratorEntity extends Entity
     public function getCalculatorName(): string
     {
         return $this->getType() === 'calculator' ? $this->getCalculator() : CoreCalculator::NAME;
+    }
+
+    public function getMapping(): ?array
+    {
+        return $this->mapping;
+    }
+
+    public function getMappingValue(string $name): ?string
+    {
+        return $this->mapping[$name] ?? null;
+    }
+
+    public function getMappingName(string $value): ?string
+    {
+        $name = array_search($value, $this->mapping, true);
+        return $name === false ? null : $name;
+    }
+
+    public function setMapping(?array $mapping): void
+    {
+        $this->mapping = $mapping;
     }
 
     public function getType(): string

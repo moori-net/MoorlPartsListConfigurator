@@ -19,6 +19,11 @@ class CoreCalculator extends PartsListCalculatorExtension implements PartsListCa
         return self::NAME;
     }
 
+    public function getMapping(): array
+    {
+        return [];
+    }
+
     public function calculatePartsList(
         Request $request,
         SalesChannelContext $salesChannelContext,
