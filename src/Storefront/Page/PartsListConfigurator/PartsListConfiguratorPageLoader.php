@@ -171,7 +171,7 @@ class PartsListConfiguratorPageLoader
 
         $partsList = PartsListCollection::createFromProducts($products->getEntities());
 
-        $this->enrichPartsList($partsList, $productStreams, $options);
+        $this->enrichPartsList($partsListConfigurator, $partsList, $productStreams, $options);
 
         // Parent ID entfernen, weil die Eingaben keine Variantenwechsel benötigen
         if (in_array(self::OPT_NO_PARENT, $loadingOptions)) {
@@ -234,17 +234,22 @@ class PartsListConfiguratorPageLoader
     }
 
     private function enrichPartsList(
+        SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
         PartsListCollection $partsList,
         ProductStreamCollection $productStreams,
         PropertyGroupOptionCollection $options
     ): void
     {
+        $partsListCalculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculatorName());
+
         foreach ($productStreams as $productStream) {
-            $productStreamTechnicalName = $productStream->getTranslation('customFields')['moorl_pl_name'] ?? null;
-            if ($productStreamTechnicalName) {
-                foreach ($partsList->filterByProductStreamIds([$productStream->getId()]) as $item) {
-                    $item->addProductStream($productStreamTechnicalName);
-                }
+            $productStreamTechnicalName = $partsListConfigurator->getMappingName($productStream->getId());
+            if (!$productStreamTechnicalName) {
+                continue;
+            }
+
+            foreach ($partsList->filterByProductStreamIds([$productStream->getId()]) as $item) {
+                $item->addProductStream($productStreamTechnicalName);
             }
         }
 
@@ -254,21 +259,23 @@ class PartsListConfiguratorPageLoader
                     continue;
                 }
 
-                $groupTechnicalName = $option->getGroup()->getTranslation('customFields')['moorl_pl_name'] ?? null;
-                $item->addGroup($groupTechnicalName);
-
-                $optionTechnicalName = $option->getTranslation('customFields')['moorl_pl_name'] ?? null;
-                $item->addOption($optionTechnicalName);
-
-                $groupCalculators = $option->getGroup()->getTranslation('customFields')['moorl_pl_calculators'] ?? [];
-                if (in_array("x", $groupCalculators)) {
-                    $item->setCalcX((int) $option->getTranslation('name'));
+                $groupTechnicalName = $partsListConfigurator->getMappingName($option->getGroupId());
+                if ($groupTechnicalName) {
+                    $item->addGroup($groupTechnicalName);
+                    if ($partsListCalculator->isCalcX($groupTechnicalName)) {
+                        $item->setCalcX((int) $option->getTranslation('name'));
+                    }
+                    if ($partsListCalculator->isCalcY($groupTechnicalName)) {
+                        $item->setCalcY((int) $option->getTranslation('name'));
+                    }
+                    if ($partsListCalculator->isCalcZ($groupTechnicalName)) {
+                        $item->setCalcZ((int) $option->getTranslation('name'));
+                    }
                 }
-                if (in_array("y", $groupCalculators)) {
-                    $item->setCalcY((int) $option->getTranslation('name'));
-                }
-                if (in_array("z", $groupCalculators)) {
-                    $item->setCalcZ((int) $option->getTranslation('name'));
+
+                $optionTechnicalName = $partsListConfigurator->getMappingName($option->getId());
+                if ($optionTechnicalName) {
+                    $item->addOption($optionTechnicalName);
                 }
             }
         }

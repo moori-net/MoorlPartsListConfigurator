@@ -34,11 +34,11 @@ onMoorlFoundationReady(() => {
             },
             calculator: {
                 conditions: [{property: 'type', value: 'calculator', operator: 'eq'}],
-                cols: 6,
-                componentName: 'moorl-select-field',
+                cols: 12,
+                componentName: 'moorl-parts-list-calculator',
                 attributes: {
-                    customSet: 'moorl-pl/get-parts-list-calculators'
-                }
+                    partsListConfigurator: ({item}) => item,
+                },
             }
         },
         cmsElements: [
@@ -78,5 +78,6 @@ onMoorlFoundationReady(() => {
     });
 });
 
+import './component';
 import './extension';
 import './module';

@@ -2,13 +2,10 @@
 
 namespace Moorl\PartsListConfigurator\Core\Service;
 
-use Doctrine\DBAL\Connection;
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
 use Psr\Log\LoggerInterface;
-use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
 use Shopware\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 class PartsListService
 {
@@ -17,9 +14,6 @@ class PartsListService
      */
     public function __construct(
         private readonly DefinitionInstanceRegistry $definitionInstanceRegistry,
-        private readonly Connection $connection,
-        private readonly SystemConfigService $systemConfigService,
-        private readonly CartService $cartService,
         private readonly LoggerInterface $logger,
         private readonly iterable $partsListCalculators
     )
@@ -38,10 +32,10 @@ class PartsListService
 
     public function getPartsListCalculators(): array
     {
-        $names = [];
+        $config = [];
         foreach ($this->partsListCalculators as $c) {
-            $names[] = $c->getName();
+            $config[$c->getName()] = $c->getMapping();
         }
-        return $names;
+        return $config;
     }
 }

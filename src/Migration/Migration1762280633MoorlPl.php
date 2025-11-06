@@ -20,7 +20,7 @@ class Migration1762280633MoorlPl extends MigrationStep
     public function update(Connection $connection): void
     {
         $sql = <<<SQL
-CREATE TABLE moorl_pl (id BINARY(16) NOT NULL, cms_page_id BINARY(16) DEFAULT NULL, moorl_pl_media_id BINARY(16) DEFAULT NULL, version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, cms_page_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425, active TINYINT(1) DEFAULT 0, calculator VARCHAR(255) DEFAULT 'demo-fence', type VARCHAR(255) DEFAULT 'calculator' NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY (id, version_id)) DEFAULT CHARACTER SET utf8mb4;
+CREATE TABLE moorl_pl (id BINARY(16) NOT NULL, cms_page_id BINARY(16) DEFAULT NULL, moorl_pl_media_id BINARY(16) DEFAULT NULL, version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, cms_page_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425, active TINYINT(1) DEFAULT 0, calculator VARCHAR(255) DEFAULT 'demo-fence', type VARCHAR(255) DEFAULT 'calculator' NOT NULL, mapping JSON NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY (id, version_id)) DEFAULT CHARACTER SET utf8mb4;
 ALTER TABLE moorl_pl ADD CONSTRAINT `fk.moorl_pl.cms_page_id` FOREIGN KEY (cms_page_id, cms_page_version_id) REFERENCES cms_page (id, version_id) ON UPDATE CASCADE ON DELETE SET NULL;
 SQL;
 
@@ -36,7 +36,7 @@ SQL;
 
         // Try to execute all queries step by step
         if (!EntityDefinitionQueryHelper::tableExists($connection, 'moorl_pl', '')) {
-            $sql = "CREATE TABLE moorl_pl (id BINARY(16) NOT NULL, cms_page_id BINARY(16) DEFAULT NULL, moorl_pl_media_id BINARY(16) DEFAULT NULL, version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, cms_page_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425, active TINYINT(1) DEFAULT 0, calculator VARCHAR(255) DEFAULT 'demo-fence', type VARCHAR(255) DEFAULT 'calculator' NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY (id, version_id)) DEFAULT CHARACTER SET utf8mb4;";
+            $sql = "CREATE TABLE moorl_pl (id BINARY(16) NOT NULL, cms_page_id BINARY(16) DEFAULT NULL, moorl_pl_media_id BINARY(16) DEFAULT NULL, version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425 NOT NULL, cms_page_version_id BINARY(16) DEFAULT 0x0FA91CE3E96A4BC2BE4BD9CE752C3425, active TINYINT(1) DEFAULT 0, calculator VARCHAR(255) DEFAULT 'demo-fence', type VARCHAR(255) DEFAULT 'calculator' NOT NULL, mapping JSON NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY (id, version_id)) DEFAULT CHARACTER SET utf8mb4;";
             EntityDefinitionQueryHelper::tryExecuteStatement($connection, $sql, 'moorl_pl');
         }
 

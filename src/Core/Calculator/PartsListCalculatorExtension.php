@@ -97,4 +97,17 @@ class PartsListCalculatorExtension
         }
         return $entity;
     }
+
+    public function isCalcX(string $name): bool
+    {
+        return false;
+    }
+    public function isCalcY(string $name): bool
+    {
+        return false;
+    }
+    public function isCalcZ(string $name): bool
+    {
+        return false;
+    }
 }

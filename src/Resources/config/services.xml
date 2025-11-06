@@ -11,9 +11,6 @@
     <services>
         <service id="Moorl\PartsListConfigurator\Core\Service\PartsListService" public="true">
             <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry"/>
-            <argument type="service" id="Doctrine\DBAL\Connection"/>
-            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
-            <argument type="service" id="Shopware\Core\Checkout\Cart\SalesChannel\CartService"/>
             <argument type="service" id="moorl.parts.list.logger"/>
             <argument type="tagged" tag="moorl.parts.list.calculator"/>
         </service>
