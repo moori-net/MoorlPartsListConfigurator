@@ -20,10 +20,7 @@
         ],
         "operator": "OR"
       }
-    ],
-    "customFields": {
-      "moorl_pl_name": "FENCES"
-    }
+    ]
   },
   {
     "id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}",
@@ -46,10 +43,7 @@
         ],
         "operator": "OR"
       }
-    ],
-    "customFields": {
-      "moorl_pl_name": "POSTS"
-    }
+    ]
   },
   {
     "id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}",
@@ -72,10 +66,7 @@
         ],
         "operator": "OR"
       }
-    ],
-    "customFields": {
-      "moorl_pl_name": "LAYOUT_ACCESSORIES"
-    }
+    ]
   },
   {
     "id": "{ID:STREAM_CATEGORY_PARTS_LIST_OPTIONAL_ACCESSORIES}",
@@ -98,10 +89,6 @@
         ],
         "operator": "OR"
       }
-    ],
-    "customFields": {
-      "moorl_pl_name": "OPTIONAL_ACCESSORIES",
-      "moorl_pl_optional": true
-    }
+    ]
   }
 ]

@@ -46,7 +46,13 @@ Shopware.Component.register('moorl-parts-list-calculator', {
                     primary: true,
                 },
                 {
-                    label: this.$tc('moorl-foundation.field.mapping'),
+                    label: this.$tc('moorl-foundation.field.flags'),
+                    property: 'flags',
+                    dataIndex: 'flags',
+                    primary: true,
+                },
+                {
+                    label: this.$tc('moorl-foundation.field.value'),
                     property: 'value',
                     dataIndex: 'value',
                     primary: true,
@@ -84,9 +90,13 @@ Shopware.Component.register('moorl-parts-list-calculator', {
             }
 
             for (const [entity, mapping] of Object.entries(this.calculators[this.partsListConfigurator.calculator])) {
-                for (const name of mapping) {
+                for (const [name, flags] of Object.entries(mapping)) {
                     this.partsListConfigurator.mapping[name] ??= null;
-                    this.mapping.push({entity, name});
+                    this.mapping.push({
+                        entity,
+                        name,
+                        flags: flags.join(',')
+                    });
                 }
             }
         }

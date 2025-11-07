@@ -85,7 +85,7 @@ class PartsListConfiguratorPageLoader
         $partsListConfigurator->getFilters()->sortByPosition();
         $partsListConfigurator->setCurrentOptionIds($this->getPropIds($request, 'options'));
 
-        $calculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculatorName());
+        $partsListCalculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculatorName());
 
         $productStreams = new ProductStreamCollection();
         $options = new PropertyGroupOptionCollection();
@@ -96,6 +96,11 @@ class PartsListConfiguratorPageLoader
 
         $mainFilters = [];
         foreach ($productStreams as $productStream) {
+            $productStreamTechnicalName = $partsListConfigurator->getMappingName($productStream->getId());
+            if ($productStreamTechnicalName) {
+                $productStream->addTranslated('flags', $partsListCalculator->getFlags($productStreamTechnicalName));
+            }
+
             $streamFilter = new ContainsFilter('streamIds', $productStream->getId());
             $propertyFilters = [];
 
@@ -109,7 +114,7 @@ class PartsListConfiguratorPageLoader
                         continue;
                     }
 
-                    if ($calculator->getName() === CoreCalculator::NAME) {
+                    if ($partsListCalculator->getName() === CoreCalculator::NAME) {
                         $this->logger->warning("Logical filter not allowed here.", [
                             'partsListConfiguratorId' => $partsListConfiguratorId,
                             'filterId' => $filter->getId(),
@@ -126,7 +131,7 @@ class PartsListConfiguratorPageLoader
 
                     // Ein logischer Filter sollte nur eine Gruppe haben,
                     // weil der logische Konfigurator des Filters anhand des technischen Namens der Gruppe geladen wird
-                    $filter->setLogicalConfigurator($calculator->getLogicalConfigurator(
+                    $filter->setLogicalConfigurator($partsListCalculator->getLogicalConfigurator(
                         $request,
                         $salesChannelContext,
                         $partsListConfigurator,
@@ -143,7 +148,7 @@ class PartsListConfiguratorPageLoader
                 }
             }
 
-            if ($productStream->getTranslation('customFields')['moorl_pl_optional'] ?? false) {
+            if (in_array('optional', $productStream->getTranslation('flags') ?? [])) {
                 $mainFilters[] = new AndFilter([
                     $streamFilter,
                     new OrFilter([
@@ -176,15 +181,21 @@ class PartsListConfiguratorPageLoader
 
         $partsList = PartsListCollection::createFromProducts($products->getEntities());
 
-        $this->enrichPartsList($partsListConfigurator, $partsList, $productStreams, $options);
+        $this->enrichPartsList(
+            $partsListConfigurator,
+            $partsListCalculator,
+            $partsList,
+            $productStreams,
+            $options
+        );
 
         // Parent ID entfernen, weil die Eingaben keine Variantenwechsel benötigen
         if (in_array(self::OPT_NO_PARENT, $loadingOptions)) {
-            $calculator->removeParentIds($partsList);
+            $partsListCalculator->removeParentIds($partsList);
         }
 
         if (in_array(self::OPT_CALCULATE, $loadingOptions)) {
-            $calculator->calculatePartsList(
+            $partsListCalculator->calculatePartsList(
                 $request,
                 $salesChannelContext,
                 $partsListConfigurator,
@@ -203,7 +214,7 @@ class PartsListConfiguratorPageLoader
         if (in_array(self::OPT_PROXY_CART, $loadingOptions)) {
             $page->setCart($this->createProxyCart($partsListConfiguratorId, $partsList, $salesChannelContext));
         }
-        $page->setCalculator($calculator);
+        $page->setCalculator($partsListCalculator);
 
         $this->loadMetaData($page);
 
@@ -240,13 +251,12 @@ class PartsListConfiguratorPageLoader
 
     private function enrichPartsList(
         SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
+        PartsListCalculatorInterface $partsListCalculator,
         PartsListCollection $partsList,
         ProductStreamCollection $productStreams,
         PropertyGroupOptionCollection $options
     ): void
     {
-        $partsListCalculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculatorName());
-
         foreach ($productStreams as $productStream) {
             $productStreamTechnicalName = $partsListConfigurator->getMappingName($productStream->getId());
             if (!$productStreamTechnicalName) {

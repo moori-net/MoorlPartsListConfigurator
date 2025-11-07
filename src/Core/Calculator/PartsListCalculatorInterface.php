@@ -9,9 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface PartsListCalculatorInterface
 {
+    public function getFlags(string $n): array;
     public function isCalcX(string $name): bool;
     public function isCalcY(string $name): bool;
     public function isCalcZ(string $name): bool;
+    public function isHidden(string $name): bool;
+    public function isOptional(string $name): bool;
     public function getName(): string;
     public function getMapping(): array;
     public function getPropertyGroupConfig(): array;

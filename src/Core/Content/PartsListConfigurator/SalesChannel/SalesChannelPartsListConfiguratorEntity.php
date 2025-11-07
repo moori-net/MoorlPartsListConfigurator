@@ -56,7 +56,7 @@ class SalesChannelPartsListConfiguratorEntity extends PartsListConfiguratorEntit
         }
 
         foreach ($productStreams as $productStream) {
-            if ($productStream->getTranslation('customFields')['moorl_pl_optional'] ?? false) {
+            if (in_array('optional', $productStream->getTranslation('flags') ?? [])) {
                 $productStreamIds[] = $productStream->getId();
             }
         }

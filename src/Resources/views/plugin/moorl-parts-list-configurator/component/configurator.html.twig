@@ -1,5 +1,4 @@
 {% for group in configuratorSettings %}
-    {% if not group.translated.customFields.moorl_pl_hidden %}
         <fieldset
                 class="js-group product-detail-configurator-group mb-3"
                 data-identifier="{{ identifier }}"
@@ -90,5 +89,4 @@
                 <div class="js-logical-configurator"></div>
             {% endif %}
         </fieldset>
-    {% endif %}
 {% endfor %}

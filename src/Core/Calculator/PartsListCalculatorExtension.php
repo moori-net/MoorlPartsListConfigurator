@@ -5,7 +5,10 @@ namespace Moorl\PartsListConfigurator\Core\Calculator;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
+use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
+use Shopware\Core\Content\Property\PropertyGroupDefinition;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -97,16 +100,57 @@ class PartsListCalculatorExtension
         return $entity;
     }
 
+    public function getMapping(): array
+    {
+        return [];
+    }
+
+    private function hasFlag(string $n, string $f): bool
+    {
+        foreach ($this->getMapping() as $mapping) {
+            foreach ($mapping as $name => $flags) {
+                if ($name === $n && in_array($f, $flags)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function getFlags(string $n): array
+    {
+        foreach ($this->getMapping() as $mapping) {
+            foreach ($mapping as $name => $flags) {
+                if ($name === $n) {
+                    return $flags;
+                }
+            }
+        }
+        return [];
+    }
+
     public function isCalcX(string $name): bool
     {
-        return false;
+        return $this->hasFlag($name, 'calc-x');
     }
+
     public function isCalcY(string $name): bool
     {
-        return false;
+        return $this->hasFlag($name, 'calc-y');
     }
+
     public function isCalcZ(string $name): bool
     {
-        return false;
+        return $this->hasFlag($name, 'calc-z');
+    }
+
+    public function isHidden(string $name): bool
+    {
+        return $this->hasFlag($name, 'hidden');
+    }
+
+    public function isOptional(string $name): bool
+    {
+        return $this->hasFlag($name, 'optional');
     }
 }
