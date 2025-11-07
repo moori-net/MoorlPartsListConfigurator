@@ -25,14 +25,38 @@
     ],
     "customFields": [
       {
-        "name": "moorl_pl_name",
-        "type": "text",
+        "name": "moorl_pl_calc_x_value",
+        "type": "int",
         "config": {
-          "componentName": "sw-text-field",
-          "customFieldType": "text",
+          "componentName": "sw-number-field",
+          "customFieldType": "number",
           "label": {
-            "en-GB": "Technical name",
-            "de-DE": "Technischer Name"
+            "en-GB": "CalcX Value",
+            "de-DE": "CalcX Wert"
+          }
+        }
+      },
+      {
+        "name": "moorl_pl_calc_y_value",
+        "type": "int",
+        "config": {
+          "componentName": "sw-number-field",
+          "customFieldType": "number",
+          "label": {
+            "en-GB": "CalcY Value",
+            "de-DE": "CalcY Wert"
+          }
+        }
+      },
+      {
+        "name": "moorl_pl_calc_z_value",
+        "type": "int",
+        "config": {
+          "componentName": "sw-number-field",
+          "customFieldType": "number",
+          "label": {
+            "en-GB": "CalcZ Value",
+            "de-DE": "CalcZ Wert"
           }
         }
       },
@@ -46,29 +70,6 @@
             "en-GB": "Alternative image",
             "de-DE": "Alternatives Bild"
           }
-        }
-      },
-      {
-        "name": "moorl_pl_calculators",
-        "type": "select",
-        "config": {
-          "_skipEnrichData": true,
-          "label": {
-            "en-GB": "Chose calculator",
-            "de-DE": "Kalkulation auswählen"
-          },
-          "helpText": {
-            "en-GB": "Saves the value of the option as an integer value for later processing",
-            "de-DE": "Speichert den Wert der Option als Integer-Wert für die spätere Verarbeitung"
-          },
-          "options": [
-            {"label": {"en-GB": "Calculator-X"}, "value": "x"},
-            {"label": {"en-GB": "Calculator-Y"}, "value": "y"},
-            {"label": {"en-GB": "Calculator-Z"}, "value": "z"}
-          ],
-          "componentName": "sw-multi-select",
-          "customFieldType": "select",
-          "customFieldPosition": 1
         }
       }
     ]

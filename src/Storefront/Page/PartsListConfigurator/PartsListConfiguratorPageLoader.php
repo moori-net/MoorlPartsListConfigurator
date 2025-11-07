@@ -84,7 +84,6 @@ class PartsListConfiguratorPageLoader
 
         $partsListConfigurator->getFilters()->sortByPosition();
         $partsListConfigurator->setCurrentOptionIds($this->getPropIds($request, 'options'));
-
         $partsListCalculator = $this->getPartsListCalculatorByName($partsListConfigurator->getCalculatorName());
 
         $productStreams = new ProductStreamCollection();
@@ -277,14 +276,27 @@ class PartsListConfiguratorPageLoader
                 $groupTechnicalName = $partsListConfigurator->getMappingName($option->getGroupId());
                 if ($groupTechnicalName) {
                     $item->addGroup($groupTechnicalName);
+                    $customFields = $option->getTranslation('customFields');
                     if ($partsListCalculator->isCalcX($groupTechnicalName)) {
-                        $item->setCalcX((int) $option->getTranslation('name'));
+                        if (!empty($customFields['moorl_pl_calc_x_value'])) {
+                            $item->setCalcX((int) $customFields['moorl_pl_calc_x_value']);
+                        } else {
+                            $item->setCalcX((int) $option->getTranslation('name'));
+                        }
                     }
                     if ($partsListCalculator->isCalcY($groupTechnicalName)) {
-                        $item->setCalcY((int) $option->getTranslation('name'));
+                        if (!empty($customFields['moorl_pl_calc_y_value'])) {
+                            $item->setCalcX((int) $customFields['moorl_pl_calc_y_value']);
+                        } else {
+                            $item->setCalcY((int) $option->getTranslation('name'));
+                        }
                     }
                     if ($partsListCalculator->isCalcZ($groupTechnicalName)) {
-                        $item->setCalcZ((int) $option->getTranslation('name'));
+                        if (!empty($customFields['moorl_pl_calc_z_value'])) {
+                            $item->setCalcX((int) $customFields['moorl_pl_calc_z_value']);
+                        } else {
+                            $item->setCalcZ((int) $option->getTranslation('name'));
+                        }
                     }
                 }
 
