@@ -2,7 +2,6 @@
 
 namespace Moorl\PartsListConfigurator\Core\Calculator;
 
-use Appflix\DewaShop\Core\Content\Option\OptionEntity;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorEntity;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use MoorlFoundation\Core\Content\PartsList\PartsListEntity;

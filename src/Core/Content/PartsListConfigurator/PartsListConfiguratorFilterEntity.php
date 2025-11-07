@@ -31,13 +31,6 @@ class PartsListConfiguratorFilterEntity extends Entity
         $this->propertyGroupOptions = $propertyGroupOptions;
     }
 
-    public function getGroupTechnicalName(): ?string
-    {
-        $customFields = $this->getPropertyGroupOptions()?->first()?->getGroup()?->getTranslation('customFields');
-
-        return $customFields['moorl_pl_name'] ?? null;
-    }
-
     public function getProductStreams(): ?ProductStreamCollection
     {
         return $this->productStreams;

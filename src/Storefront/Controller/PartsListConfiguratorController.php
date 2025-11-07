@@ -102,14 +102,21 @@ class PartsListConfiguratorController extends StorefrontController
     public function logicalConfigurator(SalesChannelContext $salesChannelContext, Request $request): Response
     {
         $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
+        $partsListConfigurator = $page->getPartsListConfigurator();
+
         $groupTechnicalName = $request->query->get('group');
         if (!$groupTechnicalName) {
             throw RoutingException::missingRequestParameter('group');
         }
 
         $currentFilter = null;
-        foreach ($page->getPartsListConfigurator()->getFilters() as $filter) {
-            if ($filter->getGroupTechnicalName() === $groupTechnicalName) {
+        foreach ($partsListConfigurator->getFilters() as $filter) {
+            $groupId = $filter->getPropertyGroupOptions()?->first()?->getGroupId();
+            if (!$groupId) {
+                continue;
+            }
+
+            if ($partsListConfigurator->getMappingName($groupId) === $groupTechnicalName) {
                 $currentFilter = $filter;
                 break;
             }

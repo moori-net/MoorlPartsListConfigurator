@@ -3,7 +3,7 @@
         <fieldset
                 class="js-group product-detail-configurator-group mb-3"
                 data-identifier="{{ identifier }}"
-                data-technical-name="{{ group.translated.customFields.moorl_pl_name }}"
+                data-technical-name="{{ partsListConfigurator.getMappingName(group.id) }}"
                 data-logical="{{ logical }}"
         >
             <legend class="h3">
@@ -49,7 +49,7 @@
                                 aria-labelledby="{{ optionIdentifier }}-label"
                                 {% if isActive %}checked="checked"{% endif %}
                                 data-logical="{{ logical }}"
-                                data-technical-name="{{ option.translated.customFields.moorl_pl_name }}"
+                                data-technical-name="{{ partsListConfigurator.getMappingName(option.id) }}"
                         >
 
                         <label
