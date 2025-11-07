@@ -29,21 +29,22 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
     {
         return [
             ProductStreamDefinition::ENTITY_NAME => [
-                'OPTIONAL_ACCESSORIES',
-                'LAYOUT_ACCESSORIES',
-                'FENCES',
+                'OPTIONAL_ACCESSORIES' => ['optional'],
+                'LAYOUT_ACCESSORIES' => [],
+                'FENCES' => [],
             ],
             PropertyGroupDefinition::ENTITY_NAME => [
-                'PARTS_LIST_LAYOUT',
-                'LENGTH',
+                'PARTS_LIST_LAYOUT' => [],
+                'PARTS_LIST_POST_TYPE' => ['hidden'],
+                'LENGTH' => ['calc-x'],
             ],
             PropertyGroupOptionDefinition::ENTITY_NAME => [
-                'PARTS_LIST_LAYOUT_1',
-                'PARTS_LIST_LAYOUT_2',
-                'PARTS_LIST_LAYOUT_3',
-                'PARTS_LIST_LAYOUT_4',
-                'PARTS_LIST_POST_TYPE_CORNER',
-                'PARTS_LIST_POST_TYPE_SIDE'
+                'PARTS_LIST_LAYOUT_1' => [],
+                'PARTS_LIST_LAYOUT_2' => [],
+                'PARTS_LIST_LAYOUT_3' => [],
+                'PARTS_LIST_LAYOUT_4' => [],
+                'PARTS_LIST_POST_TYPE_CORNER' => [],
+                'PARTS_LIST_POST_TYPE_SIDE' => []
             ],
         ];
     }
@@ -87,11 +88,6 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
                 ]
             ]
         ];
-    }
-
-    public function isCalcX(string $name): bool
-    {
-        return $name === 'LENGTH';
     }
 
     public function calculatePartsList(

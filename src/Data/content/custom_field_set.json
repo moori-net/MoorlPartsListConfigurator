@@ -37,18 +37,6 @@
         }
       },
       {
-        "name": "moorl_pl_hidden",
-        "type": "bool",
-        "config": {
-          "componentName": "sw-switch-field",
-          "customFieldType": "switch",
-          "label": {
-            "en-GB": "Hide",
-            "de-DE": "Verstecken"
-          }
-        }
-      },
-      {
         "name": "moorl_pl_image",
         "type": "media",
         "config": {
@@ -57,18 +45,6 @@
           "label": {
             "en-GB": "Alternative image",
             "de-DE": "Alternatives Bild"
-          }
-        }
-      },
-      {
-        "name": "moorl_pl_optional",
-        "type": "bool",
-        "config": {
-          "componentName": "sw-switch-field",
-          "customFieldType": "switch",
-          "label": {
-            "en-GB": "Optional accessories",
-            "de-DE": "Optionales Zubehör"
           }
         }
       },
