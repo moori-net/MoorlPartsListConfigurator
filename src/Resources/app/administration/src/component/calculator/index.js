@@ -24,10 +24,6 @@ Shopware.Component.register('moorl-parts-list-calculator', {
 
     computed: {
         calculatorOptions() {
-            console.log(this.calculators);
-            console.log(Object.keys(this.calculators));
-
-
             return Object.keys(this.calculators);
         },
 
