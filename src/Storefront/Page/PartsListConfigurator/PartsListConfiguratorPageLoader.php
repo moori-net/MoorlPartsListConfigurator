@@ -119,13 +119,18 @@ class PartsListConfiguratorPageLoader
                         continue;
                     }
 
+                    $groupId = $filter->getPropertyGroupOptions()?->first()?->getGroupId();
+                    if (!$groupId) {
+                        continue;
+                    }
+
                     // Ein logischer Filter sollte nur eine Gruppe haben,
                     // weil der logische Konfigurator des Filters anhand des technischen Namens der Gruppe geladen wird
                     $filter->setLogicalConfigurator($calculator->getLogicalConfigurator(
                         $request,
                         $salesChannelContext,
                         $partsListConfigurator,
-                        $filter->getGroupTechnicalName()
+                        $partsListConfigurator->getMappingName($groupId)
                     ));
 
                     continue;

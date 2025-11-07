@@ -37,8 +37,8 @@ class SalesChannelPartsListConfiguratorEntity extends PartsListConfiguratorEntit
                     continue;
                 }
 
-                if ($option->getGroup()->getTranslation('customFields')['moorl_pl_name'] === $groupTechnicalName) {
-                    return $option->getTranslation('customFields')['moorl_pl_name'];
+                if ($this->getMappingName($option->getGroupId()) === $groupTechnicalName) {
+                    return $this->getMappingName($option->getId());
                 }
             }
         }
