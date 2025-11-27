@@ -1,0 +1,23 @@
+{
+  "base": "/bundles/moorlpartslistconfigurator/administration/",
+  "entryPoints": {
+    "moorl-parts-list-configurator": {
+      "css": [],
+      "dynamic": [],
+      "js": [
+        "/bundles/moorlpartslistconfigurator/administration/assets/moorl-parts-list-configurator-BGbgweyf.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}
