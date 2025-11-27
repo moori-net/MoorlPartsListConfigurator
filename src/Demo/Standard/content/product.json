@@ -1,16 +1,16 @@
 [
     {
-        "id": "{ID:PRODUCT_FENCE_656}",
+        "id": "{ID:PRODUCT_FENCE_656_1000}",
         "active": true,
         "translations": {
             "{de-DE}": {
-                "name": "Zaunmatten (6/5/6)"
+                "name": "Zaunmatten - 1000mm (6/5/6)"
             },
             "{en-GB}": {
-                "name": "Fence panel (6/5/6)"
+                "name": "Fence panel - 1000mm (6/5/6)"
             }
         },
-        "productNumber": "FENCE_656",
+        "productNumber": "FENCE_656_1000",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:50|S}",
@@ -29,18 +29,60 @@
             "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
         },
         "properties": [
-            {"id": "{MD5:LINE_656}"}
+            {"id": "{MD5:LINE_656}"},
+            {"id": "{MD5:LENGTH_1000}"}
         ],
         "configuratorSettings": [
-            {"id": "{ID:PRODUCT_FENCE_656.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
-            {"id": "{ID:PRODUCT_FENCE_656.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
-            {"id": "{ID:PRODUCT_FENCE_656.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
-            {"id": "{ID:PRODUCT_FENCE_656.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
-            {"id": "{ID:PRODUCT_FENCE_656.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
-            {"id": "{ID:PRODUCT_FENCE_656.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
-            {"id": "{ID:PRODUCT_FENCE_656.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150},
-            {"id": "{ID:PRODUCT_FENCE_656.LENGTH_1000}", "optionId": "{MD5:LENGTH_1000}"},
-            {"id": "{ID:PRODUCT_FENCE_656.LENGTH_2500}", "optionId": "{MD5:LENGTH_2500}", "_price": 200}
+            {"id": "{ID:PRODUCT_FENCE_656_1000.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_FENCE_656_1000.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
+            {"id": "{ID:PRODUCT_FENCE_656_1000.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
+            {"id": "{ID:PRODUCT_FENCE_656_1000.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_FENCE_656_1000.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
+            {"id": "{ID:PRODUCT_FENCE_656_1000.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
+            {"id": "{ID:PRODUCT_FENCE_656_1000.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150}
+        ]
+    },
+    {
+        "id": "{ID:PRODUCT_FENCE_656_2500}",
+        "active": true,
+        "translations": {
+            "{de-DE}": {
+                "name": "Zaunmatten - 2500mm (6/5/6)"
+            },
+            "{en-GB}": {
+                "name": "Fence panel - 2500mm (6/5/6)"
+            }
+        },
+        "productNumber": "FENCE_656_2500",
+        "stock": 100,
+        "taxId": "{TAX_ID_STANDARD}",
+        "price": "{PRICE:150|S}",
+        "visibilities": [
+            {
+                "salesChannelId": "{SALES_CHANNEL_ID}",
+                "visibility": 30
+            }
+        ],
+        "categories": [
+            {
+                "id": "{ID:CATEGORY_PARTS_LIST_FENCES}"
+            }
+        ],
+        "cover": {
+            "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
+        },
+        "properties": [
+            {"id": "{MD5:LINE_656}"},
+            {"id": "{MD5:LENGTH_2500}"}
+        ],
+        "configuratorSettings": [
+            {"id": "{ID:PRODUCT_FENCE_656_2500.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_FENCE_656_2500.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
+            {"id": "{ID:PRODUCT_FENCE_656_2500.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
+            {"id": "{ID:PRODUCT_FENCE_656_2500.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_FENCE_656_2500.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
+            {"id": "{ID:PRODUCT_FENCE_656_2500.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
+            {"id": "{ID:PRODUCT_FENCE_656_2500.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150}
         ]
     },
     {
