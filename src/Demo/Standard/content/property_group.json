@@ -2,7 +2,7 @@
   {
     "id": "{ID:LINE}",
     "position": 0,
-    "name": "Line",
+    "name": "[MPL] Line",
     "displayType": "text",
     "sortingType": "position",
     "options": [
@@ -15,10 +15,10 @@
     "position": 1,
     "translations": {
       "{de-DE}": {
-        "name": "Farbe"
+        "name": "[MPL] Farbe"
       },
       "{en-GB}": {
-        "name": "Color"
+        "name": "[MPL] Color"
       }
     },
     "displayType": "media",
@@ -69,7 +69,7 @@
     "id": "{ID:PARTS_LIST_LAYOUT}",
     "position": 4,
     "displayType": "media",
-    "name": "Layout",
+    "name": "[MPL] Layout",
     "sortingType": "position",
     "options": [
       {
@@ -131,10 +131,10 @@
     "position": 10,
     "translations": {
       "{de-DE}": {
-        "name": "Höhe"
+        "name": "[MPL] Höhe"
       },
       "{en-GB}": {
-        "name": "Height"
+        "name": "[MPL] Height"
       }
     },
     "sortingType": "position",
@@ -150,10 +150,10 @@
     "position": 11,
     "translations": {
       "{de-DE}": {
-        "name": "Länge"
+        "name": "[MPL] Länge"
       },
       "{en-GB}": {
-        "name": "Length"
+        "name": "[MPL] Length"
       }
     },
     "sortingType": "position",
@@ -170,10 +170,10 @@
     "displayType": "text",
     "translations": {
       "{de-DE}": {
-        "name": "Pfostentyp"
+        "name": "[MPL] Pfostentyp"
       },
       "{en-GB}": {
-        "name": "Post type"
+        "name": "[MPL] Post type"
       }
     },
     "sortingType": "position",
@@ -210,10 +210,10 @@
     "displayType": "media",
     "translations": {
       "{de-DE}": {
-        "name": "Zaunbefestigung"
+        "name": "[MPL] Zaunbefestigung"
       },
       "{en-GB}": {
-        "name": "Fence mounting"
+        "name": "[MPL] Fence mounting"
       }
     },
     "sortingType": "position",
@@ -252,10 +252,10 @@
     "displayType": "media",
     "translations": {
       "{de-DE}": {
-        "name": "Bodenbefestigung"
+        "name": "[MPL] Bodenbefestigung"
       },
       "{en-GB}": {
-        "name": "Ground mounting"
+        "name": "[MPL] Ground mounting"
       }
     },
     "sortingType": "position",
