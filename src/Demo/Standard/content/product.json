@@ -1,6 +1,7 @@
 [
     {
         "id": "{ID:PRODUCT_FENCE_656_1000}",
+        "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
             "{de-DE}": {
@@ -44,6 +45,7 @@
     },
     {
         "id": "{ID:PRODUCT_FENCE_656_2500}",
+        "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
             "{de-DE}": {
@@ -87,6 +89,7 @@
     },
     {
         "id": "{ID:PRODUCT_FENCE_868}",
+        "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
             "{de-DE}": {
@@ -131,6 +134,7 @@
     },
     {
         "id": "{ID:PRODUCT_POST_SMALL}",
+        "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
             "{de-DE}": {
@@ -181,6 +185,7 @@
     },
     {
         "id": "{ID:PRODUCT_POST_LARGE}",
+        "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
             "{de-DE}": {
@@ -231,6 +236,7 @@
     },
     {
         "id": "{ID:PRODUCT_DOOR_SMALL}",
+        "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
             "{de-DE}": {
@@ -280,6 +286,7 @@
     },
     {
         "id": "{ID:PRODUCT_DOOR_LARGE}",
+        "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
             "{de-DE}": {
