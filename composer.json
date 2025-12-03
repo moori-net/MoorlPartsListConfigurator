@@ -1,7 +1,7 @@
 {
     "name": "moorl/parts-list-configurator",
     "description": "Parts list configurator",
-    "version": "1.7.20",
+    "version": "1.7.21",
     "license": "proprietary",
     "authors": [
         {
@@ -10,7 +10,7 @@
     ],
     "require": {
         "shopware/core": "~6.7.0",
-        "moorl/foundation": "1.7.*"
+        "moorl/foundation": "~1.7.46"
     },
     "type": "shopware-platform-plugin",
     "autoload": {
