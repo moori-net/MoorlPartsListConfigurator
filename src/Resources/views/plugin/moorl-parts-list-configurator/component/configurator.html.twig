@@ -1,3 +1,17 @@
+{# Collecting media #}
+{% set mediaIds = [] %}
+{% for group in configuratorSettings %}
+    {% for option in group.options %}
+        {% if option.translated.customFields.moorl_pl_image %}
+            {% set mediaIds = mediaIds|merge([option.translated.customFields.moorl_pl_image]) %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% if mediaIds|length >= 1 %}
+    {% set mediaCollection = searchMedia(mediaIds, context.context) %}
+{% endif %}
+
 {% for group in configuratorSettings %}
         <fieldset
                 class="js-group product-detail-configurator-group mb-3"
@@ -38,7 +52,17 @@
                         {% endif %}
                     {% endif %}
 
-                    <div class="product-detail-configurator-option d-inline-flex" data-position="{{ option.translated.position }}">
+                    <div
+                            class="product-detail-configurator-option d-inline-flex"
+                            data-position="{{ option.translated.position }}"
+                            {% if option.translated.customFields.moorl_pl_image %}
+                                data-moorl-hover-card="true"
+                                data-moorl-hover-card-options="{{ {
+                                    template: "#popover-#{optionIdentifier}",
+                                    placement: "top"
+                                }|json_encode }}"
+                            {% endif %}
+                    >
                         <input
                                 type="radio"
                                 name="{{ group.id }}"
@@ -63,7 +87,7 @@
                                 {% sw_thumbnails 'configurator-option-img-thumbnails' with {
                                     media: media,
                                     sizes: {
-                                        default: '52px'
+                                        default: '120px'
                                     },
                                     attributes: {
                                         class: 'product-detail-configurator-option-image h-100',
@@ -82,6 +106,23 @@
                             {% endif %}
                         </label>
                     </div>
+
+                    {% if option.translated.customFields.moorl_pl_image %}
+                        {% set popoverMedia = mediaCollection.get(option.translated.customFields.moorl_pl_image) %}
+
+                        <template id="popover-{{ optionIdentifier }}">
+                            {% sw_thumbnails 'configurator-option-img-thumbnails' with {
+                                media: popoverMedia,
+                                sizes: {
+                                    default: '120px'
+                                },
+                                attributes: {
+                                    class: 'product-detail-configurator-option-image h-100',
+                                    role: 'presentation',
+                                }
+                            } %}
+                        </template>
+                    {% endif %}
                 {% endfor %}
             </div>
 
