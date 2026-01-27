@@ -1,5 +1,5 @@
 {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
     type: "danger",
-    content: "moorl-parts-list-configurator.calculatedPartsListError"|trans|sw_sanitize
+    content: content ?: "moorl-parts-list-configurator.calculatedPartsListError"|trans|sw_sanitize
 } %}
 <div style="display: none;">{{ exception.message }}</div>

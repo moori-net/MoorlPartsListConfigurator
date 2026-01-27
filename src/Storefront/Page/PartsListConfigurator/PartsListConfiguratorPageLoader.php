@@ -58,6 +58,19 @@ class PartsListConfiguratorPageLoader
         return $this->cartService;
     }
 
+    public function getErrorMessage(Request $request, SalesChannelContext $salesChannelContext): ?string
+    {
+        $partsListConfiguratorId = $request->attributes->get('partsListConfiguratorId');
+        if (!$partsListConfiguratorId) {
+            throw RoutingException::missingRequestParameter('partsListConfiguratorId');
+        }
+
+        $criteria = new Criteria();
+        $result = $this->partsListConfiguratorDetailRoute->load($partsListConfiguratorId, $request, $salesChannelContext, $criteria);
+
+        return $result->getPartsListConfigurator()->getTranslation('errorMessage');
+    }
+
     public function load(
         Request $request,
         SalesChannelContext $salesChannelContext,

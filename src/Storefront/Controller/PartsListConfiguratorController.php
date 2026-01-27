@@ -47,6 +47,7 @@ class PartsListConfiguratorController extends StorefrontController
             );
         } catch (PartsListCalculatorException $exception) {
             return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
+                'content' => $this->partsListConfiguratorPageLoader->getErrorMessage($request, $salesChannelContext),
                 'exception' => $exception
             ]);
         }
@@ -68,7 +69,8 @@ class PartsListConfiguratorController extends StorefrontController
                 [PartsListConfiguratorPageLoader::OPT_NO_PARENT]
             );
         } catch (PartsListCalculatorException $exception) {
-            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
+            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [#
+                'content' => $this->partsListConfiguratorPageLoader->getErrorMessage($request, $salesChannelContext),
                 'exception' => $exception
             ]);
         }
