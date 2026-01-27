@@ -10,6 +10,7 @@ class PartsListConfiguratorTranslationEntity extends TranslationEntity
     protected ?string $role = null;
     protected ?string $teaser = null;
     protected ?string $description = null;
+    protected ?string $errorMessage = null;
 
     public function getName(): string
     {
@@ -39,5 +40,15 @@ class PartsListConfiguratorTranslationEntity extends TranslationEntity
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getErrorMessage(): ?string
+    {
+        return $this->errorMessage;
+    }
+
+    public function setErrorMessage(?string $errorMessage): void
+    {
+        $this->errorMessage = $errorMessage;
     }
 }

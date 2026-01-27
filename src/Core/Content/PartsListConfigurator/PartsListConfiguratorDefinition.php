@@ -11,6 +11,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class PartsListConfiguratorDefinition extends EntityDefinition
@@ -54,7 +55,8 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             [
                 (new StringField('type', 'type'))->addFlags(new Required()),
                 (new StringField('calculator', 'calculator')),
-                (new JsonField('mapping', 'mapping'))
+                (new JsonField('mapping', 'mapping')),
+                (new TranslatedField('errorMessage'))->addFlags(),
             ],
             FieldThingCollection::getFieldItems(media: false),
             FieldMediaGalleryMediaCollection::getFieldItems(
