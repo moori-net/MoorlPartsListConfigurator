@@ -1,6 +1,6 @@
 {% if logicalConfigurator %}
     {% block parts_list_logical_configurator %}
-        {% if logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT' %}
+        {% if page.partsListConfigurator.calculator == 'demo-fence' and logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT' %}
             {% for element in logicalConfigurator.elements %}
                 <div class="row my-3">
                     <div class="col-2 product-detail-configurator-group-title">
@@ -31,6 +31,34 @@
                                 variant: 'slider'
                             }
                         } %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if page.partsListConfigurator.calculator == 'demo-fence-2' and logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT' %}
+            {% for element in logicalConfigurator.elements %}
+                <div class="row my-3">
+                    <div class="col-2 product-detail-configurator-group-title">
+                        {{ "moorl-parts-list-configurator.logical-configurator.field.#{element}"|trans }}
+                    </div>
+
+                    <div class="col-10">
+                        <div class="input-group mb-2">
+                            <label for="{{ element }}_length" class="input-group-text">
+                                {{ "moorl-parts-list-configurator.logical-configurator.field.totalLength"|trans }}
+                            </label>
+                            <input
+                                    class="form-control"
+                                    type="number"
+                                    name="{{ element }}_length"
+                                    id="{{ element }}_length"
+                                    min="250"
+                                    value="250"
+                                    step="250"
+                            />
+                            <span class="input-group-text">cm</span>
+                        </div>
                     </div>
                 </div>
             {% endfor %}

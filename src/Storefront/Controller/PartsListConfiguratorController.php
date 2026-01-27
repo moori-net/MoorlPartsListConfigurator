@@ -29,7 +29,9 @@ class PartsListConfiguratorController extends StorefrontController
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/page/content/parts-list-configurator-detail.html.twig', [
             'page' => $page,
             'partsList' => $page->getPartsList(),
-            'accessoryList' => $page->getPartsList()->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds())
+            'accessoryList' => $page->getPartsList()->filterByAnyProductStreamId(
+                $page->getPartsListConfigurator()->getAccessoryProductStreamIds()
+            )
         ]);
     }
 
@@ -94,7 +96,9 @@ class PartsListConfiguratorController extends StorefrontController
         }
 
         return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
-            'items' => $page->getPartsList()->filterByProductStreamIds($page->getPartsListConfigurator()->getAccessoryProductStreamIds()),
+            'items' => $page->getPartsList()->filterByAnyProductStreamId(
+                $page->getPartsListConfigurator()->getAccessoryProductStreamIds()
+            ),
             'namePrefix' => 'accessory',
             'options' => []
         ]);
@@ -126,7 +130,9 @@ class PartsListConfiguratorController extends StorefrontController
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator.html.twig', [
             'page' => $page,
-            'accessoryList' => $page->getPartsList()->filterByProductStreamIds($currentFilter->getProductStreams()->getKeys()),
+            'accessoryList' => $page->getPartsList()->filterByProductStreamIds(
+                $currentFilter->getProductStreams()->getKeys()
+            ),
             'logicalConfigurator' => $currentFilter->getLogicalConfigurator(),
         ]);
     }
