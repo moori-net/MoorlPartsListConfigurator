@@ -135,5 +135,11 @@
 
             <tag name="moorl.parts.list.calculator"/>
         </service>
+
+        <service id="Moorl\PartsListConfigurator\Core\Calculator\DemoFenceCalculator2">
+            <argument type="service" id="Moorl\PartsListConfigurator\Core\Service\PartsListService"/>
+
+            <tag name="moorl.parts.list.calculator"/>
+        </service>
     </services>
 </container>
