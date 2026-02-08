@@ -49,8 +49,3 @@ Perfect for:
 - Mechanical or industrial equipment configuration
 - Electrical and spare part configurators
 - Vehicle or bicycle component shops
-
-## Conclusion
-
-With the **BOM Configurator**, you transform your Shopware shop into an intelligent, error-tolerant configuration system.  
-Your customers enjoy a smooth and intuitive shopping experience - while you save time, support effort, and unnecessary costs.
