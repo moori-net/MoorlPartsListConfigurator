@@ -30,7 +30,7 @@ class MoorlPartsListConfigurator extends Plugin
         'category_translation',
         'seo_url',
         'property_group',
-        'product_stream', /* Insert before products because indexing */
+        'product_stream',
         'product',
         'product_translation',
         'product_category',
