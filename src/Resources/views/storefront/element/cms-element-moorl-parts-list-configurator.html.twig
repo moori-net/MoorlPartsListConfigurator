@@ -70,17 +70,6 @@
                     {{ "moorl-parts-list-configurator.load"|trans }}
                 </button>
             </div>
-
-            <fieldset
-                    id="partsList"
-                    style="display: none"
-            >
-                <legend class="h3">
-                    {{ "moorl-parts-list-configurator.calculatedPartsList"|trans }}
-                </legend>
-
-                <div data-content></div>
-            </fieldset>
         </div>
 
         <div class="col-12 col-lg-4">
@@ -113,21 +102,28 @@
                     } %}
                 </div>
 
-                <div class="configurator-card configurator-v-spacer">
-                    <div class="bold">
-                        Ihre aktuelle Auswahl:
-                    </div>
-                    <div class="">
-                        <i>Noch keine Auswahl getroffen.</i>
-                    </div>
-                </div>
-
-                <div
+                <fieldset
                         class="configurator-card configurator-v-spacer"
-                        data-hide-on-load
+                        id="mySummary"
+                >
+                    <legend class="h3">
+                        {{ "moorl-parts-list-configurator.mySummary"|trans }}
+                    </legend>
+
+                    <div data-content>{{ "moorl-parts-list-configurator.nothingSelected"|trans }}</div>
+                </fieldset>
+
+                <fieldset
+                        class="configurator-card configurator-v-spacer"
+                        id="partsList"
                         style="display: none"
                 >
-                </div>
+                    <legend class="h3">
+                        {{ "moorl-parts-list-configurator.calculatedPartsList"|trans }}
+                    </legend>
+
+                    <div data-content></div>
+                </fieldset>
             </div>
         </div>
     </div>

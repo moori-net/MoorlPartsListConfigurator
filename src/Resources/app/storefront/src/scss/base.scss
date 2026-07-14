@@ -10,6 +10,54 @@
     width: 120px;
   }
 
+  .configurator-group {
+    margin-bottom: 4.5rem;
+  }
+
+  legend.h3 {
+    display: flex;
+    font-weight: 600;
+  }
+
+  .configurator-group-step {
+    border-radius: 9999px;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    margin-right: 0.75rem;
+    background-color: #1f2937 !important;
+    color: #ffffff !important;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  .configurator-group-locked {
+    opacity: 0.35;
+    pointer-events: none;
+    user-select: none;
+    filter: grayscale(60%);
+
+    .configurator-group-step {
+      background-color: #f3f4f6 !important;
+      border: 1px solid #e5e7eb;
+      color: #9ca3af !important;
+    }
+  }
+
+  .configurator-group-complete {
+    .configurator-group-step {
+      background-color: #10b981 !important;
+      color: #ffffff !important;
+    }
+  }
+
   .configurator-selection-group {
     display: grid;
     gap: 1rem;
