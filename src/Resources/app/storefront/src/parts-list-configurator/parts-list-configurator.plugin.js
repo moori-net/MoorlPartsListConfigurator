@@ -114,8 +114,9 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 this._loadPartsList();
             }
 
-            let currentStep = 0;
+            this._enableNextStep = true;
             this._summary = [];
+            let currentStep = 0;
 
             this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
                 currentStep++;
@@ -200,7 +201,12 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             groupEl.classList.remove('configurator-group-locked');
             stepBadge.innerText = currentStep;
 
-            const checkedOption = groupEl.querySelector('input[type=radio]:checked');
+            const checkedOption = groupEl.querySelector('input[type=radio]:checked') ?? null;
+
+            if (!checkedOption) {
+                this._enableNextStep = false;
+                return;
+            }
 
             let stepComplete = checkedOption.length !== 0;
 
@@ -225,10 +231,11 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         groupEl.querySelectorAll('input[type=radio]').forEach((el) => {
             if (el.checked) {
+                const name = el.dataset.name;
                 const description = el.dataset.description;
 
                 if (description.length) {
-                    groupDescriptionEl.innerHTML = description;
+                    groupDescriptionEl.innerHTML = description.replace("%name%", `<strong>${name}</strong>`);
                     groupDescriptionEl.style.display = "";
                 }
             }

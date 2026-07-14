@@ -12,7 +12,7 @@
         "position": 1,
         "name": "Doppelstabmatte 6/5/6",
         "customFields": {
-          "moorl_pl_description": "Die <strong>Doppelstabmatte 6/5/6 mm</strong> bietet ein ideales Gleichgewicht zwischen Stabilität und Ästhetik. Zwei 6-mm-Horizontalstäbe und ein 5-mm-Vertikalstab werden fest miteinander verschweißt."
+          "moorl_pl_description": "Die %name% bietet ein ideales Gleichgewicht zwischen Stabilität und Ästhetik. Zwei 6-mm-Horizontalstäbe und ein 5-mm-Vertikalstab werden fest miteinander verschweißt."
         }
       },
       {
@@ -21,7 +21,7 @@
         "position": 2,
         "name": "Doppelstabmatte 8/6/8",
         "customFields": {
-          "moorl_pl_description": "Die <strong>Doppelstabmatte 8/6/8 mm</strong> ist die robustere Variante – ideal für erhöhte Sicherheitsanforderungen und Gewerbeobjekte."
+          "moorl_pl_description": "Die %name% ist die robustere Variante – ideal für erhöhte Sicherheitsanforderungen und Gewerbeobjekte."
         }
       },
       {
@@ -30,7 +30,7 @@
         "position": 3,
         "name": "Einstabmatte 4 mm",
         "customFields": {
-          "moorl_pl_description": "Die <strong>Einstabmatte 4 mm</strong> ist eine leichtere Alternative, ideal für dekorative Einzäunungen."
+          "moorl_pl_description": "Die %name% ist eine leichtere Alternative, ideal für dekorative Einzäunungen."
         }
       },
       {
@@ -39,7 +39,7 @@
         "position": 4,
         "name": "Schmuckzaunmatte 6/5/6",
         "customFields": {
-          "moorl_pl_description": "Die <strong>Schmuckzaunmatte 6/5/6 mm</strong> verbindet Funktion mit Design – ideal für Gärten und repräsentative Einfriedungen."
+          "moorl_pl_description": "Die %name% verbindet Funktion mit Design – ideal für Gärten und repräsentative Einfriedungen."
         }
       }
     ]
@@ -63,10 +63,16 @@
         "position": 1,
         "translations": {
           "{de-DE}": {
-            "name": "RAL 6005, Grün"
+            "name": "RAL 6005, Grün",
+            "customFields": {
+              "moorl_pl_description": "%name%: Natürliche Farbe, die sich harmonisch in Gartenlandschaften einfügt. Pulverbeschichtet über Feuerverzinkung."
+            }
           },
           "{en-GB}": {
-            "name": "RAL 6005, green"
+            "name": "RAL 6005, green",
+            "customFields": {
+              "moorl_pl_description": "%name%: Natürliche Farbe, die sich harmonisch in Gartenlandschaften einfügt. Pulverbeschichtet über Feuerverzinkung."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/COLOR_RAL_6005.jpg}"
@@ -76,10 +82,16 @@
         "position": 2,
         "translations": {
           "{de-DE}": {
-            "name": "RAL 7016, Anthrazit"
+            "name": "RAL 7016, Anthrazit",
+            "customFields": {
+              "moorl_pl_description": "%name%: Moderne, edle Optik mit hochwertigem Korrosionsschutz. Feuerverzinkt und pulverbeschichtet."
+            }
           },
           "{en-GB}": {
-            "name": "RAL 7016, anthracite"
+            "name": "RAL 7016, anthracite",
+            "customFields": {
+              "moorl_pl_description": "%name%: Moderne, edle Optik mit hochwertigem Korrosionsschutz. Feuerverzinkt und pulverbeschichtet."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/COLOR_RAL_7016.jpg}"
@@ -89,10 +101,16 @@
         "position": 0,
         "translations": {
           "{de-DE}": {
-            "name": "Feuerverzinkt"
+            "name": "Feuerverzinkt",
+            "customFields": {
+              "moorl_pl_description": "%name%: Maximaler Korrosionsschutz ohne Farbbeschichtung. Der Zinküberzug schützt zuverlässig vor Witterungseinflüssen."
+            }
           },
           "{en-GB}": {
-            "name": "Galvanized"
+            "name": "Galvanized",
+            "customFields": {
+              "moorl_pl_description": "%name%: Maximaler Korrosionsschutz ohne Farbbeschichtung. Der Zinküberzug schützt zuverlässig vor Witterungseinflüssen."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/COLOR_NONE.jpg}"
@@ -111,10 +129,12 @@
         "position": 0,
         "translations": {
           "{de-DE}": {
-            "name": "1 Seite, 0 Ecken"
+            "name": "1 Seite, 0 Ecken",
+            "description": ""
           },
           "{en-GB}": {
-            "name": "1 side, 0 corners"
+            "name": "1 side, 0 corners",
+            "description": ""
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_1.svg}"
@@ -124,10 +144,12 @@
         "position": 1,
         "translations": {
           "{de-DE}": {
-            "name": "2 Seiten, 1 Ecke"
+            "name": "2 Seiten, 1 Ecke",
+            "description": ""
           },
           "{en-GB}": {
-            "name": "2 sides, 1 corner"
+            "name": "2 sides, 1 corner",
+            "description": ""
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_2.svg}"
@@ -137,10 +159,12 @@
         "position": 2,
         "translations": {
           "{de-DE}": {
-            "name": "3 Seiten, 2 Ecken"
+            "name": "3 Seiten, 2 Ecken",
+            "description": ""
           },
           "{en-GB}": {
-            "name": "3 sides, 2 corners"
+            "name": "3 sides, 2 corners",
+            "description": ""
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_3.svg}"
@@ -150,10 +174,12 @@
         "position": 3,
         "translations": {
           "{de-DE}": {
-            "name": "4 Seiten, 3 Ecken"
+            "name": "4 Seiten, 3 Ecken",
+            "description": ""
           },
           "{en-GB}": {
-            "name": "4 sides, 3 corners"
+            "name": "4 sides, 3 corners",
+            "description": ""
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}"
@@ -184,10 +210,12 @@
     "position": 11,
     "translations": {
       "{de-DE}": {
-        "name": "[MPL] Länge"
+        "name": "[MPL] Länge",
+        "description": ""
       },
       "{en-GB}": {
-        "name": "[MPL] Length"
+        "name": "[MPL] Length",
+        "description": ""
       }
     },
     "sortingType": "position",
