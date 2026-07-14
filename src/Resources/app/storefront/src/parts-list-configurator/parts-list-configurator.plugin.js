@@ -7,7 +7,9 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         type: 'calculator',
         url: null,
         optionCount: 0,
-        loaderClass: 'loader'
+        loaderClass: 'loader',
+        iconLocked: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>',
+        iconComplete: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>'
     };
 
     init() {
@@ -15,10 +17,12 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._filters = {
             options: []
         };
+        this._summary = [];
         this._timeout = null;
-        this._step = 0;
+        this._enableNextStep = true;
 
         this._previewImage = document.getElementById('previewImage');
+        this._mySummaryEl = document.getElementById('mySummary');
         this._partsListEl = document.getElementById('partsList');
         this._accessoryList = document.getElementById('accessoryList');
         this._formEl = this.el.querySelector('form');
@@ -31,7 +35,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             if (!stepEl) {
                 return;
             }
-            stepEl.innerText = this.options.optionCount;
+            stepEl.innerHtml = this.options.optionCount;
         });
 
         this._setFilterState();
@@ -110,11 +114,22 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 this._loadPartsList();
             }
 
+            let currentStep = 0;
+            this._summary = [];
+
             this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
+                currentStep++;
+                this._loadGroupStep(groupEl, currentStep);
                 this._loadGroupDescription(groupEl);
                 this._loadPreviewImage(groupEl);
                 this._loadLogicalConfigurator(groupEl);
             });
+
+            if (this._summary.length) {
+                const mySummaryContentEl = this._mySummaryEl.querySelector("[data-content]");
+
+                this._renderSummaryTable(mySummaryContentEl);
+            }
 
             this._timeout = null;
         }, 100);
@@ -176,6 +191,33 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 this._previewImage.src = el.dataset.preview;
             }
         });
+    }
+
+    _loadGroupStep(groupEl, currentStep) {
+        const stepBadge = groupEl.querySelector('[data-step]');
+
+        if (this._enableNextStep) {
+            groupEl.classList.remove('configurator-group-locked');
+            stepBadge.innerText = currentStep;
+
+            const checkedOption = groupEl.querySelector('input[type=radio]:checked');
+
+            let stepComplete = checkedOption.length !== 0;
+
+            if (stepComplete) {
+                this._summary.push({
+                    group: groupEl.dataset.name,
+                    option: checkedOption.dataset.name
+                });
+
+                groupEl.classList.add('configurator-group-complete');
+                stepBadge.innerHTML = this.options.iconComplete;
+            }
+
+            this._enableNextStep = stepComplete;
+        } else {
+            stepBadge.innerHTML = this.options.iconLocked;
+        }
     }
 
     _loadGroupDescription(groupEl) {
@@ -265,5 +307,37 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         });
 
         return mapped;
+    }
+
+    _renderSummaryTable(containerEl) {
+        if (!containerEl) {
+            return;
+        }
+
+        const tableEl = document.createElement('table');
+        tableEl.classList.add(
+            'table',
+            'align-middle',
+            'mb-0'
+        );
+
+        const tableBodyEl = document.createElement('tbody');
+
+        this._summary.forEach(summaryItem => {
+            const rowEl = document.createElement('tr');
+
+            const groupCellEl = document.createElement('th');
+            groupCellEl.scope = 'row';
+            groupCellEl.textContent = summaryItem.group ?? '';
+
+            const optionCellEl = document.createElement('td');
+            optionCellEl.textContent = summaryItem.option ?? '';
+
+            rowEl.append(groupCellEl, optionCellEl);
+            tableBodyEl.appendChild(rowEl);
+        });
+
+        tableEl.append(tableBodyEl);
+        containerEl.replaceChildren(tableEl);
     }
 }

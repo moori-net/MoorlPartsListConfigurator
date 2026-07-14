@@ -14,14 +14,18 @@
 
 {% for group in configuratorSettings %}
     <fieldset
-            class="js-group product-detail-configurator-group mb-3"
+            class="js-group configurator-group configurator-group-locked"
             data-identifier="{{ identifier }}"
             data-technical-name="{{ partsListConfigurator.getMappingName(group.id) }}"
             data-logical="{{ logical }}"
             data-preview="{{ preview }}"
+            data-name="{{ group.translated.name }}"
+
     >
         <legend class="h3">
-            <span data-step>{{ step }}</span>
+            <span data-step class="configurator-group-step">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </span>
             {{ 'component.product.configurator.legend'|trans({ '%group_name%': group.translated.name, '%hidden_cls%': 'visually-hidden' })|sw_sanitize }}
         </legend>
 
@@ -74,6 +78,7 @@
                             data-technical-name="{{ partsListConfigurator.getMappingName(option.id) }}"
                             data-description="{{ option.translated.customFields.moorl_pl_description }}"
                             data-preview="{{ media.url }}"
+                            data-name="{{ option.translated.name }}"
                     >
 
                     <label
