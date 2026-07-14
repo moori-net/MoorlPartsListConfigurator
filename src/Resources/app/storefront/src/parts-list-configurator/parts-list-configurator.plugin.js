@@ -18,6 +18,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._timeout = null;
         this._step = 0;
 
+        this._previewImage = document.getElementById('previewImage');
         this._partsListEl = document.getElementById('partsList');
         this._accessoryList = document.getElementById('accessoryList');
         this._formEl = this.el.querySelector('form');
@@ -110,11 +111,13 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             }
 
             this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
+                this._loadGroupDescription(groupEl);
+                this._loadPreviewImage(groupEl);
                 this._loadLogicalConfigurator(groupEl);
             });
 
             this._timeout = null;
-        }, 1000);
+        }, 100);
     }
 
     _loadList(currentEl, type) {
@@ -161,6 +164,33 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
     _loadAccessoryList() {
         this._loadList(this._accessoryList, 'accessory-list');
+    }
+
+    _loadPreviewImage(groupEl) {
+        if (!groupEl.dataset.preview) {
+            return;
+        }
+
+        groupEl.querySelectorAll('input[type=radio]').forEach((el) => {
+            if (el.checked) {
+                this._previewImage.src = el.dataset.preview;
+            }
+        });
+    }
+
+    _loadGroupDescription(groupEl) {
+        const groupDescriptionEl = groupEl.querySelector('.js-group-description');
+
+        groupEl.querySelectorAll('input[type=radio]').forEach((el) => {
+            if (el.checked) {
+                const description = el.dataset.description;
+
+                if (description.length) {
+                    groupDescriptionEl.innerHTML = description;
+                    groupDescriptionEl.style.display = "";
+                }
+            }
+        });
     }
 
     _loadLogicalConfigurator(groupEl) {

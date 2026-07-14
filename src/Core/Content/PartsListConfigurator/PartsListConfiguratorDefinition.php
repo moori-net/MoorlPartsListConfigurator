@@ -65,7 +65,10 @@ class PartsListConfiguratorDefinition extends EntityDefinition
             ),
             FieldMultiEntityCollection::getOneToManyFieldItems(
                 localClass: self::class,
-                references: [PartsListConfiguratorFilterDefinition::class]
+                references: [
+                    PartsListConfiguratorFilterDefinition::class,
+                    PartsListConfiguratorPreviewDefinition::class,
+                ]
             ),
         ));
     }

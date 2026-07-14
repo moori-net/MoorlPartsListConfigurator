@@ -3,11 +3,45 @@
     "id": "{ID:LINE}",
     "position": 0,
     "name": "[MPL] Line",
-    "displayType": "text",
+    "displayType": "media",
     "sortingType": "position",
     "options": [
-      {"id": "{MD5:LINE_656}", "name": "6/5/6"},
-      {"id": "{MD5:LINE_868}", "name": "8/6/8"}
+      {
+        "id": "{MD5:Doppelstabmatte_656}",
+        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_656.jpg}",
+        "position": 1,
+        "name": "Doppelstabmatte 6/5/6",
+        "customFields": {
+          "moorl_pl_description": "Die <strong>Doppelstabmatte 6/5/6 mm</strong> bietet ein ideales Gleichgewicht zwischen Stabilität und Ästhetik. Zwei 6-mm-Horizontalstäbe und ein 5-mm-Vertikalstab werden fest miteinander verschweißt."
+        }
+      },
+      {
+        "id": "{MD5:Doppelstabmatte_868}",
+        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_868.jpg}",
+        "position": 2,
+        "name": "Doppelstabmatte 8/6/8",
+        "customFields": {
+          "moorl_pl_description": "Die <strong>Doppelstabmatte 8/6/8 mm</strong> ist die robustere Variante – ideal für erhöhte Sicherheitsanforderungen und Gewerbeobjekte."
+        }
+      },
+      {
+        "id": "{MD5:Einstabmatte_4mm}",
+        "mediaId": "{MEDIA_FILE:new/Einstabmatte_4mm.jpg}",
+        "position": 3,
+        "name": "Einstabmatte 4 mm",
+        "customFields": {
+          "moorl_pl_description": "Die <strong>Einstabmatte 4 mm</strong> ist eine leichtere Alternative, ideal für dekorative Einzäunungen."
+        }
+      },
+      {
+        "id": "{MD5:Schmuckzaunmatte_656}",
+        "mediaId": "{MEDIA_FILE:new/Schmuckzaunmatte_656.jpg}",
+        "position": 4,
+        "name": "Schmuckzaunmatte 6/5/6",
+        "customFields": {
+          "moorl_pl_description": "Die <strong>Schmuckzaunmatte 6/5/6 mm</strong> verbindet Funktion mit Design – ideal für Gärten und repräsentative Einfriedungen."
+        }
+      }
     ]
   },
   {
