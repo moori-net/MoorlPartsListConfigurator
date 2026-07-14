@@ -1,5 +1,7 @@
 {
   "moorl-parts-list-configurator": {
+    "mySummary": "Zusammenfassung",
+    "nothingSelected": "aktuell nichts ausgewählt",
     "partsListConfigurators": "Stücklisten-Konfiguratoren",
     "logical-configurator": {
       "field": {
