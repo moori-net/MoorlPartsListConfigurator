@@ -18,6 +18,8 @@ class MoorlPartsListConfigurator extends Plugin
         'moorl_pl_translation',
         'moorl_pl_filter',
         'moorl_pl_filter_option',
+        'moorl_pl_preview',
+        'moorl_pl_preview_option',
         'moorl_pl_filter_product_stream',
         'moorl_pl_media',
     ];

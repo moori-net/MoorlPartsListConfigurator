@@ -14,6 +14,7 @@ class PartsListConfiguratorFilterEntity extends Entity
     protected string $partsListConfiguratorId = "";
     protected bool $logical = false;
     protected bool $fixed = false;
+    protected bool $preview = false;
     protected int $position = 0;
     protected ?string $technicalName = null;
     protected ?PartsListConfiguratorEntity $partsListConfigurator = null;
@@ -109,5 +110,15 @@ class PartsListConfiguratorFilterEntity extends Entity
     public function setPartsListConfigurator(?PartsListConfiguratorEntity $partsListConfigurator): void
     {
         $this->partsListConfigurator = $partsListConfigurator;
+    }
+
+    public function getPreview(): bool
+    {
+        return $this->preview;
+    }
+
+    public function setPreview(bool $preview): void
+    {
+        $this->preview = $preview;
     }
 }

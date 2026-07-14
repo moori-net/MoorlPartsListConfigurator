@@ -47,14 +47,18 @@
         "id": "{ID:FC01_FILTER_FIXED}",
         "position": 0,
         "technicalName": "fixed",
-        "fixed": true,
+        "fixed": false,
+        "preview": true,
         "productStreams": [
           {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_FENCES}"},
           {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_POSTS}"},
           {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
         ],
         "propertyGroupOptions": [
-          {"id": "{MD5:LINE_656}"}
+          {"id": "{MD5:Doppelstabmatte_656}"},
+          {"id": "{MD5:Doppelstabmatte_868}"},
+          {"id": "{MD5:Einstabmatte_4mm}"},
+          {"id": "{MD5:Schmuckzaunmatte_656}"}
         ]
       },
       {
@@ -131,6 +135,36 @@
         "propertyGroupOptions": [
           {"id": "{MD5:PARTS_LIST_POST_MOUNTING_COVER}"},
           {"id": "{MD5:PARTS_LIST_POST_MOUNTING_CLAMPS}"}
+        ]
+      }
+    ],
+    "previews": [
+      {
+        "id": "{ID:FC01_PREVIEW_Doppelstabmatte_656}",
+        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_656.jpg}",
+        "propertyGroupOptions": [
+          {"id": "{MD5:Doppelstabmatte_656}"}
+        ]
+      },
+      {
+        "id": "{ID:FC01_PREVIEW_Doppelstabmatte_868}",
+        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_868.jpg}",
+        "propertyGroupOptions": [
+          {"id": "{MD5:Doppelstabmatte_868}"}
+        ]
+      },
+      {
+        "id": "{ID:FC01_PREVIEW_Einstabmatte_4mm}",
+        "mediaId": "{MEDIA_FILE:new/Einstabmatte_4mm.jpg}",
+        "propertyGroupOptions": [
+          {"id": "{MD5:Einstabmatte_4mm}"}
+        ]
+      },
+      {
+        "id": "{ID:FC01_PREVIEW_Schmuckzaunmatte_656}",
+        "mediaId": "{MEDIA_FILE:new/Schmuckzaunmatte_656.jpg}",
+        "propertyGroupOptions": [
+          {"id": "{MD5:Schmuckzaunmatte_656}"}
         ]
       }
     ]

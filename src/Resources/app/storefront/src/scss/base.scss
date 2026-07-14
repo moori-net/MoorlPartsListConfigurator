@@ -1,10 +1,69 @@
+.is-ctl-partslistconfigurator {
+  .content-main {
+    background-color: var(--bs-gray-200);
+  }
+}
+
 .cms-element-moorl-parts-list-configurator {
   .product-detail-configurator-option-input + .product-detail-configurator-option-label {
     height: 120px;
     width: 120px;
   }
 
-  .product-detail-configurator-option-input:checked + .product-detail-configurator-option-label {
-    border: 3px solid #0042a0;
+  .configurator-selection-group {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    .configurator-card {
+      width: 100%;
+      text-align: center;
+      transition: all .5s;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 26px;
+
+      img {
+        margin-bottom: 1rem;
+      }
+    }
+
+    .configurator-check {
+      position: absolute;
+      clip: rect(0, 0, 0, 0);
+      pointer-events: none;
+
+      &:checked + .configurator-card {
+        @extend .alert-success;
+
+        background-color: var(--bs-alert-bg);
+        border: 1px solid var(--bs-alert-border-color);
+      }
+    }
+  }
+
+  .configurator-card {
+    padding: 1rem;
+    background-color: var(--bs-white);
+    border: 1px solid var(--bs-gray-400);
+    border-radius: .5rem;
+
+    img {
+      width: 100%;
+    }
+
+    &.configurator-group-description {
+      @extend .alert-success;
+
+      background-color: var(--bs-alert-bg);
+      border: 1px solid var(--bs-alert-border-color);
+    }
+  }
+
+  .configurator-v-spacer {
+    margin-top: 1.5rem;
+    bottom: 1.5rem;
   }
 }
+

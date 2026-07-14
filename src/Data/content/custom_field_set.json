@@ -71,6 +71,18 @@
             "de-DE": "Alternatives Bild"
           }
         }
+      },
+      {
+        "name": "moorl_pl_description",
+        "type": "text",
+        "config": {
+          "componentName": "sw-text-editor",
+          "customFieldType": "textEditor",
+          "label": {
+            "en-GB": "Info text",
+            "de-DE": "Info Text"
+          }
+        }
       }
     ]
   }

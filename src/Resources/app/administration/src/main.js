@@ -65,7 +65,27 @@ onMoorlFoundationReady(() => {
             {name: 'position', visibility: 200},
             {name: 'fixed', visibility: 50},
             {name: 'logical', visibility: 100},
+            {name: 'preview', visibility: 100},
             {name: 'technicalName', visibility: 100},
+            {name: 'partsListConfigurator.name', visibility: 100},
+            {name: 'options', visibility: 0},
+        ],
+        entityMapping: {
+            preview: {
+                tab: 'general',
+                card: 'general',
+            },
+            options: {
+                tab: 'relations',
+                card: 'relations',
+            }
+        },
+    });
+
+    MoorlFoundation.ModuleHelper.registerModule({
+        entity: 'moorl_pl_preview',
+        name: 'moorl-parts-list-preview',
+        properties: [
             {name: 'partsListConfigurator.name', visibility: 100},
             {name: 'options', visibility: 0},
         ],

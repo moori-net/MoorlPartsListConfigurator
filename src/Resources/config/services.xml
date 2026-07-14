@@ -32,6 +32,14 @@
             <tag name="shopware.entity.definition" entity="moorl_pl_filter_option"/>
         </service>
 
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorPreviewDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_preview"/>
+        </service>
+
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorPreviewOptionDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_filter_preview"/>
+        </service>
+
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterProductStreamDefinition">
             <tag name="shopware.entity.definition" entity="moorl_pl_filter_product_stream"/>
         </service>
