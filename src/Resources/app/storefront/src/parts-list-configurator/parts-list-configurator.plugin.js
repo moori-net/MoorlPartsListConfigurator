@@ -35,7 +35,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             if (!stepEl) {
                 return;
             }
-            stepEl.innerHtml = this.options.optionCount;
+            stepEl.textContent = this.options.optionCount;
         });
 
         this._setFilterState();
@@ -70,7 +70,9 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     _registerEvents() {
         this._formEl.querySelectorAll('input[type=radio]').forEach((el) => {
             ['keyup', 'change', 'force'].forEach(evt => {
-                el.addEventListener(evt, () => {this._refresh('options');}, false);
+                el.addEventListener(evt, () => {
+                    this._refresh('options');
+                }, false);
             });
         });
 
@@ -85,9 +87,12 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _registerListEvents(currentEl) {
-        currentEl.querySelectorAll('input[type=number]').forEach((el) => {
-            ['change'].forEach(evt => {
-                el.addEventListener(evt, () => {this._refresh('list');}, false);
+        currentEl.querySelectorAll('input[type=number]').forEach(el => {
+            ['input', 'change'].forEach(eventName => {
+                el.addEventListener(eventName, () => {
+                    this._refresh('list');
+                    this._refreshSummary();
+                });
             });
         });
     }
@@ -115,7 +120,6 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             }
 
             this._enableNextStep = true;
-            this._summary = [];
             let currentStep = 0;
 
             this._formEl.querySelectorAll('.js-group').forEach((groupEl) => {
@@ -126,11 +130,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 this._loadLogicalConfigurator(groupEl);
             });
 
-            if (this._summary.length) {
-                const mySummaryContentEl = this._mySummaryEl.querySelector("[data-content]");
-
-                this._renderSummaryTable(mySummaryContentEl);
-            }
+            this._refreshSummary();
 
             this._timeout = null;
         }, 100);
@@ -140,6 +140,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         if (this._filters.options.length < this.options.optionCount) {
             return;
         }
+
         if (!currentEl) {
             return;
         }
@@ -154,12 +155,15 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         let query = new URLSearchParams(mapped).toString()
 
-        this._client.get(this.options.url + "/" + type + "?" + query, response => {
-            currentContentEl.innerHTML = response;
-            window.PluginManager.initializePlugins();
-            this._setFilterState();
-            this._registerListEvents(currentContentEl);
-        });
+        this._client.get(
+            `${this.options.url}/${type}?${query}`,
+            response => {
+                currentContentEl.innerHTML = response;
+                window.PluginManager.initializePlugins();
+                this._setFilterState();
+                this._registerListEvents(currentContentEl);
+                this._refreshSummary();
+            });
     }
 
     _showHiddenElements() {
@@ -211,11 +215,6 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             let stepComplete = checkedOption.length !== 0;
 
             if (stepComplete) {
-                this._summary.push({
-                    group: groupEl.dataset.name,
-                    option: checkedOption.dataset.name
-                });
-
                 groupEl.classList.add('configurator-group-complete');
                 stepBadge.innerHTML = this.options.iconComplete;
             }
@@ -278,6 +277,79 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._updateHistory(query);
     }
 
+    _refreshSummary() {
+        const summary = [];
+
+        this._formEl.querySelectorAll('.js-group').forEach(groupEl => {
+            const checkedOptionEl = groupEl.querySelector('input[type=radio]:checked');
+
+            if (!checkedOptionEl) {
+                return;
+            }
+
+            summary.push({
+                id: groupEl.id,
+                group: groupEl.dataset.name ?? '',
+                option: checkedOptionEl.dataset.name ?? ''
+            });
+        });
+
+        this._formEl.querySelectorAll('.js-summary-group').forEach(summaryGroupEl => {
+            const groupName = summaryGroupEl.dataset.name ?? '';
+            const id = summaryGroupEl.id;
+            const defaultUnit = summaryGroupEl.dataset.unit ?? '';
+            const values = [];
+
+            summaryGroupEl.querySelectorAll('.js-summary-item').forEach(summaryItemEl => {
+                const inputEl = summaryItemEl.querySelector(
+                    'input, select, textarea'
+                );
+
+                if (!inputEl) {
+                    return;
+                }
+
+                const value = inputEl.value?.trim();
+
+                if (!value) {
+                    return;
+                }
+
+                const itemName = summaryItemEl.dataset.name ?? '';
+                const unit =
+                    summaryItemEl.dataset.unit ??
+                    summaryGroupEl.dataset.unit ??
+                    defaultUnit;
+
+                values.push(
+                    [
+                        itemName,
+                        [value, unit].filter(Boolean).join(' ')
+                    ]
+                        .filter(Boolean)
+                        .join(': ')
+                );
+            });
+
+            if (!values.length) {
+                return;
+            }
+
+            summary.push({
+                id,
+                group: groupName,
+                option: values.join(', ')
+            });
+        });
+
+        this._summary = summary;
+
+        const mySummaryContentEl =
+            this._mySummaryEl?.querySelector('[data-content]');
+
+        this._renderSummaryTable(mySummaryContentEl);
+    }
+
     _setValuesFromUrl(params = {}) {
         for (const [key, value] of Object.entries(params)) {
             if (key === 'options') {
@@ -285,11 +357,15 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
                 ids.forEach(id => {
                     const checkboxEl = this.el.querySelector('input[type=radio][value="' + id + '"]');
-                    if (checkboxEl) {checkboxEl.checked = true;}
+                    if (checkboxEl) {
+                        checkboxEl.checked = true;
+                    }
                 });
             } else {
                 const numberEl = this.el.querySelector('input[type=number][name="' + key + '"]');
-                if (numberEl) {numberEl.value = value;}
+                if (numberEl) {
+                    numberEl.value = value;
+                }
             }
         }
     }
@@ -335,7 +411,18 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
             const groupCellEl = document.createElement('th');
             groupCellEl.scope = 'row';
-            groupCellEl.textContent = summaryItem.group ?? '';
+
+            if (summaryItem.id) {
+                const groupLinkEl = document.createElement('a');
+
+                groupLinkEl.href = `#${encodeURIComponent(summaryItem.id)}`;
+                groupLinkEl.textContent = summaryItem.group ?? '';
+                groupLinkEl.classList.add('text-decoration-none');
+
+                groupCellEl.appendChild(groupLinkEl);
+            } else {
+                groupCellEl.textContent = summaryItem.group ?? '';
+            }
 
             const optionCellEl = document.createElement('td');
             optionCellEl.textContent = summaryItem.option ?? '';
@@ -344,7 +431,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             tableBodyEl.appendChild(rowEl);
         });
 
-        tableEl.append(tableBodyEl);
+        tableEl.appendChild(tableBodyEl);
         containerEl.replaceChildren(tableEl);
     }
 }
