@@ -1,6 +1,6 @@
 [
     {
-        "id": "{ID:PRODUCT_Doppelstabmatte_656_1000}",
+        "id": "{ID:PRODUCT_Doppelstabmatte_656mm_1000}",
         "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
@@ -11,7 +11,7 @@
                 "name": "Fence panel - 1000mm (6/5/6)"
             }
         },
-        "productNumber": "Doppelstabmatte_656_1000",
+        "productNumber": "Doppelstabmatte_656mm_1000",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:50|S}",
@@ -30,21 +30,21 @@
             "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
         },
         "properties": [
-            {"id": "{MD5:Doppelstabmatte_656}"},
+            {"id": "{MD5:Doppelstabmatte_656mm}"},
             {"id": "{MD5:LENGTH_1000}"}
         ],
         "configuratorSettings": [
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_1000.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_1000.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_1000.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_1000.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_1000.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_1000.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_1000.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150}
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_1000.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_1000.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_1000.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_1000.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_1000.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_1000.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_1000.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150}
         ]
     },
     {
-        "id": "{ID:PRODUCT_Doppelstabmatte_656_2500}",
+        "id": "{ID:PRODUCT_Doppelstabmatte_656mm_2500}",
         "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
@@ -55,7 +55,7 @@
                 "name": "Fence panel - 2500mm (6/5/6)"
             }
         },
-        "productNumber": "Doppelstabmatte_656_2500",
+        "productNumber": "Doppelstabmatte_656mm_2500",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:150|S}",
@@ -74,21 +74,21 @@
             "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
         },
         "properties": [
-            {"id": "{MD5:Doppelstabmatte_656}"},
+            {"id": "{MD5:Doppelstabmatte_656mm}"},
             {"id": "{MD5:LENGTH_2500}"}
         ],
         "configuratorSettings": [
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_2500.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_2500.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_2500.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_2500.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_2500.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_2500.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_656_2500.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150}
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_2500.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_2500.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_2500.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_2500.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_2500.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_2500.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_656mm_2500.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150}
         ]
     },
     {
-        "id": "{ID:PRODUCT_Doppelstabmatte_868}",
+        "id": "{ID:PRODUCT_Doppelstabmatte_868mm}",
         "cmsPageId": "{ID:CMS_PAGE_PRODUCT_BOM}",
         "active": true,
         "translations": {
@@ -99,7 +99,7 @@
                 "name": "Fence panel (8/6/8)"
             }
         },
-        "productNumber": "Doppelstabmatte_868",
+        "productNumber": "Doppelstabmatte_868mm",
         "stock": 100,
         "taxId": "{TAX_ID_STANDARD}",
         "price": "{PRICE:70|S}",
@@ -118,18 +118,18 @@
             "mediaId": "{MEDIA_FILE:product/fence-green-example.jpeg}"
         },
         "properties": [
-            {"id": "{MD5:Doppelstabmatte_868}"}
+            {"id": "{MD5:Doppelstabmatte_868mm}"}
         ],
         "configuratorSettings": [
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.LENGTH_1000}", "optionId": "{MD5:LENGTH_1000}"},
-            {"id": "{ID:PRODUCT_Doppelstabmatte_868.LENGTH_2500}", "optionId": "{MD5:LENGTH_2500}", "_price": 200}
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.COLOR_NONE}", "optionId": "{MD5:COLOR_NONE}"},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.COLOR_RAL_7016}", "optionId": "{MD5:COLOR_RAL_7016}", "_price": 110},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.HEIGHT_600}", "optionId": "{MD5:HEIGHT_600}"},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.HEIGHT_800}", "optionId": "{MD5:HEIGHT_800}", "_price": 112.5},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.HEIGHT_1000}", "optionId": "{MD5:HEIGHT_1000}", "_price": 125},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.HEIGHT_1200}", "optionId": "{MD5:HEIGHT_1200}", "_price": 150},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.LENGTH_1000}", "optionId": "{MD5:LENGTH_1000}"},
+            {"id": "{ID:PRODUCT_Doppelstabmatte_868mm.LENGTH_2500}", "optionId": "{MD5:LENGTH_2500}", "_price": 200}
         ]
     },
     {
@@ -163,8 +163,8 @@
             "mediaId": "{MEDIA_FILE:product/fence-post.jpg}"
         },
         "properties": [
-            {"id": "{MD5:Doppelstabmatte_656}"},
-            {"id": "{MD5:Doppelstabmatte_868}"}
+            {"id": "{MD5:Doppelstabmatte_656mm}"},
+            {"id": "{MD5:Doppelstabmatte_868mm}"}
         ],
         "configuratorSettings": [
             {"id": "{ID:PRODUCT_POST_SMALL.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
@@ -214,8 +214,8 @@
             "mediaId": "{MEDIA_FILE:product/fence-post.jpg}"
         },
         "properties": [
-            {"id": "{MD5:Doppelstabmatte_656}"},
-            {"id": "{MD5:Doppelstabmatte_868}"}
+            {"id": "{MD5:Doppelstabmatte_656mm}"},
+            {"id": "{MD5:Doppelstabmatte_868mm}"}
         ],
         "configuratorSettings": [
             {"id": "{ID:PRODUCT_POST_LARGE.COLOR_RAL_6005}", "optionId": "{MD5:COLOR_RAL_6005}", "_price": 110},
@@ -265,8 +265,8 @@
             "mediaId": "{MEDIA_FILE:product/fence-door.jpg}"
         },
         "properties": [
-            {"id": "{MD5:Doppelstabmatte_656}"},
-            {"id": "{MD5:Doppelstabmatte_868}"},
+            {"id": "{MD5:Doppelstabmatte_656mm}"},
+            {"id": "{MD5:Doppelstabmatte_868mm}"},
             {"id": "{MD5:LENGTH_1000}"}
         ],
         "configuratorSettings": [
@@ -315,8 +315,8 @@
             "mediaId": "{MEDIA_FILE:product/fence-door.jpg}"
         },
         "properties": [
-            {"id": "{MD5:Doppelstabmatte_656}"},
-            {"id": "{MD5:Doppelstabmatte_868}"},
+            {"id": "{MD5:Doppelstabmatte_656mm}"},
+            {"id": "{MD5:Doppelstabmatte_868mm}"},
             {"id": "{MD5:LENGTH_2500}"}
         ],
         "configuratorSettings": [

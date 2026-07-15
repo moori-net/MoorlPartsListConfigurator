@@ -46,7 +46,7 @@
       {
         "id": "{ID:FC01_FILTER_FIXED}",
         "position": 0,
-        "technicalName": "fixed",
+        "technicalName": "fence_type",
         "fixed": false,
         "preview": true,
         "productStreams": [
@@ -55,10 +55,10 @@
           {"id": "{ID:STREAM_CATEGORY_PARTS_LIST_LAYOUT_ACCESSORIES}"}
         ],
         "propertyGroupOptions": [
-          {"id": "{MD5:Doppelstabmatte_656}"},
-          {"id": "{MD5:Doppelstabmatte_868}"},
+          {"id": "{MD5:Doppelstabmatte_656mm}"},
+          {"id": "{MD5:Doppelstabmatte_868mm}"},
           {"id": "{MD5:Einstabmatte_4mm}"},
-          {"id": "{MD5:Schmuckzaunmatte_656}"}
+          {"id": "{MD5:Schmuckzaunmatte_656mm}"}
         ]
       },
       {
@@ -140,17 +140,17 @@
     ],
     "previews": [
       {
-        "id": "{ID:FC01_PREVIEW_Doppelstabmatte_656}",
-        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_656.jpg}",
+        "id": "{ID:FC01_PREVIEW_Doppelstabmatte_656mm}",
+        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_656mm.jpg}",
         "propertyGroupOptions": [
-          {"id": "{MD5:Doppelstabmatte_656}"}
+          {"id": "{MD5:Doppelstabmatte_656mm}"}
         ]
       },
       {
-        "id": "{ID:FC01_PREVIEW_Doppelstabmatte_868}",
-        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_868.jpg}",
+        "id": "{ID:FC01_PREVIEW_Doppelstabmatte_868mm}",
+        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_868mm.jpg}",
         "propertyGroupOptions": [
-          {"id": "{MD5:Doppelstabmatte_868}"}
+          {"id": "{MD5:Doppelstabmatte_868mm}"}
         ]
       },
       {
@@ -161,10 +161,10 @@
         ]
       },
       {
-        "id": "{ID:FC01_PREVIEW_Schmuckzaunmatte_656}",
-        "mediaId": "{MEDIA_FILE:new/Schmuckzaunmatte_656.jpg}",
+        "id": "{ID:FC01_PREVIEW_Schmuckzaunmatte_656mm}",
+        "mediaId": "{MEDIA_FILE:new/Schmuckzaunmatte_656mm.jpg}",
         "propertyGroupOptions": [
-          {"id": "{MD5:Schmuckzaunmatte_656}"}
+          {"id": "{MD5:Schmuckzaunmatte_656mm}"}
         ]
       }
     ]

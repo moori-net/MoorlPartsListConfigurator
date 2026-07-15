@@ -2,24 +2,31 @@
   {
     "id": "{ID:LINE}",
     "position": 0,
-    "name": "[MPL] Line",
+    "translations": {
+      "{de-DE}": {
+        "name": "[MPL] Zaunart"
+      },
+      "{en-GB}": {
+        "name": "[MPL] Type of fence"
+      }
+    },
     "displayType": "media",
     "sortingType": "position",
     "options": [
       {
-        "id": "{MD5:Doppelstabmatte_656}",
-        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_656.jpg}",
+        "id": "{MD5:Doppelstabmatte_656mm}",
+        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_656mm.jpg}",
         "position": 1,
-        "name": "Doppelstabmatte 6/5/6",
+        "name": "Doppelstabmatte 6/5/6 mm",
         "customFields": {
           "moorl_pl_description": "Die %name% bietet ein ideales Gleichgewicht zwischen Stabilität und Ästhetik. Zwei 6-mm-Horizontalstäbe und ein 5-mm-Vertikalstab werden fest miteinander verschweißt."
         }
       },
       {
-        "id": "{MD5:Doppelstabmatte_868}",
-        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_868.jpg}",
+        "id": "{MD5:Doppelstabmatte_868mm}",
+        "mediaId": "{MEDIA_FILE:new/Doppelstabmatte_868mm.jpg}",
         "position": 2,
-        "name": "Doppelstabmatte 8/6/8",
+        "name": "Doppelstabmatte 8/6/8 mm",
         "customFields": {
           "moorl_pl_description": "Die %name% ist die robustere Variante – ideal für erhöhte Sicherheitsanforderungen und Gewerbeobjekte."
         }
@@ -34,10 +41,10 @@
         }
       },
       {
-        "id": "{MD5:Schmuckzaunmatte_656}",
-        "mediaId": "{MEDIA_FILE:new/Schmuckzaunmatte_656.jpg}",
+        "id": "{MD5:Schmuckzaunmatte_656mm}",
+        "mediaId": "{MEDIA_FILE:new/Schmuckzaunmatte_656mm.jpg}",
         "position": 4,
-        "name": "Schmuckzaunmatte 6/5/6",
+        "name": "Schmuckzaunmatte 6/5/6 mm",
         "customFields": {
           "moorl_pl_description": "Die %name% verbindet Funktion mit Design – ideal für Gärten und repräsentative Einfriedungen."
         }
@@ -130,11 +137,17 @@
         "translations": {
           "{de-DE}": {
             "name": "1 Seite, 0 Ecken",
-            "description": ""
+            "description": "",
+            "customFields": {
+              "moorl_pl_description": "%name%: Geradlinige Einzäunung ohne Richtungswechsel. Nur End- und Zwischenpfosten werden benötigt."
+            }
           },
           "{en-GB}": {
             "name": "1 side, 0 corners",
-            "description": ""
+            "description": "",
+            "customFields": {
+              "moorl_pl_description": "%name%: Geradlinige Einzäunung ohne Richtungswechsel. Nur End- und Zwischenpfosten werden benötigt."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_1.svg}"
@@ -145,11 +158,17 @@
         "translations": {
           "{de-DE}": {
             "name": "2 Seiten, 1 Ecke",
-            "description": ""
+            "description": "",
+            "customFields": {
+              "moorl_pl_description": "%name%: L-förmige Anlage mit einem Richtungswechsel. Ideal für Eckgrundstücke."
+            }
           },
           "{en-GB}": {
             "name": "2 sides, 1 corner",
-            "description": ""
+            "description": "",
+            "customFields": {
+              "moorl_pl_description": "%name%: L-förmige Anlage mit einem Richtungswechsel. Ideal für Eckgrundstücke."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_2.svg}"
@@ -160,11 +179,17 @@
         "translations": {
           "{de-DE}": {
             "name": "3 Seiten, 2 Ecken",
-            "description": ""
+            "description": "",
+            "customFields": {
+              "moorl_pl_description": "%name%: U-förmige Anlage. Drei Seiten werden eingezäunt, zwei Eckpfosten erforderlich."
+            }
           },
           "{en-GB}": {
             "name": "3 sides, 2 corners",
-            "description": ""
+            "description": "",
+            "customFields": {
+              "moorl_pl_description": "%name%: U-förmige Anlage. Drei Seiten werden eingezäunt, zwei Eckpfosten erforderlich."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_3.svg}"
@@ -175,11 +200,17 @@
         "translations": {
           "{de-DE}": {
             "name": "4 Seiten, 3 Ecken",
-            "description": ""
+            "description": "",
+            "customFields": {
+              "moorl_pl_description": "%name%: Vollständige Umzäunung auf vier Seiten mit drei Eckpfosten."
+            }
           },
           "{en-GB}": {
             "name": "4 sides, 3 corners",
-            "description": ""
+            "description": "",
+            "customFields": {
+              "moorl_pl_description": "%name%: Vollständige Umzäunung auf vier Seiten mit drei Eckpfosten."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}"
@@ -199,10 +230,38 @@
     },
     "sortingType": "position",
     "options": [
-      {"id": "{MD5:HEIGHT_600}", "position": 0, "name": "600mm"},
-      {"id": "{MD5:HEIGHT_800}", "position": 1, "name": "800mm"},
-      {"id": "{MD5:HEIGHT_1000}", "position": 2, "name": "1000mm"},
-      {"id": "{MD5:HEIGHT_1200}", "position": 3, "name": "1200mm"}
+      {
+        "id": "{MD5:HEIGHT_600}",
+        "position": 0,
+        "name": "600 mm",
+        "customFields": {
+          "moorl_pl_description": "%name% Zaunhöhe: Entspricht 0,6 m Höhe. Wählen Sie die für Ihr Grundstück passende Höhe."
+        }
+      },
+      {
+        "id": "{MD5:HEIGHT_800}",
+        "position": 1,
+        "name": "800 mm",
+        "customFields": {
+          "moorl_pl_description": "%name% Zaunhöhe: Entspricht 0,8 m Höhe. Wählen Sie die für Ihr Grundstück passende Höhe."
+        }
+      },
+      {
+        "id": "{MD5:HEIGHT_1000}",
+        "position": 2,
+        "name": "1000 mm",
+        "customFields": {
+          "moorl_pl_description": "%name% Zaunhöhe: Entspricht 1 m Höhe. Wählen Sie die für Ihr Grundstück passende Höhe."
+        }
+      },
+      {
+        "id": "{MD5:HEIGHT_1200}",
+        "position": 3,
+        "name": "1200 mm",
+        "customFields": {
+          "moorl_pl_description": "%name% Zaunhöhe: Entspricht 1,2 m Höhe. Wählen Sie die für Ihr Grundstück passende Höhe."
+        }
+      }
     ]
   },
   {
@@ -285,10 +344,18 @@
         "position": 0,
         "translations": {
           "{de-DE}": {
-            "name": "Abdeckleiste"
+            "name": "Abdeckleiste",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_MOUNTING_COVER_ALT.svg}",
+              "moorl_pl_description": "%name%: Die Zaunmatte wird mit einer aufgesetzten Leiste am Pfosten befestigt – saubere Optik, einfache Montage."
+            }
           },
           "{en-GB}": {
-            "name": "Cover strip"
+            "name": "Cover strip",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_MOUNTING_COVER_ALT.svg}",
+              "moorl_pl_description": "%name%: Die Zaunmatte wird mit einer aufgesetzten Leiste am Pfosten befestigt – saubere Optik, einfache Montage."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_MOUNTING_COVER.jpg}"
@@ -298,10 +365,18 @@
         "position": 1,
         "translations": {
           "{de-DE}": {
-            "name": "Klemmen"
+            "name": "Klemmen",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_MOUNTING_CLAMPS_ALT.svg}",
+              "moorl_pl_description": "%name%: Stabile Schraubklemmen halten die Matte am Pfosten. Werkzeugfreundlich und wiederverwendbar."
+            }
           },
           "{en-GB}": {
-            "name": "Clamps"
+            "name": "Clamps",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_MOUNTING_CLAMPS_ALT.svg}",
+              "moorl_pl_description": "%name%: Stabile Schraubklemmen halten die Matte am Pfosten. Werkzeugfreundlich und wiederverwendbar."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_MOUNTING_CLAMPS.jpg}"
@@ -327,10 +402,18 @@
         "position": 0,
         "translations": {
           "{de-DE}": {
-            "name": "Zum Einbetonieren"
+            "name": "Zum Einbetonieren",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_FLOOR_MOUNTING_CONCRETE_ALT.svg}",
+              "moorl_pl_description": "%name%: Der Pfosten wird in ein Betonfundament gesetzt – die stabilste Montagemethode für alle Bodenarten."
+            }
           },
           "{en-GB}": {
-            "name": "For setting in concrete"
+            "name": "For setting in concrete",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_FLOOR_MOUNTING_CONCRETE_ALT.svg}",
+              "moorl_pl_description": "%name%: Der Pfosten wird in ein Betonfundament gesetzt – die stabilste Montagemethode für alle Bodenarten."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_CONCRETE.svg}"
@@ -353,10 +436,18 @@
         "position": 2,
         "translations": {
           "{de-DE}": {
-            "name": "Zum Aufdübeln"
+            "name": "Zum Aufdübeln",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_FLOOR_MOUNTING_DOWEL_ALT.svg}",
+              "moorl_pl_description": "%name%: Befestigung per Bodenplatte auf Beton oder Pflaster. Keine Erdarbeiten erforderlich."
+            }
           },
           "{en-GB}": {
-            "name": "For doweling"
+            "name": "For doweling",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_FLOOR_MOUNTING_DOWEL_ALT.svg}",
+              "moorl_pl_description": "%name%: Befestigung per Bodenplatte auf Beton oder Pflaster. Keine Erdarbeiten erforderlich."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL.jpg}"
@@ -366,10 +457,18 @@
         "position": 3,
         "translations": {
           "{de-DE}": {
-            "name": "Zum Aufdübeln (L-Winkelform)"
+            "name": "Zum Aufdübeln (L-Winkelform)",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_FLOOR_MOUNTING_DOWEL_L_ALT.svg}",
+              "moorl_pl_description": "%name%: Befestigung an Wänden oder Mauerwerk mittels L-förmiger Stahlplatte."
+            }
           },
           "{en-GB}": {
-            "name": "For doweling (L-angle shape)"
+            "name": "For doweling (L-angle shape)",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_FLOOR_MOUNTING_DOWEL_L_ALT.svg}",
+              "moorl_pl_description": "%name%: Befestigung an Wänden oder Mauerwerk mittels L-förmiger Stahlplatte."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_DOWEL_L.jpg}"
@@ -379,10 +478,18 @@
         "position": 4,
         "translations": {
           "{de-DE}": {
-            "name": "Erdspieß"
+            "name": "Erdspieß",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_FLOOR_MOUNTING_SPIKE_ALT.svg}",
+              "moorl_pl_description": "%name%: Einschlagen in weichen Boden ohne Fundament. Schnelle Montage für temporäre Einzäunungen."
+            }
           },
           "{en-GB}": {
-            "name": "Ground spike"
+            "name": "Ground spike",
+            "customFields": {
+              "moorl_pl_image": "{MEDIA_FILE:new/FENCE_POST_FLOOR_MOUNTING_SPIKE_ALT.svg}",
+              "moorl_pl_description": "%name%: Einschlagen in weichen Boden ohne Fundament. Schnelle Montage für temporäre Einzäunungen."
+            }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_POST_FLOOR_MOUNTING_SPIKE.jpg}"

@@ -17,6 +17,7 @@
 
     <fieldset
             class="js-group configurator-group configurator-group-locked"
+            id="{{ groupName|slug }}"
             data-identifier="{{ identifier }}"
             data-technical-name="{{ partsListConfigurator.getMappingName(group.id) }}"
             data-logical="{{ logical }}"
@@ -119,6 +120,7 @@
                             attributes: {
                                 class: '',
                                 role: 'presentation',
+                                style: 'width: 160px'
                             }
                         } %}
                     </template>
