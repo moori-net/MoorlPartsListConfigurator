@@ -58,6 +58,406 @@ class PartsListConfiguratorPageLoader
         return $this->cartService;
     }
 
+    /**
+     * @return list<string>
+     */
+    public function availability(
+        Request $request,
+        SalesChannelContext $salesChannelContext
+    ): array {
+        $partsListConfiguratorId = $request->attributes->get('partsListConfiguratorId');
+        if (!$partsListConfiguratorId) {
+            throw RoutingException::missingRequestParameter('partsListConfiguratorId');
+        }
+
+        $criteria = new Criteria();
+
+        $result = $this->partsListConfiguratorDetailRoute->load(
+            $partsListConfiguratorId,
+            $request,
+            $salesChannelContext,
+            $criteria
+        );
+
+        /** @var SalesChannelPartsListConfiguratorEntity $partsListConfigurator */
+        $partsListConfigurator = $result->getPartsListConfigurator();
+
+        if (!$partsListConfigurator->getActive()) {
+            throw new PageNotFoundException($partsListConfigurator->getId());
+        }
+
+        if ($partsListConfigurator->getFilters()->count() === 0) {
+            return [];
+        }
+
+        $partsListConfigurator->getFilters()->sortByPosition();
+
+        $selectedOptionIds = $this->getPropIds($request, 'options');
+
+        $options = new PropertyGroupOptionCollection();
+
+        foreach ($partsListConfigurator->getFilters() as $filter) {
+            if ($filter->getLogical()) {
+                continue;
+            }
+
+            $options->merge(
+                $filter->getPropertyGroupOptions()
+            );
+        }
+
+        $optionGroupIds = [];
+        foreach ($options as $option) {
+            $optionGroupIds[$option->getId()] = $option->getGroupId();
+        }
+
+        $availabilityOptionIds = $this->getPropIds(
+            $request,
+            'availabilityOptions'
+        );
+
+        foreach ($availabilityOptionIds as $candidateOptionId) {
+            $candidateOption = $options->get($candidateOptionId);
+            if (!$candidateOption) {
+                continue;
+            }
+
+            $candidateGroupId = $candidateOption->getGroupId();
+
+            $productStreamIds = $this->getProductStreamIdsForOption(
+                $partsListConfigurator,
+                $candidateOptionId
+            );
+
+            if (empty($productStreamIds)) {
+                continue;
+            }
+
+            $testOptionIds = array_filter(
+                $selectedOptionIds,
+                static fn (string $optionId): bool =>
+                    ($optionGroupIds[$optionId] ?? null) !== $candidateGroupId
+            );
+
+            $testOptionIds[] = $candidateOptionId;
+
+            $testOptionIds = array_values(
+                array_unique($testOptionIds)
+            );
+
+            $mainFilters = $this->buildAvailabilityFilters(
+                $partsListConfigurator,
+                $productStreamIds,
+                $testOptionIds
+            );
+
+            if (empty($mainFilters)) {
+                continue;
+            }
+
+            $criteria = new Criteria();
+            $criteria->addState(self::CRITERIA_STATE);
+            $criteria->setLimit(1);
+
+            $criteria->addPostFilter(
+                new OrFilter($mainFilters)
+            );
+
+            $listingResult = $this->productListingRoute->load(
+                $salesChannelContext
+                    ->getSalesChannel()
+                    ->getNavigationCategoryId(),
+                $request,
+                $salesChannelContext,
+                $criteria
+            );
+
+            if ($listingResult->getResult()->count() > 0) {
+                $availableOptionIds[] = $candidateOptionId;
+            }
+        }
+
+        return array_values(
+            array_unique($availableOptionIds)
+        );
+    }
+
+    private function buildAvailabilityFilters(
+        SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
+        array $productStreamIds,
+        array $selectedOptionIds
+    ): array {
+        $mainFilters = [];
+
+        foreach ($productStreamIds as $productStreamId) {
+            $propertyFilters = [];
+
+            foreach ($partsListConfigurator->getFilters() as $filter) {
+                if ($filter->getLogical()) {
+                    continue;
+                }
+
+                if (!$filter->getProductStreams()->has($productStreamId)) {
+                    continue;
+                }
+
+                $whitelistIds = array_values(
+                    $filter->getPropertyGroupOptions()?->getIds() ?: []
+                );
+
+                if ($filter->getFixed()) {
+                    $optionIds = $whitelistIds;
+                } else {
+                    $optionIds = array_values(
+                        array_intersect(
+                            $selectedOptionIds,
+                            $whitelistIds
+                        )
+                    );
+                }
+
+                if (empty($optionIds)) {
+                    continue;
+                }
+
+                $propertyFilters[] = $this->getPropertyFilterByIds(
+                    $optionIds
+                );
+            }
+
+            $propertyFilters[] = new ContainsFilter(
+                'streamIds',
+                $productStreamId
+            );
+
+            $mainFilters[] = new AndFilter(
+                $propertyFilters
+            );
+        }
+
+        return $mainFilters;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function getProductStreamIdsForOption(
+        SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
+        string $optionId
+    ): array {
+        $productStreamIds = [];
+
+        foreach ($partsListConfigurator->getFilters() as $filter) {
+            if ($filter->getLogical()) {
+                continue;
+            }
+
+            if (!$filter->getPropertyGroupOptions()?->has($optionId)) {
+                continue;
+            }
+
+            foreach ($filter->getProductStreams()->getIds() as $productStreamId) {
+                $productStreamIds[] = $productStreamId;
+            }
+        }
+
+        return array_values(
+            array_unique($productStreamIds)
+        );
+    }
+
+    /**
+     * @return array<string, bool>
+     */
+    private function resolveOptionAvailability(
+        Request $request,
+        SalesChannelContext $salesChannelContext,
+        SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
+        ProductStreamCollection $productStreams,
+        PropertyGroupOptionCollection $options
+    ): array {
+        $selectedOptionIds = $this->getPropIds($request, 'options');
+
+        /*
+         * Mapping:
+         *
+         * optionId => propertyGroupId
+         */
+        $optionGroupIds = [];
+
+        foreach ($options as $option) {
+            $optionGroupIds[$option->getId()] = $option->getGroupId();
+        }
+
+        $availability = [];
+
+        foreach ($options as $candidate) {
+            $candidateId = $candidate->getId();
+            $candidateGroupId = $candidate->getGroupId();
+
+            /*
+             * Alle bisher gewählten Optionen übernehmen,
+             * ABER die Auswahl aus der Gruppe des Kandidaten entfernen.
+             *
+             * Beispiel:
+             *
+             * Zaunart = A
+             * Farbe   = Rot
+             * Höhe    = 1800
+             *
+             * Kandidat Zaunart B:
+             *
+             * => B + Rot + 1800
+             */
+            $candidateOptionIds = array_filter(
+                $selectedOptionIds,
+                static function (string $optionId) use (
+                    $optionGroupIds,
+                    $candidateGroupId
+                ): bool {
+                    return ($optionGroupIds[$optionId] ?? null) !== $candidateGroupId;
+                }
+            );
+
+            $candidateOptionIds[] = $candidateId;
+
+            $candidateOptionIds = array_values(
+                array_unique($candidateOptionIds)
+            );
+
+            $criteria = new Criteria();
+            $criteria->addState(self::CRITERIA_STATE);
+
+            $mainFilters = $this->buildMainFilters(
+                $partsListConfigurator,
+                $productStreams,
+                $candidateOptionIds
+            );
+
+            $criteria->addPostFilter(
+                new AndFilter([
+                    new OrFilter($mainFilters),
+                ])
+            );
+
+            /*
+             * Wir wollen nur wissen:
+             * Gibt es mindestens EIN Produkt?
+             */
+            $criteria->setLimit(1);
+
+            $result = $this->productListingRoute->load(
+                $salesChannelContext
+                    ->getSalesChannel()
+                    ->getNavigationCategoryId(),
+                $request,
+                $salesChannelContext,
+                $criteria
+            );
+
+            $availability[$candidateId] = $result
+                    ->getResult()
+                    ->count() > 0;
+        }
+
+        return $availability;
+    }
+
+    private function buildMainFilters(
+        SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
+        ProductStreamCollection $productStreams,
+        array $selectedOptionIds
+    ): array {
+        $mainFilters = [];
+
+        foreach ($productStreams as $productStream) {
+            $streamFilter = new ContainsFilter('streamIds', $productStream->getId());
+            $propertyFilters = [];
+
+            foreach ($partsListConfigurator->getFilters() as $filter) {
+                if ($filter->getLogical()) {
+                    continue;
+                }
+
+                if (!$filter->getProductStreams()->has($productStream->getId())) {
+                    continue;
+                }
+
+                $whitelistIds = array_values(
+                    $filter->getPropertyGroupOptions()?->getIds() ?: []
+                );
+
+                if ($filter->getFixed()) {
+                    $optionIds = $whitelistIds;
+                } else {
+                    $optionIds = array_values(
+                        array_intersect(
+                            $selectedOptionIds,
+                            $whitelistIds
+                        )
+                    );
+                }
+
+                $propertyFilters[] = $this->getPropertyFilterByIds($optionIds);
+            }
+
+            if (in_array('optional', $productStream->getTranslation('flags') ?? [], true)) {
+                $mainFilters[] = new AndFilter([
+                    $streamFilter,
+                    new OrFilter([
+                        new AndFilter($propertyFilters),
+                        new EqualsFilter('parentId', null),
+                    ]),
+                ]);
+            } else {
+                $propertyFilters[] = $streamFilter;
+
+                $mainFilters[] = new AndFilter($propertyFilters);
+            }
+        }
+
+        return $mainFilters;
+    }
+
+    private function getPropertyFilterByIds(array $ids): AndFilter
+    {
+        if (empty($ids)) {
+            return new AndFilter([]);
+        }
+
+        $grouped = $this->connection->fetchAllAssociative(
+            <<<SQL
+SELECT
+    LOWER(HEX(property_group_id)) AS property_group_id,
+    LOWER(HEX(id)) AS id
+FROM property_group_option
+WHERE id IN (:ids)
+SQL,
+            [
+                'ids' => Uuid::fromHexToBytesList($ids),
+            ],
+            [
+                'ids' => ArrayParameterType::BINARY,
+            ]
+        );
+
+        $grouped = FetchModeHelper::group(
+            $grouped,
+            static fn (array $row): string => (string) $row['id']
+        );
+
+        $filters = [];
+
+        foreach ($grouped as $options) {
+            $filters[] = new OrFilter([
+                new EqualsAnyFilter('product.optionIds', $options),
+                new EqualsAnyFilter('product.propertyIds', $options),
+            ]);
+        }
+
+        return new AndFilter($filters);
+    }
+
     public function getErrorMessage(Request $request, SalesChannelContext $salesChannelContext): ?string
     {
         $partsListConfiguratorId = $request->attributes->get('partsListConfiguratorId');
@@ -344,38 +744,19 @@ class PartsListConfiguratorPageLoader
     private function getPropertyFilter(
         Request $request,
         array $whitelistIds = [],
-        string $prop = "tag",
-        bool $fixed = false,
-    ): AndFilter
-    {
+        string $prop = 'tag',
+        bool $fixed = false
+    ): AndFilter {
         if ($fixed) {
             $ids = $whitelistIds;
         } else {
-            $ids = $this->getPropIds($request, $prop);
-            if (empty($ids)) {
-                return new AndFilter([]);
-            }
-
-            $ids = array_intersect($ids, $whitelistIds);
+            $ids = array_intersect(
+                $this->getPropIds($request, $prop),
+                $whitelistIds
+            );
         }
 
-        $grouped = $this->connection->fetchAllAssociative(
-            'SELECT LOWER(HEX(property_group_id)) as property_group_id, LOWER(HEX(id)) as id FROM property_group_option WHERE id IN (:ids)',
-            ['ids' => Uuid::fromHexToBytesList($ids)],
-            ['ids' => ArrayParameterType::BINARY]
-        );
-
-        $grouped = FetchModeHelper::group($grouped, static fn ($row): string => (string) $row['id']);
-
-        $filters = [];
-        foreach ($grouped as $options) {
-            $filters[] = new OrFilter([
-                new EqualsAnyFilter('product.optionIds', $options),
-                new EqualsAnyFilter('product.propertyIds', $options),
-            ]);
-        }
-
-        return new AndFilter($filters);
+        return $this->getPropertyFilterByIds(array_values($ids));
     }
 
     private function getPartsListCalculatorByName(string $name): PartsListCalculatorInterface

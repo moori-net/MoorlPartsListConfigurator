@@ -8,6 +8,7 @@ use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListC
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -33,6 +34,17 @@ class PartsListConfiguratorController extends StorefrontController
                 $page->getPartsListConfigurator()->getAccessoryProductStreamIds()
             )
         ]);
+    }
+
+    #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/availability', name: 'frontend.moorl.parts.list.configurator.availability', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
+    public function availability(SalesChannelContext $salesChannelContext, Request $request): JsonResponse
+    {
+        $availability = $this->partsListConfiguratorPageLoader->availability(
+            $request,
+            $salesChannelContext
+        );
+
+        return new JsonResponse($availability);
     }
 
     #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/proxy-cart', name: 'frontend.moorl.parts.list.configurator.proxy.cart', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
