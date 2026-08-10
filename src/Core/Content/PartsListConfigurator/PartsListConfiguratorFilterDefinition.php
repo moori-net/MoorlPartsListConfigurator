@@ -14,6 +14,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToManyAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
@@ -67,6 +68,14 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
                 (new BoolField('preview', 'preview'))->addFlags(),
                 (new IntField('position', 'position'))->addFlags(new ApiAware()),
                 (new StringField('technical_name', 'technicalName'))->addFlags(new ApiAware()),
+                (new ManyToManyAssociationField(
+                    'availabilityProductStreams',
+                    ProductStreamDefinition::class,
+                    PartsListConfiguratorFilterAvailabilityProductStreamDefinition::class,
+                    'moorl_pl_filter_id',
+                    'product_stream_id'
+
+                ))->addFlags(new ApiAware()),
             ],
             FieldMultiEntityCollection::getManyToOneFieldItems(
                 references: [
@@ -83,12 +92,12 @@ class PartsListConfiguratorFilterDefinition extends EntityDefinition
                     [
                         PropertyGroupOptionDefinition::class,
                         PartsListConfiguratorFilterOptionDefinition::class,
-                        [new VueComponent('moorl-properties')]
+                        []
                     ],
                     [
                         ProductStreamDefinition::class,
                         PartsListConfiguratorFilterProductStreamDefinition::class,
-                        [new EditField()]
+                        []
                     ]
                 ],
             ),

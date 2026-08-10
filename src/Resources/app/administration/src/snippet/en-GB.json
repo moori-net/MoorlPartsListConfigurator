@@ -15,6 +15,12 @@
         "type": {
             "calculator": "Parts list calculator",
             "filter": "Parts list filter"
+        },
+        "field": {
+            "availabilityProductStreams": "Product streams for availability checks"
+        },
+        "helpText": {
+            "availabilityProductStreams": "If not set: Product streams are used"
         }
     }
 }
