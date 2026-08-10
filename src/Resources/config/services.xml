@@ -44,6 +44,10 @@
             <tag name="shopware.entity.definition" entity="moorl_pl_filter_product_stream"/>
         </service>
 
+        <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterAvailabilityProductStreamDefinition">
+            <tag name="shopware.entity.definition" entity="moorl_pl_filter_availability_ps"/>
+        </service>
+
         <service id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorMediaDefinition">
             <tag name="shopware.entity.definition" entity="moorl_pl_media"/>
         </service>

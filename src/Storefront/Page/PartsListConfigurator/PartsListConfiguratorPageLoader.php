@@ -145,34 +145,44 @@ class PartsListConfiguratorPageLoader
                 array_unique($testOptionIds)
             );
 
-            $mainFilters = $this->buildAvailabilityFilters(
-                $partsListConfigurator,
-                $productStreamIds,
-                $testOptionIds
-            );
+            $isAvailable = true;
 
-            if (empty($mainFilters)) {
-                continue;
+            foreach ($productStreamIds as $productStreamId) {
+                $filters = $this->buildAvailabilityFilters(
+                    $partsListConfigurator,
+                    [$productStreamId],
+                    $testOptionIds
+                );
+
+                if (empty($filters)) {
+                    $isAvailable = false;
+                    break;
+                }
+
+                $criteria = new Criteria();
+                $criteria->addState(self::CRITERIA_STATE);
+                $criteria->setLimit(1);
+
+                $criteria->addFilter(
+                    new AndFilter($filters)
+                );
+
+                $result = $this->productListingRoute->load(
+                    $salesChannelContext
+                        ->getSalesChannel()
+                        ->getNavigationCategoryId(),
+                    $request,
+                    $salesChannelContext,
+                    $criteria
+                );
+
+                if ($result->getResult()->count() === 0) {
+                    $isAvailable = false;
+                    break;
+                }
             }
 
-            $criteria = new Criteria();
-            $criteria->addState(self::CRITERIA_STATE);
-            $criteria->setLimit(1);
-
-            $criteria->addPostFilter(
-                new OrFilter($mainFilters)
-            );
-
-            $listingResult = $this->productListingRoute->load(
-                $salesChannelContext
-                    ->getSalesChannel()
-                    ->getNavigationCategoryId(),
-                $request,
-                $salesChannelContext,
-                $criteria
-            );
-
-            if ($listingResult->getResult()->count() > 0) {
+            if ($isAvailable) {
                 $availableOptionIds[] = $candidateOptionId;
             }
         }
@@ -256,8 +266,16 @@ class PartsListConfiguratorPageLoader
                 continue;
             }
 
-            foreach ($filter->getProductStreams()->getIds() as $productStreamId) {
-                $productStreamIds[] = $productStreamId;
+            $availabilityProductStreamIds = $filter->getAvailabilityProductStreams()->getIds();
+
+            if (!empty($availabilityProductStreamIds)) {
+                foreach ($availabilityProductStreamIds as $productStreamId) {
+                    $productStreamIds[] = $productStreamId;
+                }
+            } else {
+                foreach ($filter->getproductStreams()->getIds() as $productStreamId) {
+                    $productStreamIds[] = $productStreamId;
+                }
             }
         }
 
@@ -278,11 +296,6 @@ class PartsListConfiguratorPageLoader
     ): array {
         $selectedOptionIds = $this->getPropIds($request, 'options');
 
-        /*
-         * Mapping:
-         *
-         * optionId => propertyGroupId
-         */
         $optionGroupIds = [];
 
         foreach ($options as $option) {
@@ -295,20 +308,6 @@ class PartsListConfiguratorPageLoader
             $candidateId = $candidate->getId();
             $candidateGroupId = $candidate->getGroupId();
 
-            /*
-             * Alle bisher gewählten Optionen übernehmen,
-             * ABER die Auswahl aus der Gruppe des Kandidaten entfernen.
-             *
-             * Beispiel:
-             *
-             * Zaunart = A
-             * Farbe   = Rot
-             * Höhe    = 1800
-             *
-             * Kandidat Zaunart B:
-             *
-             * => B + Rot + 1800
-             */
             $candidateOptionIds = array_filter(
                 $selectedOptionIds,
                 static function (string $optionId) use (

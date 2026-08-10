@@ -15,6 +15,12 @@
         "type": {
             "calculator": "Stücklisten Kalkulator",
             "filter": "Stücklisten Filter"
+        },
+        "field": {
+            "availabilityProductStreams": "Produktgruppen zur Verfügbarkeitsprüfung"
+        },
+        "helpText": {
+            "availabilityProductStreams": "Wenn leer: Verwendet Produktgruppen"
         }
     }
 }

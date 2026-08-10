@@ -23,9 +23,7 @@ class SalesChannelPartsListConfiguratorDefinition extends PartsListConfiguratorD
         $criteria->addAssociation('filters.propertyGroupOptions.group');
         $criteria->addAssociation('filters.propertyGroupOptions.media');
         $criteria->addAssociation('filters.productStreams');
-
-        //$propertyGroupOptionsCriteria = $criteria->getAssociation('filters.propertyGroupOptions');
-        //$propertyGroupOptionsCriteria->addSorting(new FieldSorting('position', FieldSorting::ASCENDING));
+        $criteria->addAssociation('filters.availabilityProductStreams');
 
         if (!$this->hasAvailableFilter($criteria)) {
             $criteria->addFilter(
