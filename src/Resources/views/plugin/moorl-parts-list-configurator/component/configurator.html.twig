@@ -13,7 +13,7 @@
 {% endif %}
 
 {% for group in configuratorSettings %}
-    {% set groupName = group.translated.name|split(']')|last|trim %}
+    {% set groupName = group.translated.customFields.moorl_pl_alt_name ?? group.translated.name|split(']')|last|trim %}
 
     <fieldset
             class="js-group configurator-group configurator-group-locked"
@@ -33,6 +33,10 @@
 
         <div class="configurator-selection-group configurator-v-spacer">
             {% for option in group.options %}
+                {% set ocf = option.translated.customFields %}
+                {% set oHasPopover = ocf.moorl_pl_image || ocf.moorl_pl_teaser %}
+                {% set optionName = ocf.moorl_pl_alt_name ?? option.translated.name|split(']')|last|trim %}
+
                 {% if elementId is defined and elementId is not null %}
                     {% set optionIdentifier = [group.id, option.id, elementId]|join('-') %}
                 {% else %}
@@ -60,7 +64,7 @@
                 <div
                         class=""
                         data-position="{{ option.translated.position }}"
-                        {% if option.translated.customFields.moorl_pl_image %}
+                        {% if oHasPopover %}
                             data-moorl-hover-card="true"
                             data-moorl-hover-card-options="{{ {
                                 template: "#popover-#{optionIdentifier}",
@@ -79,14 +83,14 @@
                             data-logical="{{ logical }}"
                             data-technical-name="{{ partsListConfigurator.getMappingName(option.id) }}"
                             data-preview="{{ media.url }}"
-                            data-name="{{ option.translated.name }}"
-                            data-description="{{ option.translated.customFields.moorl_pl_description }}"
+                            data-name="{{ optionName }}"
+                            data-description="{{ ocf.moorl_pl_description }}"
                     >
 
                     <label
                             class="configurator-card"
                             {% if displayType == 'color' and option.colorHexCode %}style="background-color: {{ option.colorHexCode }}"{% endif %}
-                            title="{{ option.translated.name }}"
+                            title="{{ optionName }}"
                             id="{{ optionIdentifier }}-label"
                             for="{{ optionIdentifier }}"
                             aria-hidden="true"
@@ -108,21 +112,27 @@
                     </label>
                 </div>
 
-                {% if option.translated.customFields.moorl_pl_image %}
-                    {% set popoverMedia = mediaCollection.get(option.translated.customFields.moorl_pl_image) %}
-
+                {% if oHasPopover %}
                     <template id="popover-{{ optionIdentifier }}">
-                        {% sw_thumbnails 'configurator-option-img-thumbnails' with {
-                            media: popoverMedia,
-                            sizes: {
-                                default: '120px'
-                            },
-                            attributes: {
-                                class: '',
-                                role: 'presentation',
-                                style: 'width: 160px'
-                            }
-                        } %}
+                        {% if ocf.moorl_pl_image %}
+                            {% set popoverMedia = mediaCollection.get(option.translated.customFields.moorl_pl_image) %}
+
+                                {% sw_thumbnails 'configurator-option-img-thumbnails' with {
+                                    media: popoverMedia,
+                                    sizes: {
+                                        default: '120px'
+                                    },
+                                    attributes: {
+                                        class: '',
+                                        role: 'presentation',
+                                        style: 'width: 160px'
+                                    }
+                                } %}
+                        {% endif %}
+
+                        {% if ocf.moorl_pl_teaser %}
+                            <div class="text-center text-muted small mt-2">{{ ocf.moorl_pl_teaser }}</div>
+                        {% endif %}
                     </template>
                 {% endif %}
             {% endfor %}

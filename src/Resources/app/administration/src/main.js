@@ -99,5 +99,5 @@ onMoorlFoundationReady(() => {
 });
 
 import './component';
-import './extension';
+//import './extension';
 import './module';

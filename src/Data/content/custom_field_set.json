@@ -25,9 +25,62 @@
     ],
     "customFields": [
       {
+        "name": "moorl_pl_image",
+        "type": "media",
+        "config": {
+          "customFieldPosition": 1,
+          "componentName": "sw-media-field",
+          "customFieldType": "media",
+          "label": {
+            "en-GB": "Alternative image",
+            "de-DE": "Alternatives Bild"
+          }
+        }
+      },
+      {
+        "name": "moorl_pl_alt_name",
+        "type": "text",
+        "config": {
+          "customFieldPosition": 2,
+          "componentName": "sw-text-field",
+          "customFieldType": "text",
+          "label": {
+            "en-GB": "Alternative name",
+            "de-DE": "Alternativer Name"
+          }
+        }
+      },
+      {
+        "name": "moorl_pl_teaser",
+        "type": "text",
+        "config": {
+          "customFieldPosition": 3,
+          "componentName": "sw-text-field",
+          "customFieldType": "text",
+          "label": {
+            "en-GB": "Teaser",
+            "de-DE": "Vorschau"
+          }
+        }
+      },
+      {
+        "name": "moorl_pl_description",
+        "type": "text",
+        "config": {
+          "customFieldPosition": 4,
+          "componentName": "sw-text-field",
+          "customFieldType": "text",
+          "label": {
+            "en-GB": "Description",
+            "de-DE": "Beschreibung"
+          }
+        }
+      },
+      {
         "name": "moorl_pl_calc_x_value",
         "type": "int",
         "config": {
+          "customFieldPosition": 5,
           "componentName": "sw-number-field",
           "customFieldType": "number",
           "label": {
@@ -40,6 +93,7 @@
         "name": "moorl_pl_calc_y_value",
         "type": "int",
         "config": {
+          "customFieldPosition": 6,
           "componentName": "sw-number-field",
           "customFieldType": "number",
           "label": {
@@ -52,35 +106,12 @@
         "name": "moorl_pl_calc_z_value",
         "type": "int",
         "config": {
+          "customFieldPosition": 7,
           "componentName": "sw-number-field",
           "customFieldType": "number",
           "label": {
             "en-GB": "CalcZ Value",
             "de-DE": "CalcZ Wert"
-          }
-        }
-      },
-      {
-        "name": "moorl_pl_image",
-        "type": "media",
-        "config": {
-          "componentName": "sw-media-field",
-          "customFieldType": "media",
-          "label": {
-            "en-GB": "Alternative image",
-            "de-DE": "Alternatives Bild"
-          }
-        }
-      },
-      {
-        "name": "moorl_pl_description",
-        "type": "text",
-        "config": {
-          "componentName": "sw-text-editor",
-          "customFieldType": "textEditor",
-          "label": {
-            "en-GB": "Info text",
-            "de-DE": "Info Text"
           }
         }
       }
