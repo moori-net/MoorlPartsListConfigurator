@@ -108,14 +108,14 @@
                             } %}
                         {% endif %}
 
-                        <span class="my-4">{{ option.translated.name }}</span>
+                        <span class="my-4">{{ optionName }}</span>
                     </label>
                 </div>
 
                 {% if oHasPopover %}
                     <template id="popover-{{ optionIdentifier }}">
                         {% if ocf.moorl_pl_image %}
-                            {% set popoverMedia = mediaCollection.get(option.translated.customFields.moorl_pl_image) %}
+                            {% set popoverMedia = mediaCollection.get(ocf.moorl_pl_image) %}
 
                                 {% sw_thumbnails 'configurator-option-img-thumbnails' with {
                                     media: popoverMedia,
