@@ -61,7 +61,7 @@
   .configurator-selection-group {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     .configurator-card {
       width: 100%;
@@ -122,11 +122,30 @@
       background-color: var(--bs-alert-bg);
       border: 1px solid var(--bs-alert-border-color);
     }
+
+    &.accessories-info-message {
+      @extend .alert-danger;
+
+      background-color: var(--bs-alert-bg);
+      border: 1px solid var(--bs-alert-border-color);
+    }
   }
 
   .configurator-v-spacer {
     margin-top: 1.5rem;
-    bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .cms-element-moorl-parts-list-configurator {
+    .configurator-selection-group {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .moorl-parts-list .moorl-parts-list-items .moorl-parts-list-item {
+    grid-template-columns: 16.67% 64px 1fr 90px;
   }
 }
 

@@ -11,6 +11,27 @@ class PartsListConfiguratorTranslationEntity extends TranslationEntity
     protected ?string $teaser = null;
     protected ?string $description = null;
     protected ?string $errorMessage = null;
+    protected ?string $infoMessage = null;
+
+    public function getInfoMessage(): ?string
+    {
+        return $this->infoMessage;
+    }
+
+    public function setInfoMessage(?string $infoMessage): void
+    {
+        $this->infoMessage = $infoMessage;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): void
+    {
+        $this->role = $role;
+    }
 
     public function getName(): string
     {
