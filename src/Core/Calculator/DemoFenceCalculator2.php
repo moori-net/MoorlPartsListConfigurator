@@ -171,7 +171,7 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
             throw RoutingException::missingRequestParameter($parameterName);
         }
 
-        $length = $length * 10; // cm > mm
+        $length = $length * 1000; // m > mm
 
         $this->partsListService->debug(sprintf("Got length %d for side %s", $length, $parameterName));
 

@@ -1,21 +1,25 @@
 {
-    "moorl-parts-list-configurator": {
-        "mySummary": "Configuration summary",
-        "nothingSelected": "currently nothing selected",
-        "partsListConfigurators": "Parts list configurators",
-        "logical-configurator": {
-            "field": {
-                "totalLength": "Total length",
-                "side_a": "Side A",
-                "side_b": "Side B",
-                "side_c": "Side C",
-                "side_d": "Side D"
-            }
-        },
-        "accessoryList": "Optional accessories",
-        "partsList": "Parts list",
-        "load": "Calculate parts list",
-        "calculatedPartsList": "Calculated parts list",
-        "calculatedPartsListError": "An error occurred during calculation. Please check your input."
-    }
+  "moorl-parts-list-configurator": {
+    "mySummary": "Configuration summary",
+    "nothingSelected": "currently nothing selected",
+    "partsListConfigurators": "Parts list configurators",
+    "logical-configurator": {
+      "field": {
+        "partLength": "Part length",
+        "totalLength": "Total length",
+        "side_a": "Side A",
+        "side_b": "Side B",
+        "side_c": "Side C",
+        "side_d": "Side D"
+      },
+      "unit": {
+        "m": "Meters (m)"
+      }
+    },
+    "accessoryList": "Optional accessories",
+    "partsList": "Parts list",
+    "load": "Calculate parts list",
+    "calculatedPartsList": "Calculated parts list",
+    "calculatedPartsListError": "An error occurred during calculation. Please check your input."
+  }
 }

@@ -57,6 +57,7 @@ class PartsListConfiguratorDefinition extends EntityDefinition
                 (new StringField('calculator', 'calculator')),
                 (new JsonField('mapping', 'mapping')),
                 (new TranslatedField('errorMessage'))->addFlags(),
+                (new TranslatedField('infoMessage'))->addFlags(),
             ],
             FieldThingCollection::getFieldItems(media: false),
             FieldMediaGalleryMediaCollection::getFieldItems(

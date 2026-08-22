@@ -5,11 +5,15 @@
     "partsListConfigurators": "Stücklisten-Konfiguratoren",
     "logical-configurator": {
       "field": {
+        "partLength": "Teillänge",
         "totalLength": "Gesamtlänge",
         "side_a": "Seite A",
         "side_b": "Seite B",
         "side_c": "Seite C",
         "side_d": "Seite D"
+      },
+      "unit": {
+        "m": "Meter (m)"
       }
     },
     "accessoryList": "Optionale Zubehörteile",

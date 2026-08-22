@@ -116,6 +116,8 @@ class PartsListConfiguratorPageLoader
             'availabilityOptions'
         );
 
+        $availableOptionIds = [];
+
         foreach ($availabilityOptionIds as $candidateOptionId) {
             $candidateOption = $options->get($candidateOptionId);
             if (!$candidateOption) {
