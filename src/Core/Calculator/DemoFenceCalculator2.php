@@ -8,7 +8,6 @@ use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
 use Shopware\Core\Content\Property\PropertyGroupDefinition;
-use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -156,6 +155,15 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
             $sidePost->setQuantity($item->getQuantity() + $sidePost->getQuantity());
         }
 
+        // einen Seitenpfosten pro Tor abziehen
+        foreach ($partsList->filterByProductStream('LAYOUT_ACCESSORIES') as $item) {
+            if ($item->getTemporaryQuantity() === 0) {
+                continue;
+            }
+
+            $sidePost->setQuantity($sidePost->getQuantity() - $item->getTemporaryQuantity());
+        }
+
         // die Anzahl der Eckpfosten wieder abziehen
         $sidePost->setQuantity($sidePost->getQuantity() - $cornerPost->getQuantity());
 
@@ -166,14 +174,10 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
     {
         $parameterName = sprintf("%s_length", $sideName);
 
-        $length = (int) $request->query->get($parameterName) ?: 1;
-        if (!$length) {
-            throw RoutingException::missingRequestParameter($parameterName);
-        }
-
+        $length = (float) $request->query->get($parameterName) ?: 1.0;
         $length = $length * 1000; // m > mm
 
-        $this->partsListService->debug(sprintf("Got length %d for side %s", $length, $parameterName));
+        $this->partsListService->debug(sprintf("Got length %d mm for side %s", $length, $parameterName));
 
         // Mindestlänge anhand kleinster Zaunmatte aufrunden
         $length = ceil($length / $this->shortestFence) * $this->shortestFence;
@@ -188,7 +192,7 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
             $length = $length - ($quantity * $item->getCalcX());
 
             $this->partsListService->debug(sprintf(
-                "%s have a length of %d and is given %d-times",
+                "%s have a length of %d mm and is given %d-times",
                 $item->getProduct()->getTranslation('name'),
                 $item->getCalcX(),
                 $quantity
