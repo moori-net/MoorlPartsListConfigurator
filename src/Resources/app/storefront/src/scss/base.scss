@@ -9,7 +9,7 @@
     .moorl-parts-list .moorl-parts-list-items .moorl-parts-list-item {
       grid-template-columns: 64px 1fr 90px;
 
-      div:first-child {
+      > div:first-child {
         display: none;
       }
     }
