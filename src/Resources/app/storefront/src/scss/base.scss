@@ -5,6 +5,16 @@
 }
 
 .cms-element-moorl-parts-list-configurator {
+  #partsList {
+    .moorl-parts-list .moorl-parts-list-items .moorl-parts-list-item {
+      grid-template-columns: 64px 1fr 90px;
+
+      div:first-child {
+        display: none;
+      }
+    }
+  }
+
   .product-detail-configurator-option-input + .product-detail-configurator-option-label {
     height: 120px;
     width: 120px;
