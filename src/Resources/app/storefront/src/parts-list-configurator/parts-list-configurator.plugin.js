@@ -7,6 +7,8 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         type: 'calculator',
         url: null,
         optionCount: 0,
+        refreshTimout: 200,
+        autoLoadTimeout: 2000,
         loaderClass: 'loader',
         offsetTop: window.moorlOffsetTop ?? 30,
         iconLocked: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>',
@@ -25,29 +27,16 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         this._summary = [];
         this._timeout = null;
+        this._autoLoadTimeout = null;
         this._enableNextStep = true;
 
-        this._previewImage = document.getElementById(
-            'previewImage'
-        );
-
-        this._mySummaryEl = document.getElementById(
-            'mySummary'
-        );
-
-        this._partsListEl = document.getElementById(
-            'partsList'
-        );
-
-        this._accessoryList = document.getElementById(
-            'accessoryList'
-        );
+        this._previewImage = document.getElementById('previewImage');
+        this._mySummaryEl = document.getElementById('mySummary');
+        this._partsListEl = document.getElementById('partsList');
+        this._accessoryList = document.getElementById('accessoryList');
 
         this._formEl = this.el.querySelector('form');
-
-        this._loadButton = this.el.querySelector(
-            '.js-load-button'
-        );
+        this._loadButton = this.el.querySelector('.js-load-button');
 
         this._groups = Array.from(
             this._formEl.querySelectorAll('.js-group')
@@ -72,6 +61,48 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         this._setFilterState();
         this._initializeAvailability();
+    }
+
+    _loadConfiguration() {
+        if (!this._isConfigurationComplete()) {
+            return;
+        }
+
+        this._loadHistory();
+
+        if (this._partsListEl) {
+            this._partsListEl.style.display = '';
+        }
+
+        if (this._loadButton) {
+            this._loadButton.disabled = true;
+        }
+
+        this._loadList(
+            this._partsListEl,
+            'proxy-cart'
+        );
+    }
+
+    _scheduleAutoLoad() {
+        if (this._autoLoadTimeout) {
+            clearTimeout(this._autoLoadTimeout);
+            this._autoLoadTimeout = null;
+        }
+
+        if (!this._isConfigurationComplete()) {
+            return;
+        }
+
+        this._autoLoadTimeout = setTimeout(() => {
+            this._autoLoadTimeout = null;
+
+            if (!this._isConfigurationComplete()) {
+                return;
+            }
+
+            this._loadConfiguration();
+        }, this.options.autoLoadTimeout);
     }
 
     _initializeAvailability() {
@@ -243,22 +274,6 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         return selectionChanged;
     }
 
-    _getNextStep(currentGroupEl = null) {
-        if (!currentGroupEl) {
-            return this._groups[0] ?? null;
-        }
-
-        const index = this._groups.indexOf(
-            currentGroupEl
-        );
-
-        if (index < 0) {
-            return null;
-        }
-
-        return this._groups[index + 1] ?? null;
-    }
-
     _getNextOptionGroup(
         currentGroupEl = null
     ) {
@@ -307,48 +322,39 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                             return;
                         }
 
-                        const currentGroupEl =
-                            el.closest('.js-group');
+                        const currentGroupEl = el.closest('.js-group');
 
-                        this._resetFollowingSteps(
-                            currentGroupEl
-                        );
+                        this._resetFollowingSteps(currentGroupEl);
 
-                        this._refresh(
-                            'options',
-                            false,
-                            currentGroupEl
-                        );
+                        this._refresh('options', false, currentGroupEl);
                     }
                 );
             });
 
-        if (
-            this._loadButton &&
-            !this._loadButton.dataset
-                .configuratorRegistered
-        ) {
-            this._loadButton.dataset
-                .configuratorRegistered = '1';
+        if (this._loadButton && !this._loadButton.dataset.configuratorRegistered) {
+            this._loadButton.dataset.configuratorRegistered = '1';
 
             this._loadButton.addEventListener(
                 'click',
                 () => {
-                    this._loadHistory();
-
-                    if (this._partsListEl) {
-                        this._partsListEl.style.display =
-                            '';
-                    }
-
-                    this._loadButton.disabled = true;
-
-                    this._loadList(
-                        this._partsListEl,
-                        'proxy-cart'
-                    );
+                    this._loadConfiguration();
                 }
             );
+        }
+
+        if (!this._formEl.dataset.autoLoadRegistered) {
+            this._formEl.dataset.autoLoadRegistered = '1';
+
+            const handleAutoLoad = event => {
+                if (!event.target.matches('input, select, textarea')) {
+                    return;
+                }
+
+                this._scheduleAutoLoad();
+            };
+
+            this._formEl.addEventListener('input', handleAutoLoad);
+            this._formEl.addEventListener('change', handleAutoLoad);
         }
     }
 
@@ -360,9 +366,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         currentEl
             .querySelectorAll('input[type=number]')
             .forEach(el => {
-                if (
-                    el.dataset.configuratorRegistered
-                ) {
+                if (el.dataset.configuratorRegistered) {
                     return;
                 }
 
@@ -375,6 +379,10 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                             () => {
                                 this._loadHistory();
                                 this._refreshSummary();
+
+                                if (this._loadButton) {
+                                    this._loadButton.disabled = !this._isConfigurationComplete();
+                                }
                             }
                         );
                     }
@@ -383,6 +391,11 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _resetFollowingSteps(currentGroupEl) {
+        if (this._autoLoadTimeout) {
+            clearTimeout(this._autoLoadTimeout);
+            this._autoLoadTimeout = null;
+        }
+
         if (!currentGroupEl) {
             return;
         }
@@ -392,9 +405,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._groups.forEach(groupEl => {
             if (reset) {
                 groupEl
-                    .querySelectorAll(
-                        'input[type=radio]'
-                    )
+                    .querySelectorAll('input[type=radio]')
                     .forEach(el => {
                         el.checked = false;
                     });
@@ -417,11 +428,10 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     _refresh(
         source,
         availabilityLoaded = false,
-        scrollFromGroupEl = null
+        currentGroupEl = null
     ) {
         if (this._timeout) {
             clearTimeout(this._timeout);
-
             this._timeout = null;
         }
 
@@ -436,13 +446,11 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         }
 
         if (this._partsListEl) {
-            this._partsListEl.style.display =
-                'none';
+            this._partsListEl.style.display = 'none';
         }
 
         if (this._loadButton) {
-            this._loadButton.disabled =
-                !this._isConfigurationComplete();
+            this._loadButton.disabled = !this._isConfigurationComplete();
         }
 
         this._timeout = setTimeout(() => {
@@ -455,51 +463,30 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 this._refreshStepStates();
 
                 this._groups.forEach(groupEl => {
-                    this._loadGroupDescription(
-                        groupEl
-                    );
-
-                    this._loadPreviewImage(
-                        groupEl
-                    );
-
-                    this._loadLogicalConfigurator(
-                        groupEl
-                    );
+                    this._loadGroupDescription(groupEl);
+                    this._loadPreviewImage(groupEl);
+                    this._loadLogicalConfigurator(groupEl);
                 });
 
-                const isConfigurationComplete =
-                    this._isConfigurationComplete();
+                const isConfigurationComplete = this._isConfigurationComplete();
 
                 this.el
                     .querySelectorAll('[data-hide-on-load]')
                     .forEach(el => {
-                        el.style.display =
-                            isConfigurationComplete
-                                ? ''
-                                : 'none';
+                        el.style.display = isConfigurationComplete ? '' : 'none';
                     });
 
                 if (isConfigurationComplete) {
                     this._loadList(
                         this._accessoryList,
-                        this.options.type === 'calculator'
-                            ? 'accessory-list'
-                            : 'parts-list'
+                        this.options.type === 'calculator' ? 'accessory-list' : 'parts-list'
                     );
                 }
 
                 this._refreshSummary();
 
                 if (this._loadButton) {
-                    this._loadButton.disabled =
-                        !isConfigurationComplete;
-                }
-
-                if (scrollFromGroupEl) {
-                    this._scrollToNextStep(
-                        scrollFromGroupEl
-                    );
+                    this._loadButton.disabled = !isConfigurationComplete;
                 }
 
                 this._timeout = null;
@@ -510,10 +497,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 return;
             }
 
-            const nextGroupEl =
-                this._getNextOptionGroup(
-                    scrollFromGroupEl
-                );
+            const nextGroupEl = this._getNextOptionGroup(currentGroupEl);
 
             if (!nextGroupEl) {
                 refresh();
@@ -538,53 +522,19 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                     refresh();
                 }
             );
-        }, 100);
+        }, this.options.refreshTimout);
     }
 
-    _scrollToNextStep(currentGroupEl) {
-        const nextGroupEl =
-            this._getNextStep(currentGroupEl);
-
-        if (!nextGroupEl) {
-            return;
-        }
-
-        window.scrollTo({
-            top:
-                nextGroupEl
-                    .getBoundingClientRect()
-                    .top +
-                window.scrollY -
-                (
-                    Number(
-                        this.options.offsetTop
-                    ) + 200
-                ),
-            behavior: 'smooth'
-        });
-    }
-
-    _loadList(
-        currentEl,
-        type,
-        filters = this._filters
-    ) {
+    _loadList(currentEl, type, filters = this._filters) {
         if (!currentEl) {
             return;
         }
 
-        const contentEl =
-            currentEl.querySelector(
-                '[data-content]'
-            ) ?? currentEl;
+        const contentEl = currentEl.querySelector('[data-content]') ?? currentEl;
 
-        contentEl.replaceChildren(
-            this._loaderElement()
-        );
+        contentEl.replaceChildren(this._loaderElement());
 
-        const query = new URLSearchParams(
-            this._mapFilters(filters)
-        ).toString();
+        const query = new URLSearchParams(this._mapFilters(filters)).toString();
 
         this._client.get(
             `${this.options.url}/${type}?${query}`,
@@ -594,11 +544,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 window.PluginManager.initializePlugins();
 
                 this._setFilterState();
-
-                this._registerListEvents(
-                    contentEl
-                );
-
+                this._registerListEvents(contentEl);
                 this._refreshSummary();
             }
         );
@@ -617,10 +563,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         );
     }
 
-    _loadGroupStep(
-        groupEl,
-        currentStep
-    ) {
+    _loadGroupStep(groupEl, currentStep) {
         const stepBadge = groupEl.querySelector(
             '[data-step]'
         );
@@ -671,19 +614,17 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _isConfigurationComplete() {
-        if (!this._optionGroups.length) {
+        if (!this._groups.length) {
             return false;
         }
 
-        return this._optionGroups.every(
-            groupEl => {
-                return Boolean(
-                    groupEl.querySelector(
-                        'input[type=radio]:checked'
-                    )
-                );
-            }
-        );
+        return this._groups.every(groupEl => {
+            return Boolean(
+                groupEl.querySelector(
+                    'input[type=radio]:checked'
+                )
+            );
+        });
     }
 
     _loadGroupDescription(groupEl) {
@@ -746,33 +687,20 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             return;
         }
 
-        if (
-            groupEl.classList.contains(
-                'configurator-group-locked'
-            )
-        ) {
-            return;
-        }
-
-        const logicalConfiguratorEl =
-            groupEl.querySelector(
-                '.js-logical-configurator'
-            );
+        const logicalConfiguratorEl = groupEl.querySelector('.js-logical-configurator');
 
         if (!logicalConfiguratorEl) {
             return;
         }
 
-        const filters = {
-            ...this._filters,
-            group: groupEl.dataset.technicalName
-        };
+        if (groupEl.classList.contains('configurator-group-locked')) {
+            logicalConfiguratorEl.innerHTML = '';
+            return;
+        }
 
-        this._loadList(
-            logicalConfiguratorEl,
-            'logical-configurator',
-            filters
-        );
+        const filters = {...this._filters, group: groupEl.dataset.technicalName};
+
+        this._loadList(logicalConfiguratorEl, 'logical-configurator', filters);
     }
 
     _loadHistory() {
