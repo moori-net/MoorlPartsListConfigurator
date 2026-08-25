@@ -46,13 +46,10 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             groupEl => !groupEl.dataset.logical
         );
 
-        this.options.optionCount =
-            this._optionGroups.length;
+        this.options.optionCount = this._optionGroups.length;
 
         this._groups.forEach((groupEl, index) => {
-            const stepEl = groupEl.querySelector(
-                '[data-step]'
-            );
+            const stepEl = groupEl.querySelector('[data-step]');
 
             if (stepEl) {
                 stepEl.textContent = index + 1;
@@ -78,10 +75,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             this._loadButton.disabled = true;
         }
 
-        this._loadList(
-            this._partsListEl,
-            'proxy-cart'
-        );
+        this._loadList(this._partsListEl, 'proxy-cart');
     }
 
     _scheduleAutoLoad() {
@@ -564,10 +558,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
     }
 
     _loadGroupStep(groupEl, currentStep) {
-        const stepBadge = groupEl.querySelector(
-            '[data-step]'
-        );
-
+        const stepBadge = groupEl.querySelector('[data-step]');
         if (!stepBadge) {
             return;
         }
@@ -582,8 +573,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 'configurator-group-locked'
             );
 
-            stepBadge.innerHTML =
-                this.options.iconLocked;
+            stepBadge.innerHTML = this.options.iconLocked;
 
             return;
         }
@@ -595,9 +585,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         }
 
         const checkedOption =
-            groupEl.querySelector(
-                'input[type=radio]:checked'
-            );
+            groupEl.querySelector('input[type=radio]:checked');
 
         if (!checkedOption) {
             this._enableNextStep = false;
@@ -605,12 +593,9 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             return;
         }
 
-        groupEl.classList.add(
-            'configurator-group-complete'
-        );
+        groupEl.classList.add('configurator-group-complete');
 
-        stepBadge.innerHTML =
-            this.options.iconComplete;
+        stepBadge.innerHTML = this.options.iconComplete;
     }
 
     _isConfigurationComplete() {
@@ -620,36 +605,26 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         return this._groups.every(groupEl => {
             return Boolean(
-                groupEl.querySelector(
-                    'input[type=radio]:checked'
-                )
+                groupEl.querySelector('input[type=radio]:checked')
             );
         });
     }
 
     _loadGroupDescription(groupEl) {
         const descriptionEl =
-            groupEl.querySelector(
-                '.js-group-description'
-            );
+            groupEl.querySelector('.js-group-description');
 
         if (!descriptionEl) {
             return;
         }
 
-        const optionEl = groupEl.querySelector(
-            'input[type=radio]:checked'
-        );
+        const optionEl = groupEl.querySelector('input[type=radio]:checked');
 
-        const description =
-            optionEl?.dataset.description ?? '';
+        const description = optionEl?.dataset.description ?? '';
 
         if (!description) {
             descriptionEl.innerHTML = '';
-
-            descriptionEl.style.display =
-                'none';
-
+            descriptionEl.style.display = 'none';
             return;
         }
 
@@ -669,16 +644,10 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             return;
         }
 
-        const optionEl = groupEl.querySelector(
-            'input[type=radio]:checked'
-        );
+        const optionEl = groupEl.querySelector('input[type=radio]:checked');
 
-        if (
-            optionEl?.dataset.preview &&
-            this._previewImage
-        ) {
-            this._previewImage.src =
-                optionEl.dataset.preview;
+        if (optionEl?.dataset.preview && this._previewImage) {
+            this._previewImage.src = optionEl.dataset.preview;
         }
     }
 
@@ -828,12 +797,9 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             'p-5'
         );
 
-        const loader =
-            document.createElement('span');
+        const loader = document.createElement('span');
 
-        loader.classList.add(
-            this.options.loaderClass
-        );
+        loader.classList.add(this.options.loaderClass);
 
         wrapper.appendChild(loader);
 
@@ -863,25 +829,16 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         });
 
         this._formEl
-            .querySelectorAll(
-                '.js-summary-group'
-            )
+            .querySelectorAll('.js-summary-group')
             .forEach(summaryGroupEl => {
                 const values = [];
 
                 summaryGroupEl
-                    .querySelectorAll(
-                        '.js-summary-item'
-                    )
+                    .querySelectorAll('.js-summary-item')
                     .forEach(summaryItemEl => {
-                        const inputEl =
-                            summaryItemEl.querySelector(
-                                'input, select, textarea'
-                            );
+                        const inputEl = summaryItemEl.querySelector('input, select, textarea');
 
-                        const value =
-                            inputEl?.value?.trim();
-
+                        const value = inputEl?.value?.trim();
                         if (!value) {
                             return;
                         }
@@ -921,9 +878,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._summary = summary;
 
         this._renderSummaryTable(
-            this._mySummaryEl?.querySelector(
-                '[data-content]'
-            )
+            this._mySummaryEl?.querySelector('[data-content]')
         );
     }
 
@@ -958,47 +913,29 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                     const groupLinkEl =
                         document.createElement('a');
 
-                    groupLinkEl.href =
-                        `#${encodeURIComponent(
-                            summaryItem.id
-                        )}`;
+                    groupLinkEl.href = `#${encodeURIComponent(summaryItem.id)}`;
 
-                    groupLinkEl.textContent =
-                        summaryItem.group ?? '';
+                    groupLinkEl.textContent = summaryItem.group ?? '';
 
-                    groupLinkEl.classList.add(
-                        'text-decoration-none'
-                    );
+                    groupLinkEl.classList.add('text-decoration-none');
 
-                    groupCellEl.appendChild(
-                        groupLinkEl
-                    );
+                    groupCellEl.appendChild(groupLinkEl);
                 } else {
-                    groupCellEl.textContent =
-                        summaryItem.group ?? '';
+                    groupCellEl.textContent = summaryItem.group ?? '';
                 }
 
-                const optionCellEl =
-                    document.createElement('td');
+                const optionCellEl = document.createElement('td');
 
-                optionCellEl.textContent =
-                    summaryItem.option ?? '';
+                optionCellEl.textContent = summaryItem.option ?? '';
 
-                rowEl.append(
-                    groupCellEl,
-                    optionCellEl
-                );
+                rowEl.append(groupCellEl, optionCellEl);
 
-                tableBodyEl.appendChild(
-                    rowEl
-                );
+                tableBodyEl.appendChild(rowEl);
             }
         );
 
         tableEl.appendChild(tableBodyEl);
 
-        containerEl.replaceChildren(
-            tableEl
-        );
+        containerEl.replaceChildren(tableEl);
     }
 }
