@@ -7,7 +7,9 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         type: 'calculator',
         url: null,
         optionCount: 0,
-        refreshTimout: 200,
+        autoScroll: true,
+        autoLoad: true,
+        refreshTimeout: 200,
         autoLoadTimeout: 2000,
         loaderClass: 'loader',
         offsetTop: window.moorlOffsetTop ?? 30,
@@ -60,7 +62,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         this._initializeAvailability();
     }
 
-    _loadConfiguration() {
+    _loadConfiguration(scrollToPartsList = false) {
         if (!this._isConfigurationComplete()) {
             return;
         }
@@ -76,6 +78,10 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         }
 
         this._loadList(this._partsListEl, 'proxy-cart');
+
+        if (scrollToPartsList && this.options.autoScroll) {
+            this._scrollToElement(this._partsListEl);
+        }
     }
 
     _scheduleAutoLoad() {
@@ -297,6 +303,52 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         return null;
     }
 
+    _getNextStep(currentGroupEl) {
+        if (!currentGroupEl) {
+            return null;
+        }
+
+        const currentIndex = this._groups.indexOf(currentGroupEl);
+
+        if (currentIndex < 0) {
+            return null;
+        }
+
+        return this._groups[currentIndex + 1] ?? null;
+    }
+
+    _scrollToElement(elementEl) {
+        if (!this.options.autoScroll || !elementEl) {
+            return;
+        }
+
+        window.scrollTo({
+            top:
+                elementEl.getBoundingClientRect().top +
+                window.scrollY -
+                Number(this.options.offsetTop),
+            behavior: 'smooth'
+        });
+    }
+
+    _scrollToNextStep(currentGroupEl) {
+        if (!this.options.autoScroll || !currentGroupEl) {
+            return;
+        }
+
+        if (currentGroupEl.dataset.logical) {
+            return;
+        }
+
+        const nextGroupEl = this._getNextStep(currentGroupEl);
+
+        if (!nextGroupEl) {
+            return;
+        }
+
+        this._scrollToElement(nextGroupEl);
+    }
+
     _registerEvents() {
         this._formEl
             .querySelectorAll('input[type=radio]')
@@ -325,20 +377,17 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 );
             });
 
-        if (this._loadButton && !this._loadButton.dataset.configuratorRegistered) {
+        if (this._loadButton && this.options.autoLoad && !this._loadButton.dataset.configuratorRegistered) {
             this._loadButton.dataset.configuratorRegistered = '1';
 
-            this._loadButton.addEventListener(
-                'click',
-                () => {
-                    this._loadConfiguration();
-                }
-            );
+            this._loadButton.addEventListener('click', () => {
+                this._loadConfiguration(true);
+            });
         }
 
-        if (!this._formEl.dataset.autoLoadRegistered) {
+        if (!this._formEl.dataset.autoLoadRegistered && this.options.autoLoad) {
             this._formEl.dataset.autoLoadRegistered = '1';
-
+            
             const handleAutoLoad = event => {
                 if (!event.target.matches('input, select, textarea')) {
                     return;
@@ -483,6 +532,8 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                     this._loadButton.disabled = !isConfigurationComplete;
                 }
 
+                this._scrollToNextStep(currentGroupEl);
+
                 this._timeout = null;
             };
 
@@ -516,7 +567,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                     refresh();
                 }
             );
-        }, this.options.refreshTimout);
+        }, this.options.refreshTimeout);
     }
 
     _loadList(currentEl, type, filters = this._filters) {
