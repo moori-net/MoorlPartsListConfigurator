@@ -6,6 +6,7 @@ use Moorl\PartsListConfigurator\Core\Calculator\CoreCalculator;
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorException;
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
 use Shopware\Core\Framework\Routing\RoutingException;
+use Shopware\Core\PlatformRequest;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,7 +38,15 @@ class PartsListConfiguratorController extends StorefrontController
         ]);
     }
 
-    #[Route(path: '/parts-list-configurator/{partsListConfiguratorId}/availability', name: 'frontend.moorl.parts.list.configurator.availability', methods: ['GET'], defaults: ['XmlHttpRequest' => true])]
+    #[Route(
+        path: '/parts-list-configurator/{partsListConfiguratorId}/availability',
+        name: 'frontend.moorl.parts.list.configurator.availability',
+        defaults: [
+            'XmlHttpRequest' => true,
+            PlatformRequest::ATTRIBUTE_HTTP_CACHE => true,
+        ],
+        methods: ['GET']
+    )]
     public function availability(SalesChannelContext $salesChannelContext, Request $request): JsonResponse
     {
         $availability = $this->partsListConfiguratorPageLoader->availability(
