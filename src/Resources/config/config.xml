@@ -4,6 +4,20 @@
     <card>
         <title>General</title>
         <title lang="de-DE">Einstellungen</title>
+
+        <input-field type="bool">
+            <name>autoScroll</name>
+            <label>Auto scroll</label>
+            <label lang="de-DE">Automatisches Scrollen</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>autoLoad</name>
+            <label>Auto load parts list</label>
+            <label lang="de-DE">Stückliste automatisch ermitteln</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
     </card>
 
     <card>

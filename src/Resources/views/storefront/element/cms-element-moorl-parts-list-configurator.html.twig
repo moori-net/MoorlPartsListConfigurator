@@ -1,7 +1,9 @@
 {% set partsListConfigurator = page.partsListConfigurator %}
 {% set config = {
     url: path('frontend.moorl.parts.list.configurator.detail', {partsListConfiguratorId: partsListConfigurator.id}),
-    type: partsListConfigurator.type
+    type: partsListConfigurator.type,
+    autoScroll: config('MoorlPartsListConfigurator.config.autoScroll'),
+    autoLoad: config('MoorlPartsListConfigurator.config.autoLoad')
 } %}
 
 <div
