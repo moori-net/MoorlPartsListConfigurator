@@ -105,7 +105,6 @@
             <argument type="service" id="Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute"/>
             <argument type="service" id="Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingRoute"/>
             <argument type="service" id="Shopware\Core\Checkout\Cart\SalesChannel\CartService"/>
-            <argument type="service" id="Doctrine\DBAL\Connection"/>
             <argument type="service" id="moorl.parts.list.logger"/>
             <argument type="tagged" tag="moorl.parts.list.calculator"/>
         </service>

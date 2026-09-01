@@ -208,7 +208,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         const query = new URLSearchParams(
             this._mapFilters({
-                ...filters,
+                options: filters.options ?? [],
                 availabilityOptions
             })
         ).toString();

@@ -2,8 +2,6 @@
 
 namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 
-use Doctrine\DBAL\ArrayParameterType;
-use Doctrine\DBAL\Connection;
 use Moorl\PartsListConfigurator\Core\Calculator\CoreCalculator;
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
@@ -20,7 +18,6 @@ use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRou
 use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
-use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\AndFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
@@ -48,7 +45,6 @@ class PartsListConfiguratorPageLoader
         private readonly PartsListConfiguratorDetailRoute $partsListConfiguratorDetailRoute,
         private readonly AbstractProductListingRoute $productListingRoute,
         private readonly CartService $cartService,
-        private readonly Connection $connection,
         private readonly LoggerInterface $logger,
         private readonly iterable $partsListCalculators
     ){}
@@ -106,10 +102,7 @@ class PartsListConfiguratorPageLoader
             );
         }
 
-        $optionGroupIds = [];
-        foreach ($options as $option) {
-            $optionGroupIds[$option->getId()] = $option->getGroupId();
-        }
+        $optionGroupIds = $this->getOptionGroupIds($options);
 
         $availabilityOptionIds = $this->getPropIds(
             $request,
@@ -153,7 +146,8 @@ class PartsListConfiguratorPageLoader
                 $filters = $this->buildAvailabilityFilters(
                     $partsListConfigurator,
                     [$productStreamId],
-                    $testOptionIds
+                    $testOptionIds,
+                    $optionGroupIds
                 );
 
                 if (empty($filters)) {
@@ -197,7 +191,8 @@ class PartsListConfiguratorPageLoader
     private function buildAvailabilityFilters(
         SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
         array $productStreamIds,
-        array $selectedOptionIds
+        array $selectedOptionIds,
+        array $optionGroupIds
     ): array {
         $mainFilters = [];
 
@@ -233,7 +228,8 @@ class PartsListConfiguratorPageLoader
                 }
 
                 $propertyFilters[] = $this->getPropertyFilterByIds(
-                    $optionIds
+                    $optionIds,
+                    $optionGroupIds
                 );
             }
 
@@ -298,11 +294,7 @@ class PartsListConfiguratorPageLoader
     ): array {
         $selectedOptionIds = $this->getPropIds($request, 'options');
 
-        $optionGroupIds = [];
-
-        foreach ($options as $option) {
-            $optionGroupIds[$option->getId()] = $option->getGroupId();
-        }
+        $optionGroupIds = $this->getOptionGroupIds($options);
 
         $availability = [];
 
@@ -332,7 +324,8 @@ class PartsListConfiguratorPageLoader
             $mainFilters = $this->buildMainFilters(
                 $partsListConfigurator,
                 $productStreams,
-                $candidateOptionIds
+                $candidateOptionIds,
+                $optionGroupIds
             );
 
             $criteria->addPostFilter(
@@ -367,7 +360,8 @@ class PartsListConfiguratorPageLoader
     private function buildMainFilters(
         SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
         ProductStreamCollection $productStreams,
-        array $selectedOptionIds
+        array $selectedOptionIds,
+        array $optionGroupIds
     ): array {
         $mainFilters = [];
 
@@ -399,7 +393,7 @@ class PartsListConfiguratorPageLoader
                     );
                 }
 
-                $propertyFilters[] = $this->getPropertyFilterByIds($optionIds);
+                $propertyFilters[] = $this->getPropertyFilterByIds($optionIds, $optionGroupIds);
             }
 
             if (in_array('optional', $productStream->getTranslation('flags') ?? [], true)) {
@@ -420,36 +414,32 @@ class PartsListConfiguratorPageLoader
         return $mainFilters;
     }
 
-    private function getPropertyFilterByIds(array $ids): AndFilter
+    /**
+     * @param list<string> $ids
+     * @param array<string, string> $optionGroupIds
+     */
+    private function getPropertyFilterByIds(array $ids, array $optionGroupIds): AndFilter
     {
         if (empty($ids)) {
             return new AndFilter([]);
         }
 
-        $grouped = $this->connection->fetchAllAssociative(
-            <<<SQL
-SELECT
-    LOWER(HEX(property_group_id)) AS property_group_id,
-    LOWER(HEX(id)) AS id
-FROM property_group_option
-WHERE id IN (:ids)
-SQL,
-            [
-                'ids' => Uuid::fromHexToBytesList($ids),
-            ],
-            [
-                'ids' => ArrayParameterType::BINARY,
-            ]
-        );
+        $grouped = [];
 
-        $grouped = FetchModeHelper::group(
-            $grouped,
-            static fn (array $row): string => (string) $row['id']
-        );
+        foreach ($ids as $optionId) {
+            $groupId = $optionGroupIds[$optionId] ?? null;
+            if ($groupId === null) {
+                continue;
+            }
+
+            $grouped[$groupId][$optionId] = $optionId;
+        }
 
         $filters = [];
 
-        foreach ($grouped as $options) {
+        foreach ($grouped as $optionsById) {
+            $options = array_values($optionsById);
+
             $filters[] = new OrFilter([
                 new EqualsAnyFilter('product.optionIds', $options),
                 new EqualsAnyFilter('product.propertyIds', $options),
@@ -457,6 +447,20 @@ SQL,
         }
 
         return new AndFilter($filters);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getOptionGroupIds(PropertyGroupOptionCollection $options): array
+    {
+        $optionGroupIds = [];
+
+        foreach ($options as $option) {
+            $optionGroupIds[$option->getId()] = $option->getGroupId();
+        }
+
+        return $optionGroupIds;
     }
 
     public function getErrorMessage(Request $request, SalesChannelContext $salesChannelContext): ?string
@@ -506,6 +510,7 @@ SQL,
             $productStreams->merge($filter->getProductStreams());
             $options->merge($filter->getPropertyGroupOptions());
         }
+        $optionGroupIds = $this->getOptionGroupIds($options);
 
         $mainFilters = [];
         foreach ($productStreams as $productStream) {
@@ -557,7 +562,13 @@ SQL,
                 $optionIds = array_values($filter->getPropertyGroupOptions()?->getIds() ?: []);
 
                 if ($filter->getProductStreams()->has($productStream->getId())) {
-                    $propertyFilters[] = $this->getPropertyFilter($request, $optionIds, 'options', $filter->getFixed());
+                    $propertyFilters[] = $this->getPropertyFilter(
+                        $request,
+                        $optionIds,
+                        $optionGroupIds,
+                        'options',
+                        $filter->getFixed()
+                    );
                 }
             }
 
@@ -741,6 +752,7 @@ SQL,
     private function getPropertyFilter(
         Request $request,
         array $whitelistIds = [],
+        array $optionGroupIds = [],
         string $prop = 'tag',
         bool $fixed = false
     ): AndFilter {
@@ -753,7 +765,7 @@ SQL,
             );
         }
 
-        return $this->getPropertyFilterByIds(array_values($ids));
+        return $this->getPropertyFilterByIds(array_values($ids), $optionGroupIds);
     }
 
     private function getPartsListCalculatorByName(string $name): PartsListCalculatorInterface

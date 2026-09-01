@@ -230,4 +230,6 @@ build:
       excludes:
         paths:
           - docs
+          - tests
           - TODO.md
+          - phpunit.xml.dist
