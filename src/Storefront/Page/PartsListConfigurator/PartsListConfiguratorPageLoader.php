@@ -275,7 +275,7 @@ class PartsListConfiguratorPageLoader
                     $productStreamIds[] = $productStreamId;
                 }
             } else {
-                foreach ($filter->getproductStreams()->getIds() as $productStreamId) {
+                foreach ($filter->getProductStreams()->getIds() as $productStreamId) {
                     $productStreamIds[] = $productStreamId;
                 }
             }
@@ -700,14 +700,14 @@ SQL,
                     }
                     if ($partsListCalculator->isCalcY($groupTechnicalName)) {
                         if (!empty($customFields['moorl_pl_calc_y_value'])) {
-                            $item->setCalcX((int) $customFields['moorl_pl_calc_y_value']);
+                            $item->setCalcY((int) $customFields['moorl_pl_calc_y_value']);
                         } else {
                             $item->setCalcY((int) $option->getTranslation('name'));
                         }
                     }
                     if ($partsListCalculator->isCalcZ($groupTechnicalName)) {
                         if (!empty($customFields['moorl_pl_calc_z_value'])) {
-                            $item->setCalcX((int) $customFields['moorl_pl_calc_z_value']);
+                            $item->setCalcZ((int) $customFields['moorl_pl_calc_z_value']);
                         } else {
                             $item->setCalcZ((int) $option->getTranslation('name'));
                         }
@@ -729,17 +729,13 @@ SQL,
             return;
         }
 
-        $metaDescription = $page->getPartsListConfigurator()->getTranslation('teaser')
-            ?? $page->getPartsListConfigurator()->getTranslation('teaser');
+        $metaDescription = $page->getPartsListConfigurator()->getTranslation('metaDescription')
+            ?: $page->getPartsListConfigurator()->getTranslation('teaser');
         $metaInformation->setMetaDescription((string) $metaDescription);
 
-        if ((string) $page->getPartsListConfigurator()->getTranslation('name') !== '') {
-            $metaInformation->setMetaTitle((string) $page->getPartsListConfigurator()->getTranslation('name'));
-            return;
-        }
-
-        $metaTitleParts = [$page->getPartsListConfigurator()->getTranslation('name')];
-        $metaInformation->setMetaTitle(implode(' | ', $metaTitleParts));
+        $metaTitle = $page->getPartsListConfigurator()->getTranslation('metaTitle')
+            ?: $page->getPartsListConfigurator()->getTranslation('name');
+        $metaInformation->setMetaTitle((string) $metaTitle);
     }
 
     private function getPropertyFilter(

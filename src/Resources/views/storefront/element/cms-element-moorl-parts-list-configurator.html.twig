@@ -43,18 +43,23 @@
                                     class="mb-3"
                                     style="display: none"
                             >
-                                <legend class="h3">
-                                    {% if partsListConfigurator.type == 'calculator' %}
-                                        {{ "moorl-parts-list-configurator.accessoryList"|trans }}
-                                    {% else %}
-                                        {{ "moorl-parts-list-configurator.partsList"|trans }}
-                                    {% endif %}
-                                </legend>
+                                {% block accessory_list_title %}
+                                    <legend class="h3">
+                                        {% if partsListConfigurator.type == 'calculator' %}
+                                            {{ "moorl-parts-list-configurator.accessoryList"|trans }}
+                                        {% else %}
+                                            {{ "moorl-parts-list-configurator.partsList"|trans }}
+                                        {% endif %}
+                                    </legend>
+                                {% endblock %}
 
-                                <div
-                                        style=""
-                                        class="accessories-info-message configurator-card configurator-v-spacer"
-                                >{{ partsListConfigurator.translated.infoMessage|raw }}</div>
+                                {% if partsListConfigurator.translated.infoMessage %}
+                                    {% block accessory_list_info_message %}
+                                        <div class="accessories-info-message configurator-card configurator-v-spacer">
+                                            {{ partsListConfigurator.translated.infoMessage|raw }}
+                                        </div>
+                                    {% endblock %}
+                                {% endif %}
 
                                 <div data-content></div>
                             </fieldset>

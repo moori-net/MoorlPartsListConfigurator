@@ -34,10 +34,13 @@ class PartsListConfiguratorDetailRoute
     {
         $criteria->setIds([$partsListConfiguratorId]);
 
-        /** @var SalesChannelPartsListConfiguratorEntity $partsListConfigurator */
         $partsListConfigurator = $this->partsListConfiguratorRepository
             ->search($criteria, $context)
             ->first();
+
+        if (!$partsListConfigurator instanceof SalesChannelPartsListConfiguratorEntity) {
+            throw new PageNotFoundException($partsListConfiguratorId);
+        }
 
         $pageId = $partsListConfigurator->getCmsPageId();
 

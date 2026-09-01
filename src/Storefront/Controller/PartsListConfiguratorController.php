@@ -11,6 +11,7 @@ use Shopware\Storefront\Controller\StorefrontController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(defaults: ['_routeScope' => ['storefront']])]
@@ -83,7 +84,7 @@ class PartsListConfiguratorController extends StorefrontController
                 [PartsListConfiguratorPageLoader::OPT_NO_PARENT]
             );
         } catch (PartsListCalculatorException $exception) {
-            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [#
+            return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
                 'content' => $this->partsListConfiguratorPageLoader->getErrorMessage($request, $salesChannelContext),
                 'exception' => $exception
             ]);
@@ -138,6 +139,10 @@ class PartsListConfiguratorController extends StorefrontController
                 $currentFilter = $filter;
                 break;
             }
+        }
+
+        if (!$currentFilter) {
+            throw new NotFoundHttpException(sprintf('Logical configurator group "%s" was not found.', $groupTechnicalName));
         }
 
         return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator.html.twig', [
