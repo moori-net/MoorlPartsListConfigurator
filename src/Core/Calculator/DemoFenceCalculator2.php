@@ -48,6 +48,14 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
         ];
     }
 
+    public function getRequiredOptions(): array
+    {
+        return [
+            'PARTS_LIST_POST_TYPE_CORNER',
+            'PARTS_LIST_POST_TYPE_SIDE',
+        ];
+    }
+
     public function getPropertyGroupConfig(): array
     {
         return [

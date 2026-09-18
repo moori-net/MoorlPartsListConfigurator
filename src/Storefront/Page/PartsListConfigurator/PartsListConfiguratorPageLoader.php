@@ -3,6 +3,7 @@
 namespace Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator;
 
 use Moorl\PartsListConfigurator\Core\Calculator\CoreCalculator;
+use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorException;
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
@@ -619,6 +620,13 @@ class PartsListConfiguratorPageLoader
         }
 
         if (in_array(self::OPT_CALCULATE, $loadingOptions)) {
+            $this->validateRequiredOptions(
+                $request,
+                $partsListConfigurator,
+                $partsListCalculator,
+                $partsList
+            );
+
             $partsListCalculator->calculatePartsList(
                 $request,
                 $salesChannelContext,
@@ -643,6 +651,59 @@ class PartsListConfiguratorPageLoader
         $this->loadMetaData($page);
 
         return $page;
+    }
+
+    private function validateRequiredOptions(
+        Request $request,
+        SalesChannelPartsListConfiguratorEntity $partsListConfigurator,
+        PartsListCalculatorInterface $partsListCalculator,
+        PartsListCollection $partsList
+    ): void {
+        $requiredOptions = $partsListCalculator->getRequiredOptions();
+        if (empty($requiredOptions)) {
+            return;
+        }
+
+        $availableOptions = [];
+        foreach ($partsList as $item) {
+            $availableOptions = array_merge($availableOptions, $item->getOptions());
+        }
+        $availableOptions = array_values(array_unique($availableOptions));
+
+        $missingOptions = array_values(array_diff($requiredOptions, $availableOptions));
+        if (empty($missingOptions)) {
+            return;
+        }
+
+        $products = [];
+        foreach ($partsList as $item) {
+            $product = $item->getProduct();
+            $products[] = [
+                'id' => $item->getProductId(),
+                'productNumber' => $product?->getProductNumber(),
+                'name' => $product?->getTranslation('name'),
+                'options' => $item->getOptions(),
+                'productStreams' => $item->getProductStreams(),
+            ];
+        }
+
+        $requiredOptionMappings = [];
+        foreach ($requiredOptions as $option) {
+            $requiredOptionMappings[$option] = $partsListConfigurator->getMappingValue($option);
+        }
+
+        $this->logger->error('Parts list calculator configuration is incomplete.', [
+            'calculator' => $partsListCalculator->getName(),
+            'partsListConfiguratorId' => $partsListConfigurator->getId(),
+            'requiredOptions' => $requiredOptions,
+            'missingOptions' => $missingOptions,
+            'availableOptions' => $availableOptions,
+            'requiredOptionMappings' => $requiredOptionMappings,
+            'selectedOptionIds' => $this->getPropIds($request, 'options'),
+            'products' => $products,
+        ]);
+
+        throw PartsListCalculatorException::missingOptions($missingOptions);
     }
 
     private function createProxyCart(string $partsListConfiguratorId, PartsListCollection $partsList, SalesChannelContext $salesChannelContext): Cart

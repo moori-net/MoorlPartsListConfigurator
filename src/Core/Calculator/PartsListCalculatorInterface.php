@@ -17,6 +17,7 @@ interface PartsListCalculatorInterface
     public function isOptional(string $name): bool;
     public function getName(): string;
     public function getMapping(): array;
+    public function getRequiredOptions(): array;
     public function getPropertyGroupConfig(): array;
     public function getLogicalConfigurator(
         Request $request,
