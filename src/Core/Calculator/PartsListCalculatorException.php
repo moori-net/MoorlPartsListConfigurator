@@ -36,4 +36,19 @@ class PartsListCalculatorException extends HttpException
             ]
         );
     }
+
+    /**
+     * @param list<string> $options
+     */
+    public static function missingOptions(array $options): self
+    {
+        return new self(
+            Response::HTTP_BAD_REQUEST,
+            self::MISSING_OPTION_CODE,
+            'The required options "{{ options }}" are missing.',
+            [
+                'options' => implode(', ', $options),
+            ]
+        );
+    }
 }

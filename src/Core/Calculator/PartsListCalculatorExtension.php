@@ -102,6 +102,11 @@ class PartsListCalculatorExtension
         return [];
     }
 
+    public function getRequiredOptions(): array
+    {
+        return [];
+    }
+
     private function hasFlag(string $n, string $f): bool
     {
         foreach ($this->getMapping() as $mapping) {

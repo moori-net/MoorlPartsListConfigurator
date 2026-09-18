@@ -3,6 +3,7 @@
 namespace Moorl\PartsListConfigurator\Tests\Storefront\Page\PartsListConfigurator;
 
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
+use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorException;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPage;
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
@@ -10,6 +11,7 @@ use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use MoorlFoundation\Core\Content\PartsList\PartsListEntity;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
@@ -17,6 +19,7 @@ use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOp
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
 use Shopware\Storefront\Page\MetaInformation;
+use Symfony\Component\HttpFoundation\Request;
 
 class PartsListConfiguratorPageLoaderTest extends TestCase
 {
@@ -139,6 +142,67 @@ class PartsListConfiguratorPageLoaderTest extends TestCase
         static::assertContainsOnlyInstancesOf(OrFilter::class, $groupFilters);
         $this->assertOptionFilter($groupFilters[0], [$optionA, $optionB]);
         $this->assertOptionFilter($groupFilters[1], [$optionC]);
+    }
+
+    public function testRequiredOptionsAreLoggedAndReportedBeforeCalculation(): void
+    {
+        $product = new ProductEntity();
+        $product->setId('01990bc77c047523960b3054415ff827');
+        $product->setProductNumber('POST_SIDE');
+        $product->addTranslated('name', 'Side post');
+
+        $item = PartsListEntity::createFromProduct($product);
+        $item->addOption('PARTS_LIST_POST_TYPE_SIDE');
+        $item->addProductStream('POSTS');
+        $partsList = new PartsListCollection([$item]);
+
+        $configurator = new SalesChannelPartsListConfiguratorEntity();
+        $configurator->setId('01990bc70f3a7c13a09f27e367fcdc01');
+        $configurator->setMapping([
+            'PARTS_LIST_POST_TYPE_SIDE' => 'side-option-id',
+            'PARTS_LIST_POST_TYPE_CORNER' => 'corner-option-id',
+        ]);
+
+        $calculator = $this->createStub(PartsListCalculatorInterface::class);
+        $calculator->method('getName')->willReturn('demo-fence-2');
+        $calculator->method('getRequiredOptions')->willReturn([
+            'PARTS_LIST_POST_TYPE_SIDE',
+            'PARTS_LIST_POST_TYPE_CORNER',
+        ]);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())
+            ->method('error')
+            ->with(
+                'Parts list calculator configuration is incomplete.',
+                $this->callback(static function (array $context): bool {
+                    self::assertSame('demo-fence-2', $context['calculator']);
+                    self::assertSame(['PARTS_LIST_POST_TYPE_CORNER'], $context['missingOptions']);
+                    self::assertSame(['PARTS_LIST_POST_TYPE_SIDE'], $context['availableOptions']);
+                    self::assertSame(['01990bc74c8f7449a79486b1fd9a95d5'], $context['selectedOptionIds']);
+                    self::assertSame('POST_SIDE', $context['products'][0]['productNumber']);
+                    self::assertSame(['POSTS'], $context['products'][0]['productStreams']);
+
+                    return true;
+                })
+            );
+
+        $loader = (new \ReflectionClass(PartsListConfiguratorPageLoader::class))
+            ->newInstanceWithoutConstructor();
+        $loggerProperty = new \ReflectionProperty($loader, 'logger');
+        $loggerProperty->setValue($loader, $logger);
+
+        $method = new \ReflectionMethod($loader, 'validateRequiredOptions');
+
+        $this->expectException(PartsListCalculatorException::class);
+        $this->expectExceptionMessage('PARTS_LIST_POST_TYPE_CORNER');
+        $method->invoke(
+            $loader,
+            new Request(['options' => '01990bc74c8f7449a79486b1fd9a95d5']),
+            $configurator,
+            $calculator,
+            $partsList
+        );
     }
 
     /**
