@@ -16,6 +16,7 @@ use Shopware\Core\Checkout\Cart\LineItem\LineItemCollection;
 use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
+use Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingLoader;
 use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
@@ -590,6 +591,7 @@ class PartsListConfiguratorPageLoader
 
         $criteria = new Criteria();
         $criteria->addState(self::CRITERIA_STATE);
+        $criteria->addState('skipAddGrouping');
         $criteria->addPostFilter(new AndFilter([
             new OrFilter($mainFilters)
         ]));
