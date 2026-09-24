@@ -157,16 +157,19 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
         // Ermittlung der Pfosten
         $sidePost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_SIDE');
         $cornerPost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_CORNER');
-        $flexCornerPost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_FLEX_CORNER');
+        $flexCornerPost = null;
 
         // einen Eckpfosten wieder abziehen
         foreach ($logicalConfigurators as $logicalConfigurator) {
             $cornerPost->setQuantity(
                 $cornerPost->getQuantity() + ($logicalConfigurator['cornerPostQuantity'] ?? 0)
             );
-            $flexCornerPost->setQuantity(
-                $flexCornerPost->getQuantity() + ($logicalConfigurator['flexCornerPostQuantity'] ?? 0)
-            );
+
+            $flexCornerPostQuantity = $logicalConfigurator['flexCornerPostQuantity'] ?? 0;
+            if ($flexCornerPostQuantity > 0) {
+                $flexCornerPost ??= $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_FLEX_CORNER');
+                $flexCornerPost->setQuantity($flexCornerPost->getQuantity() + $flexCornerPostQuantity);
+            }
         }
 
         // einen Seitenpfosten hinzufügen
@@ -188,7 +191,7 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
 
         // die Anzahl der Eckpfosten wieder abziehen
         $sidePost->setQuantity(
-            $sidePost->getQuantity() - $cornerPost->getQuantity() - $flexCornerPost->getQuantity()
+            $sidePost->getQuantity() - $cornerPost->getQuantity() - ($flexCornerPost?->getQuantity() ?? 0)
         );
 
         return $partsList;
