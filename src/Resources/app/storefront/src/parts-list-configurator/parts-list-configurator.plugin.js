@@ -506,7 +506,6 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 this._refreshStepStates();
 
                 this._groups.forEach(groupEl => {
-                    this._loadGroupDescription(groupEl);
                     this._loadPreviewImage(groupEl);
                     this._loadLogicalConfigurator(groupEl);
                 });
@@ -659,35 +658,6 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 groupEl.querySelector('input[type=radio]:checked')
             );
         });
-    }
-
-    _loadGroupDescription(groupEl) {
-        const descriptionEl =
-            groupEl.querySelector('.js-group-description');
-
-        if (!descriptionEl) {
-            return;
-        }
-
-        const optionEl = groupEl.querySelector('input[type=radio]:checked');
-
-        const description = optionEl?.dataset.description ?? '';
-
-        if (!description) {
-            descriptionEl.innerHTML = '';
-            descriptionEl.style.display = 'none';
-            return;
-        }
-
-        descriptionEl.innerHTML =
-            description.replace(
-                '%name%',
-                `<strong>${
-                    optionEl.dataset.name ?? ''
-                }</strong>`
-            );
-
-        descriptionEl.style.display = '';
     }
 
     _loadPreviewImage(groupEl) {

@@ -18,6 +18,8 @@
     },
     "accessoryList": "Optionale Zubehörteile",
     "partsList": "Stückliste",
+    "info": "Informationen zu %name%",
+    "close": "Schließen",
     "load": "Stückliste berechnen",
     "calculatedPartsList": "Berechnete Stückliste",
     "calculatedPartsListError": "Bei der Berechnung ist ein Fehler aufgetreten, bitte überprüfen Sie Ihre Eingabe."

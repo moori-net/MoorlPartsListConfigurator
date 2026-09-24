@@ -18,6 +18,25 @@
             <label lang="de-DE">Stückliste automatisch ermitteln</label>
             <defaultValue>true</defaultValue>
         </input-field>
+
+        <input-field type="single-select">
+            <name>infoDisplay</name>
+            <label>Information display</label>
+            <label lang="de-DE">Darstellung der Informationen</label>
+            <options>
+                <option>
+                    <id>modal</id>
+                    <name>Modal</name>
+                    <name lang="de-DE">Modal</name>
+                </option>
+                <option>
+                    <id>offcanvas</id>
+                    <name>Right offcanvas</name>
+                    <name lang="de-DE">Offcanvas rechts</name>
+                </option>
+            </options>
+            <defaultValue>modal</defaultValue>
+        </input-field>
     </card>
 
     <card>

@@ -1,0 +1,24 @@
+<div
+        class="modal fade"
+        id="configurator-info-{{ optionIdentifier }}"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="configurator-info-title-{{ optionIdentifier }}"
+        aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="h4 modal-title" id="configurator-info-title-{{ optionIdentifier }}">
+                    {{ optionName }}
+                </div>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'moorl-parts-list-configurator.close'|trans }}"></button>
+            </div>
+
+            <div class="modal-body">
+                {{ infoContent }}
+            </div>
+        </div>
+    </div>
+</div>
