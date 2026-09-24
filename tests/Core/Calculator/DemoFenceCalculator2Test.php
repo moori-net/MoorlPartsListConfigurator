@@ -58,6 +58,26 @@ class DemoFenceCalculator2Test extends TestCase
         static::assertSame(1, $flexCornerPost->getQuantity());
     }
 
+    public function testItDoesNotRequireAFlexCornerPostWhenTheLayoutHasNoFlexCorners(): void
+    {
+        $cornerPost = $this->createPost('corner-post', 'PARTS_LIST_POST_TYPE_CORNER');
+        $sidePost = $this->createPost('side-post', 'PARTS_LIST_POST_TYPE_SIDE');
+
+        $calculator = new DemoFenceCalculator2($this->createStub(PartsListService::class));
+        $shortestFence = new \ReflectionProperty($calculator, 'shortestFence');
+        $shortestFence->setValue($calculator, 1000);
+
+        $calculator->calculatePartsList(
+            new Request(['side_a_length' => 1, 'side_b_length' => 1]),
+            (new \ReflectionClass(SalesChannelContext::class))->newInstanceWithoutConstructor(),
+            $this->createLayoutConfigurator(1, 0),
+            new PartsListCollection([$cornerPost, $sidePost])
+        );
+
+        static::assertSame(1, $cornerPost->getQuantity());
+        static::assertSame(0, $sidePost->getQuantity());
+    }
+
     private function createPost(string $id, string $option): PartsListEntity
     {
         $post = new PartsListEntity();
