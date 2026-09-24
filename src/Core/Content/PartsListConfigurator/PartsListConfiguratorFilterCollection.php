@@ -40,11 +40,11 @@ class PartsListConfiguratorFilterCollection extends EntityCollection
             }
 
             $element->getPropertyGroupOptions()->sort(
-                fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => $this->getPosition($a) > $this->getPosition($b)
+                fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => strnatcasecmp($a->getTranslation('name'), $b->getTranslation('name'))
             );
 
             $element->getPropertyGroupOptions()->sort(
-                fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => strnatcasecmp($a->getTranslation('name'), $b->getTranslation('name'))
+                fn(PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) => $this->getPosition($a) > $this->getPosition($b)
             );
         }
 
