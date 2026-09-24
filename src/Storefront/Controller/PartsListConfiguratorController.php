@@ -110,7 +110,11 @@ class PartsListConfiguratorController extends StorefrontController
     public function accessoryList(SalesChannelContext $salesChannelContext, Request $request): Response
     {
         try {
-            $page = $this->partsListConfiguratorPageLoader->load($request, $salesChannelContext);
+            $page = $this->partsListConfiguratorPageLoader->load(
+                $request,
+                $salesChannelContext,
+                [PartsListConfiguratorPageLoader::OPT_GROUP_VARIANTS]
+            );
         } catch (PartsListCalculatorException $exception) {
             return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/exception.html.twig', [
                 'exception' => $exception

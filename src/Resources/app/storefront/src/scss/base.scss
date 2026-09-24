@@ -21,7 +21,7 @@
   }
 
   .configurator-group {
-    margin-bottom: 4.5rem;
+    margin-bottom: 3rem;
   }
 
   legend.h3 {
@@ -53,6 +53,10 @@
     pointer-events: none;
     user-select: none;
     filter: grayscale(60%);
+
+    .configurator-selection-group {
+      display: none;
+    }
 
     .configurator-group-step {
       background-color: #f3f4f6 !important;
