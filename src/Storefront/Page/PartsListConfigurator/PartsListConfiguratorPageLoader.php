@@ -38,6 +38,7 @@ class PartsListConfiguratorPageLoader
     public const OPT_PROXY_CART = 'proxy-cart'; // Warenkorb berechnen
     public const OPT_NO_PARENT = 'no-parent'; // Stückliste wird manuell eingegeben - Varianten können mehrfach vorkommen
     public const OPT_CALCULATE = 'calculate'; // Berechnungen durchführen
+    public const OPT_GROUP_VARIANTS = 'group-variants'; // Varianten für die Zubehörliste gruppieren
 
     /**
      * @param PartsListCalculatorInterface[] $partsListCalculators
@@ -591,7 +592,9 @@ class PartsListConfiguratorPageLoader
 
         $criteria = new Criteria();
         $criteria->addState(self::CRITERIA_STATE);
-        $criteria->addState('skipAddGrouping');
+        if (!in_array(self::OPT_GROUP_VARIANTS, $loadingOptions, true)) {
+            $criteria->addState(ProductListingLoader::STATE_SKIP_ADD_GROUPING);
+        }
         $criteria->addPostFilter(new AndFilter([
             new OrFilter($mainFilters)
         ]));

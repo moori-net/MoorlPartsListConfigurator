@@ -4,6 +4,10 @@ namespace Moorl\PartsListConfigurator\Tests\Storefront\Page\PartsListConfigurato
 
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorInterface;
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorException;
+use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterCollection;
+use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\PartsListConfiguratorFilterEntity;
+use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRoute;
+use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\PartsListConfiguratorDetailRouteResponse;
 use Moorl\PartsListConfigurator\Core\Content\PartsListConfigurator\SalesChannel\SalesChannelPartsListConfiguratorEntity;
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPage;
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
@@ -13,12 +17,19 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Shopware\Core\Content\Product\ProductEntity;
+use Shopware\Core\Content\Product\SalesChannel\Listing\AbstractProductListingRoute;
+use Shopware\Core\Content\Product\SalesChannel\Listing\ProductListingLoader;
+use Shopware\Core\Content\ProductStream\ProductStreamEntity;
 use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
 use Shopware\Storefront\Page\MetaInformation;
+use Shopware\Storefront\Page\GenericPageLoaderInterface;
+use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
+use Shopware\Core\System\SalesChannel\SalesChannelContext;
+use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Symfony\Component\HttpFoundation\Request;
 
 class PartsListConfiguratorPageLoaderTest extends TestCase
@@ -203,6 +214,69 @@ class PartsListConfiguratorPageLoaderTest extends TestCase
             $calculator,
             $partsList
         );
+    }
+
+    #[DataProvider('listingGroupingStateProvider')]
+    public function testListingCriteriaGroupsVariantsOnlyWhenRequested(array $loadingOptions, bool $shouldSkipGrouping): void
+    {
+        $productStream = new ProductStreamEntity();
+        $productStream->setId('01990bc70f3a7c13a09f27e367fcdc01');
+
+        $filter = new PartsListConfiguratorFilterEntity();
+        $filter->setId('01990bc74c8f7449a79486b1fd9a95d5');
+        $filter->setProductStreams(new ProductStreamCollection([$productStream]));
+        $filter->setPropertyGroupOptions(new PropertyGroupOptionCollection());
+
+        $configurator = new SalesChannelPartsListConfiguratorEntity();
+        $configurator->setId('01990bc77c047523960b3054415ff827');
+        $configurator->setActive(true);
+        $configurator->setType('default');
+        $configurator->setMapping([]);
+        $configurator->setFilters(new PartsListConfiguratorFilterCollection([$filter]));
+
+        $detailRoute = $this->createMock(PartsListConfiguratorDetailRoute::class);
+        $detailRoute->method('load')->willReturn(new PartsListConfiguratorDetailRouteResponse($configurator));
+
+        $listingRoute = $this->createMock(AbstractProductListingRoute::class);
+        $listingRoute->expects(self::once())
+            ->method('load')
+            ->willReturnCallback(static function (string $categoryId, Request $request, SalesChannelContext $context, \Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria $criteria) use ($shouldSkipGrouping): never {
+                self::assertSame($shouldSkipGrouping, $criteria->hasState(ProductListingLoader::STATE_SKIP_ADD_GROUPING));
+
+                throw new \LogicException('Listing criteria captured.');
+            });
+
+        $calculator = $this->createStub(PartsListCalculatorInterface::class);
+        $calculator->method('getName')->willReturn('core');
+        $calculator->method('getFlags')->willReturn([]);
+
+        $loader = new PartsListConfiguratorPageLoader(
+            $this->createStub(GenericPageLoaderInterface::class),
+            $detailRoute,
+            $listingRoute,
+            $this->createStub(CartService::class),
+            $this->createStub(LoggerInterface::class),
+            [$calculator]
+        );
+
+        $salesChannel = new SalesChannelEntity();
+        $salesChannel->setNavigationCategoryId('01990bc77c047523960b3054415ff828');
+        $salesChannelContext = (new \ReflectionClass(SalesChannelContext::class))->newInstanceWithoutConstructor();
+        (new \ReflectionProperty(SalesChannelContext::class, 'salesChannel'))->setValue($salesChannelContext, $salesChannel);
+
+        $request = new Request();
+        $request->attributes->set('partsListConfiguratorId', $configurator->getId());
+
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Listing criteria captured.');
+
+        $loader->load($request, $salesChannelContext, $loadingOptions);
+    }
+
+    public static function listingGroupingStateProvider(): iterable
+    {
+        yield 'default keeps variant grouping disabled' => [[], true];
+        yield 'accessory list groups variants' => [[PartsListConfiguratorPageLoader::OPT_GROUP_VARIANTS], false];
     }
 
     /**
