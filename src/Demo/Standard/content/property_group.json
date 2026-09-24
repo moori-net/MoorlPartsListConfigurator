@@ -160,6 +160,7 @@
             "name": "2 Seiten, 1 Ecke",
             "description": "",
             "customFields": {
+              "moorl_pl_calc_x_value": 1,
               "moorl_pl_description": "%name%: L-förmige Anlage mit einem Richtungswechsel. Ideal für Eckgrundstücke."
             }
           },
@@ -167,6 +168,7 @@
             "name": "2 sides, 1 corner",
             "description": "",
             "customFields": {
+              "moorl_pl_calc_x_value": 1,
               "moorl_pl_description": "%name%: L-förmige Anlage mit einem Richtungswechsel. Ideal für Eckgrundstücke."
             }
           }
@@ -181,6 +183,7 @@
             "name": "3 Seiten, 2 Ecken",
             "description": "",
             "customFields": {
+              "moorl_pl_calc_x_value": 2,
               "moorl_pl_description": "%name%: U-förmige Anlage. Drei Seiten werden eingezäunt, zwei Eckpfosten erforderlich."
             }
           },
@@ -188,6 +191,7 @@
             "name": "3 sides, 2 corners",
             "description": "",
             "customFields": {
+              "moorl_pl_calc_x_value": 2,
               "moorl_pl_description": "%name%: U-förmige Anlage. Drei Seiten werden eingezäunt, zwei Eckpfosten erforderlich."
             }
           }
@@ -202,6 +206,7 @@
             "name": "4 Seiten, 3 Ecken",
             "description": "",
             "customFields": {
+              "moorl_pl_calc_x_value": 3,
               "moorl_pl_description": "%name%: Vollständige Umzäunung auf vier Seiten mit drei Eckpfosten."
             }
           },
@@ -209,11 +214,36 @@
             "name": "4 sides, 3 corners",
             "description": "",
             "customFields": {
+              "moorl_pl_calc_x_value": 3,
               "moorl_pl_description": "%name%: Vollständige Umzäunung auf vier Seiten mit drei Eckpfosten."
             }
           }
         },
         "mediaId": "{MEDIA_FILE:property_group_option/FENCE_LAYOUT_4.svg}"
+      },
+      {
+        "id": "{MD5:PARTS_LIST_LAYOUT_5}",
+        "position": 4,
+        "translations": {
+          "{de-DE}": {
+            "name": "4 Seiten, 2 Ecken, 1 Variable Ecke",
+            "description": "",
+            "customFields": {
+              "moorl_pl_calc_x_value": 2,
+              "moorl_pl_calc_y_value": 1,
+              "moorl_pl_description": "Vollständige Umzäunung auf vier Seiten mit zwei normalen und einem variablen Eckpfosten."
+            }
+          },
+          "{en-GB}": {
+            "name": "4 sides, 2 corners, 1 flex corner",
+            "description": "",
+            "customFields": {
+              "moorl_pl_calc_x_value": 2,
+              "moorl_pl_calc_y_value": 1,
+              "moorl_pl_description": "Vollständige Umzäunung auf vier Seiten mit zwei normalen und einem variablen Eckpfosten."
+            }
+          }
+        }
       }
     ]
   },
@@ -320,6 +350,18 @@
           },
           "{en-GB}": {
             "name": "Corner"
+          }
+        }
+      },
+      {
+        "id": "{MD5:PARTS_LIST_POST_TYPE_FLEX_CORNER}",
+        "position": 2,
+        "translations": {
+          "{de-DE}": {
+            "name": "Variable Ecke"
+          },
+          "{en-GB}": {
+            "name": "Flex Corner"
           }
         }
       }

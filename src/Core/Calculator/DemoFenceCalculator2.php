@@ -7,6 +7,7 @@ use Moorl\PartsListConfigurator\Core\Service\PartsListService;
 use MoorlFoundation\Core\Content\PartsList\PartsListCollection;
 use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionDefinition;
+use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
 use Shopware\Core\Content\Property\PropertyGroupDefinition;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,12 +39,9 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
                 'LENGTH' => ['calc-x'],
             ],
             PropertyGroupOptionDefinition::ENTITY_NAME => [
-                'PARTS_LIST_LAYOUT_1' => [],
-                'PARTS_LIST_LAYOUT_2' => [],
-                'PARTS_LIST_LAYOUT_3' => [],
-                'PARTS_LIST_LAYOUT_4' => [],
-                'PARTS_LIST_POST_TYPE_CORNER' => [],
-                'PARTS_LIST_POST_TYPE_SIDE' => []
+                'PARTS_LIST_POST_TYPE_SIDE' => [],
+                'PARTS_LIST_POST_TYPE_CORNER' => ['calc-x'],
+                'PARTS_LIST_POST_TYPE_FLEX_CORNER' => ['calc-y']
             ],
         ];
     }
@@ -61,39 +59,47 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
         return [
             [
                 'technicalName' => 'PARTS_LIST_LAYOUT',
-                'options' => [
-                    [
-                        'technicalName' => 'PARTS_LIST_LAYOUT_1',
-                        'elements' => [
-                            'side_a'
-                        ]
-                    ],
-                    [
-                        'technicalName' => 'PARTS_LIST_LAYOUT_2',
-                        'elements' => [
-                            'side_a',
-                            'side_b'
-                        ]
-                    ],
-                    [
-                        'technicalName' => 'PARTS_LIST_LAYOUT_3',
-                        'elements' => [
-                            'side_a',
-                            'side_b',
-                            'side_c'
-                        ]
-                    ],
-                    [
-                        'technicalName' => 'PARTS_LIST_LAYOUT_4',
-                        'elements' => [
-                            'side_a',
-                            'side_b',
-                            'side_c',
-                            'side_d'
-                        ]
-                    ]
-                ]
             ]
+        ];
+    }
+
+    public function getLogicalConfigurator(
+        Request $request,
+        SalesChannelContext $salesChannelContext,
+        PartsListConfiguratorEntity $partsListConfigurator,
+        ?string $groupTechnicalName = null
+    ): ?array {
+        $groupTechnicalName ??= $request->query->get('group');
+        if (!$groupTechnicalName || !current(array_filter(
+            $this->getPropertyGroupConfig(),
+            fn($item) => $item['technicalName'] === $groupTechnicalName
+        ))) {
+            return null;
+        }
+
+        $option = $this->getLogicalConfiguratorOption(
+            $partsListConfigurator,
+            $groupTechnicalName
+        );
+        if (!$option) {
+            return null;
+        }
+
+        $customFields = $option->getTranslation('customFields') ?? [];
+        $cornerPostQuantity = (int) ($customFields['moorl_pl_calc_x_value'] ?? 0);
+        $flexCornerPostQuantity = (int) ($customFields['moorl_pl_calc_y_value'] ?? 0);
+        $elements = [];
+
+        for ($index = 0; $index <= $cornerPostQuantity + $flexCornerPostQuantity; $index++) {
+            $elements[] = 'side_' . chr(ord('a') + $index);
+        }
+
+        return [
+            'groupTechnicalName' => $groupTechnicalName,
+            'optionId' => $option->getId(),
+            'elements' => $elements,
+            'cornerPostQuantity' => $cornerPostQuantity,
+            'flexCornerPostQuantity' => $flexCornerPostQuantity,
         ];
     }
 
@@ -149,11 +155,19 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
         }
 
         // Ermittlung der Pfosten
-        $cornerPost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_CORNER');
         $sidePost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_SIDE');
+        $cornerPost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_CORNER');
+        $flexCornerPost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_FLEX_CORNER');
 
         // einen Eckpfosten wieder abziehen
-        $cornerPost->setQuantity($cornerPost->getQuantity() - 1);
+        foreach ($logicalConfigurators as $logicalConfigurator) {
+            $cornerPost->setQuantity(
+                $cornerPost->getQuantity() + ($logicalConfigurator['cornerPostQuantity'] ?? 0)
+            );
+            $flexCornerPost->setQuantity(
+                $flexCornerPost->getQuantity() + ($logicalConfigurator['flexCornerPostQuantity'] ?? 0)
+            );
+        }
 
         // einen Seitenpfosten hinzufügen
         $sidePost->setQuantity(1);
@@ -173,7 +187,9 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
         }
 
         // die Anzahl der Eckpfosten wieder abziehen
-        $sidePost->setQuantity($sidePost->getQuantity() - $cornerPost->getQuantity());
+        $sidePost->setQuantity(
+            $sidePost->getQuantity() - $cornerPost->getQuantity() - $flexCornerPost->getQuantity()
+        );
 
         return $partsList;
     }
@@ -210,7 +226,29 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
         }
 
         // Eckpfosten pro Seite hinzufügen
-        $cornerPost = $this->getByOption($partsList, 'PARTS_LIST_POST_TYPE_CORNER');
-        $cornerPost->setQuantity($cornerPost->getQuantity() + 1);
+    }
+
+    private function getLogicalConfiguratorOption(
+        PartsListConfiguratorEntity $partsListConfigurator,
+        string $groupTechnicalName
+    ): ?PropertyGroupOptionEntity {
+        $groupId = $partsListConfigurator->getMappingValue($groupTechnicalName);
+        if (!$groupId || !method_exists($partsListConfigurator, 'getCurrentOptionIds')) {
+            return null;
+        }
+
+        $selectedOptionIds = $partsListConfigurator->getCurrentOptionIds();
+        foreach ($partsListConfigurator->getFilters() ?? [] as $filter) {
+            foreach ($filter->getPropertyGroupOptions() ?? [] as $option) {
+                if (
+                    $option->getGroupId() === $groupId
+                    && in_array($option->getId(), $selectedOptionIds, true)
+                ) {
+                    return $option;
+                }
+            }
+        }
+
+        return null;
     }
 }
