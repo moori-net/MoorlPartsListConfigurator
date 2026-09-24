@@ -39,12 +39,9 @@ class DemoFenceCalculator extends PartsListCalculatorExtension implements PartsL
                 'LENGTH' => ['calc-x'],
             ],
             PropertyGroupOptionDefinition::ENTITY_NAME => [
-                'PARTS_LIST_LAYOUT_1' => [],
-                'PARTS_LIST_LAYOUT_2' => [],
-                'PARTS_LIST_LAYOUT_3' => [],
-                'PARTS_LIST_LAYOUT_4' => [],
-                'PARTS_LIST_POST_TYPE_CORNER' => [],
-                'PARTS_LIST_POST_TYPE_SIDE' => []
+                'PARTS_LIST_POST_TYPE_SIDE' => [],
+                'PARTS_LIST_POST_TYPE_CORNER' => ['calc-x'],
+                'PARTS_LIST_POST_TYPE_FLEX_CORNER' => ['calc-y']
             ],
         ];
     }

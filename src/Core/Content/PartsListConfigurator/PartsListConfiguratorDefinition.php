@@ -38,7 +38,7 @@ class PartsListConfiguratorDefinition extends EntityDefinition
     {
         return [
             'active' => false,
-            'calculator' => 'demo-fence',
+            'calculator' => 'demo-fence-2',
             'type' => 'calculator',
         ];
     }
