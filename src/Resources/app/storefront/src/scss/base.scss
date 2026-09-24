@@ -73,6 +73,27 @@
     gap: 1rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
 
+    .configurator-option {
+      position: relative;
+    }
+
+    .configurator-option-info {
+      position: absolute;
+      top: .5rem;
+      right: .5rem;
+      z-index: 1;
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: .375rem;
+      border-radius: 50%;
+
+      svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
     .configurator-card {
       width: 100%;
       text-align: center;
@@ -158,4 +179,3 @@
     grid-template-columns: 16.67% 64px 1fr 90px;
   }
 }
-

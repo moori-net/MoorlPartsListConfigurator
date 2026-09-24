@@ -12,6 +12,8 @@
     {% set mediaCollection = searchMedia(mediaIds, context.context) %}
 {% endif %}
 
+{% set infoDisplay = config('MoorlPartsListConfigurator.config.infoDisplay') ?? 'modal' %}
+
 {% for group in configuratorSettings %}
     {% set groupName = group.translated.customFields.moorl_pl_alt_name ?? group.translated.name|split(']')|last|trim %}
 
@@ -34,7 +36,7 @@
         <div class="configurator-selection-group configurator-v-spacer">
             {% for option in group.options %}
                 {% set ocf = option.translated.customFields %}
-                {% set oHasPopover = ocf.moorl_pl_image || ocf.moorl_pl_teaser %}
+                {% set oHasInfo = ocf.moorl_pl_image || ocf.moorl_pl_teaser || ocf.moorl_pl_description %}
                 {% set optionName = ocf.moorl_pl_alt_name ?? option.translated.name|split(']')|last|trim %}
 
                 {% if elementId is defined and elementId is not null %}
@@ -62,15 +64,8 @@
                 {% endif %}
 
                 <div
-                        class=""
+                        class="configurator-option"
                         data-position="{{ option.translated.position }}"
-                        {% if oHasPopover %}
-                            data-moorl-hover-card="true"
-                            data-moorl-hover-card-options="{{ {
-                                template: "#popover-#{optionIdentifier}",
-                                placement: "top"
-                            }|json_encode }}"
-                        {% endif %}
                 >
                     <input
                             type="radio"
@@ -110,35 +105,67 @@
 
                         <span class="my-4">{{ optionName }}</span>
                     </label>
+
+                    {% if oHasInfo %}
+                        <button
+                                class="btn btn-light text-primary configurator-option-info"
+                                type="button"
+                                title="{{ 'moorl-parts-list-configurator.info'|trans({ '%name%': optionName }) }}"
+                                aria-label="{{ 'moorl-parts-list-configurator.info'|trans({ '%name%': optionName }) }}"
+                                data-bs-toggle="{{ infoDisplay == 'offcanvas' ? 'offcanvas' : 'modal' }}"
+                                data-bs-target="#configurator-info-{{ optionIdentifier }}"
+                        >
+                            <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11v5m0-8v.01"></path>
+                            </svg>
+                        </button>
+                    {% endif %}
                 </div>
 
-                {% if oHasPopover %}
-                    <template id="popover-{{ optionIdentifier }}">
+                {% if oHasInfo %}
+                    {% set infoContent %}
                         {% if ocf.moorl_pl_image %}
                             {% set popoverMedia = mediaCollection.get(ocf.moorl_pl_image) %}
 
-                                {% sw_thumbnails 'configurator-option-img-thumbnails' with {
-                                    media: popoverMedia,
-                                    sizes: {
-                                        default: '120px'
-                                    },
-                                    attributes: {
-                                        class: '',
-                                        role: 'presentation',
-                                        style: 'width: 160px'
-                                    }
-                                } %}
+                            {% sw_thumbnails 'configurator-option-img-thumbnails' with {
+                                media: popoverMedia,
+                                sizes: {
+                                    default: '120px'
+                                },
+                                attributes: {
+                                    class: 'd-block mx-auto mb-3',
+                                    role: 'presentation',
+                                    style: 'width: 160px'
+                                }
+                            } %}
                         {% endif %}
 
                         {% if ocf.moorl_pl_teaser %}
-                            <div class="text-center text-muted small mt-2">{{ ocf.moorl_pl_teaser }}</div>
+                            <div class="text-muted small mb-3">{{ ocf.moorl_pl_teaser }}</div>
                         {% endif %}
-                    </template>
+
+                        {% if ocf.moorl_pl_description %}
+                            <div class="configurator-option-info-description">{{ ocf.moorl_pl_description|sw_sanitize }}</div>
+                        {% endif %}
+                    {% endset %}
+
+                    {% if infoDisplay == 'offcanvas' %}
+                        {% sw_include '@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator-info-offcanvas.html.twig' with {
+                            optionIdentifier: optionIdentifier,
+                            optionName: optionName,
+                            infoContent: infoContent
+                        } %}
+                    {% else %}
+                        {% sw_include '@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator-info-modal.html.twig' with {
+                            optionIdentifier: optionIdentifier,
+                            optionName: optionName,
+                            infoContent: infoContent
+                        } %}
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
-
-        <div style="display: none;" class="js-group-description configurator-group-description configurator-card configurator-v-spacer"></div>
 
         {% if logical %}
             <div class="js-logical-configurator"></div>
