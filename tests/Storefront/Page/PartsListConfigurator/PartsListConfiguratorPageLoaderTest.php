@@ -23,7 +23,9 @@ use Shopware\Core\Content\ProductStream\ProductStreamEntity;
 use Shopware\Core\Content\ProductStream\ProductStreamCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionCollection;
 use Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\AndFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
 use Shopware\Storefront\Page\MetaInformation;
 use Shopware\Storefront\Page\GenericPageLoaderInterface;
@@ -276,7 +278,48 @@ class PartsListConfiguratorPageLoaderTest extends TestCase
     public static function listingGroupingStateProvider(): iterable
     {
         yield 'default keeps variant grouping disabled' => [[], true];
-        yield 'accessory list groups variants' => [[PartsListConfiguratorPageLoader::OPT_GROUP_VARIANTS], false];
+        yield 'accessory list keeps variant grouping disabled' => [[PartsListConfiguratorPageLoader::OPT_GROUP_VARIANTS], true];
+    }
+
+    public function testOptionalProductStreamsExcludeParentsWithChildren(): void
+    {
+        $productStream = new ProductStreamEntity();
+        $productStream->setId('01990bc70f3a7c13a09f27e367fcdc01');
+        $productStream->addTranslated('flags', ['optional']);
+
+        $filter = new PartsListConfiguratorFilterEntity();
+        $filter->setId('01990bc74c8f7449a79486b1fd9a95d5');
+        $filter->setProductStreams(new ProductStreamCollection([$productStream]));
+        $filter->setPropertyGroupOptions(new PropertyGroupOptionCollection());
+
+        $configurator = new SalesChannelPartsListConfiguratorEntity();
+        $configurator->setFilters(new PartsListConfiguratorFilterCollection([$filter]));
+
+        $loader = (new \ReflectionClass(PartsListConfiguratorPageLoader::class))
+            ->newInstanceWithoutConstructor();
+        $method = new \ReflectionMethod($loader, 'buildMainFilters');
+        $mainFilters = $method->invoke(
+            $loader,
+            $configurator,
+            new ProductStreamCollection([$productStream]),
+            [],
+            []
+        );
+
+        static::assertCount(1, $mainFilters);
+        static::assertInstanceOf(AndFilter::class, $mainFilters[0]);
+
+        $queries = $mainFilters[0]->getQueries();
+        static::assertCount(3, $queries);
+        static::assertInstanceOf(OrFilter::class, $queries[2]);
+
+        $leafProductFilters = $queries[2]->getQueries();
+        static::assertCount(2, $leafProductFilters);
+        static::assertContainsOnlyInstancesOf(EqualsFilter::class, $leafProductFilters);
+        static::assertSame('childCount', $leafProductFilters[0]->getField());
+        static::assertSame(0, $leafProductFilters[0]->getValue());
+        static::assertSame('childCount', $leafProductFilters[1]->getField());
+        static::assertNull($leafProductFilters[1]->getValue());
     }
 
     /**

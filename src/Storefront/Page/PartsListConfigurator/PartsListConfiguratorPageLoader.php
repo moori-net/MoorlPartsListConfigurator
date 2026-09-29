@@ -406,6 +406,10 @@ class PartsListConfiguratorPageLoader
                         new AndFilter($propertyFilters),
                         new EqualsFilter('parentId', null),
                     ]),
+                    new OrFilter([
+                        new EqualsFilter('childCount', 0),
+                        new EqualsFilter('childCount', null),
+                    ]),
                 ]);
             } else {
                 $propertyFilters[] = $streamFilter;
@@ -581,7 +585,11 @@ class PartsListConfiguratorPageLoader
                     new OrFilter([
                         new AndFilter($propertyFilters),
                         new EqualsFilter('parentId', null)
-                    ])
+                    ]),
+                    new OrFilter([
+                        new EqualsFilter('childCount', 0),
+                        new EqualsFilter('childCount', null),
+                    ]),
                 ]);
             } else {
                 $propertyFilters[] = $streamFilter;
@@ -592,9 +600,7 @@ class PartsListConfiguratorPageLoader
 
         $criteria = new Criteria();
         $criteria->addState(self::CRITERIA_STATE);
-        if (!in_array(self::OPT_GROUP_VARIANTS, $loadingOptions, true)) {
-            $criteria->addState(ProductListingLoader::STATE_SKIP_ADD_GROUPING);
-        }
+        $criteria->addState(ProductListingLoader::STATE_SKIP_ADD_GROUPING);
         $criteria->addPostFilter(new AndFilter([
             new OrFilter($mainFilters)
         ]));
