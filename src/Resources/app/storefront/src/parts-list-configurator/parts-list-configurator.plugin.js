@@ -12,6 +12,8 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         refreshTimeout: 200,
         autoLoadTimeout: 2000,
         loaderClass: 'loader',
+        loadButtonLabel: null,
+        loadedButtonLabel: null,
         offsetTop: window.moorlOffsetTop ?? 30,
         iconLocked: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>',
         iconComplete: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>'
@@ -77,7 +79,19 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
             this._loadButton.disabled = true;
         }
 
-        this._loadList(this._partsListEl, 'proxy-cart');
+        this._loadList(
+            this._partsListEl,
+            'proxy-cart',
+            this._filters,
+            () => {
+                if (!this._loadButton) {
+                    return;
+                }
+
+                this._loadButton.disabled = true;
+                this._setLoadButtonLabel(this.options.loadedButtonLabel);
+            }
+        );
 
         if (scrollToPartsList && this.options.autoScroll) {
             this._scrollToElement(this._partsListEl);
@@ -425,6 +439,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
                                 if (this._loadButton) {
                                     this._loadButton.disabled = !this._isConfigurationComplete();
+                                    this._setLoadButtonLabel(this.options.loadButtonLabel);
                                 }
                             }
                         );
@@ -494,6 +509,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
         if (this._loadButton) {
             this._loadButton.disabled = !this._isConfigurationComplete();
+            this._setLoadButtonLabel(this.options.loadButtonLabel);
         }
 
         this._timeout = setTimeout(() => {
@@ -529,6 +545,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
 
                 if (this._loadButton) {
                     this._loadButton.disabled = !isConfigurationComplete;
+                    this._setLoadButtonLabel(this.options.loadButtonLabel);
                 }
 
                 this._scrollToNextStep(currentGroupEl);
@@ -569,7 +586,7 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
         }, this.options.refreshTimeout);
     }
 
-    _loadList(currentEl, type, filters = this._filters) {
+    _loadList(currentEl, type, filters = this._filters, onLoaded = null) {
         if (!currentEl) {
             return;
         }
@@ -590,8 +607,21 @@ export default class MoorlPartsListConfiguratorPlugin extends Plugin {
                 this._setFilterState();
                 this._registerListEvents(contentEl);
                 this._refreshSummary();
+
+                if (onLoaded) {
+                    onLoaded();
+                }
             }
         );
+    }
+
+    _setLoadButtonLabel(label) {
+        if (!this._loadButton || !label) {
+            return;
+        }
+
+        this._loadButton.textContent = label;
+        this._loadButton.setAttribute('aria-label', label);
     }
 
     _refreshStepStates() {
