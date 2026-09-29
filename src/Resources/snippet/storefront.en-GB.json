@@ -21,6 +21,7 @@
     "info": "Information about %name%",
     "close": "Close",
     "load": "Calculate parts list",
+    "loaded": "Parts list loaded",
     "calculatedPartsList": "Calculated parts list",
     "calculatedPartsListError": "An error occurred during calculation. Please check your input."
   }

@@ -3,7 +3,9 @@
     url: path('frontend.moorl.parts.list.configurator.detail', {partsListConfiguratorId: partsListConfigurator.id}),
     type: partsListConfigurator.type,
     autoScroll: config('MoorlPartsListConfigurator.config.autoScroll'),
-    autoLoad: config('MoorlPartsListConfigurator.config.autoLoad')
+    autoLoad: config('MoorlPartsListConfigurator.config.autoLoad'),
+    loadButtonLabel: "moorl-parts-list-configurator.load"|trans,
+    loadedButtonLabel: "moorl-parts-list-configurator.loaded"|trans
 } %}
 
 <div
