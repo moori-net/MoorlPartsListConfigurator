@@ -1,0 +1,11 @@
+{% for accessoryList in accessoryLists %}
+    {% if accessoryList.title %}
+        <legend class="h4">{{ accessoryList.title }}</legend>
+    {% endif %}
+
+    {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig' with {
+        items: accessoryList.items,
+        namePrefix: namePrefix,
+        options: options
+    } %}
+{% endfor %}
