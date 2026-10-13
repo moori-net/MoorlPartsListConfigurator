@@ -5,6 +5,7 @@ namespace Moorl\PartsListConfigurator\Storefront\Controller;
 use Moorl\PartsListConfigurator\Core\Calculator\CoreCalculator;
 use Moorl\PartsListConfigurator\Core\Calculator\PartsListCalculatorException;
 use Moorl\PartsListConfigurator\Storefront\Page\PartsListConfigurator\PartsListConfiguratorPageLoader;
+use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\PlatformRequest;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -121,10 +122,29 @@ class PartsListConfiguratorController extends StorefrontController
             ]);
         }
 
-        return $this->renderStorefront('@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig', [
-            'items' => $page->getPartsList()->filterByAnyProductStreamId(
-                $page->getPartsListConfigurator()->getAccessoryProductStreamIds()
-            ),
+        $accessoryLists = [];
+        $partsListConfigurator = $page->getPartsListConfigurator();
+        foreach ($page->getCalculator()?->getMapping()[ProductStreamDefinition::ENTITY_NAME] ?? [] as $productStream => $flags) {
+            if (!in_array('optional', $flags, true)) {
+                continue;
+            }
+
+            $mappedProductStream = null;
+            foreach ($partsListConfigurator->getFilters() as $filter) {
+                $mappedProductStream = $filter->getProductStreams()?->get($partsListConfigurator->getMappingValue($productStream));
+                if ($mappedProductStream) {
+                    break;
+                }
+            }
+
+            $accessoryLists[$productStream] = [
+                'title' => $mappedProductStream?->getTranslation('name'),
+                'items' => $page->getPartsList()->filterByProductStream($productStream),
+            ];
+        }
+
+        return $this->renderStorefront('@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/accessory-list.html.twig', [
+            'accessoryLists' => $accessoryLists,
             'namePrefix' => 'accessory',
             'options' => []
         ]);

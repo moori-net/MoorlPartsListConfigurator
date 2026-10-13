@@ -22,7 +22,8 @@
     margin-bottom: 3rem;
   }
 
-  legend.h3 {
+  legend.h3,
+  legend.h4 {
     display: flex;
     font-weight: 600;
   }
@@ -170,6 +171,10 @@
   }
 
   #accessoryList .moorl-parts-list-items {
+    .moorl-parts-list-item-header {
+      display: none;
+    }
+
     .moorl-parts-list-item {
       padding: 1rem;
       margin-bottom: 1rem;

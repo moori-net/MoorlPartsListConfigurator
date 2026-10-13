@@ -29,8 +29,8 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
     {
         return [
             ProductStreamDefinition::ENTITY_NAME => [
-                'OPTIONAL_ACCESSORIES' => ['optional'],
                 'LAYOUT_ACCESSORIES' => ['optional'],
+                'OPTIONAL_ACCESSORIES' => ['optional'],
                 'FENCES' => [],
             ],
             PropertyGroupDefinition::ENTITY_NAME => [
@@ -124,13 +124,13 @@ class DemoFenceCalculator2 extends PartsListCalculatorExtension implements Parts
         // Setze Mengen anhand des Requests
         $this->setQuantityFromRequest(
             $request,
-            $partsList->filterByProductStream('OPTIONAL_ACCESSORIES'),
+            $partsList->filterByProductStream('LAYOUT_ACCESSORIES'),
             "accessory"
         );
 
         $this->setQuantityFromRequest(
             $request,
-            $partsList->filterByProductStream('LAYOUT_ACCESSORIES'),
+            $partsList->filterByProductStream('OPTIONAL_ACCESSORIES'),
             "accessory"
         );
 
