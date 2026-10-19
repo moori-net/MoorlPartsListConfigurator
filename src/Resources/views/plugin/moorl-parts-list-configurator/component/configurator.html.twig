@@ -14,161 +14,167 @@
 
 {% set infoDisplay = config('MoorlPartsListConfigurator.config.infoDisplay') ?? 'modal' %}
 
-{% for group in configuratorSettings %}
-    {% set groupName = group.translated.customFields.moorl_pl_alt_name ?? group.translated.name|split(']')|last|trim %}
+{% block moorl_parts_list_configurator_groups %}
+    {% for group in configuratorSettings %}
+        {% set groupName = group.translated.customFields.moorl_pl_alt_name ?? group.translated.name|split(']')|last|trim %}
 
-    <fieldset
-            class="js-group configurator-group configurator-group-locked"
-            id="{{ groupName|slug }}"
-            data-identifier="{{ identifier }}"
-            data-technical-name="{{ partsListConfigurator.getMappingName(group.id) }}"
-            data-logical="{{ logical }}"
-            data-preview="{{ preview }}"
-            data-name="{{ groupName }}"
-    >
-        <legend class="h3">
-            <span data-step class="configurator-group-step">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-            </span>
-            {{ 'component.product.configurator.legend'|trans({ '%group_name%': groupName, '%hidden_cls%': 'visually-hidden' })|sw_sanitize }}
-        </legend>
+        {% block moorl_parts_list_configurator_group %}
+            <fieldset
+                    class="js-group configurator-group configurator-group-locked"
+                    id="{{ groupName|slug }}"
+                    data-identifier="{{ identifier }}"
+                    data-technical-name="{{ partsListConfigurator.getMappingName(group.id) }}"
+                    data-logical="{{ logical }}"
+                    data-preview="{{ preview }}"
+                    data-name="{{ groupName }}">
+                {% block moorl_parts_list_configurator_group_legend %}
+                    <legend class="h3">
+                        {% block moorl_parts_list_configurator_group_legend_icon %}
+                            <span data-step class="configurator-group-step">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            </span>
+                        {% endblock %}
+                        {% block moorl_parts_list_configurator_group_legend_text %}
+                            {{ 'component.product.configurator.legend'|trans({ '%group_name%': groupName, '%hidden_cls%': 'visually-hidden' })|sw_sanitize }}
+                        {% endblock %}
+                    </legend>
+                {% endblock %}
 
-        <div class="configurator-selection-group configurator-v-spacer">
-            {% for option in group.options %}
-                {% set ocf = option.translated.customFields %}
-                {% set oHasInfo = ocf.moorl_pl_image || ocf.moorl_pl_teaser || ocf.moorl_pl_description %}
-                {% set optionName = ocf.moorl_pl_alt_name ?? option.translated.name|split(']')|last|trim %}
+                {% block moorl_parts_list_configurator_options %}
+                    <div class="configurator-selection-group configurator-v-spacer">
+                        {% for option in group.options %}
+                            {% set ocf = option.translated.customFields %}
+                            {% set oHasInfo = ocf.moorl_pl_image || ocf.moorl_pl_teaser || ocf.moorl_pl_description %}
+                            {% set optionName = ocf.moorl_pl_alt_name ?? option.translated.name|split(']')|last|trim %}
 
-                {% if elementId is defined and elementId is not null %}
-                    {% set optionIdentifier = [group.id, option.id, elementId]|join('-') %}
-                {% else %}
-                    {% set optionIdentifier = [group.id, option.id]|join('-') %}
-                {% endif %}
+                            {% set optionIdentifier = [group.id, option.id, elementId ?? null]|filter(oi => oi !== null)|join('-') %}
 
-                {% set isActive = false %}
+                            {% set isActive = option.id in (product.optionIds ?? []) %}
 
-                {% if option.id in product.optionIds %}
-                    {% set isActive = true %}
-                {% endif %}
+                            {% set media = option.configuratorSetting.media ?: option.media ?: false %}
+                            {% set displayType = option.configuratorSetting.media ? 'media' : group.displayType %}
 
-                {% if option.configuratorSetting.media %}
-                    {% set displayType = 'media' %}
-                    {% set media = option.configuratorSetting.media %}
-                {% else %}
-                    {% set displayType = group.displayType %}
-                    {% if option.media %}
-                        {% set media = option.media %}
-                    {% else %}
-                        {% set media = false %}
+                            {% block moorl_parts_list_configurator_option %}
+                                <div
+                                        class="configurator-option"
+                                        data-position="{{ option.translated.position }}">
+                                    {% block moorl_parts_list_configurator_option_input %}
+                                        <input
+                                                type="radio"
+                                                name="{{ group.id }}"
+                                                value="{{ option.id }}"
+                                                class="configurator-check"
+                                                id="{{ optionIdentifier }}"
+                                                aria-labelledby="{{ optionIdentifier }}-label"
+                                                {% if isActive %}checked="checked"{% endif %}
+                                                data-logical="{{ logical }}"
+                                                data-technical-name="{{ partsListConfigurator.getMappingName(option.id) }}"
+                                                data-preview="{{ media.url }}"
+                                                data-name="{{ optionName }}"
+                                                data-description="{{ ocf.moorl_pl_description }}">
+                                    {% endblock %}
+
+                                    {% block moorl_parts_list_configurator_option_label %}
+                                        <label
+                                                class="configurator-card"
+                                                {% if displayType == 'color' and option.colorHexCode %}style="background-color: {{ option.colorHexCode }}"{% endif %}
+                                                title="{{ optionName }}"
+                                                id="{{ optionIdentifier }}-label"
+                                                for="{{ optionIdentifier }}"
+                                                aria-hidden="true">
+                                            {% block moorl_parts_list_configurator_option_media %}
+                                                {% if media and displayType == 'media' %}
+                                                    {% sw_thumbnails 'configurator-option-img-thumbnails' with {
+                                                        media: media,
+                                                        sizes: {
+                                                            default: '120px'
+                                                        },
+                                                        attributes: {
+                                                            class: '',
+                                                            role: 'presentation',
+                                                        }
+                                                    } %}
+                                                {% endif %}
+                                            {% endblock %}
+
+                                            {% block moorl_parts_list_configurator_option_name %}
+                                                <span class="my-4">{{ optionName }}</span>
+                                            {% endblock %}
+                                        </label>
+                                    {% endblock %}
+
+                                    {% block moorl_parts_list_configurator_option_info_button %}
+                                        {% if oHasInfo %}
+                                            <button
+                                                    class="btn btn-light text-primary configurator-option-info"
+                                                    type="button"
+                                                    title="{{ 'moorl-parts-list-configurator.info'|trans({ '%name%': optionName }) }}"
+                                                    aria-label="{{ 'moorl-parts-list-configurator.info'|trans({ '%name%': optionName }) }}"
+                                                    data-bs-toggle="{{ infoDisplay == 'offcanvas' ? 'offcanvas' : 'modal' }}"
+                                                    data-bs-target="#configurator-info-{{ optionIdentifier }}">
+                                                {% block moorl_parts_list_configurator_option_info_button_icon %}
+                                                    <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11v5m0-8v.01"></path>
+                                                    </svg>
+                                                {% endblock %}
+                                            </button>
+                                        {% endif %}
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+
+                            {% block moorl_parts_list_configurator_option_info %}
+                                {% if oHasInfo %}
+                                    {% set infoContent %}
+                                        {% block moorl_parts_list_configurator_option_info_content %}
+                                            {% if ocf.moorl_pl_image %}
+                                                {% set popoverMedia = mediaCollection.get(ocf.moorl_pl_image) %}
+
+                                                {% sw_thumbnails 'configurator-option-img-thumbnails' with {
+                                                    media: popoverMedia,
+                                                    sizes: {
+                                                        default: '120px'
+                                                    },
+                                                    attributes: {
+                                                        class: 'd-block mx-auto mb-3',
+                                                        role: 'presentation',
+                                                        style: 'width: 160px'
+                                                    }
+                                                } %}
+                                            {% endif %}
+
+                                            {% if ocf.moorl_pl_teaser %}
+                                                <div class="text-muted small mb-3">{{ ocf.moorl_pl_teaser }}</div>
+                                            {% endif %}
+
+                                            {% if ocf.moorl_pl_description %}
+                                                <div class="configurator-option-info-description">{{ ocf.moorl_pl_description|sw_sanitize }}</div>
+                                            {% endif %}
+                                        {% endblock %}
+                                    {% endset %}
+
+                                    {% block moorl_parts_list_configurator_option_info_content_display %}
+                                        {% set infoDisplayType = infoDisplay == 'offcanvas' ? 'configurator-info-offcanvas' : 'configurator-info-modal' %}
+
+                                        {% sw_include '@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/' ~ infoDisplayType ~ '.html.twig' with {
+                                            optionIdentifier: optionIdentifier,
+                                            optionName: optionName,
+                                            infoContent: infoContent
+                                        } %}
+                                    {% endblock %}
+                                {% endif %}
+                            {% endblock %}
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+
+                {% block moorl_parts_list_configurator_group_logical %}
+                    {% if logical %}
+                        <div class="js-logical-configurator"></div>
                     {% endif %}
-                {% endif %}
-
-                <div
-                        class="configurator-option"
-                        data-position="{{ option.translated.position }}"
-                >
-                    <input
-                            type="radio"
-                            name="{{ group.id }}"
-                            value="{{ option.id }}"
-                            class="configurator-check"
-                            id="{{ optionIdentifier }}"
-                            aria-labelledby="{{ optionIdentifier }}-label"
-                            {% if isActive %}checked="checked"{% endif %}
-                            data-logical="{{ logical }}"
-                            data-technical-name="{{ partsListConfigurator.getMappingName(option.id) }}"
-                            data-preview="{{ media.url }}"
-                            data-name="{{ optionName }}"
-                            data-description="{{ ocf.moorl_pl_description }}"
-                    >
-
-                    <label
-                            class="configurator-card"
-                            {% if displayType == 'color' and option.colorHexCode %}style="background-color: {{ option.colorHexCode }}"{% endif %}
-                            title="{{ optionName }}"
-                            id="{{ optionIdentifier }}-label"
-                            for="{{ optionIdentifier }}"
-                            aria-hidden="true"
-                    >
-                        {% if displayType == 'media' and media %}
-                            {% sw_thumbnails 'configurator-option-img-thumbnails' with {
-                                media: media,
-                                sizes: {
-                                    default: '120px'
-                                },
-                                attributes: {
-                                    class: '',
-                                    role: 'presentation',
-                                }
-                            } %}
-                        {% endif %}
-
-                        <span class="my-4">{{ optionName }}</span>
-                    </label>
-
-                    {% if oHasInfo %}
-                        <button
-                                class="btn btn-light text-primary configurator-option-info"
-                                type="button"
-                                title="{{ 'moorl-parts-list-configurator.info'|trans({ '%name%': optionName }) }}"
-                                aria-label="{{ 'moorl-parts-list-configurator.info'|trans({ '%name%': optionName }) }}"
-                                data-bs-toggle="{{ infoDisplay == 'offcanvas' ? 'offcanvas' : 'modal' }}"
-                                data-bs-target="#configurator-info-{{ optionIdentifier }}"
-                        >
-                            <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11v5m0-8v.01"></path>
-                            </svg>
-                        </button>
-                    {% endif %}
-                </div>
-
-                {% if oHasInfo %}
-                    {% set infoContent %}
-                        {% if ocf.moorl_pl_image %}
-                            {% set popoverMedia = mediaCollection.get(ocf.moorl_pl_image) %}
-
-                            {% sw_thumbnails 'configurator-option-img-thumbnails' with {
-                                media: popoverMedia,
-                                sizes: {
-                                    default: '120px'
-                                },
-                                attributes: {
-                                    class: 'd-block mx-auto mb-3',
-                                    role: 'presentation',
-                                    style: 'width: 160px'
-                                }
-                            } %}
-                        {% endif %}
-
-                        {% if ocf.moorl_pl_teaser %}
-                            <div class="text-muted small mb-3">{{ ocf.moorl_pl_teaser }}</div>
-                        {% endif %}
-
-                        {% if ocf.moorl_pl_description %}
-                            <div class="configurator-option-info-description">{{ ocf.moorl_pl_description|sw_sanitize }}</div>
-                        {% endif %}
-                    {% endset %}
-
-                    {% if infoDisplay == 'offcanvas' %}
-                        {% sw_include '@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator-info-offcanvas.html.twig' with {
-                            optionIdentifier: optionIdentifier,
-                            optionName: optionName,
-                            infoContent: infoContent
-                        } %}
-                    {% else %}
-                        {% sw_include '@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator-info-modal.html.twig' with {
-                            optionIdentifier: optionIdentifier,
-                            optionName: optionName,
-                            infoContent: infoContent
-                        } %}
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-        </div>
-
-        {% if logical %}
-            <div class="js-logical-configurator"></div>
-        {% endif %}
-    </fieldset>
-{% endfor %}
+                {% endblock %}
+            </fieldset>
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

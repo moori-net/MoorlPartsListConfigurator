@@ -1,11 +1,17 @@
-{% for accessoryList in accessoryLists %}
-    {% if accessoryList.title %}
-        <legend class="h4">{{ accessoryList.title }}</legend>
-    {% endif %}
+{% block moorl_parts_list_accessory_list %}
+    {% for accessoryList in accessoryLists %}
+        {% block moorl_parts_list_accessory_list_title %}
+            {% if accessoryList.title %}
+                <legend class="h4">{{ accessoryList.title }}</legend>
+            {% endif %}
+        {% endblock %}
 
-    {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig' with {
-        items: accessoryList.items,
-        namePrefix: namePrefix,
-        options: options
-    } %}
-{% endfor %}
+        {% block moorl_parts_list_accessory_list_items %}
+            {% sw_include '@MoorlFoundation/plugin/moorl-foundation/component/parts-list/index.html.twig' with {
+                items: accessoryList.items,
+                namePrefix: namePrefix,
+                options: options
+            } %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}
