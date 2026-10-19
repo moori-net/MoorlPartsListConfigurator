@@ -1,144 +1,168 @@
-{% set partsListConfigurator = page.partsListConfigurator %}
-{% set config = {
-    url: path('frontend.moorl.parts.list.configurator.detail', {partsListConfiguratorId: partsListConfigurator.id}),
-    type: partsListConfigurator.type,
-    autoScroll: config('MoorlPartsListConfigurator.config.autoScroll'),
-    autoLoad: config('MoorlPartsListConfigurator.config.autoLoad'),
-    loadButtonLabel: "moorl-parts-list-configurator.load"|trans,
-    loadedButtonLabel: "moorl-parts-list-configurator.loaded"|trans
-} %}
+{% block element_moorl_parts_list_configurator %}
+    {% set partsListConfigurator = page.partsListConfigurator %}
+    {% set config = {
+        url: path('frontend.moorl.parts.list.configurator.detail', {partsListConfiguratorId: partsListConfigurator.id}),
+        type: partsListConfigurator.type,
+        autoScroll: config('MoorlPartsListConfigurator.config.autoScroll'),
+        autoLoad: config('MoorlPartsListConfigurator.config.autoLoad'),
+        loadButtonLabel: "moorl-parts-list-configurator.load"|trans,
+        loadedButtonLabel: "moorl-parts-list-configurator.loaded"|trans
+    } %}
 
-<div
-        class="cms-element-moorl-parts-list-configurator"
-        data-moorl-parts-list-configurator="true"
-        data-moorl-parts-list-configurator-options="{{ config|json_encode }}"
->
-    <div class="row">
-        <div class="col-12 col-lg-8">
-            <!-- configurator -->
+    <div
+            class="cms-element-moorl-parts-list-configurator"
+            data-moorl-parts-list-configurator="true"
+            data-moorl-parts-list-configurator-options="{{ config|json_encode }}">
+        <div class="row">
+            {% block element_moorl_parts_list_configurator_main %}
+                <div class="col-12 col-lg-8">
+                    {% block element_moorl_parts_list_configurator_header %}
+                        {% block element_moorl_parts_list_configurator_header_title %}
+                            <h1
+                                    class="product-detail-name configurator-v-spacer">
+                                {{ partsListConfigurator.translated.name }}
+                            </h1>
+                        {% endblock %}
 
-            <h1 class="product-detail-name configurator-v-spacer" itemprop="name">
-                {{ partsListConfigurator.translated.name }}
-            </h1>
+                        {% block element_moorl_parts_list_configurator_header_description %}
+                            <div class="product-detail-description configurator-v-spacer">
+                                {{ partsListConfigurator.translated.description|raw }}
+                            </div>
+                        {% endblock %}
+                    {% endblock %}
 
-            <div class="product-detail-description configurator-v-spacer">
-                {{ partsListConfigurator.translated.description|raw }}
-            </div>
+                    {% block element_moorl_parts_list_configurator_form %}
+                        <div class="product-detail-configurator-container">
+                            <div class="product-detail-configurator">
+                                <form>
+                                    {% block element_moorl_parts_list_configurator_filters %}
+                                        {% for filter in partsListConfigurator.getFilters %}
+                                            {% if not filter.fixed %}
+                                                {% block element_moorl_parts_list_configurator_filter %}
+                                                    {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
+                                                        configuratorSettings: filter.propertyGroupOptions.groupByPropertyGroups,
+                                                        logical: filter.logical,
+                                                        preview: filter.preview,
+                                                        identifier: filter.id,
+                                                        accessoryList: page.partsList.filterByProductStreamIds(filter.productStreamIds)
+                                                    } %}
+                                                {% endblock %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endblock %}
 
-            <div class="product-detail-configurator-container">
-                <div class="product-detail-configurator">
-                    <form>
-                        {% for filter in partsListConfigurator.getFilters %}
-                            {% if not filter.fixed %}
-                                {% sw_include "@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/configurator.html.twig" with {
-                                    configuratorSettings: filter.propertyGroupOptions.groupByPropertyGroups,
-                                    logical: filter.logical,
-                                    preview: filter.preview,
-                                    identifier: filter.id,
-                                    accessoryList: page.partsList.filterByProductStreamIds(filter.productStreamIds)
-                                } %}
-                            {% endif %}
-                        {% endfor %}
+                                    {% block element_moorl_parts_list_configurator_accessory_list %}
+                                        {% if page.partsList and page.partsList.count > 0 %}
+                                            <fieldset
+                                                    data-hide-on-load
+                                                    id="accessoryList"
+                                                    class="mb-3"
+                                                    style="display: none">
+                                                {% block element_moorl_parts_list_configurator_accessory_list_title %}
+                                                    <legend class="h3">
+                                                        {% if partsListConfigurator.type == 'calculator' %}
+                                                            {{ "moorl-parts-list-configurator.accessoryList"|trans }}
+                                                        {% else %}
+                                                            {{ "moorl-parts-list-configurator.partsList"|trans }}
+                                                        {% endif %}
+                                                    </legend>
+                                                {% endblock %}
 
-                        {% if partsList.count > 0 %}
-                            <fieldset
-                                    data-hide-on-load
-                                    id="accessoryList"
-                                    class="mb-3"
-                                    style="display: none"
-                            >
-                                {% block accessory_list_title %}
-                                    <legend class="h3">
-                                        {% if partsListConfigurator.type == 'calculator' %}
-                                            {{ "moorl-parts-list-configurator.accessoryList"|trans }}
-                                        {% else %}
-                                            {{ "moorl-parts-list-configurator.partsList"|trans }}
+                                                {% block element_moorl_parts_list_configurator_accessory_list_info_message %}
+                                                    {% if partsListConfigurator.translated.infoMessage %}
+                                                        <div class="accessories-info-message configurator-card configurator-v-spacer">
+                                                            {{ partsListConfigurator.translated.infoMessage|raw }}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endblock %}
+
+                                                {% block element_moorl_parts_list_configurator_accessory_list_content %}
+                                                    <div data-content></div>
+                                                {% endblock %}
+                                            </fieldset>
                                         {% endif %}
+                                    {% endblock %}
+                                </form>
+                            </div>
+                        </div>
+                    {% endblock %}
+
+                    {% block element_moorl_parts_list_configurator_load_button %}
+                        <div
+                                data-hide-on-load
+                                class="d-grid my-3"
+                                style="display: none">
+                            <button class="js-load-button btn btn-outline-primary">
+                                {{ "moorl-parts-list-configurator.load"|trans }}
+                            </button>
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block element_moorl_parts_list_configurator_sidebar %}
+                <div class="col-12 col-lg-4">
+                    {% set options = {
+                        isSticky: true
+                    } %}
+
+                    <div
+                            class="position-sticky top-0"
+                            data-moorl-grid
+                            data-moorl-grid-options='{{ options|json_encode|raw }}'>
+                        {% block element_moorl_parts_list_configurator_sidebar_preview %}
+                            <div class="configurator-card configurator-v-spacer">
+                                {% sw_thumbnails 'configurator-preview-image' with {
+                                    media: partsListConfigurator.cover.media,
+                                    sizes: {
+                                        default: '120px'
+                                    },
+                                    attributes: {
+                                        id: 'previewImage',
+                                        class: 'configurator-preview-image',
+                                        role: 'presentation',
+                                    }
+                                } %}
+                            </div>
+                        {% endblock %}
+
+                        {% block element_moorl_parts_list_configurator_sidebar_summary %}
+                            <fieldset
+                                    class="configurator-card configurator-v-spacer"
+                                    id="mySummary">
+                                {% block element_moorl_parts_list_configurator_sidebar_summary_title %}
+                                    <legend class="h3">
+                                        {{ "moorl-parts-list-configurator.mySummary"|trans }}
                                     </legend>
                                 {% endblock %}
 
-                                {% if partsListConfigurator.translated.infoMessage %}
-                                    {% block accessory_list_info_message %}
-                                        <div class="accessories-info-message configurator-card configurator-v-spacer">
-                                            {{ partsListConfigurator.translated.infoMessage|raw }}
-                                        </div>
-                                    {% endblock %}
-                                {% endif %}
-
-                                <div data-content></div>
+                                {% block element_moorl_parts_list_configurator_sidebar_summary_content %}
+                                    <div data-content>
+                                        <span class="fst-italic">{{ "moorl-parts-list-configurator.nothingSelected"|trans }}</span>
+                                    </div>
+                                {% endblock %}
                             </fieldset>
-                        {% endif %}
-                    </form>
+                        {% endblock %}
+
+                        {% block element_moorl_parts_list_configurator_sidebar_parts_list %}
+                            <fieldset
+                                    class="configurator-card configurator-v-spacer"
+                                    id="partsList"
+                                    style="display: none">
+                                {% block element_moorl_parts_list_configurator_sidebar_parts_list_title %}
+                                    <legend class="h3">
+                                        {{ "moorl-parts-list-configurator.calculatedPartsList"|trans }}
+                                    </legend>
+                                {% endblock %}
+
+                                {% block element_moorl_parts_list_configurator_sidebar_parts_list_content %}
+                                    <div data-content></div>
+                                {% endblock %}
+                            </fieldset>
+                        {% endblock %}
+                    </div>
                 </div>
-            </div>
-
-            <div
-                    data-hide-on-load
-                    class="d-grid my-3"
-                    style="display: none"
-            >
-                <button
-                        class="js-load-button btn btn-outline-primary"
-                        aria-label="{{ "moorl-parts-list-configurator.load"|trans }}"
-                >
-                    {{ "moorl-parts-list-configurator.load"|trans }}
-                </button>
-            </div>
-        </div>
-
-        <div class="col-12 col-lg-4">
-            <!-- sticky sidebar with preview image, current selection and proxy cart -->
-            {% set options = {
-                isSticky: true
-            } %}
-
-            {% set sectionCss = [
-                "position:sticky",
-                "top:0"
-            ] %}
-
-            <div
-                    style="{{ sectionCss|join(';')|raw }}"
-                    data-moorl-grid
-                    data-moorl-grid-options='{{ options|json_encode|raw }}'
-            >
-                <div class="configurator-card configurator-v-spacer">
-                    {% sw_thumbnails 'configurator-preview-image' with {
-                        media: partsListConfigurator.cover.media,
-                        sizes: {
-                            default: '120px'
-                        },
-                        attributes: {
-                            id: 'previewImage',
-                            class: 'configurator-preview-image',
-                            role: 'presentation',
-                        }
-                    } %}
-                </div>
-
-                <fieldset
-                        class="configurator-card configurator-v-spacer"
-                        id="mySummary"
-                >
-                    <legend class="h3">
-                        {{ "moorl-parts-list-configurator.mySummary"|trans }}
-                    </legend>
-
-                    <div data-content><i>{{ "moorl-parts-list-configurator.nothingSelected"|trans }}</i></div>
-                </fieldset>
-
-                <fieldset
-                        class="configurator-card configurator-v-spacer"
-                        id="partsList"
-                        style="display: none"
-                >
-                    <legend class="h3">
-                        {{ "moorl-parts-list-configurator.calculatedPartsList"|trans }}
-                    </legend>
-
-                    <div data-content></div>
-                </fieldset>
-            </div>
+            {% endblock %}
         </div>
     </div>
-</div>
+{% endblock %}
