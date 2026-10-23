@@ -1,23 +1,35 @@
-<div
-        class="offcanvas offcanvas-end"
-        id="configurator-info-{{ optionIdentifier }}"
-        tabindex="-1"
-        aria-labelledby="configurator-info-title-{{ optionIdentifier }}"
->
-    <div class="offcanvas-header">
-        <button
-                class="btn btn-secondary offcanvas-close js-offcanvas-close"
-                type="button"
-                data-bs-dismiss="offcanvas"
-                aria-label="{{ 'moorl-parts-list-configurator.close'|trans }}"
-        >
-            {% sw_icon 'arrow-head-left' style { size: 'sm' } %}
-            {{ 'checkout.continueShopping'|trans|sw_sanitize }}
-        </button>
-    </div>
+{% sw_extends '@Storefront/storefront/utilities/offcanvas.html.twig' %}
 
-    <div class="offcanvas-body">
-        <div class="offcanvas-cart">
+{% block utilities_offcanvas %}
+    <div
+            class="offcanvas offcanvas-end configurator-option-offcanvas"
+            id="configurator-info-{{ optionIdentifier }}"
+            tabindex="-1"
+            aria-labelledby="configurator-info-title-{{ optionIdentifier }}"
+    >
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block utilities_offcanvas_close %}
+    <button class="btn btn-secondary offcanvas-close js-offcanvas-close"
+            type="button"
+            data-bs-dismiss="offcanvas"
+            aria-label="{{ 'moorl-parts-list-configurator.close'|trans }}"
+    >
+        {% block utilities_offcanvas_close_icon %}
+            {% sw_icon 'arrow-head-left' style { size: 'sm' } %}
+        {% endblock %}
+
+        {% block utilities_offcanvas_close_text %}
+            {{ 'checkout.continueShopping'|trans|sw_sanitize }}
+        {% endblock %}
+    </button>
+{% endblock %}
+
+{% block utilities_offcanvas_content %}
+    <div class="offcanvas-cart">
+        {% block moorl_parts_list_configurator_info_offcanvas_content_header %}
             <div class="row align-items-center offcanvas-cart-header">
                 <div class="col">
                     <h4 id="configurator-info-title-{{ optionIdentifier }}">
@@ -25,8 +37,10 @@
                     </h4>
                 </div>
             </div>
+        {% endblock %}
 
+        {% block moorl_parts_list_configurator_info_offcanvas_content %}
             {{ infoContent }}
-        </div>
+        {% endblock %}
     </div>
-</div>
+{% endblock %}

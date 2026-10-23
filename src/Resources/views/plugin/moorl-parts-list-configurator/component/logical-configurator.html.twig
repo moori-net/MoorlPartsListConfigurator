@@ -1,7 +1,7 @@
-{% if logicalConfigurator %}
-    {% block parts_list_logical_configurator %}
-        {% if page.partsListConfigurator.calculator == 'demo-fence-2' and logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT' %}
-            {% sw_include '@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator/demo-fence-2-parts-list-layout.html.twig' %}
-        {% endif %}
-    {% endblock %}
-{% endif %}
+{% block moorl_parts_list_logical_configurator %}
+    {% if logicalConfigurator
+        and logicalConfigurator.groupTechnicalName == 'PARTS_LIST_LAYOUT'
+        and page.partsListConfigurator.calculator == 'demo-fence-2' %}
+        {% sw_include '@MoorlPartsListConfigurator/plugin/moorl-parts-list-configurator/component/logical-configurator/demo-fence-2-parts-list-layout.html.twig' %}
+    {% endif %}
+{% endblock %}
