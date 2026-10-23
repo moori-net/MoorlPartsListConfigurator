@@ -1,24 +1,43 @@
-<div
-        class="modal fade"
-        id="configurator-info-{{ optionIdentifier }}"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="configurator-info-title-{{ optionIdentifier }}"
-        aria-hidden="true"
->
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="h4 modal-title" id="configurator-info-title-{{ optionIdentifier }}">
-                    {{ optionName }}
+{% block moorl_parts_list_configurator_info_modal %}
+    <div
+            class="modal fade"
+            id="configurator-info-{{ optionIdentifier }}"
+            tabindex="-1"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+            aria-labelledby="configurator-info-title-{{ optionIdentifier }}">
+        <div class="modal-dialog modal-dialog-centered">
+            {% block moorl_parts_list_configurator_info_modal_content %}
+                <div class="modal-content">
+                    {% block moorl_parts_list_configurator_info_modal_header %}
+                        <div class="modal-header">
+                            {% block moorl_parts_list_configurator_info_modal_header_title %}
+                                <div
+                                        class="h4 modal-title"
+                                        id="configurator-info-title-{{ optionIdentifier }}">
+                                    {{ optionName }}
+                                </div>
+                            {% endblock %}
+
+                            {% block moorl_parts_list_configurator_info_modal_header_close_button %}
+                                <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="{{ 'moorl-parts-list-configurator.close'|trans|striptags }}">
+                                </button>
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+
+                    {% block moorl_parts_list_configurator_info_modal_body %}
+                        <div class="modal-body">
+                            {{ infoContent }}
+                        </div>
+                    {% endblock %}
                 </div>
-
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'moorl-parts-list-configurator.close'|trans }}"></button>
-            </div>
-
-            <div class="modal-body">
-                {{ infoContent }}
-            </div>
+            {% endblock %}
         </div>
     </div>
-</div>
+{% endblock %}
