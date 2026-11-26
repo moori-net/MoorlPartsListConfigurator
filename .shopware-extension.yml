@@ -234,3 +234,5 @@ build:
           - tests
           - TODO.md
           - phpunit.xml.dist
+          - .superpowers
+          - CODEX.md
